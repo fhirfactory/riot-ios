@@ -1392,7 +1392,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             profileCell.mxkImageViewWidthConstraint.constant = profileCell.mxkImageViewHeightConstraint.constant = 30;
             profileCell.mxkImageViewDisplayBoxType = MXKTableViewCellDisplayBoxTypeCircle;
             
-            if (!profileCell.mxkImageView.gestureRecognizers.count)
+            if (!profileCell.mxkImageView.gestureRecognizers.count && RiotSettings.shared.disableProfilePictureEdit)
             {
                 // tap on avatar to update it
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileAvatarTap:)];
@@ -2621,7 +2621,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         }
         else if (section == SETTINGS_SECTION_USER_SETTINGS_INDEX)
         {
-            if (row == userSettingsProfilePictureIndex)
+            if (row == userSettingsProfilePictureIndex && RiotSettings.shared.disableProfilePictureEdit)
             {
                 [self onProfileAvatarTap:nil];
             }

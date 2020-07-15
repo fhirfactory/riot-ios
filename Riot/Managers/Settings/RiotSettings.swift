@@ -34,6 +34,7 @@ final class RiotSettings: NSObject {
         static let stunServerFallback = "stunServerFallback"
         static let hideVerifyThisSessionAlert = "hideVerifyThisSessionAlert"
         static let hideReviewSessionsAlert = "hideReviewSessionsAlert"
+        static let disableProfilePictureEdit = "disableProfilePicutreEdit"
     }
     
     static let shared = RiotSettings()
@@ -153,4 +154,7 @@ final class RiotSettings: NSObject {
             UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.hideReviewSessionsAlert)
         }
     }
+    
+    var disableProfilePictureEdit: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.disableProfilePictureEdit)
+    
 }

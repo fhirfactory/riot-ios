@@ -80,5 +80,7 @@
 		<key>matrix.org</key>
 		<string></string>
 	</dict>
+	<key>disableProfilePicutreEdit</key>
+	<false/>
 </dict>
 </plist>

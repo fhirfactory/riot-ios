@@ -17,6 +17,8 @@ internal enum RiotDefaults {
   internal static let createConferenceCallsWithJitsi: Bool = _document["createConferenceCallsWithJitsi"]
   internal static let disableProfilePicutreEdit: Bool = _document["disableProfilePicutreEdit"]
   internal static let enableRageShake: Bool = _document["enableRageShake"]
+  internal static let hideAddEmailAddress: Bool = _document["hideAddEmailAddress"]
+  internal static let hideAddPhoneNumber: Bool = _document["hideAddPhoneNumber"]
   internal static let hidePasswordChange: Bool = _document["hidePasswordChange"]
   internal static let homeserver: String = _document["homeserver"]
   internal static let homeserverurl: String = _document["homeserverurl"]

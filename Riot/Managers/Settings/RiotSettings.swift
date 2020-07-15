@@ -36,6 +36,8 @@ final class RiotSettings: NSObject {
         static let hideReviewSessionsAlert = "hideReviewSessionsAlert"
         static let disableProfilePictureEdit = "disableProfilePicutreEdit"
         static let hidePasswordChange = "hidePasswordChange"
+        static let hideAddEmailAddress = "hideAddEmailAddress"
+        static let hideAddPhoneNumber = "hideAddPhoneNumber"
     }
     
     static let shared = RiotSettings()
@@ -158,4 +160,6 @@ final class RiotSettings: NSObject {
     
     let disableProfilePictureEdit: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.disableProfilePictureEdit)
     let hidePasswordChange: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hidePasswordChange)
+    let hideAddEmailAddress: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideAddEmailAddress)
+    let hideAddPhoneNumber: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideAddPhoneNumber)
 }

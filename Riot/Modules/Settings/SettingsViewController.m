@@ -1155,10 +1155,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         userSettingsNightModeIndex = -1;
 
         userSettingsEmailStartIndex = RiotSettings.shared.hidePasswordChange? 2: 3;
-        userSettingsNewEmailIndex = userSettingsEmailStartIndex + account.linkedEmails.count;
-        userSettingsPhoneStartIndex = userSettingsNewEmailIndex + 1;
-        userSettingsNewPhoneIndex = userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count;
-        userSettingsThreePidsInformation = userSettingsNewPhoneIndex + 1;
+        userSettingsNewEmailIndex = RiotSettings.shared.hideAddEmailAddress? -1 : userSettingsEmailStartIndex + account.linkedEmails.count;
+        userSettingsPhoneStartIndex = RiotSettings.shared.hideAddEmailAddress? userSettingsEmailStartIndex + 1:userSettingsNewEmailIndex + 1;
+        userSettingsNewPhoneIndex = RiotSettings.shared.hideAddPhoneNumber? -1 : userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count;
+        userSettingsThreePidsInformation = RiotSettings.shared.hideAddPhoneNumber? userSettingsPhoneStartIndex +1 : userSettingsNewPhoneIndex + 1;
         
         count = userSettingsThreePidsInformation + 1;
     }
@@ -1465,7 +1465,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = surnameCell;
         }
-        else if (userSettingsEmailStartIndex <= row &&  row < userSettingsNewEmailIndex)
+        else if ((userSettingsEmailStartIndex <= row &&  row < userSettingsNewEmailIndex) || (userSettingsEmailStartIndex == row && RiotSettings.shared.hideAddEmailAddress))
         {
             MXKTableViewCellWithLabelAndTextField *emailCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
             
@@ -1529,7 +1529,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
             cell = newEmailCell;
         }
-        else if (userSettingsPhoneStartIndex <= row &&  row < userSettingsNewPhoneIndex)
+        else if ((userSettingsPhoneStartIndex <= row &&  row < userSettingsNewPhoneIndex)|| (userSettingsPhoneStartIndex == row && RiotSettings.shared.hideAddPhoneNumber))
         {
             MXKTableViewCellWithLabelAndTextField *phoneCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
             

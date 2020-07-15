@@ -1146,7 +1146,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         
         userSettingsProfilePictureIndex = 0;
         userSettingsDisplayNameIndex = 1;
-        userSettingsChangePasswordIndex = 2;
+        userSettingsChangePasswordIndex = RiotSettings.shared.hidePasswordChange? -1 : 2;
         
         // Hide some unsupported account settings
         userSettingsFirstNameIndex = -1;
@@ -1154,7 +1154,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         userSettingsNightModeSepIndex = -1;
         userSettingsNightModeIndex = -1;
 
-        userSettingsEmailStartIndex = 3;
+        userSettingsEmailStartIndex = RiotSettings.shared.hidePasswordChange? 2: 3;
         userSettingsNewEmailIndex = userSettingsEmailStartIndex + account.linkedEmails.count;
         userSettingsPhoneStartIndex = userSettingsNewEmailIndex + 1;
         userSettingsNewPhoneIndex = userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count;
@@ -1392,7 +1392,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             profileCell.mxkImageViewWidthConstraint.constant = profileCell.mxkImageViewHeightConstraint.constant = 30;
             profileCell.mxkImageViewDisplayBoxType = MXKTableViewCellDisplayBoxTypeCircle;
             
-            if (!profileCell.mxkImageView.gestureRecognizers.count && RiotSettings.shared.disableProfilePictureEdit)
+            if (!profileCell.mxkImageView.gestureRecognizers.count && !RiotSettings.shared.disableProfilePictureEdit)
             {
                 // tap on avatar to update it
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileAvatarTap:)];
@@ -2621,7 +2621,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         }
         else if (section == SETTINGS_SECTION_USER_SETTINGS_INDEX)
         {
-            if (row == userSettingsProfilePictureIndex && RiotSettings.shared.disableProfilePictureEdit)
+            if (row == userSettingsProfilePictureIndex && !RiotSettings.shared.disableProfilePictureEdit)
             {
                 [self onProfileAvatarTap:nil];
             }

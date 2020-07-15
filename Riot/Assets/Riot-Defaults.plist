@@ -81,6 +81,8 @@
 		<string></string>
 	</dict>
 	<key>disableProfilePicutreEdit</key>
-	<false/>
+	<true/>
+	<key>hidePasswordChange</key>
+	<true/>
 </dict>
 </plist>

@@ -89,8 +89,8 @@ enum
 {
     CALLS_ENABLE_CALLKIT_INDEX = 0,
     CALLS_CALLKIT_DESCRIPTION_INDEX,
-    CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX,
-    CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX,
+    //CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX,
+    //CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX,
     CALLS_COUNT
 };
 
@@ -1762,7 +1762,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
             cell = globalInfoCell;
         }
-        else if (row == CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX)
+        /*else if (row == CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX)
         {
             MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
             labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_calls_stun_server_fallback_button", @"Vector", nil);
@@ -1785,7 +1785,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             cell = globalInfoCell;
-        }
+        }*/
     }
     /*else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
     {

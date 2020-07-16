@@ -3046,6 +3046,10 @@ internal enum VectorL10n {
   internal static var serviceTermsModalTitleIdentityServer: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_title_identity_server") 
   }
+  /// Acknowledgement
+  internal static var settingsAcknowledgement: String { 
+    return VectorL10n.tr("Vector", "settings_acknowledgement") 
+  }
   /// Invalid password
   internal static var settingsAdd3pidInvalidPasswordMessage: String { 
     return VectorL10n.tr("Vector", "settings_add_3pid_invalid_password_message") 

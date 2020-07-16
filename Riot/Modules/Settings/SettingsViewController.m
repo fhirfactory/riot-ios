@@ -2060,7 +2060,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         {
             MXKTableViewCell *thirdPartyCell = [self getDefaultTableViewCell:tableView];
             
-            thirdPartyCell.textLabel.text = NSLocalizedStringFromTable(@"settings_third_party_notices", @"Vector", nil);
+            thirdPartyCell.textLabel.text = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
             
             thirdPartyCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
@@ -2618,7 +2618,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithLocalHTMLFile:htmlFile];
                 
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_third_party_notices", @"Vector", nil);
+                webViewViewController.title = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
                 
                 [self pushViewController:webViewViewController];
             }

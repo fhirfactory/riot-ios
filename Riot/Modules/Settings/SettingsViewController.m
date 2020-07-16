@@ -72,7 +72,7 @@ enum
 enum
 {
     NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX = 0,
-    NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT,
+    //NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT,
     NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX,
     NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX,
     NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX,
@@ -103,8 +103,8 @@ enum
 
 enum
 {
-    USER_INTERFACE_LANGUAGE_INDEX = 0,
-    USER_INTERFACE_THEME_INDEX,
+    //USER_INTERFACE_LANGUAGE_INDEX = 0,
+    USER_INTERFACE_THEME_INDEX = 0,
     USER_INTERFACE_COUNT
 };
 
@@ -1677,7 +1677,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = labelAndSwitchCell;
         }
-        else if (row == NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT)
+        /*else if (row == NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT)
         {
             MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
             
@@ -1689,7 +1689,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             
             cell = labelAndSwitchCell;
-        }
+        }*/
         else if (row == NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX)
         {
             MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
@@ -1875,7 +1875,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     }
     else if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
     {
-        if (row == USER_INTERFACE_LANGUAGE_INDEX)
+        /*if (row == USER_INTERFACE_LANGUAGE_INDEX)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
             if (!cell)
@@ -1902,7 +1902,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         }
-        else if (row == USER_INTERFACE_THEME_INDEX)
+        else*/
+        if (row == USER_INTERFACE_THEME_INDEX)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
             if (!cell)
@@ -2487,7 +2488,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
         if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
         {
-            if (row == USER_INTERFACE_LANGUAGE_INDEX)
+            /*if (row == USER_INTERFACE_LANGUAGE_INDEX)
             {
                 // Display the language picker
                 LanguagePickerViewController *languagePickerViewController = [LanguagePickerViewController languagePickerViewController];
@@ -2495,7 +2496,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 languagePickerViewController.delegate = self;
                 [self pushViewController:languagePickerViewController];
             }
-            else if (row == USER_INTERFACE_THEME_INDEX)
+            else*/
+            if (row == USER_INTERFACE_THEME_INDEX)
             {
                 [self showThemePicker];
             }

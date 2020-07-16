@@ -38,6 +38,7 @@ final class RiotSettings: NSObject {
         static let hidePasswordChange = "hidePasswordChange"
         static let hideAddEmailAddress = "hideAddEmailAddress"
         static let hideAddPhoneNumber = "hideAddPhoneNumber"
+        static let hideDiscoverUser = "hideDiscoverUser"
     }
     
     static let shared = RiotSettings()
@@ -162,4 +163,5 @@ final class RiotSettings: NSObject {
     let hidePasswordChange: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hidePasswordChange)
     let hideAddEmailAddress: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideAddEmailAddress)
     let hideAddPhoneNumber: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideAddPhoneNumber)
+    let hideDiscoverUser: Bool = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideDiscoverUser)
 }

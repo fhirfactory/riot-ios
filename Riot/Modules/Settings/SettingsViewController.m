@@ -55,7 +55,7 @@ enum
     SETTINGS_SECTION_SECURITY_INDEX,
     SETTINGS_SECTION_NOTIFICATIONS_SETTINGS_INDEX,
     SETTINGS_SECTION_CALLS_INDEX,
-    SETTINGS_SECTION_DISCOVERY_INDEX,
+    //SETTINGS_SECTION_DISCOVERY_INDEX,
     SETTINGS_SECTION_IDENTITY_SERVER_INDEX,
     SETTINGS_SECTION_CONTACTS_INDEX,
     SETTINGS_SECTION_IGNORED_USERS_INDEX,
@@ -1159,8 +1159,9 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         userSettingsPhoneStartIndex = RiotSettings.shared.hideAddEmailAddress? userSettingsEmailStartIndex + account.linkedEmails.count : userSettingsNewEmailIndex + 1;
         userSettingsNewPhoneIndex = RiotSettings.shared.hideAddPhoneNumber? -1 : userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count;
         userSettingsThreePidsInformation = RiotSettings.shared.hideAddPhoneNumber? userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count : userSettingsNewPhoneIndex + 1;
+        userSettingsThreePidsInformation = RiotSettings.shared.hideDiscoverUser? -1 : userSettingsThreePidsInformation;
         
-        count = userSettingsThreePidsInformation + 1;
+        count = userSettingsThreePidsInformation == -1? (userSettingsNewPhoneIndex==-1?userSettingsPhoneStartIndex+1:userSettingsNewPhoneIndex+1) :userSettingsThreePidsInformation + 1;
     }
     else if (section == SETTINGS_SECTION_NOTIFICATIONS_SETTINGS_INDEX)
     {
@@ -1175,10 +1176,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             count -= 2;
         }
     }
-    else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
+    /*else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
     {
         count = self.settingsDiscoveryTableViewSection.numberOfRows;
-    }
+    }*/
     else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
     {
         count = IDENTITY_SERVER_COUNT;
@@ -1465,7 +1466,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = surnameCell;
         }
-        else if ((userSettingsEmailStartIndex <= row &&  row < userSettingsNewEmailIndex) || (userSettingsEmailStartIndex <= row && row < userSettingsPhoneStartIndex && RiotSettings.shared.hideAddEmailAddress))
+        else if ((userSettingsEmailStartIndex <= row &&  row < userSettingsNewEmailIndex) || (userSettingsEmailStartIndex <= row && row < userSettingsPhoneStartIndex && RiotSettings.shared.hideAddEmailAddress) )
         {
             MXKTableViewCellWithLabelAndTextField *emailCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
             
@@ -1529,7 +1530,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
             cell = newEmailCell;
         }
-        else if ((userSettingsPhoneStartIndex <= row &&  row < userSettingsNewPhoneIndex)|| (userSettingsPhoneStartIndex <= row && row < userSettingsThreePidsInformation && RiotSettings.shared.hideAddPhoneNumber))
+        else if ((userSettingsPhoneStartIndex <= row &&  row < userSettingsNewPhoneIndex) || (userSettingsPhoneStartIndex <= row && row < userSettingsThreePidsInformation && RiotSettings.shared.hideAddPhoneNumber)|| (userSettingsEmailStartIndex <= row && userSettingsThreePidsInformation == -1))
         {
             MXKTableViewCellWithLabelAndTextField *phoneCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
             
@@ -1786,10 +1787,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             cell = globalInfoCell;
         }
     }
-    else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
+    /*else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
     {
         cell = [self.settingsDiscoveryTableViewSection cellForRowAtRow:row];
-    }
+    }*/
     else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
     {
         switch (row)
@@ -2274,10 +2275,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         return NSLocalizedStringFromTable(@"settings_calls_settings", @"Vector", nil);
     }
-    else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
+    /*else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_discovery_settings", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_identity_server_settings", @"Vector", nil);
@@ -2499,7 +2500,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 [self showThemePicker];
             }
         }
-        else if (section == SETTINGS_SECTION_USER_SETTINGS_INDEX && row == userSettingsThreePidsInformation)
+        /*else if (section == SETTINGS_SECTION_USER_SETTINGS_INDEX && row == userSettingsThreePidsInformation)
         {
             NSIndexPath *discoveryIndexPath = [NSIndexPath indexPathForRow:0 inSection:SETTINGS_SECTION_DISCOVERY_INDEX];
             [tableView scrollToRowAtIndexPath:discoveryIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
@@ -2507,7 +2508,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
         {
             [self.settingsDiscoveryTableViewSection selectRow:indexPath.row];
-        }
+        }*/
         else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
         {
             switch (row)
@@ -4182,10 +4183,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         tableViewCell = [self getDefaultTableViewCell:self.tableView];
     }
-    else if ([tableViewCellClass isEqual:[MXKTableViewCellWithTextView class]])
+    /*else if ([tableViewCellClass isEqual:[MXKTableViewCellWithTextView class]])
     {
         tableViewCell = [self textViewCellForTableView:self.tableView atIndexPath:[NSIndexPath indexPathForRow:forRow inSection:SETTINGS_SECTION_DISCOVERY_INDEX]];
-    }
+    }*/
     else if ([tableViewCellClass isEqual:[MXKTableViewCellWithButton class]])
     {
         MXKTableViewCellWithButton *cell = [self.tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
@@ -4205,10 +4206,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         
         tableViewCell = cell;
     }
-    else if ([tableViewCellClass isEqual:[MXKTableViewCellWithLabelAndSwitch class]])
+    /*else if ([tableViewCellClass isEqual:[MXKTableViewCellWithLabelAndSwitch class]])
     {
         tableViewCell = [self getLabelAndSwitchCell:self.tableView forIndexPath:[NSIndexPath indexPathForRow:forRow inSection:SETTINGS_SECTION_DISCOVERY_INDEX]];
-    }
+    }*/
     
     return tableViewCell;
 }

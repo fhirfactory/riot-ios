@@ -88,5 +88,7 @@
 	<true/>
 	<key>hideAddPhoneNumber</key>
 	<true/>
+	<key>hideDiscoverUser</key>
+	<true/>
 </dict>
 </plist>

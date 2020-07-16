@@ -123,11 +123,11 @@ enum
     OTHER_TERM_CONDITIONS_INDEX,
     OTHER_PRIVACY_INDEX,
     OTHER_THIRD_PARTY_INDEX,
-    OTHER_CRASH_REPORT_INDEX,
-    OTHER_ENABLE_RAGESHAKE_INDEX,
+    //OTHER_CRASH_REPORT_INDEX,
+    //OTHER_ENABLE_RAGESHAKE_INDEX,
     OTHER_MARK_ALL_AS_READ_INDEX,
     OTHER_CLEAR_CACHE_INDEX,
-    OTHER_REPORT_BUG_INDEX,
+    //OTHER_REPORT_BUG_INDEX,
     OTHER_COUNT
 };
 
@@ -2066,7 +2066,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = thirdPartyCell;
         }
-        else if (row == OTHER_CRASH_REPORT_INDEX)
+        /*else if (row == OTHER_CRASH_REPORT_INDEX)
         {
             MXKTableViewCellWithLabelAndSwitch* sendCrashReportCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
             
@@ -2089,7 +2089,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [enableRageShakeCell.mxkSwitch addTarget:self action:@selector(toggleEnableRageShake:) forControlEvents:UIControlEventTouchUpInside];
 
             cell = enableRageShakeCell;
-        }
+        }*/
         else if (row == OTHER_MARK_ALL_AS_READ_INDEX)
         {
             MXKTableViewCellWithButton *markAllBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
@@ -2140,7 +2140,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = clearCacheBtnCell;
         }
-        else if (row == OTHER_REPORT_BUG_INDEX)
+        /*else if (row == OTHER_REPORT_BUG_INDEX)
         {
             MXKTableViewCellWithButton *reportBugBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
             if (!reportBugBtnCell)
@@ -2164,7 +2164,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             reportBugBtnCell.mxkButton.accessibilityIdentifier = nil;
 
             cell = reportBugBtnCell;
-        }
+        }*/
     }
     else if (section == SETTINGS_SECTION_LABS_INDEX)
     {

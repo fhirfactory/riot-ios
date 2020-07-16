@@ -62,7 +62,7 @@
 	<key>stunServerFallback</key>
 	<string>stun:turn.matrix.org</string>
 	<key>enableRageShake</key>
-	<true/>
+	<false/>
 	<key>maxAllowedMediaCacheSize</key>
 	<integer>1073741824</integer>
 	<key>presenceColorForOnlineUser</key>

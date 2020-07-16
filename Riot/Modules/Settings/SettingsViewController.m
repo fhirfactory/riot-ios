@@ -57,9 +57,9 @@ enum
     SETTINGS_SECTION_CALLS_INDEX,
     //SETTINGS_SECTION_DISCOVERY_INDEX,
     SETTINGS_SECTION_IDENTITY_SERVER_INDEX,
-    SETTINGS_SECTION_CONTACTS_INDEX,
+    //SETTINGS_SECTION_CONTACTS_INDEX,
     SETTINGS_SECTION_IGNORED_USERS_INDEX,
-    SETTINGS_SECTION_INTEGRATIONS_INDEX,
+    //SETTINGS_SECTION_INTEGRATIONS_INDEX,
     SETTINGS_SECTION_USER_INTERFACE_INDEX,
     SETTINGS_SECTION_ADVANCED_INDEX,
     SETTINGS_SECTION_OTHER_INDEX,
@@ -94,12 +94,12 @@ enum
     CALLS_COUNT
 };
 
-enum
+/*enum
 {
     INTEGRATIONS_INDEX,
     INTEGRATIONS_DESCRIPTION_INDEX,
     INTEGRATIONS_COUNT
-};
+};*/
 
 enum
 {
@@ -119,7 +119,7 @@ enum
 {
     OTHER_VERSION_INDEX = 0,
     //OTHER_OLM_VERSION_INDEX,
-    OTHER_COPYRIGHT_INDEX,
+    //OTHER_COPYRIGHT_INDEX,
     OTHER_TERM_CONDITIONS_INDEX,
     OTHER_PRIVACY_INDEX,
     OTHER_THIRD_PARTY_INDEX,
@@ -206,8 +206,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     NSInteger userSettingsNightModeIndex;
     
     // Dynamic rows in the local contacts section
-    NSInteger localContactsSyncIndex;
-    NSInteger localContactsPhoneBookCountryIndex;
+    //NSInteger localContactsSyncIndex;
+    //NSInteger localContactsPhoneBookCountryIndex;
     
     // Flair: the groups data source
     GroupsDataSource *groupsDataSource;
@@ -1184,10 +1184,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         count = IDENTITY_SERVER_COUNT;
     }
-    else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
+    /*else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
     {
         count = INTEGRATIONS_COUNT;
-    }
+    }*/
     else if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
     {
         count = USER_INTERFACE_COUNT;
@@ -1204,7 +1204,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             count = 0;
         }
     }
-    else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         localContactsSyncIndex = count++;
         
@@ -1216,7 +1216,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         {
             localContactsPhoneBookCountryIndex = -1;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_ADVANCED_INDEX)
     {
         count = 1;
@@ -1835,7 +1835,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 break;
         }
     }
-    else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
+    /*else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
     {
         switch (row) {
             case INTEGRATIONS_INDEX:
@@ -1872,7 +1872,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             default:
                 break;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
     {
         /*if (row == USER_INTERFACE_LANGUAGE_INDEX)
@@ -1954,7 +1954,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
         cell = ignoredUserCell;
     }
-    else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         if (row == localContactsSyncIndex)
         {
@@ -1989,7 +1989,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_ADVANCED_INDEX)
     {
         MXKTableViewCellWithTextView *configCell = [self textViewCellForTableView:tableView atIndexPath:indexPath];
@@ -2036,7 +2036,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = termAndConditionCell;
         }
-        else if (row == OTHER_COPYRIGHT_INDEX)
+        /*else if (row == OTHER_COPYRIGHT_INDEX)
         {
             MXKTableViewCell *copyrightCell = [self getDefaultTableViewCell:tableView];
 
@@ -2045,7 +2045,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             copyrightCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             cell = copyrightCell;
-        }
+        }*/
         else if (row == OTHER_PRIVACY_INDEX)
         {
             MXKTableViewCell *privacyPolicyCell = [self getDefaultTableViewCell:tableView];
@@ -2284,10 +2284,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         return NSLocalizedStringFromTable(@"settings_identity_server_settings", @"Vector", nil);
     }
-    else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
+    /*else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_integrations", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_user_interface", @"Vector", nil);
@@ -2304,10 +2304,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             }
         }
     }
-    else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_contacts", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_ADVANCED_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_advanced", @"Vector", nil);
@@ -2587,7 +2587,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         }
         else if (section == SETTINGS_SECTION_OTHER_INDEX)
         {
-            if (row == OTHER_COPYRIGHT_INDEX)
+            /*if (row == OTHER_COPYRIGHT_INDEX)
             {
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:NSLocalizedStringFromTable(@"settings_copyright_url", @"Vector", nil)];
                 
@@ -2595,7 +2595,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 
                 [self pushViewController:webViewViewController];
             }
-            else if (row == OTHER_TERM_CONDITIONS_INDEX)
+            else*/
+            if (row == OTHER_TERM_CONDITIONS_INDEX)
             {
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:NSLocalizedStringFromTable(@"settings_term_conditions_url", @"Vector", nil)];
                 
@@ -2657,7 +2658,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 }
             }
         }
-        else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+        /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
         {
             if (row == localContactsPhoneBookCountryIndex)
             {
@@ -2667,7 +2668,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 countryPicker.showCountryCallingCode = YES;
                 [self pushViewController:countryPicker];
             }
-        }
+        }*/
         else if (section == SETTINGS_SECTION_SECURITY_INDEX)
         {
             switch (row)
@@ -4009,11 +4010,12 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (void)countryPickerViewController:(MXKCountryPickerViewController *)countryPickerViewController didSelectCountry:(NSString *)isoCountryCode
 {
-    if (countryPickerViewController.view.tag == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*if (countryPickerViewController.view.tag == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         [MXKAppSettings standardAppSettings].phonebookCountryCode = isoCountryCode;
     }
-    else if (countryPickerViewController.view.tag == SETTINGS_SECTION_USER_SETTINGS_INDEX)
+    else*/
+    if (countryPickerViewController.view.tag == SETTINGS_SECTION_USER_SETTINGS_INDEX)
     {
         if (newPhoneNumberCell)
         {

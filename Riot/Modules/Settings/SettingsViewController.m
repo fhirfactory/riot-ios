@@ -1807,7 +1807,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 {
                     isCell.textLabel.text = NSLocalizedStringFromTable(@"settings_identity_server_no_is", @"Vector", nil);
                 }
-                isCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                isCell.accessoryType = UITableViewCellAccessoryNone;
+                isCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell = isCell;
                 break;
             }
@@ -2511,7 +2512,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         {
             [self.settingsDiscoveryTableViewSection selectRow:indexPath.row];
         }*/
-        else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
+        /*else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
         {
             switch (row)
             {
@@ -2519,7 +2520,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                     [self showIdentityServerSettingsScreen];
                     break;
             }
-        }
+        }*/
         else if (section == SETTINGS_SECTION_IGNORED_USERS_INDEX)
         {
             MXSession* session = [AppDelegate theDelegate].mxSessions[0];

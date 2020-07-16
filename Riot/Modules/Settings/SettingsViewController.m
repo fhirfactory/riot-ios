@@ -63,7 +63,7 @@ enum
     SETTINGS_SECTION_USER_INTERFACE_INDEX,
     SETTINGS_SECTION_ADVANCED_INDEX,
     SETTINGS_SECTION_OTHER_INDEX,
-    SETTINGS_SECTION_LABS_INDEX,
+    //SETTINGS_SECTION_LABS_INDEX,
     SETTINGS_SECTION_FLAIR_INDEX,
     SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX,
     SETTINGS_SECTION_COUNT
@@ -131,12 +131,12 @@ enum
     OTHER_COUNT
 };
 
-enum
+/*enum
 {
     LABS_USE_ROOM_MEMBERS_LAZY_LOADING_INDEX = 0,
     LABS_USE_JITSI_WIDGET_INDEX,
     LABS_COUNT
-};
+};*/
 
 enum
 {
@@ -1225,10 +1225,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         count = OTHER_COUNT;
     }
-    else if (section == SETTINGS_SECTION_LABS_INDEX)
+    /*else if (section == SETTINGS_SECTION_LABS_INDEX)
     {
         count = LABS_COUNT;
-    }
+    }*/
     else if (section == SETTINGS_SECTION_FLAIR_INDEX)
     {
         // Check whether some joined groups are available
@@ -2166,7 +2166,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             cell = reportBugBtnCell;
         }*/
     }
-    else if (section == SETTINGS_SECTION_LABS_INDEX)
+    /*else if (section == SETTINGS_SECTION_LABS_INDEX)
     {
         if (row == LABS_USE_ROOM_MEMBERS_LAZY_LOADING_INDEX)
         {
@@ -2194,7 +2194,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
             cell = labelAndSwitchCell;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_FLAIR_INDEX)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:groupsDataSource.joinedGroupsSection];
@@ -2316,10 +2316,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         return NSLocalizedStringFromTable(@"settings_other", @"Vector", nil);
     }
-    else if (section == SETTINGS_SECTION_LABS_INDEX)
+    /*else if (section == SETTINGS_SECTION_LABS_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_labs", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_FLAIR_INDEX)
     {
         // Check whether this section is visible

@@ -660,8 +660,9 @@ UIDocumentInteractionControllerDelegate>
     NSString *deviceId = device.deviceId;
     cell.textLabel.text = (name.length ? [NSString stringWithFormat:@"%@ (%@)", name, deviceId] : [NSString stringWithFormat:@"(%@)", deviceId]);
     cell.textLabel.numberOfLines = 0;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     if ([deviceId isEqualToString:self.mainSession.matrixRestClient.credentials.deviceId])
     {
         cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -932,7 +933,7 @@ UIDocumentInteractionControllerDelegate>
 {
     if (self.tableView == tableView)
     {
-        NSInteger section = indexPath.section;
+        /*NSInteger section = indexPath.section;
         NSInteger row = indexPath.row;
 
         if (section == SECTION_CRYPTO_SESSIONS)
@@ -967,7 +968,7 @@ UIDocumentInteractionControllerDelegate>
                     }
                 }
             }
-        }
+        }*/
 
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }

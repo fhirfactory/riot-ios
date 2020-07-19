@@ -33,14 +33,14 @@
 enum
 {
     SECTION_CRYPTO_SESSIONS,
-    SECTION_CROSSSIGNING,
-    SECTION_CRYPTOGRAPHY,
-    SECTION_KEYBACKUP,
-    SECTION_ADVANCED,
+    //SECTION_CROSSSIGNING,
+    //SECTION_CRYPTOGRAPHY,
+    //SECTION_KEYBACKUP,
+    //SECTION_ADVANCED,
     SECTION_COUNT
 };
 
-enum {
+/*enum {
     CROSSSIGNING_INFO,
     CROSSSIGNING_FIRST_ACTION,      // Bootstrap, Reset, Verify this session, Request keys
     CROSSSIGNING_SECOND_ACTION,     // Reset
@@ -57,7 +57,7 @@ enum {
     ADVANCED_BLACKLIST_UNVERIFIED_DEVICES_DESCRIPTION,
     ADVANCED_COUNT
 };
-
+*/
 
 @interface SecurityViewController () <
 SettingsKeyBackupTableViewSectionDelegate,
@@ -414,7 +414,7 @@ UIDocumentInteractionControllerDelegate>
     }];
 }
 
-- (NSInteger)numberOfRowsInCrossSigningSection
+/*- (NSInteger)numberOfRowsInCrossSigningSection
 {
     NSInteger numberOfRowsInCrossSigningSection;
     
@@ -434,7 +434,7 @@ UIDocumentInteractionControllerDelegate>
     
     return numberOfRowsInCrossSigningSection;
 }
-
+*/
 - (NSAttributedString*)crossSigningInformation
 {
     MXCrossSigning *crossSigning = self.mainSession.crypto.crossSigning;
@@ -464,7 +464,7 @@ UIDocumentInteractionControllerDelegate>
                                                         }];
 }
 
-- (UITableViewCell*)crossSigningButtonCellInTableView:(UITableView*)tableView forAction:(NSInteger)action
+/*- (UITableViewCell*)crossSigningButtonCellInTableView:(UITableView*)tableView forAction:(NSInteger)action
 {
     // Get a button cell
     MXKTableViewCellWithButton *buttonCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
@@ -517,6 +517,7 @@ UIDocumentInteractionControllerDelegate>
     
     return buttonCell;
 }
+ */
 
 - (void)setUpcrossSigningButtonCellForBootstrap:(MXKTableViewCellWithButton*)buttonCell
 {
@@ -589,14 +590,14 @@ UIDocumentInteractionControllerDelegate>
         case SECTION_CRYPTO_SESSIONS:
             if (self.showLoadingDevicesInformation)
             {
-                count = 2;
+                count = 1;
             }
             else
             {
-                count = devicesArray.count + 1;
+                count = devicesArray.count;
             }
             break;
-        case SECTION_KEYBACKUP:
+        /*case SECTION_KEYBACKUP:
             count = keyBackupSection.numberOfRows;
             break;
         case SECTION_CROSSSIGNING:
@@ -607,7 +608,7 @@ UIDocumentInteractionControllerDelegate>
             break;
         case SECTION_ADVANCED:
             count = ADVANCED_COUNT;
-            break;
+            break;*/
     }
 
     return count;
@@ -742,27 +743,27 @@ UIDocumentInteractionControllerDelegate>
                 cell = [self descriptionCellForTableView:tableView
                                                 withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_loading", @"Vector", nil) ];
             }
-            else
+            /*else
             {
                 cell = [self descriptionCellForTableView:tableView
                                                 withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_description", @"Vector", nil) ];
-            }
+            }*/
         }
         else
         {
-            if (row < devicesArray.count)
+            if (row <= devicesArray.count)
             {
                 cell = [self deviceCellWithDevice:devicesArray[row] forTableView:tableView];
             }
-            else if (row == devicesArray.count)
+            /*else if (row == devicesArray.count)
             {
                 cell = [self descriptionCellForTableView:tableView
                                                 withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_description", @"Vector", nil) ];
                 
-            }
+            }*/
         }
     }
-    else if (section == SECTION_KEYBACKUP)
+    /*else if (section == SECTION_KEYBACKUP)
     {
         cell = [keyBackupSection cellForRowAtRow:row];
     }
@@ -849,7 +850,7 @@ UIDocumentInteractionControllerDelegate>
                 break;
             }
         }
-    }
+    }*/
     
     return cell;
 }
@@ -860,14 +861,14 @@ UIDocumentInteractionControllerDelegate>
     {
         case SECTION_CRYPTO_SESSIONS:
             return NSLocalizedStringFromTable(@"security_settings_crypto_sessions", @"Vector", nil);
-        case SECTION_KEYBACKUP:
+        /*case SECTION_KEYBACKUP:
             return NSLocalizedStringFromTable(@"security_settings_backup", @"Vector", nil);
         case SECTION_CROSSSIGNING:
             return NSLocalizedStringFromTable(@"security_settings_crosssigning", @"Vector", nil);
         case SECTION_CRYPTOGRAPHY:
             return NSLocalizedStringFromTable(@"security_settings_cryptography", @"Vector", nil);
         case SECTION_ADVANCED:
-            return NSLocalizedStringFromTable(@"security_settings_advanced", @"Vector", nil);
+            return NSLocalizedStringFromTable(@"security_settings_advanced", @"Vector", nil);*/
     }
 
     return nil;
@@ -1092,10 +1093,10 @@ UIDocumentInteractionControllerDelegate>
     [self.tableView reloadData];
 }
 
-- (MXKTableViewCellWithTextView *)settingsKeyBackupTableViewSection:(SettingsKeyBackupTableViewSection *)settingsKeyBackupTableViewSection textCellForRow:(NSInteger)textCellForRow
+/*- (MXKTableViewCellWithTextView *)settingsKeyBackupTableViewSection:(SettingsKeyBackupTableViewSection *)settingsKeyBackupTableViewSection textCellForRow:(NSInteger)textCellForRow
 {
     return [self textViewCellForTableView:self.tableView atIndexPath:[NSIndexPath indexPathForRow:textCellForRow inSection:SECTION_KEYBACKUP]];
-}
+}*/
 
 - (MXKTableViewCellWithButton *)settingsKeyBackupTableViewSection:(SettingsKeyBackupTableViewSection *)settingsKeyBackupTableViewSection buttonCellForRow:(NSInteger)buttonCellForRow
 {

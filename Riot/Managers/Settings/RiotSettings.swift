@@ -34,6 +34,7 @@ final class RiotSettings: NSObject {
         static let stunServerFallback = "stunServerFallback"
         static let hideVerifyThisSessionAlert = "hideVerifyThisSessionAlert"
         static let hideReviewSessionsAlert = "hideReviewSessionsAlert"
+        static let showAnalyticsPrompt = "showAnalyticsPrompt"
     }
     
     static let shared = RiotSettings()
@@ -153,4 +154,6 @@ final class RiotSettings: NSObject {
             UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.hideReviewSessionsAlert)
         }
     }
+    
+    let showAnalyticsPrompt = UserDefaults.standard.bool(forKey: UserDefaultsKeys.showAnalyticsPrompt)
 }

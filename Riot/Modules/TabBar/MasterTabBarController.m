@@ -183,7 +183,7 @@
     {
         // Check whether the user has been already prompted to send crash reports.
         // (Check whether 'enableCrashReport' flag has been set once)        
-        if (!RiotSettings.shared.isEnableCrashReportHasBeenSetOnce)
+        if (!RiotSettings.shared.isEnableCrashReportHasBeenSetOnce && RiotSettings.shared.showAnalyticsPrompt)
         {
             [self promptUserBeforeUsingAnalytics];
         }

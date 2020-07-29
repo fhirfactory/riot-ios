@@ -2331,6 +2331,13 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		4397158F24D1359500D0D582 /* directory */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = directory;
+			sourceTree = "<group>";
+		};
 		5FC42FA41F5186AFFB6A2404 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3037,6 +3044,7 @@
 		B1B5567620EE6C4C00210D55 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4397158F24D1359500D0D582 /* directory */,
 				EC3B066324AC6ADD000DF9BF /* CrossSigning */,
 				EC711BB424A63C11008F830C /* AuthenticatedSession */,
 				EC711B9A24A63B58008F830C /* SecureBackup */,

@@ -8,17 +8,32 @@
 
 import UIKit
 
+protocol RoleCellDelegate: class {
+    func expandButtonClick(cell: RoleCell, index: Int)
+}
+
 class RoleCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    weak var delegate: RoleCellDelegate?
+    var index: Int = 0
+    var isDisplayed = false {
+        didSet {
+            detailedView.isHidden = !isDisplayed
+        }
     }
+    
+    @IBOutlet weak var detailedView: UIView!
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    @IBAction private func expandButtonClick(_ sender: Any) {
+        if let delegate = delegate {
+            delegate.expandButtonClick(cell: self, index: index)
+        }
+    }
+    
+    func bindModel(role: RoleModel, index: Int) {
+        self.isDisplayed = role.isExpanded
+        self.index = index
     }
 
 }

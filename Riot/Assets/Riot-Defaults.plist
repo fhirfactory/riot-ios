@@ -68,7 +68,7 @@
 	<key>stunServerFallback</key>
 	<string>stun:turn.matrix.org</string>
 	<key>enableRageShake</key>
-	<true/>
+	<false/>
 	<key>maxAllowedMediaCacheSize</key>
 	<integer>1073741824</integer>
 	<key>presenceColorForOnlineUser</key>
@@ -96,5 +96,15 @@
 	<string>https://element.io/terms-of-service</string>
 	<key>enableBotCreation</key>
 	<false/>
+	<key>disableProfilePicutreEdit</key>
+	<true/>
+	<key>hidePasswordChange</key>
+	<true/>
+	<key>hideAddEmailAddress</key>
+	<true/>
+	<key>hideAddPhoneNumber</key>
+	<true/>
+	<key>hideDiscoverUser</key>
+	<true/>
 </dict>
 </plist>

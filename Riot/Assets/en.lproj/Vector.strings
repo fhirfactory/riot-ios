@@ -494,6 +494,7 @@
 "settings_term_conditions" = "Terms & Conditions";
 "settings_privacy_policy" = "Privacy Policy";
 "settings_third_party_notices" = "Third-party Notices";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_send_crash_report" = "Send anon crash & usage data";
 "settings_enable_rageshake" = "Rage shake to report bug";
 "settings_clear_cache" = "Clear cache";

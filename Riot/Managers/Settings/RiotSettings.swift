@@ -35,6 +35,11 @@ final class RiotSettings: NSObject {
         static let hideVerifyThisSessionAlert = "hideVerifyThisSessionAlert"
         static let hideReviewSessionsAlert = "hideReviewSessionsAlert"
         static let showAnalyticsPrompt = "showAnalyticsPrompt"
+        static let disableProfilePictureEdit = "disableProfilePicutreEdit"
+        static let hidePasswordChange = "hidePasswordChange"
+        static let hideAddEmailAddress = "hideAddEmailAddress"
+        static let hideAddPhoneNumber = "hideAddPhoneNumber"
+        static let hideDiscoverUser = "hideDiscoverUser"
     }
     
     static let shared = RiotSettings()
@@ -178,4 +183,9 @@ final class RiotSettings: NSObject {
     }
     
     let showAnalyticsPrompt = UserDefaults.standard.bool(forKey: UserDefaultsKeys.showAnalyticsPrompt)
+    let disableProfilePictureEdit = UserDefaults.standard.bool(forKey: UserDefaultsKeys.disableProfilePictureEdit)
+    let hidePasswordChange = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hidePasswordChange)
+    let hideAddEmailAddress = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideAddEmailAddress)
+    let hideAddPhoneNumber = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideAddPhoneNumber)
+    let hideDiscoverUser = UserDefaults.standard.bool(forKey: UserDefaultsKeys.hideDiscoverUser)
 }

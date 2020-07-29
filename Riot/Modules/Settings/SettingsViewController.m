@@ -55,24 +55,24 @@ enum
     SETTINGS_SECTION_SECURITY_INDEX,
     SETTINGS_SECTION_NOTIFICATIONS_SETTINGS_INDEX,
     SETTINGS_SECTION_CALLS_INDEX,
-    SETTINGS_SECTION_DISCOVERY_INDEX,
+    //SETTINGS_SECTION_DISCOVERY_INDEX,
     SETTINGS_SECTION_IDENTITY_SERVER_INDEX,
-    SETTINGS_SECTION_CONTACTS_INDEX,
+    //SETTINGS_SECTION_CONTACTS_INDEX,
     SETTINGS_SECTION_IGNORED_USERS_INDEX,
-    SETTINGS_SECTION_INTEGRATIONS_INDEX,
+    //SETTINGS_SECTION_INTEGRATIONS_INDEX,
     SETTINGS_SECTION_USER_INTERFACE_INDEX,
     SETTINGS_SECTION_ADVANCED_INDEX,
     SETTINGS_SECTION_OTHER_INDEX,
-    SETTINGS_SECTION_LABS_INDEX,
+    //SETTINGS_SECTION_LABS_INDEX,
     SETTINGS_SECTION_FLAIR_INDEX,
-    SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX,
+    //SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX,
     SETTINGS_SECTION_COUNT
 };
 
 enum
 {
     NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX = 0,
-    NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT,
+    //NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT,
     NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX,
     NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX,
     NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX,
@@ -87,22 +87,24 @@ enum
 
 enum
 {
-    CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX=0,
-    CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX,
+    CALLS_ENABLE_CALLKIT_INDEX = 0,
+    CALLS_CALLKIT_DESCRIPTION_INDEX,
+    //CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX,
+    //CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX,
     CALLS_COUNT
 };
 
-enum
+/*enum
 {
     INTEGRATIONS_INDEX,
     INTEGRATIONS_DESCRIPTION_INDEX,
     INTEGRATIONS_COUNT
-};
+};*/
 
 enum
 {
-    USER_INTERFACE_LANGUAGE_INDEX = 0,
-    USER_INTERFACE_THEME_INDEX,
+    //USER_INTERFACE_LANGUAGE_INDEX = 0,
+    USER_INTERFACE_THEME_INDEX = 0,
     USER_INTERFACE_COUNT
 };
 
@@ -116,24 +118,24 @@ enum
 enum
 {
     OTHER_VERSION_INDEX = 0,
-    OTHER_OLM_VERSION_INDEX,
-    OTHER_COPYRIGHT_INDEX,
+    //OTHER_OLM_VERSION_INDEX,
+    //OTHER_COPYRIGHT_INDEX,
     OTHER_TERM_CONDITIONS_INDEX,
     OTHER_PRIVACY_INDEX,
     OTHER_THIRD_PARTY_INDEX,
-    OTHER_CRASH_REPORT_INDEX,
-    OTHER_ENABLE_RAGESHAKE_INDEX,
-    OTHER_MARK_ALL_AS_READ_INDEX,
-    OTHER_CLEAR_CACHE_INDEX,
-    OTHER_REPORT_BUG_INDEX,
+    //OTHER_CRASH_REPORT_INDEX,
+    //OTHER_ENABLE_RAGESHAKE_INDEX,
+    //OTHER_MARK_ALL_AS_READ_INDEX,
+    //OTHER_CLEAR_CACHE_INDEX,
+    //OTHER_REPORT_BUG_INDEX,
     OTHER_COUNT
 };
 
-enum
+/*enum
 {
     LABS_USE_JITSI_WIDGET_INDEX = 0,
     LABS_COUNT
-};
+};*/
 
 enum
 {
@@ -203,8 +205,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     NSInteger userSettingsNightModeIndex;
     
     // Dynamic rows in the local contacts section
-    NSInteger localContactsSyncIndex;
-    NSInteger localContactsPhoneBookCountryIndex;
+    //NSInteger localContactsSyncIndex;
+    //NSInteger localContactsPhoneBookCountryIndex;
     
     // Flair: the groups data source
     GroupsDataSource *groupsDataSource;
@@ -1146,7 +1148,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         
         userSettingsProfilePictureIndex = 0;
         userSettingsDisplayNameIndex = 1;
-        userSettingsChangePasswordIndex = 2;
+        userSettingsChangePasswordIndex = RiotSettings.shared.hidePasswordChange? -1 : 2;
         
         // Hide some unsupported account settings
         userSettingsFirstNameIndex = -1;
@@ -1154,13 +1156,14 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         userSettingsNightModeSepIndex = -1;
         userSettingsNightModeIndex = -1;
 
-        userSettingsEmailStartIndex = 3;
-        userSettingsNewEmailIndex = userSettingsEmailStartIndex + account.linkedEmails.count;
-        userSettingsPhoneStartIndex = userSettingsNewEmailIndex + 1;
-        userSettingsNewPhoneIndex = userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count;
-        userSettingsThreePidsInformation = userSettingsNewPhoneIndex + 1;
+        userSettingsEmailStartIndex = RiotSettings.shared.hidePasswordChange? 2 : 3;
+        userSettingsNewEmailIndex = RiotSettings.shared.hideAddEmailAddress? -1 : userSettingsEmailStartIndex + account.linkedEmails.count;
+        userSettingsPhoneStartIndex = RiotSettings.shared.hideAddEmailAddress? userSettingsEmailStartIndex + account.linkedEmails.count : userSettingsNewEmailIndex + 1;
+        userSettingsNewPhoneIndex = RiotSettings.shared.hideAddPhoneNumber? -1 : userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count;
+        userSettingsThreePidsInformation = RiotSettings.shared.hideAddPhoneNumber? userSettingsPhoneStartIndex + account.linkedPhoneNumbers.count : userSettingsNewPhoneIndex + 1;
+        userSettingsThreePidsInformation = RiotSettings.shared.hideDiscoverUser? -1 : userSettingsThreePidsInformation;
         
-        count = userSettingsThreePidsInformation + 1;
+        count = userSettingsThreePidsInformation == -1? (userSettingsNewPhoneIndex==-1?userSettingsPhoneStartIndex+1:userSettingsNewPhoneIndex+1) :userSettingsThreePidsInformation + 1;
     }
     else if (section == SETTINGS_SECTION_NOTIFICATIONS_SETTINGS_INDEX)
     {
@@ -1175,18 +1178,18 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             count -= 2;
         }
     }
-    else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
+    /*else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
     {
         count = self.settingsDiscoveryTableViewSection.numberOfRows;
-    }
+    }*/
     else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
     {
         count = IDENTITY_SERVER_COUNT;
     }
-    else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
+    /*else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
     {
         count = INTEGRATIONS_COUNT;
-    }
+    }*/
     else if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
     {
         count = USER_INTERFACE_COUNT;
@@ -1203,7 +1206,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             count = 0;
         }
     }
-    else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         localContactsSyncIndex = count++;
         
@@ -1215,7 +1218,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         {
             localContactsPhoneBookCountryIndex = -1;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_ADVANCED_INDEX)
     {
         count = 1;
@@ -1224,10 +1227,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         count = OTHER_COUNT;
     }
-    else if (section == SETTINGS_SECTION_LABS_INDEX)
+    /*else if (section == SETTINGS_SECTION_LABS_INDEX)
     {
         count = LABS_COUNT;
-    }
+    }*/
     else if (section == SETTINGS_SECTION_FLAIR_INDEX)
     {
         // Check whether some joined groups are available
@@ -1239,10 +1242,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             }
         }
     }
-    else if (section == SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX)
+    /*else if (section == SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX)
     {
         count = 1;
-    }
+    }*/
     else if (section == SETTINGS_SECTION_SECURITY_INDEX)
     {
         count = SECURITY_COUNT;
@@ -1392,7 +1395,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             profileCell.mxkImageViewWidthConstraint.constant = profileCell.mxkImageViewHeightConstraint.constant = 30;
             profileCell.mxkImageViewDisplayBoxType = MXKTableViewCellDisplayBoxTypeCircle;
             
-            if (!profileCell.mxkImageView.gestureRecognizers.count)
+            if (!profileCell.mxkImageView.gestureRecognizers.count && !RiotSettings.shared.disableProfilePictureEdit)
             {
                 // tap on avatar to update it
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onProfileAvatarTap:)];
@@ -1465,7 +1468,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = surnameCell;
         }
-        else if (userSettingsEmailStartIndex <= row &&  row < userSettingsNewEmailIndex)
+        else if ((userSettingsEmailStartIndex <= row &&  row < userSettingsNewEmailIndex) || (userSettingsEmailStartIndex <= row && row < userSettingsPhoneStartIndex && RiotSettings.shared.hideAddEmailAddress) )
         {
             MXKTableViewCellWithLabelAndTextField *emailCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
             
@@ -1528,7 +1531,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
             cell = newEmailCell;
         }
-        else if (userSettingsPhoneStartIndex <= row &&  row < userSettingsNewPhoneIndex)
+        else if ((userSettingsPhoneStartIndex <= row &&  row < userSettingsNewPhoneIndex) || (userSettingsPhoneStartIndex <= row && row < userSettingsThreePidsInformation && RiotSettings.shared.hideAddPhoneNumber)|| (userSettingsEmailStartIndex <= row && userSettingsThreePidsInformation == -1))
         {
             MXKTableViewCellWithLabelAndTextField *phoneCell = [self getLabelAndTextFieldCell:tableView forIndexPath:indexPath];
             
@@ -1676,7 +1679,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = labelAndSwitchCell;
         }
-        else if (row == NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT)
+        /*else if (row == NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT)
         {
             MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
             
@@ -1688,7 +1691,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             
             cell = labelAndSwitchCell;
-        }
+        }*/
         else if (row == NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX)
         {
             MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
@@ -1729,7 +1732,39 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     }
     else if (section == SETTINGS_SECTION_CALLS_INDEX)
     {
-        if (row == CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX)
+        if (row == CALLS_ENABLE_CALLKIT_INDEX)
+        {
+            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
+            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_enable_callkit", @"Vector", nil);
+            labelAndSwitchCell.mxkSwitch.on = [MXKAppSettings standardAppSettings].isCallKitEnabled;
+            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
+            labelAndSwitchCell.mxkSwitch.enabled = YES;
+            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleCallKit:) forControlEvents:UIControlEventTouchUpInside];
+
+            if (![MXCallKitAdapter callKitAvailable])
+            {
+                labelAndSwitchCell.mxkSwitch.on = NO;
+                labelAndSwitchCell.mxkSwitch.enabled = NO;
+                labelAndSwitchCell.mxkLabel.enabled = NO;
+            }
+
+            cell = labelAndSwitchCell;
+        }
+        else if (row == CALLS_CALLKIT_DESCRIPTION_INDEX)
+        {
+            MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
+            globalInfoCell.textLabel.text = NSLocalizedStringFromTable(@"settings_callkit_info", @"Vector", nil);
+            globalInfoCell.textLabel.numberOfLines = 0;
+            globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+            if (![MXCallKitAdapter callKitAvailable])
+            {
+                globalInfoCell.textLabel.enabled = NO;
+            }
+
+            cell = globalInfoCell;
+        }
+        /*else if (row == CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX)
         {
             MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
             labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_calls_stun_server_fallback_button", @"Vector", nil);
@@ -1752,12 +1787,12 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
             cell = globalInfoCell;
-        }
+        }*/
     }
-    else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
+    /*else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
     {
         cell = [self.settingsDiscoveryTableViewSection cellForRowAtRow:row];
-    }
+    }*/
     else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
     {
         switch (row)
@@ -1774,7 +1809,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 {
                     isCell.textLabel.text = NSLocalizedStringFromTable(@"settings_identity_server_no_is", @"Vector", nil);
                 }
-                [isCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+                isCell.accessoryType = UITableViewCellAccessoryNone;
+                isCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell = isCell;
                 break;
             }
@@ -1802,7 +1838,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 break;
         }
     }
-    else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
+    /*else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
     {
         switch (row) {
             case INTEGRATIONS_INDEX:
@@ -1839,10 +1875,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             default:
                 break;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
     {
-        if (row == USER_INTERFACE_LANGUAGE_INDEX)
+        /*if (row == USER_INTERFACE_LANGUAGE_INDEX)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
             if (!cell)
@@ -1869,7 +1905,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [cell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         }
-        else if (row == USER_INTERFACE_THEME_INDEX)
+        else*/
+        if (row == USER_INTERFACE_THEME_INDEX)
         {
             cell = [tableView dequeueReusableCellWithIdentifier:kSettingsViewControllerPhoneBookCountryCellId];
             if (!cell)
@@ -1920,7 +1957,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
         cell = ignoredUserCell;
     }
-    else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         if (row == localContactsSyncIndex)
         {
@@ -1955,7 +1992,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [cell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             cell.selectionStyle = UITableViewCellSelectionStyleDefault;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_ADVANCED_INDEX)
     {
         MXKTableViewCellWithTextView *configCell = [self textViewCellForTableView:tableView atIndexPath:indexPath];
@@ -1982,7 +2019,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = versionCell;
         }
-        else if (row == OTHER_OLM_VERSION_INDEX)
+        /*else if (row == OTHER_OLM_VERSION_INDEX)
         {
             MXKTableViewCell *versionCell = [self getDefaultTableViewCell:tableView];
             
@@ -1991,7 +2028,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             versionCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             cell = versionCell;
-        }
+        }*/
         else if (row == OTHER_TERM_CONDITIONS_INDEX)
         {
             MXKTableViewCell *termAndConditionCell = [self getDefaultTableViewCell:tableView];
@@ -2002,7 +2039,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             cell = termAndConditionCell;
         }
-        else if (row == OTHER_COPYRIGHT_INDEX)
+        /*else if (row == OTHER_COPYRIGHT_INDEX)
         {
             MXKTableViewCell *copyrightCell = [self getDefaultTableViewCell:tableView];
 
@@ -2011,7 +2048,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [copyrightCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             
             cell = copyrightCell;
-        }
+        }*/
         else if (row == OTHER_PRIVACY_INDEX)
         {
             MXKTableViewCell *privacyPolicyCell = [self getDefaultTableViewCell:tableView];
@@ -2026,13 +2063,13 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         {
             MXKTableViewCell *thirdPartyCell = [self getDefaultTableViewCell:tableView];
             
-            thirdPartyCell.textLabel.text = NSLocalizedStringFromTable(@"settings_third_party_notices", @"Vector", nil);
+            thirdPartyCell.textLabel.text = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
             
             [thirdPartyCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             
             cell = thirdPartyCell;
         }
-        else if (row == OTHER_CRASH_REPORT_INDEX)
+        /*else if (row == OTHER_CRASH_REPORT_INDEX)
         {
             MXKTableViewCellWithLabelAndSwitch* sendCrashReportCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
             
@@ -2055,8 +2092,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [enableRageShakeCell.mxkSwitch addTarget:self action:@selector(toggleEnableRageShake:) forControlEvents:UIControlEventTouchUpInside];
 
             cell = enableRageShakeCell;
-        }
-        else if (row == OTHER_MARK_ALL_AS_READ_INDEX)
+        }*/
+        /*else if (row == OTHER_MARK_ALL_AS_READ_INDEX)
         {
             MXKTableViewCellWithButton *markAllBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
             if (!markAllBtnCell)
@@ -2080,8 +2117,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             markAllBtnCell.mxkButton.accessibilityIdentifier = nil;
             
             cell = markAllBtnCell;
-        }
-        else if (row == OTHER_CLEAR_CACHE_INDEX)
+        }*/
+        /*else if (row == OTHER_CLEAR_CACHE_INDEX)
         {
             MXKTableViewCellWithButton *clearCacheBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
             if (!clearCacheBtnCell)
@@ -2105,8 +2142,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             clearCacheBtnCell.mxkButton.accessibilityIdentifier = nil;
             
             cell = clearCacheBtnCell;
-        }
-        else if (row == OTHER_REPORT_BUG_INDEX)
+        }*/
+        /*else if (row == OTHER_REPORT_BUG_INDEX)
         {
             MXKTableViewCellWithButton *reportBugBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
             if (!reportBugBtnCell)
@@ -2130,9 +2167,9 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             reportBugBtnCell.mxkButton.accessibilityIdentifier = nil;
 
             cell = reportBugBtnCell;
-        }
+        }*/
     }
-    else if (section == SETTINGS_SECTION_LABS_INDEX)
+    /*else if (section == SETTINGS_SECTION_LABS_INDEX)
     {
         if (row == LABS_USE_JITSI_WIDGET_INDEX)
         {
@@ -2146,7 +2183,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
             cell = labelAndSwitchCell;
         }
-    }
+    }*/
     else if (section == SETTINGS_SECTION_FLAIR_INDEX)
     {
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:groupsDataSource.joinedGroupsSection];
@@ -2184,7 +2221,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 break;
         }
     }
-    else if (section == SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX)
+    /*else if (section == SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX)
     {
         MXKTableViewCellWithButton *deactivateAccountBtnCell = [tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
         
@@ -2209,7 +2246,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         deactivateAccountBtnCell.mxkButton.accessibilityIdentifier = nil;
         
         cell = deactivateAccountBtnCell;
-    }
+    }*/
 
     return cell;
 }
@@ -2228,18 +2265,18 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         return NSLocalizedStringFromTable(@"settings_calls_settings", @"Vector", nil);
     }
-    else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
+    /*else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_discovery_settings", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_identity_server_settings", @"Vector", nil);
     }
-    else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
+    /*else if (section == SETTINGS_SECTION_INTEGRATIONS_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_integrations", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_user_interface", @"Vector", nil);
@@ -2256,10 +2293,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             }
         }
     }
-    else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_contacts", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_ADVANCED_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_advanced", @"Vector", nil);
@@ -2268,10 +2305,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         return NSLocalizedStringFromTable(@"settings_other", @"Vector", nil);
     }
-    else if (section == SETTINGS_SECTION_LABS_INDEX)
+    /*else if (section == SETTINGS_SECTION_LABS_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_labs", @"Vector", nil);
-    }
+    }*/
     else if (section == SETTINGS_SECTION_FLAIR_INDEX)
     {
         // Check whether this section is visible
@@ -2284,10 +2321,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         return NSLocalizedStringFromTable(@"settings_security", @"Vector", nil);
     }
-    else if (section == SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX)
+    /*else if (section == SETTINGS_SECTION_DEACTIVATE_ACCOUNT_INDEX)
     {
         return NSLocalizedStringFromTable(@"settings_deactivate_my_account", @"Vector", nil);
-    }
+    }*/
 
     return nil;
 }
@@ -2440,7 +2477,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
         if (section == SETTINGS_SECTION_USER_INTERFACE_INDEX)
         {
-            if (row == USER_INTERFACE_LANGUAGE_INDEX)
+            /*if (row == USER_INTERFACE_LANGUAGE_INDEX)
             {
                 // Display the language picker
                 LanguagePickerViewController *languagePickerViewController = [LanguagePickerViewController languagePickerViewController];
@@ -2448,12 +2485,13 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 languagePickerViewController.delegate = self;
                 [self pushViewController:languagePickerViewController];
             }
-            else if (row == USER_INTERFACE_THEME_INDEX)
+            else*/
+            if (row == USER_INTERFACE_THEME_INDEX)
             {
                 [self showThemePicker];
             }
         }
-        else if (section == SETTINGS_SECTION_USER_SETTINGS_INDEX && row == userSettingsThreePidsInformation)
+        /*else if (section == SETTINGS_SECTION_USER_SETTINGS_INDEX && row == userSettingsThreePidsInformation)
         {
             // settingsDiscoveryTableViewSection is a dynamic section, so check number of rows before scroll to avoid crashes
             if (self.settingsDiscoveryTableViewSection.numberOfRows > 0)
@@ -2471,8 +2509,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         else if (section == SETTINGS_SECTION_DISCOVERY_INDEX)
         {
             [self.settingsDiscoveryTableViewSection selectRow:indexPath.row];
-        }
-        else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
+        }*/
+        /*else if (section == SETTINGS_SECTION_IDENTITY_SERVER_INDEX)
         {
             switch (row)
             {
@@ -2480,7 +2518,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                     [self showIdentityServerSettingsScreen];
                     break;
             }
-        }
+        }*/
         else if (section == SETTINGS_SECTION_IGNORED_USERS_INDEX)
         {
             MXSession* session = [AppDelegate theDelegate].mxSessions[0];
@@ -2548,7 +2586,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         }
         else if (section == SETTINGS_SECTION_OTHER_INDEX)
         {
-            if (row == OTHER_COPYRIGHT_INDEX)
+            /*if (row == OTHER_COPYRIGHT_INDEX)
             {
                 NSString *copyrightUrlString = [[NSUserDefaults standardUserDefaults] objectForKey:@"settingsCopyrightUrl"];
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:copyrightUrlString];
@@ -2557,7 +2595,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 
                 [self pushViewController:webViewViewController];
             }
-            else if (row == OTHER_TERM_CONDITIONS_INDEX)
+            else*/
+            if (row == OTHER_TERM_CONDITIONS_INDEX)
             {
                 NSString *termsConditionsUrlString = [[NSUserDefaults standardUserDefaults] objectForKey:@"settingsTermsConditionsUrl"];
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:termsConditionsUrlString];
@@ -2581,14 +2620,14 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithLocalHTMLFile:htmlFile];
                 
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_third_party_notices", @"Vector", nil);
+                webViewViewController.title = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
                 
                 [self pushViewController:webViewViewController];
             }
         }
         else if (section == SETTINGS_SECTION_USER_SETTINGS_INDEX)
         {
-            if (row == userSettingsProfilePictureIndex)
+            if (row == userSettingsProfilePictureIndex && !RiotSettings.shared.disableProfilePictureEdit)
             {
                 [self onProfileAvatarTap:nil];
             }
@@ -2621,7 +2660,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 }
             }
         }
-        else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
+        /*else if (section == SETTINGS_SECTION_CONTACTS_INDEX)
         {
             if (row == localContactsPhoneBookCountryIndex)
             {
@@ -2631,7 +2670,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 countryPicker.showCountryCallingCode = YES;
                 [self pushViewController:countryPicker];
             }
-        }
+        }*/
         else if (section == SETTINGS_SECTION_SECURITY_INDEX)
         {
             switch (row)
@@ -3913,11 +3952,12 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (void)countryPickerViewController:(MXKCountryPickerViewController *)countryPickerViewController didSelectCountry:(NSString *)isoCountryCode
 {
-    if (countryPickerViewController.view.tag == SETTINGS_SECTION_CONTACTS_INDEX)
+    /*if (countryPickerViewController.view.tag == SETTINGS_SECTION_CONTACTS_INDEX)
     {
         [MXKAppSettings standardAppSettings].phonebookCountryCode = isoCountryCode;
     }
-    else if (countryPickerViewController.view.tag == SETTINGS_SECTION_USER_SETTINGS_INDEX)
+    else*/
+    if (countryPickerViewController.view.tag == SETTINGS_SECTION_USER_SETTINGS_INDEX)
     {
         if (newPhoneNumberCell)
         {
@@ -4183,10 +4223,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         tableViewCell = [self getDefaultTableViewCell:self.tableView];
     }
-    else if ([tableViewCellClass isEqual:[MXKTableViewCellWithTextView class]])
+    /*else if ([tableViewCellClass isEqual:[MXKTableViewCellWithTextView class]])
     {
         tableViewCell = [self textViewCellForTableView:self.tableView atIndexPath:[NSIndexPath indexPathForRow:forRow inSection:SETTINGS_SECTION_DISCOVERY_INDEX]];
-    }
+    }*/
     else if ([tableViewCellClass isEqual:[MXKTableViewCellWithButton class]])
     {
         MXKTableViewCellWithButton *cell = [self.tableView dequeueReusableCellWithIdentifier:[MXKTableViewCellWithButton defaultReuseIdentifier]];
@@ -4206,10 +4246,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         
         tableViewCell = cell;
     }
-    else if ([tableViewCellClass isEqual:[MXKTableViewCellWithLabelAndSwitch class]])
+    /*else if ([tableViewCellClass isEqual:[MXKTableViewCellWithLabelAndSwitch class]])
     {
         tableViewCell = [self getLabelAndSwitchCell:self.tableView forIndexPath:[NSIndexPath indexPathForRow:forRow inSection:SETTINGS_SECTION_DISCOVERY_INDEX]];
-    }
+    }*/
     
     return tableViewCell;
 }

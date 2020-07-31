@@ -126,7 +126,7 @@
 		39D49C7B24B8D42A00FEDBC8 /* CGPath+SVG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C6E24B8D42900FEDBC8 /* CGPath+SVG.swift */; };
 		39D49C7C24B8D42A00FEDBC8 /* CAMediaTimingFunction+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C6F24B8D42900FEDBC8 /* CAMediaTimingFunction+Extension.swift */; };
 		39D49C7D24B8D42A00FEDBC8 /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7024B8D42900FEDBC8 /* Timeline.swift */; };
-		39D49C7E24B8D42A00FEDBC8 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7124B8D42900FEDBC8 /* TextView.swift */; };
+		39D49C7E24B8D42A00FEDBC8 /* RiotTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7124B8D42900FEDBC8 /* RiotTextView.swift */; };
 		39D49C7F24B8D42A00FEDBC8 /* NSMutableParagraphStyle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7224B8D42900FEDBC8 /* NSMutableParagraphStyle+Extension.swift */; };
 		39D49C8024B8D42A00FEDBC8 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7324B8D42900FEDBC8 /* Animation.swift */; };
 		39D49C8124B8D42A00FEDBC8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7424B8D42900FEDBC8 /* UIView+Extension.swift */; };
@@ -1015,7 +1015,7 @@
 		39D49C6E24B8D42900FEDBC8 /* CGPath+SVG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGPath+SVG.swift"; path = "FlowCommon/CGPath+SVG.swift"; sourceTree = "<group>"; };
 		39D49C6F24B8D42900FEDBC8 /* CAMediaTimingFunction+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CAMediaTimingFunction+Extension.swift"; path = "FlowCommon/CAMediaTimingFunction+Extension.swift"; sourceTree = "<group>"; };
 		39D49C7024B8D42900FEDBC8 /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timeline.swift; path = FlowCommon/Timeline.swift; sourceTree = "<group>"; };
-		39D49C7124B8D42900FEDBC8 /* TextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextView.swift; path = FlowCommon/TextView.swift; sourceTree = "<group>"; };
+		39D49C7124B8D42900FEDBC8 /* RiotTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RiotTextView.swift; path = FlowCommon/RiotTextView.swift; sourceTree = "<group>"; };
 		39D49C7224B8D42900FEDBC8 /* NSMutableParagraphStyle+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSMutableParagraphStyle+Extension.swift"; path = "FlowCommon/NSMutableParagraphStyle+Extension.swift"; sourceTree = "<group>"; };
 		39D49C7324B8D42900FEDBC8 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Animation.swift; path = FlowCommon/Animation.swift; sourceTree = "<group>"; };
 		39D49C7424B8D42900FEDBC8 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Extension.swift"; path = "FlowCommon/UIView+Extension.swift"; sourceTree = "<group>"; };
@@ -2324,7 +2324,7 @@
 				39D49C7624B8D42A00FEDBC8 /* NSShadow+Extension.swift */,
 				39D49C6B24B8D42900FEDBC8 /* ShapeView.swift */,
 				39D49C7524B8D42A00FEDBC8 /* Sound.swift */,
-				39D49C7124B8D42900FEDBC8 /* TextView.swift */,
+				39D49C7124B8D42900FEDBC8 /* RiotTextView.swift */,
 				39D49C7024B8D42900FEDBC8 /* Timeline.swift */,
 				39D49C6A24B8D42900FEDBC8 /* UIImage+Extension.swift */,
 				39D49C7424B8D42900FEDBC8 /* UIView+Extension.swift */,
@@ -5729,7 +5729,7 @@
 				32DB557722FDADE50016329E /* ServiceTermsModalCoordinator.swift in Sources */,
 				B185145B24B8C98200EE19EA /* MajorUpdateViewController.swift in Sources */,
 				32DB557922FDADE50016329E /* ServiceTermsModalScreenViewModel.swift in Sources */,
-				39D49C7E24B8D42A00FEDBC8 /* TextView.swift in Sources */,
+				39D49C7E24B8D42A00FEDBC8 /* RiotTextView.swift in Sources */,
 				32891D75226728EE00C82226 /* KeyVerificationDataLoadingViewController.swift in Sources */,
 				F083BDEF1E7009ED00A9B29C /* UINavigationController+Riot.m in Sources */,
 				B1B5581F20EF625800210D55 /* SimpleRoomTitleView.m in Sources */,

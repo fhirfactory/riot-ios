@@ -9,26 +9,8 @@
 import UIKit
 
 class ActRoleViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        tabItem.title = NSLocalizedString("role_title", tableName: "Act", comment: "")
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        AppDelegate.the()?.masterTabBarController.navigationItem.title = NSLocalizedString("title_people", tableName: "Vector", comment: "")
-        AppDelegate.the().masterTabBarController.tabBar.tintColor = ThemeService.shared().theme.tintColor
-    }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

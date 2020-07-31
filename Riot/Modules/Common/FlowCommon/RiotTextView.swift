@@ -19,7 +19,7 @@
 
 import UIKit
 
-open class TextView: UILabel {
+open class RiotTextView: UILabel {
     open var textLayer: CATextLayer {
         return layer as! CATextLayer // swiftlint:disable:this force_cast
     }

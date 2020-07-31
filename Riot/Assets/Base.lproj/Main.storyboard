@@ -588,10 +588,10 @@
             </objects>
             <point key="canvasLocation" x="4174" y="-2050"/>
         </scene>
-        <!--Role View Controller-->
+        <!--Act Directory View Controller-->
         <scene sceneID="Ar7-6F-TGu">
             <objects>
-                <viewController id="qHM-YX-a3R" customClass="RoleViewController" customModule="Riot" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qHM-YX-a3R" customClass="ActDirectoryViewController" customModule="Riot" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qW4-1I-D8Y"/>
                         <viewControllerLayoutGuide type="bottom" id="gOs-Aq-IhZ"/>

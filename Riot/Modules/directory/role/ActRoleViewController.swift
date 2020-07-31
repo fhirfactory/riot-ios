@@ -12,15 +12,10 @@ class ActRoleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tabItem.title = NSLocalizedString("role_title", tableName: "Act", comment: "")
         // Do any additional setup after loading the view.
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        AppDelegate.the()?.masterTabBarController.navigationItem.title = NSLocalizedString("title_people", tableName: "Vector", comment: "")
-        AppDelegate.the().masterTabBarController.tabBar.tintColor = ThemeService.shared().theme.tintColor
-    }
     /*
     // MARK: - Navigation
 

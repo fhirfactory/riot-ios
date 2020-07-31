@@ -73,6 +73,7 @@ abstract_target 'RiotPods' do
     # Tools
     pod 'SwiftGen', '~> 6.1'
     pod 'SwiftLint', '~> 0.36.0'
+    pod 'Material', '~> 3.1.0'
 
     target "Riot" do
         import_MatrixKit

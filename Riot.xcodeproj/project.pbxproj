@@ -134,8 +134,11 @@
 		39D49C8324B8D42A00FEDBC8 /* NSShadow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7624B8D42A00FEDBC8 /* NSShadow+Extension.swift */; };
 		3AF393339D2D566CE14AC200 /* Pods_RiotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */; };
 		405FD41D306133A48D9B5AA1 /* Pods_RiotPods_Riot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */; };
-		4397159224D146FD00D0D582 /* RoleFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397159124D146FD00D0D582 /* RoleFilterCell.swift */; };
-		4397159424D1472F00D0D582 /* RoleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397159324D1472F00D0D582 /* RoleCell.swift */; };
+		43367F0F24D680D100DB17CB /* RoleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43367F0D24D680D100DB17CB /* RoleTableViewCell.swift */; };
+		43367F1024D680D100DB17CB /* RoleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43367F0E24D680D100DB17CB /* RoleTableViewCell.xib */; };
+		43367F1324D680E100DB17CB /* RoleFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43367F1124D680E100DB17CB /* RoleFilterTableViewCell.swift */; };
+		43367F1424D680E100DB17CB /* RoleFilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43367F1224D680E100DB17CB /* RoleFilterTableViewCell.xib */; };
+		43367F1624D6826D00DB17CB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43367F1524D6826D00DB17CB /* PaddingLabel.swift */; };
 		43DAB8A924D3E04100873206 /* ActDirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB8A824D3E04100873206 /* ActDirectoryViewController.swift */; };
 		43DAB8B924D3E91C00873206 /* ActRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB8B724D3E91C00873206 /* ActRoleViewController.swift */; };
 		43DAB8BA24D3E91C00873206 /* ActRoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DAB8B824D3E91C00873206 /* ActRoleViewController.xib */; };
@@ -1027,8 +1030,11 @@
 		3D78489321ACA25200B98A7D /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3D78489421ACA25300B98A7D /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D78489521ACA25300B98A7D /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Vector.strings; sourceTree = "<group>"; };
-		4397159124D146FD00D0D582 /* RoleFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleFilterCell.swift; sourceTree = "<group>"; };
-		4397159324D1472F00D0D582 /* RoleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleCell.swift; sourceTree = "<group>"; };
+		43367F0D24D680D100DB17CB /* RoleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleTableViewCell.swift; sourceTree = "<group>"; };
+		43367F0E24D680D100DB17CB /* RoleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleTableViewCell.xib; sourceTree = "<group>"; };
+		43367F1124D680E100DB17CB /* RoleFilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleFilterTableViewCell.swift; sourceTree = "<group>"; };
+		43367F1224D680E100DB17CB /* RoleFilterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleFilterTableViewCell.xib; sourceTree = "<group>"; };
+		43367F1524D6826D00DB17CB /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		43C2962BE367F59220F517FA /* Pods-RiotPods-Riot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-Riot.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-Riot/Pods-RiotPods-Riot.debug.xcconfig"; sourceTree = "<group>"; };
 		43DAB8A824D3E04100873206 /* ActDirectoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActDirectoryViewController.swift; sourceTree = "<group>"; };
 		43DAB8B724D3E91C00873206 /* ActRoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActRoleViewController.swift; sourceTree = "<group>"; };
@@ -2349,6 +2355,18 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		43367F0C24D680B200DB17CB /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				43367F0D24D680D100DB17CB /* RoleTableViewCell.swift */,
+				43367F0E24D680D100DB17CB /* RoleTableViewCell.xib */,
+				43367F1124D680E100DB17CB /* RoleFilterTableViewCell.swift */,
+				43367F1224D680E100DB17CB /* RoleFilterTableViewCell.xib */,
+				43367F1524D6826D00DB17CB /* PaddingLabel.swift */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
 		4397158F24D1359500D0D582 /* directory */ = {
 			isa = PBXGroup;
 			children = (
@@ -2362,9 +2380,8 @@
 		4397159024D146C200D0D582 /* role */ = {
 			isa = PBXGroup;
 			children = (
+				43367F0C24D680B200DB17CB /* cells */,
 				43DAB8B624D3E90400873206 /* models */,
-				4397159124D146FD00D0D582 /* RoleFilterCell.swift */,
-				4397159324D1472F00D0D582 /* RoleCell.swift */,
 				43DAB8B724D3E91C00873206 /* ActRoleViewController.swift */,
 				43DAB8B824D3E91C00873206 /* ActRoleViewController.xib */,
 			);
@@ -5215,6 +5232,7 @@
 				F083BDE81E7009ED00A9B29C /* message.caf in Resources */,
 				B1107ECA2200B09F0038014B /* KeyBackupRecoverSuccessViewController.storyboard in Resources */,
 				B1B9DEF522EB426D0065E677 /* ReactionHistoryViewCell.xib in Resources */,
+				43367F1424D680E100DB17CB /* RoleFilterTableViewCell.xib in Resources */,
 				B1550FCA2420E8F500CE097B /* QRCodeReaderViewController.storyboard in Resources */,
 				B1B5579C20EF575B00210D55 /* ForgotPasswordInputsView.xib in Resources */,
 				F083BE011E7009ED00A9B29C /* third_party_licenses.html in Resources */,
@@ -5256,6 +5274,7 @@
 				F083BE061E7009ED00A9B29C /* Riot-Defaults.plist in Resources */,
 				B1B558D120EF768F00210D55 /* RoomIncomingEncryptedAttachmentWithoutSenderInfoBubbleCell.xib in Resources */,
 				B1B558FE20EF768F00210D55 /* RoomMembershipExpandedWithPaginationTitleBubbleCell.xib in Resources */,
+				43367F1024D680D100DB17CB /* RoleTableViewCell.xib in Resources */,
 				B1B5581D20EF625800210D55 /* RoomAvatarTitleView.xib in Resources */,
 				B1BEE74923E093260003A4CB /* UserVerificationSessionStatusViewController.storyboard in Resources */,
 				B1B5590B20EF768F00210D55 /* RoomMembershipExpandedBubbleCell.xib in Resources */,
@@ -5615,6 +5634,7 @@
 				B110871D21F087F4003554A5 /* KeyBackupSetupPassphraseViewState.swift in Sources */,
 				B1098C0121ECFE65000DDA48 /* KeyBackupSetupPassphraseCoordinatorType.swift in Sources */,
 				32242F1221E8FBA900725742 /* ThemeService.m in Sources */,
+				43367F1624D6826D00DB17CB /* PaddingLabel.swift in Sources */,
 				B1B558E820EF768F00210D55 /* RoomIncomingAttachmentWithPaginationTitleBubbleCell.m in Sources */,
 				B1B558F320EF768F00210D55 /* RoomOutgoingAttachmentWithoutSenderInfoBubbleCell.m in Sources */,
 				B12D79FE23E2462200FACEDC /* UserVerificationStartViewController.swift in Sources */,
@@ -5777,6 +5797,7 @@
 				B1B558E420EF768F00210D55 /* RoomMembershipWithPaginationTitleBubbleCell.m in Sources */,
 				B18DEDD8243377C10075FEF7 /* KeyVerificationSelfVerifyWaitCoordinatorType.swift in Sources */,
 				B1B5573620EE6C4D00210D55 /* GroupsViewController.m in Sources */,
+				43367F1324D680E100DB17CB /* RoleFilterTableViewCell.swift in Sources */,
 				B125FE21231D5E1D00B72806 /* SettingsDiscoveryViewAction.swift in Sources */,
 				B108932323AB908A00802670 /* KeyVerificationRequestStatusViewData.swift in Sources */,
 				B142317A22CCFA2000FFA96A /* EditHistoryCell.swift in Sources */,
@@ -5844,7 +5865,6 @@
 				B1C543AE23A286A000DCA1FA /* KeyVerificationRequestStatusBubbleCell.swift in Sources */,
 				B139C22121FE5D9D00BB68EC /* KeyBackupRecoverFromPassphraseViewState.swift in Sources */,
 				EC711B8124A63B37008F830C /* SecretsSetupRecoveryPassphraseViewAction.swift in Sources */,
-				4397159224D146FD00D0D582 /* RoleFilterCell.swift in Sources */,
 				B1B5579120EF568D00210D55 /* GroupInviteTableViewCell.m in Sources */,
 				B1B5579A20EF575B00210D55 /* ForgotPasswordInputsView.m in Sources */,
 				43DAB8A924D3E04100873206 /* ActDirectoryViewController.swift in Sources */,
@@ -6083,6 +6103,7 @@
 				39D49C7C24B8D42A00FEDBC8 /* CAMediaTimingFunction+Extension.swift in Sources */,
 				F083BDF01E7009ED00A9B29C /* UIViewController+RiotSearch.m in Sources */,
 				32DB557522FDADE50016329E /* ServiceTermsModalCoordinatorType.swift in Sources */,
+				43367F0F24D680D100DB17CB /* RoleTableViewCell.swift in Sources */,
 				F083BDF91E7009ED00A9B29C /* RoomEmailInvitation.m in Sources */,
 				EC85D7272477DCF2002C44C9 /* KeyVerificationManuallyVerifyViewController.swift in Sources */,
 				B1D211E422C18E3800D939BD /* ReactionsMenuViewModelType.swift in Sources */,
@@ -6125,7 +6146,6 @@
 				B109D6F1222D8C400061B6D9 /* UIApplication.swift in Sources */,
 				EC711BB124A63B58008F830C /* SecureBackupBannerPreferences.swift in Sources */,
 				B1BEE73723DF44A60003A4CB /* UserVerificationSessionsStatusViewState.swift in Sources */,
-				4397159424D1472F00D0D582 /* RoleCell.swift in Sources */,
 				B108932823ABEE6800802670 /* BubbleCellReadReceiptsDisplayable.swift in Sources */,
 				B1B558FF20EF768F00210D55 /* RoomIncomingTextMsgBubbleCell.m in Sources */,
 				EC85D7342477DD54002C44C9 /* SectionHeaderView.m in Sources */,

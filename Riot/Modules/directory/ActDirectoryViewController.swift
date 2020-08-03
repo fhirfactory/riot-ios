@@ -23,5 +23,8 @@ class ActDirectoryViewController: TabsController {
         tabBarAlignment = .top
         tabBar.tabBarStyle = .auto
         tabBar.dividerColor = nil
+        
+        AppDelegate.the()?.masterTabBarController.navigationItem.title = NSLocalizedString("directory_title", tableName: "Vector", comment: "")
+        AppDelegate.the().masterTabBarController.tabBar.tintColor = ThemeService.shared().theme.tintColor
     }
 }

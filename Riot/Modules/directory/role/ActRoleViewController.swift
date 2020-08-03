@@ -25,7 +25,6 @@ private enum SectionType: Int, CaseIterable {
 
 class ActRoleViewController: RecentsViewController {
     
-    
     var roles = [
         RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
         RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
@@ -45,17 +44,15 @@ class ActRoleViewController: RecentsViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabItem.title = NSLocalizedString("role_title", tableName: "Act", comment: "")
-        setupTableView()
-        self.view.accessibilityIdentifier = "PeopleVCView"
-        self.recentsTableView.accessibilityIdentifier = "PeopleVCTableView"
-        self.addPlusButton()
+        self.view.accessibilityIdentifier = "RoleVCView"
+        self.recentsTableView.accessibilityIdentifier = "RoleVCTableView"
+        //self.addPlusButton()
         enableSearchBar = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        AppDelegate.the()?.masterTabBarController.navigationItem.title = NSLocalizedString("title_people", tableName: "Vector", comment: "")
-        AppDelegate.the().masterTabBarController.tabBar.tintColor = ThemeService.shared().theme.tintColor
+        setupTableView()
     }
     
 }
@@ -63,9 +60,10 @@ class ActRoleViewController: RecentsViewController {
 // MARK: Private functions
 extension ActRoleViewController {
     private func setupTableView() {
-        recentsTableView.delegate = nil
+        recentsTableView.delegate = self
         recentsTableView.delaysContentTouches = false
         recentsTableView.dataSource = self
+        recentsTableView.allowsSelection = true
         recentsTableView.estimatedRowHeight = 500
         recentsTableView.rowHeight = UITableView.automaticDimension
         recentsTableView.tableFooterView = UIView()
@@ -98,6 +96,11 @@ extension ActRoleViewController: UITableViewDataSource {
         roleCell.delegate = self
         roleCell.bindModel(role: roles[indexPath.row], index: indexPath.row)
         return roleCell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let role = roles[indexPath.row]
+        print(role.name)
     }
     
 }

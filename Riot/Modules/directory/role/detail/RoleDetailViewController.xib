@@ -10,7 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RoleDetailViewController" customModule="Riot" customModuleProvider="target">
             <connections>
-                <outlet property="detail" destination="1tP-cb-jzu" id="FLx-nV-QVq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,17 +18,20 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1tP-cb-jzu">
-                    <rect key="frame" x="186" y="137" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="IRF-kJ-f58">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="IRF-kJ-f58" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6uu-Sg-nVR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="IRF-kJ-f58" secondAttribute="bottom" id="QP3-0m-fi2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="IRF-kJ-f58" secondAttribute="trailing" id="p9h-WC-Pc9"/>
+                <constraint firstItem="IRF-kJ-f58" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="rXJ-P3-eUg"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="132" y="151"/>
+            <point key="canvasLocation" x="131.8840579710145" y="150.66964285714286"/>
         </view>
     </objects>
 </document>

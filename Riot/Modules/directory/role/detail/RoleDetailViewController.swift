@@ -8,26 +8,22 @@
 
 import UIKit
 
+enum SectionType {
+    case ROLE_PROFILE
+    case ROLE_TITLE
+    case SPECIALITY
+    case LOCATION
+    case TEAM
+    case ORGANISATION_UNIT
+    case PRACTITIONER_ROLE
+}
+
 class RoleDetailViewController: UIViewController {
-    
-    @IBOutlet weak var detail: UILabel!
     var role:RoleModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        detail.text = role?.name
         // Do any additional setup after loading the view.
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

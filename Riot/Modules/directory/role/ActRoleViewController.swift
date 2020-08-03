@@ -100,7 +100,7 @@ extension ActRoleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(indexPath.section==SectionType.ROLE_CELL.rawValue){
+        if(indexPath.section == SectionType.ROLE_CELL.rawValue) {
             let vc = RoleDetailViewController() //your view controller
             vc.role = roles[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)

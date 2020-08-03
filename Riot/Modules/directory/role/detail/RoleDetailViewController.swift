@@ -9,10 +9,13 @@
 import UIKit
 
 class RoleDetailViewController: UIViewController {
+    
+    @IBOutlet weak var detail: UILabel!
+    var role:RoleModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        detail.text = role?.name
         // Do any additional setup after loading the view.
     }
 

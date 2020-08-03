@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RoleDetailViewController" customModule="Riot" customModuleProvider="target">
             <connections>
+                <outlet property="detail" destination="1tP-cb-jzu" id="FLx-nV-QVq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

@@ -10,8 +10,8 @@ import UIKit
 
 
 private enum SectionType: Int, CaseIterable {
-    case FILTER
-    case ROLE_CELL
+    case FILTER = 0
+    case ROLE_CELL = 1
     
     var cellIdentifier: String {
         switch self {
@@ -23,31 +23,32 @@ private enum SectionType: Int, CaseIterable {
     }
 }
 
-class ActRoleViewController: RecentsViewController {
+class ActRoleViewController: UIViewController {
+    @IBOutlet weak var recentsTableView: UITableView!
     
     var roles = [
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false),
-        RoleModel(name: "Test", description: "Emergency Department", isExpanded: false)
+        RoleModel(name: "Test1", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test2", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test3", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test4", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test5", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test6", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test7", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test8", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test9", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test10", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test11", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test12", description: "Emergency Department", isExpanded: false),
+        RoleModel(name: "Test13", description: "Emergency Department", isExpanded: false)
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tabItem.title = NSLocalizedString("role_title", tableName: "Act", comment: "")
         self.view.accessibilityIdentifier = "RoleVCView"
-        self.recentsTableView.accessibilityIdentifier = "RoleVCTableView"
+        //self.recentsTableView.accessibilityIdentifier = "RoleVCTableView"
         //self.addPlusButton()
-        enableSearchBar = false
+        //enableSearchBar = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +74,7 @@ extension ActRoleViewController {
 }
 
 // MARK: UITableViewDataSource
-extension ActRoleViewController: UITableViewDataSource {
+extension ActRoleViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return SectionType.allCases.count
@@ -98,11 +99,13 @@ extension ActRoleViewController: UITableViewDataSource {
         return roleCell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let role = roles[indexPath.row]
-        print(role.name)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.section==SectionType.ROLE_CELL.rawValue){
+            let vc = RoleDetailViewController() //your view controller
+            vc.role = roles[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
-    
 }
 
 // MARK: Role Cell Delegate

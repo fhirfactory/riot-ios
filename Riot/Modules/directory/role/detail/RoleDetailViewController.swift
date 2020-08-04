@@ -72,6 +72,8 @@ extension RoleDetailViewController: UITableViewDataSource, UITableViewDelegate {
         return SectionType.allCases.count
     }
     
+
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SectionType.ROLE_PROFILE.rawValue:

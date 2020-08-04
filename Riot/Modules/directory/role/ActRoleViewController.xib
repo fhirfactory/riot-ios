@@ -19,13 +19,18 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NB8-4x-o5n">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NB8-4x-o5n">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="NB8-4x-o5n" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9Bx-Lb-piv"/>
+                <constraint firstItem="NB8-4x-o5n" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Cj7-oy-gla"/>
+                <constraint firstItem="NB8-4x-o5n" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="GtD-uS-JzJ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NB8-4x-o5n" secondAttribute="bottom" id="PF1-6H-nBe"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="28.985507246376812" y="67.633928571428569"/>
         </view>

@@ -52,7 +52,11 @@ extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        
+        let vc = PeopleDetailViewController() //your view controller
+        //vc.actPeople = people[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }
 

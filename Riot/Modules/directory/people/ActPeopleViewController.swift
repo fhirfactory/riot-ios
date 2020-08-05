@@ -9,9 +9,55 @@
 import UIKit
 
 class ActPeopleViewController: UIViewController {
-
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabItem.title = NSLocalizedString("people_title", tableName: "Act", comment: "")
+        setupTableView()
+    }
+}
+
+
+// MARK: Private functions
+extension ActPeopleViewController {
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.delaysContentTouches = false
+        tableView.dataSource = self
+        tableView.allowsSelection = true
+        tableView.estimatedRowHeight = 500
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = UIView()
+        tableView.register(UINib(nibName: "PeopleTableViewCell", bundle: nil), forCellReuseIdentifier: "PeopleTableViewCell")
+    }
+}
+
+
+// MARK: UITableViewDataSource
+extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleTableViewCell") as? PeopleTableViewCell else { return UITableViewCell() }
+        cell.peopleCellDelegate = self
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    }
+}
+
+extension ActPeopleViewController: PeopleCellDelegate {
+    func favoriteButtonClick(actPeople: ActPeople?) {
+        // need implementation
     }
 }

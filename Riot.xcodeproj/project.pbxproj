@@ -150,6 +150,8 @@
 		438067C124D7D05E002675E1 /* SpecialityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438067BF24D7D05E002675E1 /* SpecialityTableViewCell.xib */; };
 		438067C424D7D0B9002675E1 /* PractitionerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438067C224D7D0B9002675E1 /* PractitionerTableViewCell.swift */; };
 		438067C524D7D0B9002675E1 /* PractitionerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438067C324D7D0B9002675E1 /* PractitionerTableViewCell.xib */; };
+		43AFC0B224DA408900D0EF19 /* PeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AFC0B024DA408900D0EF19 /* PeopleTableViewCell.swift */; };
+		43AFC0B324DA408900D0EF19 /* PeopleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AFC0B124DA408900D0EF19 /* PeopleTableViewCell.xib */; };
 		43DAB8A924D3E04100873206 /* ActDirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB8A824D3E04100873206 /* ActDirectoryViewController.swift */; };
 		43DAB8B924D3E91C00873206 /* ActRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB8B724D3E91C00873206 /* ActRoleViewController.swift */; };
 		43DAB8BA24D3E91C00873206 /* ActRoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DAB8B824D3E91C00873206 /* ActRoleViewController.xib */; };
@@ -1057,6 +1059,8 @@
 		438067BF24D7D05E002675E1 /* SpecialityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecialityTableViewCell.xib; sourceTree = "<group>"; };
 		438067C224D7D0B9002675E1 /* PractitionerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PractitionerTableViewCell.swift; sourceTree = "<group>"; };
 		438067C324D7D0B9002675E1 /* PractitionerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PractitionerTableViewCell.xib; sourceTree = "<group>"; };
+		43AFC0B024DA408900D0EF19 /* PeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTableViewCell.swift; sourceTree = "<group>"; };
+		43AFC0B124DA408900D0EF19 /* PeopleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeopleTableViewCell.xib; sourceTree = "<group>"; };
 		43C2962BE367F59220F517FA /* Pods-RiotPods-Riot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-Riot.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-Riot/Pods-RiotPods-Riot.debug.xcconfig"; sourceTree = "<group>"; };
 		43DAB8A824D3E04100873206 /* ActDirectoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActDirectoryViewController.swift; sourceTree = "<group>"; };
 		43DAB8B724D3E91C00873206 /* ActRoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActRoleViewController.swift; sourceTree = "<group>"; };
@@ -2444,6 +2448,15 @@
 			path = role;
 			sourceTree = "<group>";
 		};
+		43AFC0AF24DA402100D0EF19 /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				43AFC0B024DA408900D0EF19 /* PeopleTableViewCell.swift */,
+				43AFC0B124DA408900D0EF19 /* PeopleTableViewCell.xib */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
 		43DAB8B624D3E90400873206 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2455,6 +2468,7 @@
 		43DAB8BB24D3E92100873206 /* people */ = {
 			isa = PBXGroup;
 			children = (
+				43AFC0AF24DA402100D0EF19 /* cells */,
 				438067A824D7AA7B002675E1 /* model */,
 				43DAB8BC24D3E93500873206 /* ActPeopleViewController.swift */,
 				43DAB8BD24D3E93500873206 /* ActPeopleViewController.xib */,
@@ -5390,6 +5404,7 @@
 				B1C562E5228C7C8D0037F12A /* RoomContextualMenuViewController.storyboard in Resources */,
 				3232ABA2225730E100AD6A5C /* DeviceVerificationStartViewController.storyboard in Resources */,
 				3284A35120A07C210044F922 /* postMessageAPI.js in Resources */,
+				43AFC0B324DA408900D0EF19 /* PeopleTableViewCell.xib in Resources */,
 				B1B557A220EF58AD00210D55 /* ContactTableViewCell.xib in Resources */,
 				B1B558EB20EF768F00210D55 /* RoomIncomingTextMsgWithPaginationTitleBubbleCell.xib in Resources */,
 				B1C543A6239E999700DCA1FA /* KeyVerificationCellInnerContentView.xib in Resources */,
@@ -6231,6 +6246,7 @@
 				EC711B8624A63B37008F830C /* SecretsRecoveryWithPassphraseCoordinatorType.swift in Sources */,
 				B1C562E8228C7CF20037F12A /* ContextualMenuItemView.swift in Sources */,
 				B14F143022144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyCoordinatorType.swift in Sources */,
+				43AFC0B224DA408900D0EF19 /* PeopleTableViewCell.swift in Sources */,
 				B1E5368921FB1E20001F3AFF /* UIButton.swift in Sources */,
 				B1DCC63422E72C1B00625807 /* UISearchBar.swift in Sources */,
 				32A6001622C661100042C1D9 /* EditHistoryViewState.swift in Sources */,

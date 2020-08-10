@@ -70,6 +70,7 @@ final class BuildSettings: NSObject {
     // MARK: - Legal URLs
     static let applicationCopyrightUrlString = "https://element.io/copyright"
     static let applicationPrivacyPolicyUrlString = "https://element.io/privacy"
+    static let applicationAcknowledgementUrlString = "https://element.io/privacy"
     static let applicationTermsConditionsUrlString = "https://element.io/terms-of-service"
     
     
@@ -147,24 +148,37 @@ final class BuildSettings: NSObject {
     
     static let allowSendingStickers: Bool = true
     
-    static let allowLocalContactsAccess: Bool = true
+    static let allowLocalContactsAccess: Bool = false
     
     
     // MARK: - Screen settings -
     
     static let settingsScreenShowUserFirstName: Bool = false
     static let settingsScreenShowUserSurname: Bool = false
-    static let settingsScreenAllowAddingEmailThreepids: Bool = true
-    static let settingsScreenAllowAddingPhoneThreepids: Bool = true
-    static let settingsScreenShowThreepidExplanatory: Bool = true
-    static let settingsScreenShowDiscoverySettings: Bool = true
+    static let settingsScreenAllowAddingEmailThreepids: Bool = false
+    static let settingsScreenAllowAddingPhoneThreepids: Bool = false
+    static let settingsScreenAllowChangingPassword: Bool = false
+    static let settingsScreenAllowChangingProfilePicture: Bool = false
+    static let settingsScreenAllowChangingdisplayName: Bool = false
+    static let settingsScreenShowThreepidExplanatory: Bool = false
+    static let settingsScreenShowDiscoverySettings: Bool = false
     static let settingsScreenAllowIdentityServerConfig: Bool = true
+    static let settingsScreenAllowSelectingIdentityServer: Bool = false
     static let settingsScreenShowAdvancedSettings: Bool = true
-    static let settingsScreenShowLabSettings: Bool = true
-    static let settingsScreenAllowChangingRageshakeSettings: Bool = true
-    static let settingsScreenAllowChangingCrashUsageDataSettings: Bool = true
-    static let settingsScreenAllowBugReportingManually: Bool = true
-    static let settingsScreenAllowDeactivatingAccount: Bool = true
+    static let settingsScreenShowLabSettings: Bool = false
+    static let settingsScreenShowIntegrationSettings: Bool = false
+    static let settingsScreenShowCallsSettings: Bool = false
+    static let settingsScreenShowNotificationDecryptedContentSettings: Bool = false
+    static let settingsScreenAllowChangingRageshakeSettings: Bool = false
+    static let settingsScreenAllowChangingCrashUsageDataSettings: Bool = false
+    static let settingsScreenAllowBugReportingManually: Bool = false
+    static let settingsScreenAllowDeactivatingAccount: Bool = false
+    static let settingsScreenShowUserInterfaceSettings: Bool = false
+    static let settingsScreenShowOLMVersion: Bool = false
+    static let settingsScreenShowCopyRight: Bool = false
+    static let settingsScreenAllowClearingCacheSettings = false
+    static let settingsScreenShowThirdPartNotice = false
+    static let settingsScreenShowAcknowledgement = true
     
     // MARK: - Message
     static let messageDetailsAllowShare: Bool = true

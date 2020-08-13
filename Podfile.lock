@@ -97,7 +97,8 @@ PODS:
     - Reusable/View (= 4.1.1)
   - Reusable/Storyboard (4.1.1)
   - Reusable/View (4.1.1)
-  - SwiftGen (6.2.1)
+  - SideMenu (6.4.9)
+  - SwiftGen (6.3.0)
   - SwiftLint (0.36.0)
   - zxcvbn-ios (1.0.4)
   - ZXingObjC (3.6.5):
@@ -118,6 +119,7 @@ DEPENDENCIES:
   - MatrixSDK/SwiftSupport
   - OLMKit
   - Reusable (~> 4.1)
+  - SideMenu
   - SwiftGen (~> 6.1)
   - SwiftLint (~> 0.36.0)
   - zxcvbn-ios
@@ -144,6 +146,7 @@ SPEC REPOS:
     - OLMKit
     - Realm
     - Reusable
+    - SideMenu
     - SwiftGen
     - SwiftLint
     - zxcvbn-ios
@@ -169,11 +172,12 @@ SPEC CHECKSUMS:
   OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
   Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
-  SwiftGen: 62e69d127507be1538d4263e137b2290cd6ab272
+  SideMenu: 8ef57a3cfc024a2d3fc1c036c7fe98537baec9e0
+  SwiftGen: 3d5024a47ea79e408cded20763d7a17d18a4548c
   SwiftLint: fc9859e4e1752340664851f667bb1898b9c90114
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 4f5106309b0939cb9dca5512fc9880a78a8b4926
+PODFILE CHECKSUM: e190acde13d04334b71b26a09c92c1d1c8808471
 
 COCOAPODS: 1.9.3

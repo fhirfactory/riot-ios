@@ -268,7 +268,7 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="MasterTabBarControllerSettingsBarButton"/>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <segue destination="taU-5Q-sdv" kind="show" identifier="showSettings" id="3jh-kY-vVn"/>
+                                <segue destination="Nc1-LZ-wpq" kind="presentation" id="Oyr-pE-C1z"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="search_icon" id="pud-Fh-Usd">
@@ -287,7 +287,6 @@
                     </tabBar>
                     <connections>
                         <outlet property="searchBarButtonIem" destination="pud-Fh-Usd" id="DiH-Re-nZE"/>
-                        <outlet property="settingsBarButtonItem" destination="QSE-cg-V2m" id="N6b-Ju-w9g"/>
                         <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showRoomDetails" id="tk8-vF-K4T"/>
                         <segue destination="ZlD-EU-ncw" kind="presentation" identifier="showAuth" modalPresentationStyle="fullScreen" id="fpJ-zM-Qpo"/>
                         <segue destination="pBa-To-3YT" kind="relationship" relationship="viewControllers" id="Sfs-mh-GOz"/>
@@ -415,11 +414,11 @@
                         <viewControllerLayoutGuide type="bottom" id="q6N-65-HOy"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4vi-uu-gM6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="58q-wN-pDJ">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="HZ4-vs-jLe">
@@ -461,7 +460,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GNn-qe-YMy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1799" y="-361"/>
+            <point key="canvasLocation" x="-2937" y="-2603"/>
         </scene>
         <!--RoomNav-->
         <scene sceneID="r7l-gg-dq7">
@@ -651,17 +650,20 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nc1-LZ-wpq" customClass="SideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z5N-mt-48c">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="Mh4-hc-ZUa" kind="relationship" relationship="rootViewController" id="3xh-S8-aiy"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="la7-ga-WIm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2834" y="-361"/>
+            <point key="canvasLocation" x="-3945" y="-2604"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

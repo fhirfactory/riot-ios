@@ -405,10 +405,10 @@
             </objects>
             <point key="canvasLocation" x="5984.8000000000002" y="-711.09445277361328"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile View Controller-->
         <scene sceneID="kvz-rL-cxU">
             <objects>
-                <viewController id="Mh4-hc-ZUa" sceneMemberID="viewController">
+                <viewController id="Mh4-hc-ZUa" customClass="ProfileViewController" customModule="Riot" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7lq-zD-TYa"/>
                         <viewControllerLayoutGuide type="bottom" id="q6N-65-HOy"/>

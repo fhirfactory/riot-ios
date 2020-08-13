@@ -18,9 +18,14 @@ import UIKit
 
 class ProfileTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var contactIcon: UILabel!
+    @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var officialName: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        contactIcon.layer.cornerRadius = contactIcon.bounds.height / 2
+        contactIcon.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

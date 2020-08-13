@@ -16,23 +16,58 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+private enum SectionType: Int, CaseIterable {
+    case PROFILE_CELL = 0
+    case ROLE_CELL = 1
+    
+    var cellIdentifier: String {
+        switch self {
+        case .PROFILE_CELL:
+            return "ProfileTableViewCell"
+        case .ROLE_CELL:
+            return "ProfileRoleTableViewCell"
+        }
+    }
+}
 
+class ProfileViewController: UIViewController {
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: SectionType.PROFILE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.PROFILE_CELL.cellIdentifier)
+        tableView.register(UINib(nibName: SectionType.ROLE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_CELL.cellIdentifier)
     }
     
+    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return SectionType.allCases.count
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case SectionType.PROFILE_CELL.rawValue:
+            return 1
+        case SectionType.ROLE_CELL.rawValue:
+            return 3
+        default:
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == SectionType.PROFILE_CELL.rawValue {
+            guard let profileCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.PROFILE_CELL.cellIdentifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
+            
+            return profileCell
+        }
+        guard let roleCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier, for: indexPath) as? ProfileRoleTableViewCell else { return UITableViewCell() }
+        
+        return roleCell
+    }
 }

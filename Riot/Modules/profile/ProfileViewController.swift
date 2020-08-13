@@ -19,6 +19,8 @@ import UIKit
 private enum SectionType: Int, CaseIterable {
     case PROFILE_CELL = 0
     case ROLE_CELL = 1
+    case ICON_ITEM_CELL = 2
+    case ONLY_TEXT_CELL = 3
     
     var cellIdentifier: String {
         switch self {
@@ -26,19 +28,27 @@ private enum SectionType: Int, CaseIterable {
             return "ProfileTableViewCell"
         case .ROLE_CELL:
             return "ProfileRoleTableViewCell"
+        case .ICON_ITEM_CELL:
+            return "DrawerItemTableViewCell"
+        case .ONLY_TEXT_CELL:
+            return "DrawerTextTableViewCell"
         }
     }
 }
 
 class ProfileViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    var theme: Theme = ThemeService.shared().theme
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.navigationController?.navigationBar.barTintColor = self.theme.sideMenuProfileBackground
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: SectionType.PROFILE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.PROFILE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ROLE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_CELL.cellIdentifier)
+        tableView.register(UINib(nibName: SectionType.ICON_ITEM_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ICON_ITEM_CELL.cellIdentifier)
+        tableView.register(UINib(nibName: SectionType.ONLY_TEXT_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier)
     }
     
     
@@ -55,19 +65,35 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return 1
         case SectionType.ROLE_CELL.rawValue:
             return 3
+        case SectionType.ICON_ITEM_CELL.rawValue:
+            return 3
+        case SectionType.ONLY_TEXT_CELL.rawValue:
+            return 3
         default:
             return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == SectionType.PROFILE_CELL.rawValue {
+        switch indexPath.section {
+        case SectionType.PROFILE_CELL.rawValue:
             guard let profileCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.PROFILE_CELL.cellIdentifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
             
             return profileCell
+        case SectionType.ROLE_CELL.rawValue:
+            guard let roleCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier, for: indexPath) as? ProfileRoleTableViewCell else { return UITableViewCell() }
+            
+            return roleCell
+        case SectionType.ICON_ITEM_CELL.rawValue:
+            guard let iconItemCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ICON_ITEM_CELL.cellIdentifier, for: indexPath) as? DrawerItemTableViewCell else { return UITableViewCell() }
+            
+            return iconItemCell
+        case SectionType.ONLY_TEXT_CELL.rawValue:
+            guard let textCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier, for: indexPath) as? DrawerTextTableViewCell else { return UITableViewCell() }
+            
+            return textCell
+        default:
+            return UITableViewCell()
         }
-        guard let roleCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier, for: indexPath) as? ProfileRoleTableViewCell else { return UITableViewCell() }
-        
-        return roleCell
     }
 }

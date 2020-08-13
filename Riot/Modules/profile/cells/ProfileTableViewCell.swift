@@ -21,9 +21,11 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var contactIcon: UILabel!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var officialName: UILabel!
+    var theme: Theme = ThemeService.shared().theme
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = self.theme.sideMenuProfileBackground
         contactIcon.layer.cornerRadius = contactIcon.bounds.height / 2
         contactIcon.clipsToBounds = true
     }

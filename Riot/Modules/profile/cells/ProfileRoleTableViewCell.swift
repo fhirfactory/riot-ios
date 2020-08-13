@@ -17,9 +17,11 @@
 import UIKit
 
 class ProfileRoleTableViewCell: UITableViewCell {
+    var theme: Theme = ThemeService.shared().theme
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.backgroundColor = self.theme.sideMenuProfileBackground
         // Initialization code
     }
 

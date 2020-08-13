@@ -40,6 +40,8 @@ import UIKit
     var textPrimaryColor: UIColor { get }
     var textSecondaryColor: UIColor { get }
 
+    var sideMenuProfileBackground: UIColor { get }
+    
     var tintColor: UIColor { get }
     var tintBackgroundColor: UIColor { get }
     

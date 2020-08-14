@@ -109,6 +109,8 @@ internal enum Asset {
     internal static let tabHome = ImageAsset(name: "tab_home")
     internal static let tabPeople = ImageAsset(name: "tab_people")
     internal static let tabRooms = ImageAsset(name: "tab_rooms")
+    internal static let exit = ImageAsset(name: "exit")
+    internal static let roleOutline = ImageAsset(name: "role_outline")
     internal static let work = ImageAsset(name: "work")
     internal static let launchScreenLogo = ImageAsset(name: "launch_screen_logo")
   }

@@ -45,12 +45,16 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var theme: Theme = ThemeService.shared().theme
     
+    var roles: [Role] = []
+    var iconItems: [IconItem] = []
+    var textItems: [TextItem] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //hiding the navigation bar's shadow
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         
-        //self.navigationController?.navigationBar.barTintColor = self.theme.sideMenuProfileBackground
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: SectionType.PROFILE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.PROFILE_CELL.cellIdentifier)
@@ -58,9 +62,20 @@ class ProfileViewController: UIViewController {
         tableView.register(UINib(nibName: SectionType.ICON_ITEM_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ICON_ITEM_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ONLY_TEXT_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ROLE_DIVIDER_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_DIVIDER_CELL.cellIdentifier)
+        
+        roles.append(Role(name: "Software Developer", active: true))
+        roles.append(Role(name: "Business Analyst", active: false))
+        roles.append(Role(name: "UI Designer", active: false))
+        
+        iconItems.append(IconItem(image: UIImage(named: "settings_icon") ?? UIImage(), text: "Settings"))
+        iconItems.append(IconItem(image: UIImage(named: "role_outline") ?? UIImage(), text: "Roles"))
+        iconItems.append(IconItem(image: UIImage(named: "exit") ?? UIImage(), text: "Sign out"))
+        
+        textItems.append(TextItem(text: "Terms and Condition", url: ""))
+        textItems.append(TextItem(text: "Privacy Policy", url: ""))
+        textItems.append(TextItem(text: "Acknowledgement", url: ""))
+        textItems.append(TextItem(text: "Version ... ", url: ""))
     }
-    
-    
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
@@ -75,11 +90,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case SectionType.PROFILE_CELL.rawValue:
             return 1
         case SectionType.ROLE_CELL.rawValue:
-            return 3
+            return roles.count
         case SectionType.ICON_ITEM_CELL.rawValue:
-            return 3
+            return iconItems.count
         case SectionType.ONLY_TEXT_CELL.rawValue:
-            return 3
+            return textItems.count
         default:
             return 0
         }
@@ -93,15 +108,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             return profileCell
         case SectionType.ROLE_CELL.rawValue:
             guard let roleCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier, for: indexPath) as? ProfileRoleTableViewCell else { return UITableViewCell() }
-            
+            roleCell.setValue(role: roles[indexPath.row])
             return roleCell
         case SectionType.ICON_ITEM_CELL.rawValue:
             guard let iconItemCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ICON_ITEM_CELL.cellIdentifier, for: indexPath) as? DrawerItemTableViewCell else { return UITableViewCell() }
-            
+            iconItemCell.setValue(iconItem: iconItems[indexPath.row])
             return iconItemCell
         case SectionType.ONLY_TEXT_CELL.rawValue:
             guard let textCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier, for: indexPath) as? DrawerTextTableViewCell else { return UITableViewCell() }
-            
+            textCell.setValue(textItem: textItems[indexPath.row])
             return textCell
         case SectionType.ROLE_DIVIDER_CELL.rawValue, SectionType.ICON_ITEM_DIVIDER_CELL.rawValue:
             guard let dividerCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ICON_ITEM_DIVIDER_CELL.cellIdentifier, for: indexPath) as? ProfileSectionDividerTableViewCell else { return UITableViewCell() }

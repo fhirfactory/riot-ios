@@ -18,6 +18,8 @@ import UIKit
 
 class DrawerItemTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var textItem: UILabel!
+    @IBOutlet weak var icon: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -27,6 +29,11 @@ class DrawerItemTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setValue(iconItem: IconItem){
+        textItem.text = iconItem.text
+        icon.image = iconItem.image
     }
     
 }

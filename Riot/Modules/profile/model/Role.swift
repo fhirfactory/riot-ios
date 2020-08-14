@@ -14,23 +14,19 @@
 // limitations under the License.
 //
 
-import UIKit
+import Foundation
 
-class DrawerTextTableViewCell: UITableViewCell {
+struct Role {
+    let name:String
+    let active: Bool
+}
 
-    @IBOutlet weak var textView: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+struct IconItem {
+    let image:UIImage
+    let text:String
+}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
-    func setValue(textItem: TextItem){
-        textView.text = textItem.text
-    }
+struct TextItem {
+    let text: String
+    let url: String
 }

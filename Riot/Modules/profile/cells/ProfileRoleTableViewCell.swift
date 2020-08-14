@@ -18,6 +18,9 @@ import UIKit
 
 class ProfileRoleTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var roleIcon: UIImageView!
+    @IBOutlet weak var roleName: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -29,4 +32,8 @@ class ProfileRoleTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func setValue(role: Role){
+        roleName.text = role.name
+        roleIcon.tintColor = role.active ? UIColor.green: UIColor.gray
+    }
 }

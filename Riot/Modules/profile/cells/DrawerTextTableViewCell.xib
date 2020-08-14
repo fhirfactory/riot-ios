@@ -18,20 +18,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms and Condition" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vEw-6R-noV">
-                        <rect key="frame" x="16" y="16" width="336" height="41"/>
+                        <rect key="frame" x="16" y="10" width="336" height="53"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="vEw-6R-noV" secondAttribute="bottom" constant="16" id="IkE-1F-WFp"/>
+                    <constraint firstAttribute="bottom" secondItem="vEw-6R-noV" secondAttribute="bottom" constant="10" id="IkE-1F-WFp"/>
                     <constraint firstItem="vEw-6R-noV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="RQD-Q9-oVj"/>
-                    <constraint firstItem="vEw-6R-noV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="V0X-6N-NB1"/>
+                    <constraint firstItem="vEw-6R-noV" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="V0X-6N-NB1"/>
                     <constraint firstAttribute="trailing" secondItem="vEw-6R-noV" secondAttribute="trailing" constant="8" id="jWl-um-csF"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="textView" destination="vEw-6R-noV" id="EaC-Af-E9n"/>
+            </connections>
             <point key="canvasLocation" x="160.86956521739131" y="160.37946428571428"/>
         </tableViewCell>
     </objects>

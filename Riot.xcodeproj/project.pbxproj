@@ -173,6 +173,8 @@
 		43AF6B0724E4E42E00BFE3EC /* DrawerTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6B0524E4E42E00BFE3EC /* DrawerTextTableViewCell.swift */; };
 		43AF6B0824E4E42E00BFE3EC /* DrawerTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AF6B0624E4E42E00BFE3EC /* DrawerTextTableViewCell.xib */; };
 		43AF6B0B24E4F58C00BFE3EC /* Dot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6B0A24E4F58C00BFE3EC /* Dot.swift */; };
+		43CE5FFD24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE5FFB24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift */; };
+		43CE5FFE24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43CE5FFC24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib */; };
 		670966FEFE120D865FD8A5B6 /* Pods_RiotPods_SiriIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */; };
 		926FA53F1F4C132000F826C2 /* MXSession+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FA53E1F4C132000F826C2 /* MXSession+Riot.m */; };
 		92726A471F58737A004AD26F /* IntentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 92726A461F58737A004AD26F /* IntentHandler.m */; };
@@ -1111,6 +1113,8 @@
 		43AF6B0624E4E42E00BFE3EC /* DrawerTextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawerTextTableViewCell.xib; sourceTree = "<group>"; };
 		43AF6B0A24E4F58C00BFE3EC /* Dot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dot.swift; sourceTree = "<group>"; };
 		43C2962BE367F59220F517FA /* Pods-RiotPods-Riot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-Riot.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-Riot/Pods-RiotPods-Riot.debug.xcconfig"; sourceTree = "<group>"; };
+		43CE5FFB24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionDividerTableViewCell.swift; sourceTree = "<group>"; };
+		43CE5FFC24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSectionDividerTableViewCell.xib; sourceTree = "<group>"; };
 		4FC6A5D63FAD1B27C2F57AFA /* Pods-RiotPods-RiotShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotShareExtension.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotShareExtension/Pods-RiotPods-RiotShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_SiriIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A61E94F88EA96AFE1CFD9D3 /* Pods-RiotPods-RiotNSE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotNSE.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotNSE/Pods-RiotPods-RiotNSE.release.xcconfig"; sourceTree = "<group>"; };
@@ -2505,6 +2509,8 @@
 				43AF6B0224E4E3F500BFE3EC /* DrawerItemTableViewCell.xib */,
 				43AF6B0524E4E42E00BFE3EC /* DrawerTextTableViewCell.swift */,
 				43AF6B0624E4E42E00BFE3EC /* DrawerTextTableViewCell.xib */,
+				43CE5FFB24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift */,
+				43CE5FFC24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -5463,6 +5469,7 @@
 				B110872421F098F0003554A5 /* ActivityIndicatorView.xib in Resources */,
 				B1B5573320EE6C4D00210D55 /* GroupHomeViewController.xib in Resources */,
 				3232AB2122564D9100AD6A5C /* README.md in Resources */,
+				43CE5FFE24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib in Resources */,
 				3291DC8A23E0BE820009732F /* Security.storyboard in Resources */,
 				B1B5593920EF7BAC00210D55 /* TableViewCellWithCheckBoxes.xib in Resources */,
 				B1B557C120EF5B4500210D55 /* DisabledRoomInputToolbarView.xib in Resources */,
@@ -6043,6 +6050,7 @@
 				32242F1421E8FBA900725742 /* DefaultTheme.swift in Sources */,
 				B1963B2D228F1C4900CBA17F /* BubbleReactionsViewModel.swift in Sources */,
 				32242F1321E8FBA900725742 /* Theme.swift in Sources */,
+				43CE5FFD24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift in Sources */,
 				B108932523AB93A200802670 /* KeyVerificationConclusionViewData.swift in Sources */,
 				B1B5582520EF638A00210D55 /* RoomMemberTitleView.m in Sources */,
 				B1560DA224B65AFA00490F50 /* LaunchLoadingView.swift in Sources */,

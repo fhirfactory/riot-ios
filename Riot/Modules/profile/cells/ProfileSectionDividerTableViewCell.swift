@@ -16,16 +16,11 @@
 
 import UIKit
 
-class ProfileTableViewCell: UITableViewCell {
+class ProfileSectionDividerTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var contactIcon: UILabel!
-    @IBOutlet weak var status: UILabel!
-    @IBOutlet weak var officialName: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        contactIcon.layer.cornerRadius = contactIcon.bounds.height / 2
-        contactIcon.clipsToBounds = true
+        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -13,26 +13,26 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileTableViewCell" rowHeight="99" id="KGk-i7-Jjw" customClass="ProfileTableViewCell" customModule="Riot" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="409" height="99"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="409" height="99"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N3e-LL-MqT">
-                        <rect key="frame" x="8" y="8" width="44" height="44"/>
+                        <rect key="frame" x="16" y="20" width="40" height="40"/>
                         <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="44" id="EP6-q1-jv9"/>
-                            <constraint firstAttribute="height" constant="44" id="S89-pu-0c6"/>
+                            <constraint firstAttribute="width" constant="40" id="EP6-q1-jv9"/>
+                            <constraint firstAttribute="height" constant="40" id="S89-pu-0c6"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8WO-c4-5Eg" customClass="Dot" customModule="Riot" customModuleProvider="target">
-                        <rect key="frame" x="36" y="36" width="16" height="16"/>
+                        <rect key="frame" x="42" y="46" width="14" height="14"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="16" id="9Ng-O7-5Wp"/>
-                            <constraint firstAttribute="width" constant="16" id="YO3-bN-BBA"/>
+                            <constraint firstAttribute="height" constant="14" id="9Ng-O7-5Wp"/>
+                            <constraint firstAttribute="width" constant="14" id="YO3-bN-BBA"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="mainColor">
@@ -47,28 +47,29 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Onine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQq-8L-8Bx">
-                        <rect key="frame" x="60" y="35" width="39.5" height="17"/>
+                        <rect key="frame" x="64" y="43" width="39.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rafi Sadat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXF-js-n0v">
-                        <rect key="frame" x="8" y="64" width="393" height="19.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <rect key="frame" x="16" y="72" width="385" height="11"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="8WO-c4-5Eg" firstAttribute="trailing" secondItem="N3e-LL-MqT" secondAttribute="trailing" id="8py-XA-gIo"/>
-                    <constraint firstItem="N3e-LL-MqT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Cuc-RG-zmE"/>
+                    <constraint firstAttribute="bottom" secondItem="MXF-js-n0v" secondAttribute="bottom" constant="16" id="AiA-VK-Y6b"/>
+                    <constraint firstItem="N3e-LL-MqT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Cuc-RG-zmE"/>
                     <constraint firstItem="8WO-c4-5Eg" firstAttribute="bottom" secondItem="N3e-LL-MqT" secondAttribute="bottom" id="G7F-uc-Rfi"/>
                     <constraint firstItem="MXF-js-n0v" firstAttribute="leading" secondItem="N3e-LL-MqT" secondAttribute="leading" id="LTi-Xm-T2k"/>
-                    <constraint firstAttribute="bottom" secondItem="N3e-LL-MqT" secondAttribute="bottom" constant="8" id="Lql-l7-JCP"/>
                     <constraint firstItem="sQq-8L-8Bx" firstAttribute="bottom" secondItem="N3e-LL-MqT" secondAttribute="bottom" id="XZC-dY-Wze"/>
                     <constraint firstItem="MXF-js-n0v" firstAttribute="top" secondItem="N3e-LL-MqT" secondAttribute="bottom" constant="12" id="Yla-Rv-6NL"/>
+                    <constraint firstItem="MXF-js-n0v" firstAttribute="top" secondItem="N3e-LL-MqT" secondAttribute="bottom" constant="12" id="k03-W8-wd1"/>
                     <constraint firstItem="sQq-8L-8Bx" firstAttribute="leading" secondItem="N3e-LL-MqT" secondAttribute="trailing" constant="8" id="lUA-Wa-qGz"/>
-                    <constraint firstItem="N3e-LL-MqT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="nJs-9t-uiz"/>
+                    <constraint firstItem="N3e-LL-MqT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="nJs-9t-uiz"/>
                     <constraint firstAttribute="trailing" secondItem="MXF-js-n0v" secondAttribute="trailing" constant="8" id="ncc-vf-WgE"/>
                 </constraints>
             </tableViewCellContentView>

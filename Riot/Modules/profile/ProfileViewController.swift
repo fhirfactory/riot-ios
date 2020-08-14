@@ -19,8 +19,11 @@ import UIKit
 private enum SectionType: Int, CaseIterable {
     case PROFILE_CELL = 0
     case ROLE_CELL = 1
-    case ICON_ITEM_CELL = 2
-    case ONLY_TEXT_CELL = 3
+    case ROLE_DIVIDER_CELL = 2
+    case ICON_ITEM_CELL = 3
+    case ICON_ITEM_DIVIDER_CELL = 4
+    case ONLY_TEXT_CELL = 5
+    
     
     var cellIdentifier: String {
         switch self {
@@ -32,6 +35,8 @@ private enum SectionType: Int, CaseIterable {
             return "DrawerItemTableViewCell"
         case .ONLY_TEXT_CELL:
             return "DrawerTextTableViewCell"
+        case .ICON_ITEM_DIVIDER_CELL, .ROLE_DIVIDER_CELL:
+            return "ProfileSectionDividerTableViewCell"
         }
     }
 }
@@ -42,6 +47,9 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        
         //self.navigationController?.navigationBar.barTintColor = self.theme.sideMenuProfileBackground
         tableView.delegate = self
         tableView.dataSource = self
@@ -49,6 +57,7 @@ class ProfileViewController: UIViewController {
         tableView.register(UINib(nibName: SectionType.ROLE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ICON_ITEM_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ICON_ITEM_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ONLY_TEXT_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier)
+        tableView.register(UINib(nibName: SectionType.ROLE_DIVIDER_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_DIVIDER_CELL.cellIdentifier)
     }
     
     
@@ -61,6 +70,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
+        case SectionType.ROLE_DIVIDER_CELL.rawValue, SectionType.ICON_ITEM_DIVIDER_CELL.rawValue:
+            return 1
         case SectionType.PROFILE_CELL.rawValue:
             return 1
         case SectionType.ROLE_CELL.rawValue:
@@ -92,6 +103,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             guard let textCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier, for: indexPath) as? DrawerTextTableViewCell else { return UITableViewCell() }
             
             return textCell
+        case SectionType.ROLE_DIVIDER_CELL.rawValue, SectionType.ICON_ITEM_DIVIDER_CELL.rawValue:
+            guard let dividerCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ICON_ITEM_DIVIDER_CELL.cellIdentifier, for: indexPath) as? ProfileSectionDividerTableViewCell else { return UITableViewCell() }
+            
+            return dividerCell
         default:
             return UITableViewCell()
         }

@@ -163,6 +163,7 @@
 		39D49C8324B8D42A00FEDBC8 /* NSShadow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D49C7624B8D42A00FEDBC8 /* NSShadow+Extension.swift */; };
 		3AF393339D2D566CE14AC200 /* Pods_RiotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */; };
 		405FD41D306133A48D9B5AA1 /* Pods_RiotPods_Riot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */; };
+		437440A824E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */; };
 		43AF6AF724E4E2E000BFE3EC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6AF624E4E2E000BFE3EC /* ProfileViewController.swift */; };
 		43AF6AFB24E4E3CC00BFE3EC /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6AF924E4E3CC00BFE3EC /* ProfileTableViewCell.swift */; };
 		43AF6AFC24E4E3CC00BFE3EC /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AF6AFA24E4E3CC00BFE3EC /* ProfileTableViewCell.xib */; };
@@ -1103,6 +1104,7 @@
 		3D78489321ACA25200B98A7D /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3D78489421ACA25300B98A7D /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3D78489521ACA25300B98A7D /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Vector.strings; sourceTree = "<group>"; };
+		437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTablBarControllerProfileExtension.swift; sourceTree = "<group>"; };
 		43AF6AF624E4E2E000BFE3EC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43AF6AF924E4E3CC00BFE3EC /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		43AF6AFA24E4E3CC00BFE3EC /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileTableViewCell.xib; sourceTree = "<group>"; };
@@ -2497,6 +2499,7 @@
 				43AF6B0924E4F56700BFE3EC /* views */,
 				43AF6AF824E4E3A800BFE3EC /* cells */,
 				43AF6AF624E4E2E000BFE3EC /* ProfileViewController.swift */,
+				437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -6256,6 +6259,7 @@
 				B1B336BE242B933700F95EC4 /* KeyVerificationSelfVerifyStartViewState.swift in Sources */,
 				B1BEE73423DF44A60003A4CB /* UserVerificationSessionsStatusViewModelType.swift in Sources */,
 				B18DEDD9243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewController.swift in Sources */,
+				437440A824E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift in Sources */,
 				EC1CA89524C9C9A200DE9EBF /* SetupBiometricsViewController.swift in Sources */,
 				324A2052225FC571004FE8B0 /* DeviceVerificationIncomingViewAction.swift in Sources */,
 				EC85D72C2477DCF2002C44C9 /* KeyVerificationManuallyVerifyViewState.swift in Sources */,

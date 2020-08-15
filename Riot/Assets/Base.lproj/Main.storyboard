@@ -325,7 +325,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SettingsViewController" title="Settings" id="taU-5Q-sdv" customClass="SettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="egL-pK-Xhr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
@@ -333,6 +333,7 @@
                             <outlet property="delegate" destination="taU-5Q-sdv" id="kIU-uT-h9Y"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="i8V-GN-8Ij"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s7I-UT-YCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -442,6 +443,7 @@
                     <navigationItem key="navigationItem" id="wyB-Oo-rgV"/>
                     <connections>
                         <outlet property="tableView" destination="58q-wN-pDJ" id="oIG-7H-scX"/>
+                        <segue destination="taU-5Q-sdv" kind="show" identifier="showSettingSegue" id="eER-0J-8Ui"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GNn-qe-YMy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -57,6 +57,7 @@ class ProfileViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
         tableView.register(UINib(nibName: SectionType.PROFILE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.PROFILE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ROLE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ICON_ITEM_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ICON_ITEM_CELL.cellIdentifier)
@@ -104,26 +105,48 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case SectionType.PROFILE_CELL.rawValue:
             guard let profileCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.PROFILE_CELL.cellIdentifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
-            
+            profileCell.selectionStyle = .none
             return profileCell
         case SectionType.ROLE_CELL.rawValue:
             guard let roleCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier, for: indexPath) as? ProfileRoleTableViewCell else { return UITableViewCell() }
             roleCell.setValue(role: roles[indexPath.row])
+            roleCell.selectionStyle = .none
             return roleCell
         case SectionType.ICON_ITEM_CELL.rawValue:
             guard let iconItemCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ICON_ITEM_CELL.cellIdentifier, for: indexPath) as? DrawerItemTableViewCell else { return UITableViewCell() }
             iconItemCell.setValue(iconItem: iconItems[indexPath.row])
+            iconItemCell.selectionStyle = .default
             return iconItemCell
         case SectionType.ONLY_TEXT_CELL.rawValue:
             guard let textCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier, for: indexPath) as? DrawerTextTableViewCell else { return UITableViewCell() }
             textCell.setValue(textItem: textItems[indexPath.row])
+            textCell.selectionStyle = .default
             return textCell
         case SectionType.ROLE_DIVIDER_CELL.rawValue, SectionType.ICON_ITEM_DIVIDER_CELL.rawValue:
             guard let dividerCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ICON_ITEM_DIVIDER_CELL.cellIdentifier, for: indexPath) as? ProfileSectionDividerTableViewCell else { return UITableViewCell() }
-            
+            dividerCell.selectionStyle = .none
             return dividerCell
         default:
             return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        //case SectionType.PROFILE_CELL.rawValue:
+            
+        //case SectionType.ROLE_CELL.rawValue:
+            
+        case SectionType.ICON_ITEM_CELL.rawValue:
+            if(iconItems[indexPath.row].text=="Settings")
+            {
+            self.performSegue(withIdentifier: "showSettingSegue", sender: self.tableView)
+            }
+        //case SectionType.ONLY_TEXT_CELL.rawValue:
+            
+        
+        default:
+            break
         }
     }
 }

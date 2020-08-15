@@ -605,7 +605,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showRoomDetails"] || [[segue identifier] isEqualToString:@"showContactDetails"] || [[segue identifier] isEqualToString:@"showGroupDetails"])
+    if ([[segue identifier] isEqualToString:@"showSideMenu"]){
+        //[self prepareSideMenuSeque:segue];
+    }
+    else if ([[segue identifier] isEqualToString:@"showRoomDetails"] || [[segue identifier] isEqualToString:@"showContactDetails"] || [[segue identifier] isEqualToString:@"showGroupDetails"])
     {
         UINavigationController *navigationController = [segue destinationViewController];
         

@@ -268,7 +268,7 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="MasterTabBarControllerSettingsBarButton"/>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <segue destination="Nc1-LZ-wpq" kind="presentation" id="Oyr-pE-C1z"/>
+                                <segue destination="Nc1-LZ-wpq" kind="presentation" identifier="showSideMenu" id="Oyr-pE-C1z"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="search_icon" id="pud-Fh-Usd">

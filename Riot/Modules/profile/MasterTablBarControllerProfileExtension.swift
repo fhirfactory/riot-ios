@@ -16,10 +16,9 @@
 
 import SideMenu
 import UIKit
-import Foundation
 
-public extension MasterTabBarController {
-    @objc public func prepareSideMenuSeque(for segue: UIStoryboardSegue){
+extension MasterTabBarController {
+    @objc func prepareSideMenuSeque(for segue: UIStoryboardSegue) {
         guard let sideMenuNavigationController = segue.destination as? SideMenuNavigationController else { return }
         sideMenuNavigationController.settings = prepareSideMenu()
     }
@@ -27,7 +26,8 @@ public extension MasterTabBarController {
     func prepareSideMenu() -> SideMenuSettings {
         var settings = SideMenuSettings()
         settings.presentationStyle = .menuSlideIn
-        //settings.menuWidth = min(view.frame.width, view.frame.height) * CGFloat(screenWidthSlider.value)
+        //let screenSize: CGRect = UIScreen.main.bounds
+        settings.menuWidth = min(view.frame.width, view.frame.height) * 0.75 //CGFloat(screenWidthSlider.value)
         return settings
     }
 }

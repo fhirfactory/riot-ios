@@ -30,6 +30,7 @@
 #import "SettingsViewController.h"
 #import "SecurityViewController.h"
 
+#import "SideMenu-Swift.h"
 #import "Riot-Swift.h"
 
 @interface MasterTabBarController ()
@@ -606,7 +607,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showSideMenu"]){
-        //[self prepareSideMenuSeque:segue];
+        [self prepareSideMenuSequeFor:segue];
     }
     else if ([[segue identifier] isEqualToString:@"showRoomDetails"] || [[segue identifier] isEqualToString:@"showContactDetails"] || [[segue identifier] isEqualToString:@"showGroupDetails"])
     {

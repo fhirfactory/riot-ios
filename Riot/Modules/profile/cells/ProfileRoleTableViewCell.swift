@@ -32,8 +32,8 @@ class ProfileRoleTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setValue(role: Role){
+    func setValue(role: Role) {
         roleName.text = role.name
-        roleIcon.tintColor = role.active ? UIColor.green: UIColor.gray
+        roleIcon.tintColor = role.active ? UIColor.systemGreen: UIColor.gray
     }
 }

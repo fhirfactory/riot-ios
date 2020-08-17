@@ -1,4 +1,4 @@
-// 
+//
 // Copyright 2020 Vector Creations Ltd
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,7 +41,7 @@ private enum SectionType: Int, CaseIterable {
     }
 }
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: MXKViewController {
     @IBOutlet weak var tableView: UITableView!
     var theme: Theme = ThemeService.shared().theme
     
@@ -49,8 +49,26 @@ class ProfileViewController: UIViewController {
     var iconItems: [IconItem] = []
     var textItems: [TextItem] = []
     
+    let signOutAlertPresenter = SignOutAlertPresenter()
+    
+    override func finalizeInit() {
+        super.finalizeInit()
+        // Setup `MXKViewControllerHandling` properties
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Add each matrix session, to update the view controller appearance according to mx sessions state
+        if let sessions = AppDelegate.the().mxSessions {
+            for mxSession in sessions {
+                guard let mxSession = mxSession as? MXSession else {
+                    continue
+                }
+                addMatrixSession(mxSession)
+            }
+        }
+        
+        signOutAlertPresenter.delegate = self
         
         //hiding the navigation bar's shadow
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
@@ -72,11 +90,12 @@ class ProfileViewController: UIViewController {
         iconItems.append(IconItem(image: UIImage(named: "role_outline") ?? UIImage(), text: "Roles"))
         iconItems.append(IconItem(image: UIImage(named: "exit") ?? UIImage(), text: "Sign out"))
         
-        textItems.append(TextItem(text: "Terms and Condition", url: ""))
-        textItems.append(TextItem(text: "Privacy Policy", url: ""))
+        textItems.append(TextItem(text: NSLocalizedString("settings_term_conditions", tableName: "Vector", bundle: Bundle.main, value: "", comment: ""), url: ""))
+        textItems.append(TextItem(text: NSLocalizedString("settings_privacy_policy", tableName: "Vector", bundle: Bundle.main, value: "", comment: ""), url: ""))
         textItems.append(TextItem(text: "Acknowledgement", url: ""))
         textItems.append(TextItem(text: "Version ... ", url: ""))
     }
+    
 }
 
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
@@ -133,20 +152,55 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
-        //case SectionType.PROFILE_CELL.rawValue:
+            //case SectionType.PROFILE_CELL.rawValue:
             
-        //case SectionType.ROLE_CELL.rawValue:
+            //case SectionType.ROLE_CELL.rawValue:
             
         case SectionType.ICON_ITEM_CELL.rawValue:
-            if(iconItems[indexPath.row].text=="Settings")
-            {
-            self.performSegue(withIdentifier: "showSettingSegue", sender: self.tableView)
+            if iconItems[indexPath.row].text == "Settings" {
+                self.performSegue(withIdentifier: "showSettingSegue", sender: self.tableView)
+            } else if iconItems[indexPath.row].text == "Sign out" {
+                onSignout(tableView.cellForRow(at: indexPath))
             }
-        //case SectionType.ONLY_TEXT_CELL.rawValue:
-            
-        
+            break
+        case SectionType.ONLY_TEXT_CELL.rawValue:
+            if textItems[indexPath.row].text == NSLocalizedString("settings_term_conditions", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {
+                let webViewViewController: WebViewViewController = WebViewViewController(url: BuildSettings.applicationTermsConditionsUrlString)
+                webViewViewController.title = NSLocalizedString("settings_term_conditions", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")
+                navigationController?.pushViewController(webViewViewController, animated: true)
+            } else if textItems[indexPath.row].text == NSLocalizedString("settings_privacy_policy", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {
+                let webViewViewController: WebViewViewController = WebViewViewController(url: BuildSettings.applicationPrivacyPolicyUrlString)
+                webViewViewController.title = NSLocalizedString("settings_privacy_policy", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")
+                navigationController?.pushViewController(webViewViewController, animated: true)
+            }
+            break
         default:
             break
         }
+    }
+}
+
+
+extension ProfileViewController: SignOutAlertPresenterDelegate {
+    func onSignout(_ sender: Any?) {
+        let cell = sender as? UITableViewCell
+        let keyBackup = mainSession.crypto.backup
+        signOutAlertPresenter.present(for: keyBackup?.state ?? MXKeyBackupStateUnknown, areThereKeysToBackup: keyBackup?.hasKeysToBackup ?? false, from: self, sourceView: cell, animated: true)
+    }
+    
+    func signOutAlertPresenterDidTapSignOutAction(_ presenter: SignOutAlertPresenter) {
+        // Prevent user to perform user interaction in settings when sign out
+        view.isUserInteractionEnabled = false
+        startActivityIndicator()
+        //MXWeakify(self)
+        AppDelegate.the().logout(withConfirmation: false) { isLoggedOut in
+            //MXStrongifyAndReturnIfNil(self)
+            self.stopActivityIndicator()
+            self.view.isUserInteractionEnabled = true
+        }
+    }
+    
+    func signOutAlertPresenterDidTapBackupAction(_ presenter: SignOutAlertPresenter) {
+        print("not implemented")
     }
 }

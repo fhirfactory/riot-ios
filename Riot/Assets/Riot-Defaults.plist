@@ -42,7 +42,7 @@
 		<string></string>
 	</dict>
 	<key>showAnalyticsPrompt</key>
-	<true/>
+	<false/>
 	<key>settingsCopyrightUrl</key>
 	<string>https://element.io/copyright</string>
 	<key>settingsPrivacyPolicyUrl</key>

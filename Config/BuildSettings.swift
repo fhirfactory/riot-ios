@@ -176,6 +176,7 @@ final class BuildSettings: NSObject {
     
     // MARK: - General Settings Screen
     
+    static let settingsScreenAllowUserSignOut: Bool = false
     static let settingsScreenShowUserFirstName: Bool = false
     static let settingsScreenShowUserSurname: Bool = false
     static let settingsScreenAllowAddingEmailThreepids: Bool = false
@@ -201,6 +202,7 @@ final class BuildSettings: NSObject {
     static let settingsScreenShowOLMVersion: Bool = false
     static let settingsScreenShowCopyRight: Bool = false
     static let settingsScreenAllowClearingCacheSettings = false
+    static let settingsScreenAllowMarkAllAsRead = false
     static let settingsScreenShowThirdPartNotice = false
     static let settingsScreenShowAcknowledgement = true
     

@@ -275,9 +275,11 @@ TableViewSectionsDelegate>
 {
     NSMutableArray<Section*> *tmpSections = [NSMutableArray arrayWithCapacity:SECTION_TAG_DEACTIVATE_ACCOUNT + 1];
     
-    Section *sectionSignOut = [Section sectionWithTag:SECTION_TAG_SIGN_OUT];
-    [sectionSignOut addRowWithTag:0];
-    [tmpSections addObject:sectionSignOut];
+    if (BuildSettings.settingsScreenAllowUserSignOut){
+        Section *sectionSignOut = [Section sectionWithTag:SECTION_TAG_SIGN_OUT];
+        [sectionSignOut addRowWithTag:0];
+        [tmpSections addObject:sectionSignOut];
+    }
     
     Section *sectionUserSettings = [Section sectionWithTag:SECTION_TAG_USER_SETTINGS];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_PROFILE_PICTURE_INDEX];
@@ -445,7 +447,9 @@ TableViewSectionsDelegate>
     {
         [sectionOther addRowWithTag:OTHER_ENABLE_RAGESHAKE_INDEX];
     }
-    [sectionOther addRowWithTag:OTHER_MARK_ALL_AS_READ_INDEX];
+    if (BuildSettings.settingsScreenAllowMarkAllAsRead){
+        [sectionOther addRowWithTag:OTHER_MARK_ALL_AS_READ_INDEX];
+    }
     if (BuildSettings.settingsScreenAllowClearingCacheSettings)
     {
     [sectionOther addRowWithTag:OTHER_CLEAR_CACHE_INDEX];
@@ -2182,6 +2186,8 @@ TableViewSectionsDelegate>
             markAllBtnCell.mxkButton.accessibilityIdentifier = nil;
             
             cell = markAllBtnCell;
+            
+            //if (!BuildSettings.settingsScreenAllowMarkAllAsRead)
         }
         else if (row == OTHER_CLEAR_CACHE_INDEX)
         {

@@ -54,6 +54,22 @@ final class BuildSettings: NSObject {
         return baseBundleIdentifier + ".ios.dev"
     }
     
+    static var pushKitAppId: String {
+        #if DEBUG
+        return pushKitAppIdDev
+        #else
+        return pushKitAppIdProd
+        #endif
+    }
+    
+    static var pusherAppId: String {
+        #if DEBUG
+        return pusherAppIdDev
+        #else
+        return pusherAppIdProd
+        #endif
+    }
+    
     // Element-Web instance for the app
     static let applicationWebAppUrlString = "https://app.element.io"
     
@@ -142,6 +158,9 @@ final class BuildSettings: NSObject {
     /// Setting to force protection by pin code
     static let forcePinProtection: Bool = false
     
+    /// Max allowed time to continue using the app without prompting PIN
+    static let pinCodeGraceTimeInSeconds: TimeInterval = 0
+    
     /// Force non-jailbroken app usage
     static let forceNonJailbrokenUsage: Bool = true
     
@@ -149,8 +168,12 @@ final class BuildSettings: NSObject {
     
     static let allowLocalContactsAccess: Bool = true
     
+    // MARK: - Feature Specifics
     
-    // MARK: - Screen settings -
+    /// Not allowed pin codes. User won't be able to select one of the pin in the list.
+    static let notAllowedPINs: [String] = []
+    
+    // MARK: - General Settings Screen
     
     static let settingsScreenShowUserFirstName: Bool = false
     static let settingsScreenShowUserSurname: Bool = false
@@ -166,13 +189,31 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowBugReportingManually: Bool = true
     static let settingsScreenAllowDeactivatingAccount: Bool = true
     
+    // MARK: - Room Settings Screen
+    
+    static let roomSettingsScreenShowLowPriorityOption: Bool = true
+    static let roomSettingsScreenShowDirectChatOption: Bool = true
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
+    static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
+    static let roomSettingsScreenShowAddressSettings: Bool = true
+    static let roomSettingsScreenShowFlairSettings: Bool = true
+    static let roomSettingsScreenShowAdvancedSettings: Bool = true
+    
     // MARK: - Message
     static let messageDetailsAllowShare: Bool = true
     static let messageDetailsAllowPermalink: Bool = true
     static let messageDetailsAllowViewSource: Bool = true
+    static let messageDetailsAllowSave: Bool = true
+    
+    // MARK: - HTTP
+    /// Additional HTTP headers will be sent by all requests. Not recommended to use request-specific headers, like `Authorization`.
+    /// Empty dictionary by default.
+    static let httpAdditionalHeaders: [String: String] = [:]
     
     
     // MARK: - Authentication Screen
     static let authScreenShowRegister = true
+    static let authScreenShowPhoneNumber = true
+    static let authScreenShowForgotPassword = true
     static let authScreenShowCustomServerOptions = true
 }

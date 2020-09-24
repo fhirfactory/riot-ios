@@ -17,7 +17,6 @@
 
 #import "HomeViewController.h"
 
-#import "AppDelegate.h"
 #import "Riot-Swift.h"
 
 #import "RecentsDataSource.h"
@@ -112,11 +111,6 @@
     }
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-}
-
-- (void)dealloc
-{
-    
 }
 
 - (void)destroy
@@ -405,14 +399,7 @@
         
         CGSize fittingSize = UILayoutFittingCompressedSize;
         CGFloat tableViewWidth = CGRectGetWidth(tableView.frame);
-        CGFloat safeAreaWidth;
-        
-        if (@available(iOS 11.0, *)) {
-            // Take safe area into account
-            safeAreaWidth = MAX(tableView.safeAreaInsets.left, tableView.safeAreaInsets.right);
-        } else {
-            safeAreaWidth = 0;
-        }
+        CGFloat safeAreaWidth = MAX(tableView.safeAreaInsets.left, tableView.safeAreaInsets.right);        
         
         fittingSize.width = tableViewWidth - safeAreaWidth;
         

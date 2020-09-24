@@ -51,6 +51,11 @@ final class PinCodePreferences: NSObject {
         return BuildSettings.forcePinProtection
     }
     
+    /// Not allowed pin codes. User won't be able to select one of the pin in the list.
+    var notAllowedPINs: [String] {
+        return BuildSettings.notAllowedPINs
+    }
+    
     var isBiometricsAvailable: Bool {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
@@ -59,7 +64,9 @@ final class PinCodePreferences: NSObject {
     let allowedNumberOfTrialsBeforeAlert: Int = 5
     
     /// Max allowed time to continue using the app without prompting PIN
-    let graceTimeInSeconds: TimeInterval = 120
+    var graceTimeInSeconds: TimeInterval {
+        return BuildSettings.pinCodeGraceTimeInSeconds
+    }
     
     /// Number of digits for the PIN
     let numberOfDigits: Int = 4
@@ -111,6 +118,8 @@ final class PinCodePreferences: NSObject {
     func localizedBiometricsName() -> String? {
         if isBiometricsAvailable {
             let context = LAContext()
+            //  canEvaluatePolicy should be called for biometryType to be set
+            _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
             switch context.biometryType {
             case .touchID:
                 return VectorL10n.biometricsModeTouchId
@@ -126,6 +135,8 @@ final class PinCodePreferences: NSObject {
     func biometricsIcon() -> UIImage? {
         if isBiometricsAvailable {
             let context = LAContext()
+            //  canEvaluatePolicy should be called for biometryType to be set
+            _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
             switch context.biometryType {
             case .touchID:
                 return Asset.Images.touchidIcon.image

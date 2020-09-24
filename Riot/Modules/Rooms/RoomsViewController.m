@@ -16,21 +16,22 @@
 
 #import "RoomsViewController.h"
 
-#import "AppDelegate.h"
-
 #import "RecentsDataSource.h"
 
 #import "DirectoryServerPickerViewController.h"
 
 #import "Riot-Swift.h"
 
-@interface RoomsViewController ()
+@interface RoomsViewController ()<RoomsDirectoryCoordinatorBridgePresenterDelegate>
 {
     RecentsDataSource *recentsDataSource;
 
     // The animated view displayed at the table view bottom when paginating the room directory
     UIView* footerSpinnerView;
 }
+
+@property (nonatomic, strong) RoomsDirectoryCoordinatorBridgePresenter *roomsDirectoryCoordinatorBridgePresenter;
+
 @end
 
 @implementation RoomsViewController
@@ -55,6 +56,8 @@
     
     // Add the (+) button programmatically
     [self addPlusButton];
+    
+    plusButtonImageView.image = [UIImage imageNamed:@"rooms_floating_action"];
     
     self.enableStickyHeaders = YES;
 }
@@ -82,11 +85,6 @@
             [recentsDataSource.publicRoomsDirectoryDataSource paginate:nil failure:nil];
         }
     }
-}
-
-- (void)dealloc
-{
-    
 }
 
 - (void)destroy
@@ -126,6 +124,13 @@
     {
         [super dataSource:dataSource didRecognizeAction:actionIdentifier inCell:cell userInfo:userInfo];
     }
+}
+
+- (void)onPlusButtonPressed
+{
+    self.roomsDirectoryCoordinatorBridgePresenter = [[RoomsDirectoryCoordinatorBridgePresenter alloc] initWithSession:self.mainSession dataSource:[recentsDataSource.publicRoomsDirectoryDataSource copy]];
+    self.roomsDirectoryCoordinatorBridgePresenter.delegate = self;
+    [self.roomsDirectoryCoordinatorBridgePresenter presentFrom:self animated:YES];
 }
 
 #pragma mark - 
@@ -254,7 +259,12 @@
 - (void)openPublicRoomAtIndexPath:(NSIndexPath *)indexPath
 {
     MXPublicRoom *publicRoom = [recentsDataSource.publicRoomsDirectoryDataSource roomAtIndexPath:indexPath];
+    
+    [self openPublicRoom:publicRoom];
+}
 
+- (void)openPublicRoom:(MXPublicRoom *)publicRoom
+{
     // Check whether the user has already joined the selected public room
     if ([recentsDataSource.publicRoomsDirectoryDataSource.mxSession roomWithRoomId:publicRoom.roomId])
     {
@@ -339,6 +349,30 @@
         // Hide line separators of empty cells
         self.recentsTableView.tableFooterView = [[UIView alloc] init];;
     }
+}
+
+#pragma mark - RoomsDirectoryCoordinatorBridgePresenterDelegate
+
+- (void)roomsDirectoryCoordinatorBridgePresenterDelegateDidComplete:(RoomsDirectoryCoordinatorBridgePresenter *)coordinatorBridgePresenter
+{
+    [coordinatorBridgePresenter dismissWithAnimated:YES completion:nil];
+    self.roomsDirectoryCoordinatorBridgePresenter = nil;
+}
+
+- (void)roomsDirectoryCoordinatorBridgePresenterDelegate:(RoomsDirectoryCoordinatorBridgePresenter *)coordinatorBridgePresenter didSelectRoom:(MXPublicRoom *)room
+{
+    [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
+        [self openPublicRoom:room];
+    }];
+    self.roomsDirectoryCoordinatorBridgePresenter = nil;
+}
+
+- (void)roomsDirectoryCoordinatorBridgePresenterDelegateDidTapCreateNewRoom:(RoomsDirectoryCoordinatorBridgePresenter *)coordinatorBridgePresenter
+{
+    [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
+        [self createNewRoom];
+    }];
+    self.roomsDirectoryCoordinatorBridgePresenter = nil;
 }
 
 @end

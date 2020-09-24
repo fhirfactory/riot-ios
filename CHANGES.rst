@@ -1,3 +1,269 @@
+Changes to be released in next version
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * Pin: Implement not allowed PINs feature. There is no restriction by default.
+ * Room: New Room Settings screen.
+
+🐛 Bugfix
+ * Timeline: Hide encrypted history (pre-invite) (#3660).
+ * Fix floating action buttons' images.
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Changes in 1.0.12 (2020-09-16)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.12.20](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.12.20)).
+
+Changes in 1.0.11 (2020-09-15)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * Room: Collapse state messages on room creation (#3629). 
+ * AuthVC: Make force PIN working for registration as well.
+ * AppDelegate: Do not show incoming key verification requests while authenticating.
+
+🐛 Bugfix
+ * AuthVC: Fix PIN setup that broke cross-signing bootstrap.
+ * Loading animation: Fix the bug where, after authentication, the animation disappeared too early and made auth screen flashed.
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * buildRelease.sh: Pass a `git_tag` parameter to fastlane because fastlane `git_branch` method can fail.
+
+Improvements:
+
+
+Changes in 1.0.10 (2020-09-08)
+=================================================
+
+✨ Features
+ * 
+    
+🙌 Improvements
+ * AppDelegate: Convert to Swift (#3594).
+ * Contextualize floating button actions per tab (#3627).
+    
+🐛 Bugfix
+ * Show pin code screen on every foreground (#3620). 
+ * Close keyboard on pin code screen (#3622).
+ * Fix content leakage on pin code protection (#3624).
+    
+⚠️ API Changes
+ * 
+    
+🗣 Translations
+ * 
+    
+🧱 Build
+ * buildRelease.sh: Make sure it works for both branches and tags
+    
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.12.18](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.12.18)).
+
+Changes in 1.0.9 (2020-09-03)
+=================================================
+
+Features:
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.12.17](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.12.17)).
+ * 
+
+Bugfix:
+ * 
+
+API Change:
+ * 
+
+Translations:
+ * 
+
+Others:
+ * 
+
+Build:
+ * 
+
+Test:
+ * 
+
+Changes in 1.0.8 (2020-09-03)
+=================================================
+
+Features:
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.12.17](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.12.17)).
+ * 
+
+Bugfix:
+ * PushKit: Add more logs when removing PushKit pusher (#3577).
+ * PushKit: Check all registered pushers and remove PushKit ones (#3577).
+
+API Change:
+ * 
+
+Translations:
+ * 
+
+Others:
+ * 
+
+Build:
+ * 
+
+Test:
+ * 
+
+Changes in 1.0.7 (2020-08-28)
+=================================================
+
+Features:
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.12.16](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.12.16)).
+ * 
+
+Bugfix:
+ * Update room input toolbar on theme change (#3445).
+ * Explicitly remove PushKit pushers (#3577).
+ * Fix launch animation on clear cache (#3580).
+
+API Change:
+ * 
+
+Translations:
+ * 
+
+Others:
+ * 
+
+Build:
+ * 
+
+Test:
+ * 
+
+Changes in 1.0.6 (2020-08-26)
+=================================================
+
+Features:
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.12.15](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.12.15)).
+ * Config fixes.
+ * Introduce TableViewSections. Refactor RoomSettingsViewController & SettingsViewController.
+ * AuthenticationVC: Make forgot password button and phone number text field configurable.
+ * Introduce httpAdditionalHeaders in BuildSettings.
+
+Bugfix:
+ * Fix biometry name null case (#3551).
+ * Avoid email validation link to redirect to web app (#3513).
+ * Wait for first sync complete before stopping loading screen (#3336).
+ * Disable key backup on extensions (#3371).
+ * Gracefully cancel verification on iOS 13 drag gesture (#3556).
+
+API Change:
+ * 
+
+Translations:
+ * 
+
+Others:
+ * Ignore fastlane/Preview.html
+ * SonarCloud: Fix some code smells.
+
+Build:
+ * 
+
+Test:
+ * 
+
+Changes in 1.0.5 (2020-08-13)
+=================================================
+
+Features:
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.12.12](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.12.12)).
+ * 
+
+Bugfix:
+ * Fix pin code cell selection. 
+ * Fix default orientation crash.
+ * Fix rooms list swipe actions tint colors (#3507).
+
+API Change:
+ * 
+
+Translations:
+ * 
+
+Others:
+ * 
+
+Build:
+ * Integrate fastlane deliver (#3519).
+
+Test:
+ * 
+
 Changes in 1.0.4 (2020-08-07)
 =================================================
 

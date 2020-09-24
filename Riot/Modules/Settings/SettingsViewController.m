@@ -130,6 +130,7 @@ enum
     OTHER_COPYRIGHT_INDEX,
     OTHER_TERM_CONDITIONS_INDEX,
     OTHER_PRIVACY_INDEX,
+    OTHER_ACKNOWLEDGEMENT_INDEX,
     OTHER_THIRD_PARTY_INDEX,
     OTHER_CRASH_REPORT_INDEX,
     OTHER_ENABLE_RAGESHAKE_INDEX,
@@ -281,7 +282,10 @@ TableViewSectionsDelegate>
     Section *sectionUserSettings = [Section sectionWithTag:SECTION_TAG_USER_SETTINGS];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_PROFILE_PICTURE_INDEX];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_DISPLAYNAME_INDEX];
+    if (BuildSettings.settingsScreenAllowChangingPassword)
+    {
     [sectionUserSettings addRowWithTag:USER_SETTINGS_CHANGE_PASSWORD_INDEX];
+    }
     if (BuildSettings.settingsScreenShowUserFirstName)
     {
         [sectionUserSettings addRowWithTag:USER_SETTINGS_FIRST_NAME_INDEX];
@@ -323,14 +327,17 @@ TableViewSectionsDelegate>
     
     Section *sectionNotificationSettings = [Section sectionWithTag:SECTION_TAG_NOTIFICATIONS];
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX];
+    if (BuildSettings.settingsScreenShowNotificationDecryptedContentSettings)
+    {
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT];
+    }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX];
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX];
     sectionNotificationSettings.headerTitle = NSLocalizedStringFromTable(@"settings_notifications_settings", @"Vector", nil);
     [tmpSections addObject:sectionNotificationSettings];
     
-    if (BuildSettings.allowVoIPUsage && BuildSettings.stunServerFallbackUrlString)
+    if (BuildSettings.allowVoIPUsage && BuildSettings.stunServerFallbackUrlString && BuildSettings.settingsScreenShowCallsSettings)
     {
         Section *sectionCalls = [Section sectionWithTag:SECTION_TAG_CALLS];
         [sectionCalls addRowWithTag:CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX];
@@ -384,7 +391,7 @@ TableViewSectionsDelegate>
         [tmpSections addObject:sectionIgnoredUsers];
     }
     
-    if (RiotSettings.shared.matrixApps)
+    if (RiotSettings.shared.matrixApps && BuildSettings.settingsScreenShowIntegrationSettings)
     {
         Section *sectionIntegrations = [Section sectionWithTag:SECTION_TAG_INTEGRATIONS];
         [sectionIntegrations addRowWithTag:INTEGRATIONS_INDEX];
@@ -393,11 +400,14 @@ TableViewSectionsDelegate>
         [tmpSections addObject:sectionIntegrations];
     }
     
+    if (BuildSettings.settingsScreenShowUserInterfaceSettings)
+    {
     Section *sectionUserInterface = [Section sectionWithTag:SECTION_TAG_USER_INTERFACE];
     [sectionUserInterface addRowWithTag:USER_INTERFACE_LANGUAGE_INDEX];
     [sectionUserInterface addRowWithTag:USER_INTERFACE_THEME_INDEX];
     sectionUserInterface.headerTitle = NSLocalizedStringFromTable(@"settings_user_interface", @"Vector", nil);
     [tmpSections addObject: sectionUserInterface];
+    }
     
     if (BuildSettings.settingsScreenShowAdvancedSettings)
     {
@@ -409,11 +419,24 @@ TableViewSectionsDelegate>
     
     Section *sectionOther = [Section sectionWithTag:SECTION_TAG_OTHER];
     [sectionOther addRowWithTag:OTHER_VERSION_INDEX];
-    [sectionOther addRowWithTag:OTHER_OLM_VERSION_INDEX];
+    if (BuildSettings.settingsScreenShowOLMVersion)
+    {
+        [sectionOther addRowWithTag:OTHER_OLM_VERSION_INDEX];
+    }
+    if (BuildSettings.settingsScreenShowCopyRight)
+    {
     [sectionOther addRowWithTag:OTHER_COPYRIGHT_INDEX];
+    }
     [sectionOther addRowWithTag:OTHER_TERM_CONDITIONS_INDEX];
-    [sectionOther addRowWithTag:OTHER_PRIVACY_INDEX];
+    if (BuildSettings.settingsScreenShowThirdPartNotice)
+    {
     [sectionOther addRowWithTag:OTHER_THIRD_PARTY_INDEX];
+    }
+    [sectionOther addRowWithTag:OTHER_PRIVACY_INDEX];
+    if (BuildSettings.settingsScreenShowAcknowledgement)
+    {
+    [sectionOther addRowWithTag:OTHER_ACKNOWLEDGEMENT_INDEX];
+    }
     if (BuildSettings.settingsScreenAllowChangingCrashUsageDataSettings)
     {
         [sectionOther addRowWithTag:OTHER_CRASH_REPORT_INDEX];
@@ -423,7 +446,10 @@ TableViewSectionsDelegate>
         [sectionOther addRowWithTag:OTHER_ENABLE_RAGESHAKE_INDEX];
     }
     [sectionOther addRowWithTag:OTHER_MARK_ALL_AS_READ_INDEX];
+    if (BuildSettings.settingsScreenAllowClearingCacheSettings)
+    {
     [sectionOther addRowWithTag:OTHER_CLEAR_CACHE_INDEX];
+    }
     if (BuildSettings.settingsScreenAllowBugReportingManually)
     {
         [sectionOther addRowWithTag:OTHER_REPORT_BUG_INDEX];
@@ -1521,9 +1547,16 @@ TableViewSectionsDelegate>
             displaynameCell.mxkTextField.text = myUser.displayname;
             
             displaynameCell.mxkTextField.tag = row;
-            displaynameCell.mxkTextField.delegate = self;
-            [displaynameCell.mxkTextField removeTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-            [displaynameCell.mxkTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            if (BuildSettings.settingsScreenAllowChangingdisplayName)
+            {
+                displaynameCell.mxkTextField.delegate = self;
+                [displaynameCell.mxkTextField removeTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                [displaynameCell.mxkTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            }
+            else
+            {
+                displaynameCell.mxkTextField.userInteractionEnabled = NO;
+            }
             displaynameCell.mxkTextField.accessibilityIdentifier=@"SettingsVCDisplayNameTextField";
             
             cell = displaynameCell;
@@ -1840,7 +1873,14 @@ TableViewSectionsDelegate>
                 {
                     isCell.textLabel.text = NSLocalizedStringFromTable(@"settings_identity_server_no_is", @"Vector", nil);
                 }
-                [isCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+                if (BuildSettings.settingsScreenAllowSelectingIdentityServer)
+                {
+                    [isCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+                }
+                else
+                {
+                    isCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
                 cell = isCell;
                 break;
             }
@@ -2073,6 +2113,16 @@ TableViewSectionsDelegate>
             [privacyPolicyCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             
             cell = privacyPolicyCell;
+        }
+        else if (row == OTHER_ACKNOWLEDGEMENT_INDEX)
+        {
+            MXKTableViewCell *acknowledgementCell = [self getDefaultTableViewCell:tableView];
+            
+            acknowledgementCell.textLabel.text = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+            
+            [acknowledgementCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+            
+            cell = acknowledgementCell;
         }
         else if (row == OTHER_THIRD_PARTY_INDEX)
         {
@@ -2425,7 +2475,10 @@ TableViewSectionsDelegate>
             switch (row)
             {
                 case IDENTITY_SERVER_INDEX:
+                    if (BuildSettings.settingsScreenAllowSelectingIdentityServer)
+                    {
                     [self showIdentityServerSettingsScreen];
+                    }
                     break;
             }
         }
@@ -2516,6 +2569,14 @@ TableViewSectionsDelegate>
                 
                 [self pushViewController:webViewViewController];
             }
+            else if (row == OTHER_ACKNOWLEDGEMENT_INDEX)
+            {
+                WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:BuildSettings.applicationAcknowledgementUrlString];
+                
+                webViewViewController.title = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+                
+                [self pushViewController:webViewViewController];
+            }
             else if (row == OTHER_THIRD_PARTY_INDEX)
             {
                 NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"third_party_licenses" ofType:@"html" inDirectory:nil];
@@ -2529,7 +2590,7 @@ TableViewSectionsDelegate>
         }
         else if (section == SECTION_TAG_USER_SETTINGS)
         {
-            if (row == USER_SETTINGS_PROFILE_PICTURE_INDEX)
+            if (row == USER_SETTINGS_PROFILE_PICTURE_INDEX && BuildSettings.settingsScreenAllowChangingProfilePicture)
             {
                 [self onProfileAvatarTap:nil];
             }

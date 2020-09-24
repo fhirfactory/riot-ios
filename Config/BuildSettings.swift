@@ -181,7 +181,7 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowAddingEmailThreepids: Bool = false
     static let settingsScreenAllowAddingPhoneThreepids: Bool = false
     static let settingsScreenAllowChangingPassword: Bool = false
-    static let settingsScreenAllowChangingProfilePicture: Bool = false
+    static let settingsScreenAllowChangingProfilePicture: Bool = true
     static let settingsScreenAllowChangingdisplayName: Bool = false
     static let settingsScreenShowThreepidExplanatory: Bool = false
     static let settingsScreenShowDiscoverySettings: Bool = false
@@ -197,6 +197,7 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowBugReportingManually: Bool = false
     static let settingsScreenAllowDeactivatingAccount: Bool = false
     static let settingsScreenShowUserInterfaceSettings: Bool = false
+    static let settingsScreenOverrideDefaultThemeSelection : NSString = "light"
     static let settingsScreenShowOLMVersion: Bool = false
     static let settingsScreenShowCopyRight: Bool = false
     static let settingsScreenAllowClearingCacheSettings = false

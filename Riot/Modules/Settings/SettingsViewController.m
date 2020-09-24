@@ -3496,6 +3496,8 @@ TableViewSectionsDelegate>
 
 - (void)onProfileAvatarTap:(UITapGestureRecognizer *)recognizer
 {
+    if (!BuildSettings.settingsScreenAllowChangingProfilePicture)
+        return;
     SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
     singleImagePickerPresenter.delegate = self;
     

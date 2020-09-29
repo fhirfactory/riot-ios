@@ -334,7 +334,9 @@ TableViewSectionsDelegate>
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT];
     }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
+    if (BuildSettings.settingsScreenShowPinWithMissed){
+        [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
+    }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX];
     sectionNotificationSettings.headerTitle = NSLocalizedStringFromTable(@"settings_notifications_settings", @"Vector", nil);
     [tmpSections addObject:sectionNotificationSettings];

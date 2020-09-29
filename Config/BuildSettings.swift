@@ -205,6 +205,7 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowMarkAllAsRead = false
     static let settingsScreenShowThirdPartNotice = false
     static let settingsScreenShowAcknowledgement = true
+    static let settingsScreenShowPinWithMissed = false // to set the default for this setting, change the appropriate row in Riot-Defaults.plist
     
     // MARK: - Room Settings Screen
     

@@ -217,6 +217,11 @@ final class BuildSettings: NSObject {
     static let roomSettingsScreenShowFlairSettings: Bool = true
     static let roomSettingsScreenShowAdvancedSettings: Bool = true
     
+    // MARK: - Room Participants
+    static let roomParticipantAllowBan : Bool = false
+    static let roomParticipantShowSecurity : Bool = false
+    static let roomParticipantShowVoipCallByDefault : Bool = true
+    
     // MARK: - Message
     static let messageDetailsAllowShare: Bool = true
     static let messageDetailsAllowPermalink: Bool = true

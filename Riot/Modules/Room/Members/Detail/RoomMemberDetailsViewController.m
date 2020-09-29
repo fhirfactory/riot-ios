@@ -52,6 +52,12 @@
     NSInteger otherActionsIndex;
     
     /**
+     List of the voip options for this member.
+     */
+    NSMutableArray<NSNumber*> *callActionsArray;
+    NSInteger callActionsIndex;
+    
+    /**
      List of the direct chats (room ids) with this member.
      */
     NSMutableArray<NSString*> *directChatsArray;
@@ -134,6 +140,7 @@
     adminActionsArray = [[NSMutableArray alloc] init];
     otherActionsArray = [[NSMutableArray alloc] init];
     directChatsArray = [[NSMutableArray alloc] init];
+    callActionsArray = [[NSMutableArray alloc] init];
     
     // Keep visible the status bar by default.
     isStatusBarHidden = NO;
@@ -399,7 +406,7 @@
         
         self.roomMemberStatusLabel.text = presenceText;
         
-        self.roomMemberAvatarBadgeImageView.image = [EncryptionTrustLevelBadgeImageHelper userBadgeImageFor:self.encryptionTrustLevel];
+        self.roomMemberAvatarBadgeImageView.image = BuildSettings.roomParticipantShowSecurity ? [EncryptionTrustLevelBadgeImageHelper userBadgeImageFor:self.encryptionTrustLevel] : nil;
         
         // Retrieve the existing direct chats
         [directChatsArray removeAllObjects];
@@ -512,6 +519,7 @@
     
     [adminActionsArray removeAllObjects];
     [otherActionsArray removeAllObjects];
+    [callActionsArray removeAllObjects];
     
     // Consider the case of the user himself
     if (self.isRoomMemberCurrentUser)
@@ -583,7 +591,7 @@
                     [adminActionsArray addObject:@(MXKRoomMemberDetailsActionKick)];
                 }
                 // Check conditions to be able to ban someone
-                if (oneSelfPowerLevel >= [powerLevels ban] && oneSelfPowerLevel > memberPowerLevel)
+                if (oneSelfPowerLevel >= [powerLevels ban] && oneSelfPowerLevel > memberPowerLevel && BuildSettings.roomParticipantAllowBan)
                 {
                     [adminActionsArray addObject:@(MXKRoomMemberDetailsActionBan)];
                 }
@@ -620,11 +628,11 @@
         }
         
         // List the other actions
-        if (self.enableVoipCall)
+        if (self.enableVoipCall || BuildSettings.roomParticipantShowVoipCallByDefault)
         {
             // Offer voip call options
-            [otherActionsArray addObject:@(MXKRoomMemberDetailsActionStartVoiceCall)];
-            [otherActionsArray addObject:@(MXKRoomMemberDetailsActionStartVideoCall)];
+            [callActionsArray addObject:@(MXKRoomMemberDetailsActionStartVoiceCall)];
+            [callActionsArray addObject:@(MXKRoomMemberDetailsActionStartVideoCall)];
         }
         
         // Check whether the option Ignore may be presented
@@ -648,15 +656,17 @@
         }
     }
     
-    if (self.mxRoom.summary.isEncrypted)
-    {
-        securityActionsArray = @[@(MXKRoomMemberDetailsActionSecurity),
-                                 @(MXKRoomMemberDetailsActionSecurityInformation)];
-        
-    }
-    else
-    {
-        securityActionsArray = @[@(MXKRoomMemberDetailsActionSecurity)];
+    if (BuildSettings.roomParticipantShowSecurity){
+        if (self.mxRoom.summary.isEncrypted)
+        {
+            securityActionsArray = @[@(MXKRoomMemberDetailsActionSecurity),
+                                     @(MXKRoomMemberDetailsActionSecurityInformation)];
+            
+        }
+        else
+        {
+            securityActionsArray = @[@(MXKRoomMemberDetailsActionSecurity)];
+        }
     }
     
     securityIndex = adminToolsIndex = otherActionsIndex = directChatsIndex = devicesIndex = -1;
@@ -679,6 +689,10 @@
     if (!isOneself)
     {
         directChatsIndex = sectionCount++;
+    }
+    
+    if (callActionsArray.count){
+        callActionsIndex = sectionCount++;
     }
     
     if (devicesArray.count)
@@ -711,6 +725,10 @@
     {
         return (devicesArray.count);
     }
+    else if (section == callActionsIndex)
+    {
+        return (callActionsArray.count);
+    }
     
     return 0;
 }
@@ -736,6 +754,9 @@
     else if (section == devicesIndex)
     {
         return NSLocalizedStringFromTable(@"room_participants_action_section_devices", @"Vector", nil);
+    }
+    else if (section == callActionsIndex){
+        return NSLocalizedStringFromTable(@"room_participants_action_section_call", @"Vector", nil);
     }
     
     return nil;
@@ -896,7 +917,7 @@
             cell = encryptionInfoCell;
         }
     }
-    else if (indexPath.section == adminToolsIndex || indexPath.section == otherActionsIndex)
+    else if (indexPath.section == adminToolsIndex || indexPath.section == otherActionsIndex || indexPath.section == callActionsIndex)
     {
         TableViewCellWithButton *cellWithButton = [tableView dequeueReusableCellWithIdentifier:[TableViewCellWithButton defaultReuseIdentifier] forIndexPath:indexPath];
         
@@ -908,6 +929,8 @@
         else if (indexPath.section == otherActionsIndex && indexPath.row < otherActionsArray.count)
         {
             actionNumber = otherActionsArray[indexPath.row];
+        }else if (indexPath.section == callActionsIndex){
+            actionNumber = callActionsArray[indexPath.row];
         }
         
         if (actionNumber)

@@ -2358,7 +2358,7 @@ internal enum VectorL10n {
   internal static var roomDetailsCopyRoomUrl: String { 
     return VectorL10n.tr("Vector", "room_details_copy_room_url") 
   }
-  /// Direct Chat
+  /// Chat
   internal static var roomDetailsDirectChat: String { 
     return VectorL10n.tr("Vector", "room_details_direct_chat") 
   }
@@ -2762,11 +2762,15 @@ internal enum VectorL10n {
   internal static var roomParticipantsActionSectionAdminTools: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_admin_tools") 
   }
+  /// Calls
+  internal static var roomParticipantsActionSectionCall: String { 
+    return VectorL10n.tr("Vector", "room_participants_action_section_call") 
+  }
   /// Sessions
   internal static var roomParticipantsActionSectionDevices: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_devices") 
   }
-  /// Direct chats
+  /// Chats
   internal static var roomParticipantsActionSectionDirectChats: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_direct_chats") 
   }

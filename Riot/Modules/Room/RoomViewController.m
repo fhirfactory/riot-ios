@@ -2261,20 +2261,9 @@
     }
 }
 
-- (bool)getEventIsAdministrative:(MXEvent*)Event{
-    switch (Event.eventType) {
-        case MXEventTypeRoomMessage:
-            return false;
-        default:
-            return true;
-    }
-}
-
 // Display the additiontal event actions menu
 - (void)showAdditionalActionsMenuForEvent:(MXEvent*)selectedEvent inCell:(id<MXKCellRendering>)cell animated:(BOOL)animated
 {
-    bool showRemoveInActionSheet = ![self getEventIsAdministrative:selectedEvent] || BuildSettings.roomAllowRemoveAdministrativeMessage;
-    
     MXKRoomBubbleTableViewCell *roomBubbleTableViewCell = (MXKRoomBubbleTableViewCell *)cell;
     MXKAttachment *attachment = roomBubbleTableViewCell.bubbleData.attachment;
     
@@ -2575,7 +2564,7 @@
         
         // Do not allow to redact the event that enabled encryption (m.room.encryption)
         // because it breaks everything
-        if (selectedEvent.eventType != MXEventTypeRoomEncryption && showRemoveInActionSheet)
+        if (selectedEvent.eventType != MXEventTypeRoomEncryption)
         {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_redact", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault

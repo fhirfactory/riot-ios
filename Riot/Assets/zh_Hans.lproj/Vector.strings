@@ -164,6 +164,7 @@
 "room_participants_action_section_direct_chats" = "私聊";
 "room_participants_action_section_devices" = "会话";
 "room_participants_action_section_other" = "选项";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "邀请";
 "room_participants_action_leave" = "退出此聊天室";
 "room_participants_action_remove" = "从此聊天室移除";

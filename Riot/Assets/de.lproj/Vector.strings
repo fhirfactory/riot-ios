@@ -135,6 +135,7 @@
 "room_participants_action_section_direct_chats" = "Direkte Chats";
 "room_participants_action_section_devices" = "Sitzungen";
 "room_participants_action_section_other" = "Optionen";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Einladen";
 "room_participants_action_leave" = "Diesen Raum verlassen";
 "room_participants_action_remove" = "Von diesem Raum entfernen";

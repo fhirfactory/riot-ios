@@ -153,6 +153,7 @@
 "room_participants_action_section_admin_tools" = "Инструменты администратора";
 "room_participants_action_section_devices" = "Сессии";
 "room_participants_action_section_other" = "Параметры";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_leave" = "Покинуть эту комнату";
 "room_participants_action_remove" = "Удалить из этой комнаты";
 "room_participants_action_ignore" = "Скрыть все сообщения этого пользователя";

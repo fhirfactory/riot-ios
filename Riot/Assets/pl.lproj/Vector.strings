@@ -133,6 +133,7 @@
 "room_participants_action_section_admin_tools" = "Narzędzia Administracyjne";
 "room_participants_action_section_direct_chats" = "Rozmowy bezpośrednie";
 "room_participants_action_section_devices" = "Urządzenia";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Zaproś";
 "room_participants_action_leave" = "Opuść pokój";
 "room_participants_action_remove" = "Usuń z pokoju";

@@ -179,6 +179,7 @@
 "room_participants_action_section_direct_chats" = "Xats directes";
 "room_participants_action_section_devices" = "Dispositius";
 "room_participants_action_section_other" = "Altres";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Convida";
 "room_participants_action_leave" = "Deixar aquesta sala";
 "room_participants_action_remove" = "Fer fora de la sala";

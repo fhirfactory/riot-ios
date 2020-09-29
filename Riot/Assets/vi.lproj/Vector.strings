@@ -175,6 +175,7 @@
 "room_participants_action_section_direct_chats" = "Trò chuyện trực tiếp";
 "room_participants_action_section_devices" = "Thiết bị";
 "room_participants_action_section_other" = "Khác";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Mời";
 "room_participants_action_leave" = "Rời khỏi phòng này";
 "room_participants_action_remove" = "Loại bỏ khỏi phòng này";

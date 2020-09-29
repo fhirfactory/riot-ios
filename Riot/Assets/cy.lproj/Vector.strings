@@ -206,6 +206,7 @@
 "room_participants_action_section_direct_chats" = "Sgyrsiau uniongyrchol";
 "room_participants_action_section_devices" = "Sesiynau";
 "room_participants_action_section_other" = "Opsiynau";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Gwahodd";
 "room_participants_action_leave" = "Gadael yr ystafell hon";
 "room_participants_action_remove" = "Tynnu o'r ystafell hon";

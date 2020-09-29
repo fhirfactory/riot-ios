@@ -274,6 +274,7 @@
 "room_participants_unknown" = "Ezezaguna";
 "room_participants_action_section_admin_tools" = "Kudeaketa tresnak";
 "room_participants_action_section_direct_chats" = "Txat zuzenak";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_ban" = "Debekatu gela honetan";
 "room_participants_action_start_new_chat" = "Hasi txat berria";
 "room_participants_action_start_voice_call" = "Hasi ahots deia";

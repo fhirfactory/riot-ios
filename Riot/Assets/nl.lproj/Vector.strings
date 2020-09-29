@@ -179,6 +179,7 @@
 "room_participants_action_section_direct_chats" = "Tweegesprekken";
 "room_participants_action_section_devices" = "Apparaten";
 "room_participants_action_section_other" = "Overige";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Uitnodigen";
 "room_participants_action_leave" = "Dit gesprek verlaten";
 "room_participants_action_remove" = "Verwijderen uit dit gesprek";

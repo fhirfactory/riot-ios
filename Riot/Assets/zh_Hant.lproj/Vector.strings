@@ -113,6 +113,7 @@
 "room_participants_idle" = "閒置";
 "room_participants_action_section_direct_chats" = "私聊";
 "room_participants_action_section_devices" = "裝置列表";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_unban" = "解除封鎖";
 "room_participants_action_start_new_chat" = "開始新聊天";
 "room_participants_action_mention" = "提及";

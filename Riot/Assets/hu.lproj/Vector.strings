@@ -181,6 +181,7 @@
 "room_participants_action_section_direct_chats" = "Közvetlen csevegések";
 "room_participants_action_section_devices" = "Munkamenetek";
 "room_participants_action_section_other" = "Opciók";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Meghívó";
 "room_participants_action_leave" = "Szoba elhagyása";
 "room_participants_action_remove" = "Eltávolítás a szobából";

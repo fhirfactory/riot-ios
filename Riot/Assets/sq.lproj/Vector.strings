@@ -150,6 +150,7 @@
 "room_participants_action_section_direct_chats" = "Fjalosje të drejtpërdrejta";
 "room_participants_action_section_devices" = "Sesione";
 "room_participants_action_section_other" = "Mundësi";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Ftoje";
 "room_participants_action_leave" = "Braktiseni këtë dhomë";
 "room_participants_action_remove" = "Hiqeni prej kësaj dhome";

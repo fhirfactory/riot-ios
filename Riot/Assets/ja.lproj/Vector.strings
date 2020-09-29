@@ -175,6 +175,7 @@
 "room_participants_action_section_direct_chats" = "対話";
 "room_participants_action_section_devices" = "セッション";
 "room_participants_action_section_other" = "オプション";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "招待";
 "room_participants_action_leave" = "部屋を退室";
 "room_participants_action_remove" = "部屋から退室させる";

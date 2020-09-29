@@ -170,6 +170,7 @@
 "room_participants_action_section_direct_chats" = "Discussions directes";
 "room_participants_action_section_devices" = "Sessions";
 "room_participants_action_section_other" = "Options";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Inviter";
 "room_participants_action_leave" = "Quitter ce salon";
 "room_participants_action_remove" = "Exclure de ce salon";

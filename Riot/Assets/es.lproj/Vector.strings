@@ -187,6 +187,7 @@
 "room_participants_action_section_direct_chats" = "Conversaciones directas";
 "room_participants_action_section_devices" = "Dispositivos";
 "room_participants_action_section_other" = "Otro";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Invitar";
 "room_participants_action_leave" = "Salir de esta sala";
 "room_participants_action_remove" = "Eliminar de esta sala";

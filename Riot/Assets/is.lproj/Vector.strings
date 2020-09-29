@@ -110,6 +110,7 @@
 "room_participants_action_section_direct_chats" = "Beint spjall";
 "room_participants_action_section_devices" = "Tæki";
 "room_participants_action_section_other" = "Annað";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Bjóða";
 "room_participants_action_leave" = "Fara af spjallrás";
 "room_participants_action_remove" = "Fjarlægja úr þessari spjallrás";

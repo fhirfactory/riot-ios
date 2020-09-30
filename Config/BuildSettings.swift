@@ -205,6 +205,10 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowMarkAllAsRead: Bool = false
     static let settingsScreenShowThirdPartNotice: Bool = false
     static let settingsScreenShowAcknowledgement: Bool = true
+    static let settingsScreenShowPinWithMissed = false // to set the default for this setting, change the appropriate row in Riot-Defaults.plist
+    static let settingsEnforceSpecificLanguage : Bool = true
+    static let settingsDefaultLanguage : String = "en"
+
     
     // MARK: - General Settings Defaults Overrides
     /// Override values that are used to control the value of settings that are hidden from users

@@ -236,4 +236,7 @@ final class BuildSettings: NSObject {
     static let authScreenShowPhoneNumber = true
     static let authScreenShowForgotPassword = true
     static let authScreenShowCustomServerOptions = true
+    
+    // MARK: - Home Screen
+    static let homeScreenShowFavourites : Bool = false
 }

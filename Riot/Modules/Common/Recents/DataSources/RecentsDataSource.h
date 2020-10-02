@@ -23,14 +23,13 @@
  List the different modes used to prepare the recents data source.
  Each mode corresponds to an application tab: Home, Favourites, People and Rooms.
  */
-typedef enum : NSUInteger
+typedef NS_ENUM(NSUInteger, RecentsDataSourceMode)//enum : NSUInteger
 {
     RecentsDataSourceModeHome,
     RecentsDataSourceModeFavourites,
     RecentsDataSourceModePeople,
     RecentsDataSourceModeRooms
-    
-} RecentsDataSourceMode;
+};
 
 /**
  List the different secure backup banners that could be displayed.
@@ -158,6 +157,11 @@ extern NSString *const kRecentsDataSourceTapOnDirectoryServerChange;
  It is based on room Tag.
  */
 - (void)moveRoomCell:(MXRoom*)room from:(NSIndexPath*)oldPath to:(NSIndexPath*)newPath success:(void (^)(void))moveSuccess failure:(void (^)(NSError *error))moveFailure;
+
+/**
+ Get the default comparitor for cells
+ */
+- (NSComparator)homeGetComparator;
 
 /**
  The current number of the favourite rooms with missed notifications.

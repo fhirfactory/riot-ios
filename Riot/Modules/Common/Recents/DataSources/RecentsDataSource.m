@@ -1282,91 +1282,8 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
         
         if (_recentsDataSourceMode == RecentsDataSourceModeHome)
         {
-            BOOL pinMissedNotif = RiotSettings.shared.pinRoomsWithMissedNotificationsOnHome;
-            BOOL pinUnread = RiotSettings.shared.pinRoomsWithUnreadMessagesOnHome;            
             NSComparator comparator = nil;
-            
-            if (pinMissedNotif)
-            {
-                // Sort each rooms collection by considering first the rooms with some missed notifs, the rooms with unread, then the others.
-                comparator = ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
-                    
-                    if (recentCellData1.highlightCount)
-                    {
-                        if (recentCellData2.highlightCount)
-                        {
-                            return NSOrderedSame;
-                        }
-                        else
-                        {
-                            return NSOrderedAscending;
-                        }
-                    }
-                    else if (recentCellData2.highlightCount)
-                    {
-                        return NSOrderedDescending;
-                    }
-                    else if (recentCellData1.notificationCount)
-                    {
-                        if (recentCellData2.notificationCount)
-                        {
-                            return NSOrderedSame;
-                        }
-                        else
-                        {
-                            return NSOrderedAscending;
-                        }
-                    }
-                    else if (recentCellData2.notificationCount)
-                    {
-                        return NSOrderedDescending;
-                    }
-                    else if (pinUnread)
-                    {
-                        if (recentCellData1.hasUnread)
-                        {
-                            if (recentCellData2.hasUnread)
-                            {
-                                return NSOrderedSame;
-                            }
-                            else
-                            {
-                                return NSOrderedAscending;
-                            }
-                        }
-                        else if (recentCellData2.hasUnread)
-                        {
-                            return NSOrderedDescending;
-                        }
-                    }
-                    
-                    return NSOrderedSame;
-                };
-            }
-            else if (pinUnread)
-            {
-                // Sort each rooms collection by considering first the rooms with some unread messages then the others.
-                comparator = ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
-                    
-                    if (recentCellData1.hasUnread)
-                    {
-                        if (recentCellData2.hasUnread)
-                        {
-                            return NSOrderedSame;
-                        }
-                        else
-                        {
-                            return NSOrderedAscending;
-                        }
-                    }
-                    else if (recentCellData2.hasUnread)
-                    {
-                        return NSOrderedDescending;
-                    }
-                    
-                    return NSOrderedSame;
-                };
-            }
+            comparator = [self homeGetComparator];
             
             if (comparator)
             {
@@ -1390,6 +1307,93 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
     }
 
     NSLog(@"[RecentsDataSource] refreshRoomsSections: Done in %.0fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
+}
+
+- (NSComparator)homeGetComparator{
+    BOOL pinMissedNotif = RiotSettings.shared.pinRoomsWithMissedNotificationsOnHome;
+    BOOL pinUnread = RiotSettings.shared.pinRoomsWithUnreadMessagesOnHome;
+    if (pinMissedNotif)
+    {
+        // Sort each rooms collection by considering first the rooms with some missed notifs, the rooms with unread, then the others.
+        return ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
+            
+            if (recentCellData1.highlightCount)
+            {
+                if (recentCellData2.highlightCount)
+                {
+                    return NSOrderedSame;
+                }
+                else
+                {
+                    return NSOrderedAscending;
+                }
+            }
+            else if (recentCellData2.highlightCount)
+            {
+                return NSOrderedDescending;
+            }
+            else if (recentCellData1.notificationCount)
+            {
+                if (recentCellData2.notificationCount)
+                {
+                    return NSOrderedSame;
+                }
+                else
+                {
+                    return NSOrderedAscending;
+                }
+            }
+            else if (recentCellData2.notificationCount)
+            {
+                return NSOrderedDescending;
+            }
+            else if (pinUnread)
+            {
+                if (recentCellData1.hasUnread)
+                {
+                    if (recentCellData2.hasUnread)
+                    {
+                        return NSOrderedSame;
+                    }
+                    else
+                    {
+                        return NSOrderedAscending;
+                    }
+                }
+                else if (recentCellData2.hasUnread)
+                {
+                    return NSOrderedDescending;
+                }
+            }
+            
+            return NSOrderedSame;
+        };
+    }
+    else if (pinUnread)
+    {
+        // Sort each rooms collection by considering first the rooms with some unread messages then the others.
+        return ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
+            
+            if (recentCellData1.hasUnread)
+            {
+                if (recentCellData2.hasUnread)
+                {
+                    return NSOrderedSame;
+                }
+                else
+                {
+                    return NSOrderedAscending;
+                }
+            }
+            else if (recentCellData2.hasUnread)
+            {
+                return NSOrderedDescending;
+            }
+            
+            return NSOrderedSame;
+        };
+    }
+    return nil;
 }
 
 - (void)dataSource:(MXKDataSource*)dataSource didCellChange:(id)changes

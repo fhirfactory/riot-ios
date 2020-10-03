@@ -72,7 +72,12 @@ class AlternateHomeViewController: RecentsViewController {
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return super.tableView(tableView, trailingSwipeActionsConfigurationForRowAt: HomeDataSource.getIndexPathInUnderlying(indexPathFor: indexPath))
+        let swipeActions = super.getContextualActions(for: tableView, at: HomeDataSource.getIndexPathInUnderlying(indexPathFor: indexPath))//super.tableView(tableView, trailingSwipeActionsConfigurationForRowAt: HomeDataSource.getIndexPathInUnderlying(indexPathFor: indexPath))
+        if var actions = swipeActions {
+            actions.remove(at: actions.count - 1)
+            return UISwipeActionsConfiguration(actions: actions)
+        }
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

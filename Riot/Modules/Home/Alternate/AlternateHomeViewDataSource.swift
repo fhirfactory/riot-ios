@@ -34,14 +34,34 @@ class AlternateHomeDataSource: RecentsDataSource {
             var conversationIndex = 0
             if peopleCellDataArray.count > 0 && conversationCellDataArray.count > 0 {
                 for _ in 0..<peopleCellDataArray.count + conversationCellDataArray.count {
+                    if peopleIndex == peopleCellDataArray.count {
+                        interleaveRecord.append((1, conversationIndex))
+                        conversationIndex += 1
+                        continue
+                    }
+                    if conversationIndex == conversationCellDataArray.count {
+                        interleaveRecord.append((0, peopleIndex))
+                        peopleIndex += 1
+                        continue
+                    }
                     let peopleCell: MXKRecentCellDataStoring? = peopleCellDataArray[peopleIndex] as? MXKRecentCellDataStoring
                     let conversationCell: MXKRecentCellDataStoring? = (conversationCellDataArray[conversationIndex]) as? MXKRecentCellDataStoring
                     let comparer = homeGetComparator()
                     if comparer != nil {
                         let res = AlternateHomeTools.runComparer(comparer, against: peopleCell, andThen: conversationCell)
                         if res == ComparrisonResult.equalTo {
-                            interleaveRecord.append((0, peopleIndex))
-                            peopleIndex += 1
+                            if let pCell = peopleCell, let cCell = conversationCell {
+                                if pCell.lastEvent.originServerTs >= cCell.lastEvent.originServerTs {
+                                    interleaveRecord.append((0, peopleIndex))
+                                    peopleIndex += 1
+                                } else {
+                                    interleaveRecord.append((1, conversationIndex))
+                                    conversationIndex += 1
+                                }
+                            } else {
+                                interleaveRecord.append((0, peopleIndex))
+                                peopleIndex += 1
+                            }
                         } else if res == ComparrisonResult.lessThan {
                             interleaveRecord.append((0, peopleIndex))
                             peopleIndex += 1

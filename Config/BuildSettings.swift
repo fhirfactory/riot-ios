@@ -54,6 +54,22 @@ final class BuildSettings: NSObject {
         return baseBundleIdentifier + ".ios.dev"
     }
     
+    static var pushKitAppId: String {
+        #if DEBUG
+        return pushKitAppIdDev
+        #else
+        return pushKitAppIdProd
+        #endif
+    }
+    
+    static var pusherAppId: String {
+        #if DEBUG
+        return pusherAppIdDev
+        #else
+        return pusherAppIdProd
+        #endif
+    }
+    
     // Element-Web instance for the app
     static let applicationWebAppUrlString = "https://app.element.io"
     
@@ -70,6 +86,7 @@ final class BuildSettings: NSObject {
     // MARK: - Legal URLs
     static let applicationCopyrightUrlString = "https://element.io/copyright"
     static let applicationPrivacyPolicyUrlString = "https://element.io/privacy"
+    static let applicationAcknowledgementUrlString = "https://element.io/privacy"
     static let applicationTermsConditionsUrlString = "https://element.io/terms-of-service"
     
     
@@ -142,37 +159,87 @@ final class BuildSettings: NSObject {
     /// Setting to force protection by pin code
     static let forcePinProtection: Bool = false
     
+    /// Max allowed time to continue using the app without prompting PIN
+    static let pinCodeGraceTimeInSeconds: TimeInterval = 0
+    
     /// Force non-jailbroken app usage
     static let forceNonJailbrokenUsage: Bool = true
     
     static let allowSendingStickers: Bool = true
     
-    static let allowLocalContactsAccess: Bool = true
+    static let allowLocalContactsAccess: Bool = false
     
+    // MARK: - Feature Specifics
     
-    // MARK: - Screen settings -
+    /// Not allowed pin codes. User won't be able to select one of the pin in the list.
+    static let notAllowedPINs: [String] = []
     
+    // MARK: - General Settings Screen Toggles
+    /// Booleans that hide or show different elements on the Settings screen
+    
+    static let settingsScreenAllowUserSignOut: Bool = false
     static let settingsScreenShowUserFirstName: Bool = false
     static let settingsScreenShowUserSurname: Bool = false
-    static let settingsScreenAllowAddingEmailThreepids: Bool = true
-    static let settingsScreenAllowAddingPhoneThreepids: Bool = true
-    static let settingsScreenShowThreepidExplanatory: Bool = true
-    static let settingsScreenShowDiscoverySettings: Bool = true
+    static let settingsScreenAllowAddingEmailThreepids: Bool = false
+    static let settingsScreenAllowAddingPhoneThreepids: Bool = false
+    static let settingsScreenAllowChangingPassword: Bool = false
+    static let settingsScreenAllowChangingProfilePicture: Bool = true
+    static let settingsScreenAllowChangingdisplayName: Bool = false
+    static let settingsScreenShowThreepidExplanatory: Bool = false
+    static let settingsScreenShowDiscoverySettings: Bool = false
     static let settingsScreenAllowIdentityServerConfig: Bool = true
+    static let settingsScreenAllowSelectingIdentityServer: Bool = false
     static let settingsScreenShowAdvancedSettings: Bool = true
-    static let settingsScreenShowLabSettings: Bool = true
-    static let settingsScreenAllowChangingRageshakeSettings: Bool = true
-    static let settingsScreenAllowChangingCrashUsageDataSettings: Bool = true
-    static let settingsScreenAllowBugReportingManually: Bool = true
-    static let settingsScreenAllowDeactivatingAccount: Bool = true
+    static let settingsScreenShowLabSettings: Bool = false
+    static let settingsScreenShowIntegrationSettings: Bool = false
+    static let settingsScreenShowCallsSettings: Bool = false
+    static let settingsScreenShowNotificationDecryptedContentSettings: Bool = false
+    static let settingsScreenAllowChangingRageshakeSettings: Bool = false
+    static let settingsScreenAllowChangingCrashUsageDataSettings: Bool = false
+    static let settingsScreenAllowBugReportingManually: Bool = false
+    static let settingsScreenAllowDeactivatingAccount: Bool = false
+    static let settingsScreenShowUserInterfaceSettings: Bool = false
+    static let settingsScreenShowOLMVersion: Bool = false
+    static let settingsScreenShowCopyRight: Bool = false
+    static let settingsScreenAllowClearingCacheSettings: Bool = false
+    static let settingsScreenAllowMarkAllAsRead: Bool = false
+    static let settingsScreenShowThirdPartNotice: Bool = false
+    static let settingsScreenShowAcknowledgement: Bool = true
+    static let settingsScreenShowPinWithMissed = false // to set the default for this setting, change the appropriate row in Riot-Defaults.plist
+    static let settingsEnforceSpecificLanguage : Bool = true
+    static let settingsDefaultLanguage : String = "en"
+
+    
+    // MARK: - General Settings Defaults Overrides
+    /// Override values that are used to control the value of settings that are hidden from users
+    
+    static let settingsScreenOverrideDefaultThemeSelection : NSString = "light"
+    
+    // MARK: - Room Settings Screen
+    
+    static let roomSettingsScreenShowLowPriorityOption: Bool = true
+    static let roomSettingsScreenShowDirectChatOption: Bool = true
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
+    static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
+    static let roomSettingsScreenShowAddressSettings: Bool = true
+    static let roomSettingsScreenShowFlairSettings: Bool = true
+    static let roomSettingsScreenShowAdvancedSettings: Bool = true
     
     // MARK: - Message
     static let messageDetailsAllowShare: Bool = true
     static let messageDetailsAllowPermalink: Bool = true
     static let messageDetailsAllowViewSource: Bool = true
+    static let messageDetailsAllowSave: Bool = true
+    
+    // MARK: - HTTP
+    /// Additional HTTP headers will be sent by all requests. Not recommended to use request-specific headers, like `Authorization`.
+    /// Empty dictionary by default.
+    static let httpAdditionalHeaders: [String: String] = [:]
     
     
     // MARK: - Authentication Screen
     static let authScreenShowRegister = true
+    static let authScreenShowPhoneNumber = true
+    static let authScreenShowForgotPassword = true
     static let authScreenShowCustomServerOptions = true
 }

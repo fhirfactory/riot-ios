@@ -20,7 +20,6 @@
 
 #import <OLMKit/OLMKit.h>
 
-#import "AppDelegate.h"
 #import "AvatarGenerator.h"
 
 #import "ThemeService.h"
@@ -732,7 +731,6 @@ enum {
         {
             NSLog(@"[ManageSessionVC] Delete device (%@) failed, auth session flow type is not supported", self->device.deviceId);
             [self.activityIndicator stopAnimating];
-            //[[AppDelegate theDelegate] showErrorAsAlert:error];
         }
         
     } failure:^(NSError *error) {

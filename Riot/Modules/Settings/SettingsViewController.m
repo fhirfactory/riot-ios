@@ -22,7 +22,6 @@
 
 #import <OLMKit/OLMKit.h>
 
-#import "AppDelegate.h"
 #import "AvatarGenerator.h"
 
 #import "BugReportViewController.h"
@@ -41,9 +40,6 @@
 
 #import "GroupsDataSource.h"
 #import "GroupTableViewCellWithSwitch.h"
-
-#import "Row.h"
-#import "Section.h"
 
 #import "GBDeviceInfo_iOS.h"
 
@@ -96,12 +92,6 @@ enum
     NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX,
     NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX,
     NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX,
-    //NOTIFICATION_SETTINGS_CONTAINING_MY_USER_NAME_INDEX,
-    //NOTIFICATION_SETTINGS_CONTAINING_MY_DISPLAY_NAME_INDEX,
-    //NOTIFICATION_SETTINGS_SENT_TO_ME_INDEX,
-    //NOTIFICATION_SETTINGS_INVITED_TO_ROOM_INDEX,
-    //NOTIFICATION_SETTINGS_PEOPLE_LEAVE_JOIN_INDEX,
-    //NOTIFICATION_SETTINGS_CALL_INVITATION_INDEX,
 };
 
 enum
@@ -140,6 +130,7 @@ enum
     OTHER_COPYRIGHT_INDEX,
     OTHER_TERM_CONDITIONS_INDEX,
     OTHER_PRIVACY_INDEX,
+    OTHER_ACKNOWLEDGEMENT_INDEX,
     OTHER_THIRD_PARTY_INDEX,
     OTHER_CRASH_REPORT_INDEX,
     OTHER_ENABLE_RAGESHAKE_INDEX,
@@ -167,11 +158,12 @@ SecureBackupSetupCoordinatorBridgePresenterDelegate,
 SignOutAlertPresenterDelegate,
 SingleImagePickerPresenterDelegate,
 SettingsDiscoveryTableViewSectionDelegate, SettingsDiscoveryViewModelCoordinatorDelegate,
-SettingsIdentityServerCoordinatorBridgePresenterDelegate>
+SettingsIdentityServerCoordinatorBridgePresenterDelegate,
+TableViewSectionsDelegate>
 {
     // Current alert (if any).
     UIAlertController *currentAlert;
-
+    
     // listener
     id removedAccountObserver;
     id accountUserInfoObserver;
@@ -253,7 +245,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 @property (nonatomic, strong) SecureBackupSetupCoordinatorBridgePresenter *secureBackupSetupCoordinatorBridgePresenter;
 @property (nonatomic, strong) AuthenticatedSessionViewControllerFactory *authenticatedSessionViewControllerFactory;
 
-@property (nonatomic, strong) NSArray<Section*> *sections;
+@property (nonatomic, strong) TableViewSections *tableViewSections;
 
 @end
 
@@ -283,14 +275,19 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 {
     NSMutableArray<Section*> *tmpSections = [NSMutableArray arrayWithCapacity:SECTION_TAG_DEACTIVATE_ACCOUNT + 1];
     
-    Section *sectionSignOut = [Section sectionWithTag:SECTION_TAG_SIGN_OUT];
-    [sectionSignOut addRowWithTag:0];
-    [tmpSections addObject:sectionSignOut];
+    if (BuildSettings.settingsScreenAllowUserSignOut){
+        Section *sectionSignOut = [Section sectionWithTag:SECTION_TAG_SIGN_OUT];
+        [sectionSignOut addRowWithTag:0];
+        [tmpSections addObject:sectionSignOut];
+    }
     
     Section *sectionUserSettings = [Section sectionWithTag:SECTION_TAG_USER_SETTINGS];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_PROFILE_PICTURE_INDEX];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_DISPLAYNAME_INDEX];
+    if (BuildSettings.settingsScreenAllowChangingPassword)
+    {
     [sectionUserSettings addRowWithTag:USER_SETTINGS_CHANGE_PASSWORD_INDEX];
+    }
     if (BuildSettings.settingsScreenShowUserFirstName)
     {
         [sectionUserSettings addRowWithTag:USER_SETTINGS_FIRST_NAME_INDEX];
@@ -332,14 +329,19 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     
     Section *sectionNotificationSettings = [Section sectionWithTag:SECTION_TAG_NOTIFICATIONS];
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX];
+    if (BuildSettings.settingsScreenShowNotificationDecryptedContentSettings)
+    {
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT];
+    }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
+    if (BuildSettings.settingsScreenShowPinWithMissed){
+        [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
+    }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX];
     sectionNotificationSettings.headerTitle = NSLocalizedStringFromTable(@"settings_notifications_settings", @"Vector", nil);
     [tmpSections addObject:sectionNotificationSettings];
     
-    if (BuildSettings.allowVoIPUsage && BuildSettings.stunServerFallbackUrlString)
+    if (BuildSettings.allowVoIPUsage && BuildSettings.stunServerFallbackUrlString && BuildSettings.settingsScreenShowCallsSettings)
     {
         Section *sectionCalls = [Section sectionWithTag:SECTION_TAG_CALLS];
         [sectionCalls addRowWithTag:CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX];
@@ -393,7 +395,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         [tmpSections addObject:sectionIgnoredUsers];
     }
     
-    if (RiotSettings.shared.matrixApps)
+    if (RiotSettings.shared.matrixApps && BuildSettings.settingsScreenShowIntegrationSettings)
     {
         Section *sectionIntegrations = [Section sectionWithTag:SECTION_TAG_INTEGRATIONS];
         [sectionIntegrations addRowWithTag:INTEGRATIONS_INDEX];
@@ -402,11 +404,14 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         [tmpSections addObject:sectionIntegrations];
     }
     
+    if (BuildSettings.settingsScreenShowUserInterfaceSettings)
+    {
     Section *sectionUserInterface = [Section sectionWithTag:SECTION_TAG_USER_INTERFACE];
     [sectionUserInterface addRowWithTag:USER_INTERFACE_LANGUAGE_INDEX];
     [sectionUserInterface addRowWithTag:USER_INTERFACE_THEME_INDEX];
     sectionUserInterface.headerTitle = NSLocalizedStringFromTable(@"settings_user_interface", @"Vector", nil);
     [tmpSections addObject: sectionUserInterface];
+    }
     
     if (BuildSettings.settingsScreenShowAdvancedSettings)
     {
@@ -418,11 +423,24 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     
     Section *sectionOther = [Section sectionWithTag:SECTION_TAG_OTHER];
     [sectionOther addRowWithTag:OTHER_VERSION_INDEX];
-    [sectionOther addRowWithTag:OTHER_OLM_VERSION_INDEX];
+    if (BuildSettings.settingsScreenShowOLMVersion)
+    {
+        [sectionOther addRowWithTag:OTHER_OLM_VERSION_INDEX];
+    }
+    if (BuildSettings.settingsScreenShowCopyRight)
+    {
     [sectionOther addRowWithTag:OTHER_COPYRIGHT_INDEX];
+    }
     [sectionOther addRowWithTag:OTHER_TERM_CONDITIONS_INDEX];
-    [sectionOther addRowWithTag:OTHER_PRIVACY_INDEX];
+    if (BuildSettings.settingsScreenShowThirdPartNotice)
+    {
     [sectionOther addRowWithTag:OTHER_THIRD_PARTY_INDEX];
+    }
+    [sectionOther addRowWithTag:OTHER_PRIVACY_INDEX];
+    if (BuildSettings.settingsScreenShowAcknowledgement)
+    {
+    [sectionOther addRowWithTag:OTHER_ACKNOWLEDGEMENT_INDEX];
+    }
     if (BuildSettings.settingsScreenAllowChangingCrashUsageDataSettings)
     {
         [sectionOther addRowWithTag:OTHER_CRASH_REPORT_INDEX];
@@ -431,8 +449,13 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     {
         [sectionOther addRowWithTag:OTHER_ENABLE_RAGESHAKE_INDEX];
     }
-    [sectionOther addRowWithTag:OTHER_MARK_ALL_AS_READ_INDEX];
+    if (BuildSettings.settingsScreenAllowMarkAllAsRead){
+        [sectionOther addRowWithTag:OTHER_MARK_ALL_AS_READ_INDEX];
+    }
+    if (BuildSettings.settingsScreenAllowClearingCacheSettings)
+    {
     [sectionOther addRowWithTag:OTHER_CLEAR_CACHE_INDEX];
+    }
     if (BuildSettings.settingsScreenAllowBugReportingManually)
     {
         [sectionOther addRowWithTag:OTHER_REPORT_BUG_INDEX];
@@ -470,78 +493,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     }
     
     //  update sections
-    self.sections = tmpSections;
-}
-
-- (void)setSections:(NSArray<Section *> *)sections
-{
-    _sections = sections;
-    
-    //  reload table
-    [self.tableView reloadData];
-}
-
-/// Returns index of section for the given tag. If cannot find, return `NSNotFound`
-/// @param tag Tag for section
-- (NSInteger)indexOfSectionForTag:(NSInteger)tag
-{
-    return [_sections indexOfObjectPassingTest:^BOOL(Section * _Nonnull section, NSUInteger idx, BOOL * _Nonnull stop) {
-        return section.tag == tag;
-    }];
-}
-
-/// Finds the exact indexpath for the given row and section tag. If cannot find, returns nil
-/// @param rowTag Tag for row
-/// @param sectionTag Tag for section
-- (NSIndexPath *)exactIndexPathForRowTag:(NSInteger)rowTag sectionTag:(NSInteger)sectionTag
-{
-    NSInteger sectionIndex = [self indexOfSectionForTag:sectionTag];
-    if (sectionIndex != NSNotFound)
-    {
-        Section *section = _sections[sectionIndex];
-        NSInteger rowIndex = [section indexOfRowForTag:rowTag];
-        if (rowIndex != NSNotFound)
-        {
-            return [NSIndexPath indexPathForRow:rowIndex inSection:sectionIndex];
-        }
-    }
-    return nil;
-}
-
-/// Finds the nearest next indexPath for given row tag and section tag. If the section finishes, also checks for the next section. If cannot find any row available, returns nil.
-/// @param rowTag Tag for row
-/// @param sectionTag Tag for section
-- (NSIndexPath *)nearestIndexPathForRowTag:(NSInteger)rowTag sectionTag:(NSInteger)sectionTag
-{
-    NSInteger sectionIndex = [self indexOfSectionForTag:sectionTag];
-    if (sectionIndex != NSNotFound)
-    {
-        Section *section = _sections[sectionIndex];
-        NSInteger rowIndex = [section indexOfRowForTag:rowTag];
-        if (rowIndex != NSNotFound)
-        {
-            //  exact row found, return it
-            return [NSIndexPath indexPathForRow:rowIndex inSection:sectionIndex];
-        }
-        else if (rowTag + 1 < section.rows.count)
-        {
-            //  try to return next row in the same section
-            return [self nearestIndexPathForRowTag:rowTag + 1 sectionTag:sectionTag];
-        }
-        else if (sectionTag + 1 < _sections.count)
-        {
-            //  try to return the first row of the next section
-            return [self nearestIndexPathForRowTag:0 sectionTag:sectionTag + 1];
-        }
-        
-        return nil;
-    }
-    else if (sectionTag + 1 < _sections.count)
-    {
-        //  try to return the first row of the next section
-        return [self nearestIndexPathForRowTag:0 sectionTag:sectionTag + 1];
-    }
-    return nil;
+    _tableViewSections.sections = tmpSections;
 }
 
 - (void)viewDidLoad
@@ -624,6 +576,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     self.signOutAlertPresenter = [SignOutAlertPresenter new];
     self.signOutAlertPresenter.delegate = self;
     
+    _tableViewSections = [TableViewSections new];
+    _tableViewSections.delegate = self;
     [self updateSections];
 }
 
@@ -881,8 +835,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [self.tableView beginUpdates];
             
             // Refresh the corresponding table view cell with animation
-            NSIndexPath *addEmailIndexPath = [self exactIndexPathForRowTag:USER_SETTINGS_ADD_EMAIL_INDEX
-                                                                sectionTag:SECTION_TAG_USER_SETTINGS];
+            NSIndexPath *addEmailIndexPath = [self.tableViewSections exactIndexPathForRowTag:USER_SETTINGS_ADD_EMAIL_INDEX
+                                                                                  sectionTag:SECTION_TAG_USER_SETTINGS];
             if (addEmailIndexPath)
             {
                 [self.tableView reloadRowsAtIndexPaths:@[addEmailIndexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -912,8 +866,8 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [self.tableView beginUpdates];
             
             // Refresh the corresponding table view cell with animation
-            NSIndexPath *addPhoneIndexPath = [self exactIndexPathForRowTag:USER_SETTINGS_ADD_PHONENUMBER_INDEX
-                                                                sectionTag:SECTION_TAG_USER_SETTINGS];
+            NSIndexPath *addPhoneIndexPath = [self.tableViewSections exactIndexPathForRowTag:USER_SETTINGS_ADD_PHONENUMBER_INDEX
+                                                                                  sectionTag:SECTION_TAG_USER_SETTINGS];
             if (addPhoneIndexPath)
             {
                 [self.tableView reloadRowsAtIndexPaths:@[addPhoneIndexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -1400,16 +1354,12 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     // update the save button if there is an update
     [self updateSaveButtonStatus];
     
-    return _sections.count;
+    return _tableViewSections.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    Section *sectionObject = nil;
-    if (section < _sections.count)
-    {
-        sectionObject = _sections[section];
-    }
+    Section *sectionObject = [_tableViewSections sectionAtIndex:section];
     return sectionObject.rows.count;
 }
 
@@ -1496,19 +1446,9 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Section *sectionObj = nil;
-    NSInteger section = NSNotFound;
-    NSInteger row = NSNotFound;
-    
-    if (indexPath.section < _sections.count)
-    {
-        sectionObj = _sections[indexPath.section];
-        section = sectionObj.tag;
-        if (indexPath.row < sectionObj.rows.count)
-        {
-            row = sectionObj.rows[indexPath.row].tag;
-        }
-    }
+    NSIndexPath *tagsIndexPath = [_tableViewSections tagsIndexPathFromTableViewIndexPath:indexPath];
+    NSInteger section = tagsIndexPath.section;
+    NSInteger row = tagsIndexPath.row;
 
     // set the cell to a default value to avoid application crashes
     UITableViewCell *cell = [[UITableViewCell alloc] init];
@@ -1613,9 +1553,16 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             displaynameCell.mxkTextField.text = myUser.displayname;
             
             displaynameCell.mxkTextField.tag = row;
-            displaynameCell.mxkTextField.delegate = self;
-            [displaynameCell.mxkTextField removeTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-            [displaynameCell.mxkTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            if (BuildSettings.settingsScreenAllowChangingdisplayName)
+            {
+                displaynameCell.mxkTextField.delegate = self;
+                [displaynameCell.mxkTextField removeTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+                [displaynameCell.mxkTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+            }
+            else
+            {
+                displaynameCell.mxkTextField.userInteractionEnabled = NO;
+            }
             displaynameCell.mxkTextField.accessibilityIdentifier=@"SettingsVCDisplayNameTextField";
             
             cell = displaynameCell;
@@ -1932,7 +1879,14 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 {
                     isCell.textLabel.text = NSLocalizedStringFromTable(@"settings_identity_server_no_is", @"Vector", nil);
                 }
-                [isCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+                if (BuildSettings.settingsScreenAllowSelectingIdentityServer)
+                {
+                    [isCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+                }
+                else
+                {
+                    isCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
                 cell = isCell;
                 break;
             }
@@ -2039,16 +1993,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             
             if (!theme)
             {
-                if (@available(iOS 11.0, *))
-                {
-                    // "auto" is used the default value from iOS 11
-                    theme = @"auto";
-                }
-                else
-                {
-                    // Use "light" for older version
-                    theme = @"light";
-                }
+                theme = @"auto";
             }
 
             theme = [NSString stringWithFormat:@"settings_ui_theme_%@", theme];
@@ -2174,6 +2119,16 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             [privacyPolicyCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             
             cell = privacyPolicyCell;
+        }
+        else if (row == OTHER_ACKNOWLEDGEMENT_INDEX)
+        {
+            MXKTableViewCell *acknowledgementCell = [self getDefaultTableViewCell:tableView];
+            
+            acknowledgementCell.textLabel.text = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+            
+            [acknowledgementCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
+            
+            cell = acknowledgementCell;
         }
         else if (row == OTHER_THIRD_PARTY_INDEX)
         {
@@ -2369,11 +2324,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    Section *sectionObj = nil;
-    if (section < _sections.count)
-    {
-        sectionObj = _sections[section];
-    }
+    Section *sectionObj = [_tableViewSections sectionAtIndex:section];
     return sectionObj.headerTitle;
 }
 
@@ -2390,19 +2341,9 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Section *sectionObj = nil;
-    NSInteger section = NSNotFound;
-    NSInteger row = NSNotFound;
-    
-    if (indexPath.section < _sections.count)
-    {
-        sectionObj = _sections[indexPath.section];
-        section = sectionObj.tag;
-        if (indexPath.row < sectionObj.rows.count)
-        {
-            row = sectionObj.rows[indexPath.row].tag;
-        }
-    }
+    NSIndexPath *tagsIndexPath = [_tableViewSections tagsIndexPathFromTableViewIndexPath:indexPath];
+    NSInteger section = tagsIndexPath.section;
+    NSInteger row = tagsIndexPath.row;
     
     if (section == SECTION_TAG_USER_SETTINGS)
     {
@@ -2456,19 +2397,9 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Section *sectionObj = nil;
-    NSInteger section = NSNotFound;
-    NSInteger row = NSNotFound;
-    
-    if (indexPath.section < _sections.count)
-    {
-        sectionObj = _sections[indexPath.section];
-        section = sectionObj.tag;
-        if (indexPath.row < sectionObj.rows.count)
-        {
-            row = sectionObj.rows[indexPath.row].tag;
-        }
-    }
+    NSIndexPath *tagsIndexPath = [_tableViewSections tagsIndexPathFromTableViewIndexPath:indexPath];
+    NSInteger section = tagsIndexPath.section;
+    NSInteger row = tagsIndexPath.row;
     
     NSMutableArray* actions;
     
@@ -2501,19 +2432,9 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 {
     if (self.tableView == tableView)
     {
-        Section *sectionObj = nil;
-        NSInteger section = NSNotFound;
-        NSInteger row = NSNotFound;
-        
-        if (indexPath.section < _sections.count)
-        {
-            sectionObj = _sections[indexPath.section];
-            section = sectionObj.tag;
-            if (indexPath.row < sectionObj.rows.count)
-            {
-                row = sectionObj.rows[indexPath.row].tag;
-            }
-        }
+        NSIndexPath *tagsIndexPath = [_tableViewSections tagsIndexPathFromTableViewIndexPath:indexPath];
+        NSInteger section = tagsIndexPath.section;
+        NSInteger row = tagsIndexPath.row;
 
         if (section == SECTION_TAG_USER_INTERFACE)
         {
@@ -2535,7 +2456,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             // settingsDiscoveryTableViewSection is a dynamic section, so check number of rows before scroll to avoid crashes
             if (self.settingsDiscoveryTableViewSection.numberOfRows > 0)
             {
-                NSIndexPath *discoveryIndexPath = [self exactIndexPathForRowTag:0 sectionTag:SECTION_TAG_DISCOVERY];
+                NSIndexPath *discoveryIndexPath = [_tableViewSections exactIndexPathForRowTag:0 sectionTag:SECTION_TAG_DISCOVERY];
                 if (discoveryIndexPath)
                 {
                     [tableView scrollToRowAtIndexPath:discoveryIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
@@ -2544,7 +2465,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             else
             {
                 //  this won't be precise in scroll location, but seems the best option for now
-                NSIndexPath *discoveryIndexPath = [self nearestIndexPathForRowTag:0 sectionTag:SECTION_TAG_DISCOVERY];
+                NSIndexPath *discoveryIndexPath = [_tableViewSections nearestIndexPathForRowTag:0 sectionTag:SECTION_TAG_DISCOVERY];
                 if (discoveryIndexPath)
                 {
                     [tableView scrollToRowAtIndexPath:discoveryIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
@@ -2560,7 +2481,10 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             switch (row)
             {
                 case IDENTITY_SERVER_INDEX:
+                    if (BuildSettings.settingsScreenAllowSelectingIdentityServer)
+                    {
                     [self showIdentityServerSettingsScreen];
+                    }
                     break;
             }
         }
@@ -2651,6 +2575,14 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 
                 [self pushViewController:webViewViewController];
             }
+            else if (row == OTHER_ACKNOWLEDGEMENT_INDEX)
+            {
+                WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:BuildSettings.applicationAcknowledgementUrlString];
+                
+                webViewViewController.title = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+                
+                [self pushViewController:webViewViewController];
+            }
             else if (row == OTHER_THIRD_PARTY_INDEX)
             {
                 NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"third_party_licenses" ofType:@"html" inDirectory:nil];
@@ -2664,7 +2596,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
         }
         else if (section == SECTION_TAG_USER_SETTINGS)
         {
-            if (row == USER_SETTINGS_PROFILE_PICTURE_INDEX)
+            if (row == USER_SETTINGS_PROFILE_PICTURE_INDEX && BuildSettings.settingsScreenAllowChangingProfilePicture)
             {
                 [self onProfileAvatarTap:nil];
             }
@@ -2744,19 +2676,9 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (void)onRemove3PID:(NSIndexPath*)indexPath
 {
-    Section *sectionObj = nil;
-    NSInteger section = NSNotFound;
-    NSInteger row = NSNotFound;
-    
-    if (indexPath.section < _sections.count)
-    {
-        sectionObj = _sections[indexPath.section];
-        section = sectionObj.tag;
-        if (indexPath.row < sectionObj.rows.count)
-        {
-            row = sectionObj.rows[indexPath.row].tag;
-        }
-    }
+    NSIndexPath *tagsIndexPath = [_tableViewSections tagsIndexPathFromTableViewIndexPath:indexPath];
+    NSInteger section = tagsIndexPath.section;
+    NSInteger row = tagsIndexPath.row;
     
     if (section == SECTION_TAG_USER_SETTINGS)
     {
@@ -3142,46 +3064,6 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     newPhoneNumberCountryPicker.showCountryCallingCode = YES;
     [self pushViewController:newPhoneNumberCountryPicker];
 }
-
-//- (void)onRuleUpdate:(id)sender
-//{
-//    MXPushRule* pushRule = nil;
-//    MXSession* session = [[AppDelegate theDelegate].mxSessions objectAtIndex:0];
-//    
-//    NSInteger row = ((UIView*)sender).tag;
-//    
-//    if (row == NOTIFICATION_SETTINGS_CONTAINING_MY_DISPLAY_NAME_INDEX)
-//    {
-//        pushRule = [session.notificationCenter ruleById:kMXNotificationCenterContainDisplayNameRuleID];
-//    }
-//    else if (row == NOTIFICATION_SETTINGS_CONTAINING_MY_USER_NAME_INDEX)
-//    {
-//        pushRule = [session.notificationCenter ruleById:kMXNotificationCenterContainUserNameRuleID];
-//    }
-//    else if (row == NOTIFICATION_SETTINGS_SENT_TO_ME_INDEX)
-//    {
-//        pushRule = [session.notificationCenter ruleById:kMXNotificationCenterOneToOneRoomRuleID];
-//    }
-//    else if (row == NOTIFICATION_SETTINGS_INVITED_TO_ROOM_INDEX)
-//    {
-//        pushRule = [session.notificationCenter ruleById:kMXNotificationCenterInviteMeRuleID];
-//    }
-//    else if (row == NOTIFICATION_SETTINGS_PEOPLE_LEAVE_JOIN_INDEX)
-//    {
-//        pushRule = [session.notificationCenter ruleById:kMXNotificationCenterMemberEventRuleID];
-//    }
-//    else if (row == NOTIFICATION_SETTINGS_CALL_INVITATION_INDEX)
-//    {
-//        pushRule = [session.notificationCenter ruleById:kMXNotificationCenterCallRuleID];
-//    }
-//    
-//    if (pushRule)
-//    {
-//        // toggle the rule
-//        [session.notificationCenter enableRule:pushRule isEnabled:!pushRule.enabled];
-//    }
-//}
-
 
 - (void)onSave:(id)sender
 {
@@ -3620,11 +3502,15 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (void)onProfileAvatarTap:(UITapGestureRecognizer *)recognizer
 {
+    if (!BuildSettings.settingsScreenAllowChangingProfilePicture)
+    {
+        return;
+    }
     SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
     singleImagePickerPresenter.delegate = self;
     
-    NSIndexPath *indexPath = [self exactIndexPathForRowTag:USER_SETTINGS_PROFILE_PICTURE_INDEX
-                                                sectionTag:SECTION_TAG_USER_SETTINGS];
+    NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:USER_SETTINGS_PROFILE_PICTURE_INDEX
+                                                              sectionTag:SECTION_TAG_USER_SETTINGS];
     if (indexPath)
     {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -3682,17 +3568,14 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
             }
         }
     };
-
-    if (@available(iOS 11.0, *))
-    {
-        // Show "auto" only from iOS 11
-        autoAction = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"settings_ui_theme_auto", @"Vector", nil)
-                                              style:UIAlertActionStyleDefault
-                                            handler:actionBlock];
-
-        // Explain what is "auto"
-        themePickerMessage = NSLocalizedStringFromTable(@"settings_ui_theme_picker_message", @"Vector", nil);
-    }
+    
+    // Show "auto" only from iOS 11
+    autoAction = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"settings_ui_theme_auto", @"Vector", nil)
+                                          style:UIAlertActionStyleDefault
+                                        handler:actionBlock];
+    
+    // Explain what is "auto"
+    themePickerMessage = NSLocalizedStringFromTable(@"settings_ui_theme_picker_message", @"Vector", nil);  
 
     lightAction = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"settings_ui_theme_light", @"Vector", nil)
                                           style:UIAlertActionStyleDefault
@@ -3723,7 +3606,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                                                         style:UIAlertActionStyleCancel
                                                       handler:nil]];
 
-    NSIndexPath *indexPath = [self exactIndexPathForRowTag:USER_INTERFACE_THEME_INDEX
+    NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:USER_INTERFACE_THEME_INDEX
                                                 sectionTag:SECTION_TAG_USER_INTERFACE];
     if (indexPath)
     {
@@ -3845,7 +3728,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
                 
                 MXKAccount* account = [MXKAccountManager sharedManager].activeAccounts.firstObject;
                 
-                [account changePassword:currentPasswordTextField.text with:newPasswordTextField1.text success:^{
+                [account changePassword:self->currentPasswordTextField.text with:self->newPasswordTextField1.text success:^{
                     
                     if (weakSelf)
                     {
@@ -4280,7 +4163,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     }
     else if ([tableViewCellClass isEqual:[MXKTableViewCellWithTextView class]])
     {
-        NSIndexPath *indexPath = [self exactIndexPathForRowTag:forRow sectionTag:SECTION_TAG_DISCOVERY];
+        NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:forRow sectionTag:SECTION_TAG_DISCOVERY];
         if (indexPath)
         {
             tableViewCell = [self textViewCellForTableView:self.tableView atIndexPath:indexPath];
@@ -4307,7 +4190,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
     }
     else if ([tableViewCellClass isEqual:[MXKTableViewCellWithLabelAndSwitch class]])
     {
-        NSIndexPath *indexPath = [self exactIndexPathForRowTag:forRow sectionTag:SECTION_TAG_DISCOVERY];
+        NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:forRow sectionTag:SECTION_TAG_DISCOVERY];
         if (indexPath)
         {
             tableViewCell = [self getLabelAndSwitchCell:self.tableView forIndexPath:indexPath];
@@ -4336,7 +4219,7 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 
 - (void)settingsDiscoveryViewModelDidTapUserSettingsLink:(SettingsDiscoveryViewModel *)viewModel
 {
-    NSIndexPath *discoveryIndexPath = [self exactIndexPathForRowTag:USER_SETTINGS_ADD_EMAIL_INDEX
+    NSIndexPath *discoveryIndexPath = [_tableViewSections exactIndexPathForRowTag:USER_SETTINGS_ADD_EMAIL_INDEX
                                                          sectionTag:SECTION_TAG_USER_SETTINGS];
     if (discoveryIndexPath)
     {
@@ -4361,6 +4244,13 @@ SettingsIdentityServerCoordinatorBridgePresenterDelegate>
 {
     identityServerSettingsCoordinatorBridgePresenter = nil;
     [self refreshSettings];
+}
+
+#pragma mark - TableViewSectionsDelegate
+
+- (void)tableViewSectionsDidUpdateSections:(TableViewSections *)sections
+{
+    [self.tableView reloadData];
 }
 
 @end

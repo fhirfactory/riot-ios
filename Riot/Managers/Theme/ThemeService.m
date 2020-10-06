@@ -64,6 +64,11 @@ NSString *const kThemeServiceDidChangeThemeNotification = @"kThemeServiceDidChan
 {
     id<Theme> theme;
     
+    if (themeId == nil && BuildSettings.settingsScreenOverrideDefaultThemeSelection != nil){
+        themeId = BuildSettings.settingsScreenOverrideDefaultThemeSelection;
+        RiotSettings.shared.userInterfaceTheme = themeId;
+    }
+    
     if (themeId == nil || [themeId isEqualToString:@"auto"])
     {
         if (@available(iOS 13, *))

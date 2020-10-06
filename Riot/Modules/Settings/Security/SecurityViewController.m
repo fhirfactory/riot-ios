@@ -22,7 +22,6 @@
 
 #import <OLMKit/OLMKit.h>
 
-#import "AppDelegate.h"
 #import "AvatarGenerator.h"
 
 #import "ThemeService.h"
@@ -1157,6 +1156,8 @@ SetPinCoordinatorBridgePresenterDelegate>
                 
                 cell = switchCell;
             }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         else if (indexPath.row == PIN_CODE_DESCRIPTION)
         {

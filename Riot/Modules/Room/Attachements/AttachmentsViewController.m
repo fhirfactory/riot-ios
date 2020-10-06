@@ -17,7 +17,6 @@
 
 #import "AttachmentsViewController.h"
 
-#import "AppDelegate.h"
 #import "Riot-Swift.h"
 
 @interface AttachmentsViewController ()
@@ -91,6 +90,12 @@
         [[NSNotificationCenter defaultCenter] removeObserver:kThemeServiceDidChangeThemeNotificationObserver];
         kThemeServiceDidChangeThemeNotificationObserver = nil;
     }
+}
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+{
+    BOOL animated = flag && !self.presentingViewController.presentingViewController;
+    [super dismissViewControllerAnimated:animated completion:completion];
 }
 
 @end

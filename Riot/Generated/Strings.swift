@@ -538,6 +538,66 @@ internal enum VectorL10n {
   internal static var create: String { 
     return VectorL10n.tr("Vector", "create") 
   }
+  /// Enable Encryption
+  internal static var createRoomEnableEncryption: String { 
+    return VectorL10n.tr("Vector", "create_room_enable_encryption") 
+  }
+  /// #testroom:matrix.org
+  internal static var createRoomPlaceholderAddress: String { 
+    return VectorL10n.tr("Vector", "create_room_placeholder_address") 
+  }
+  /// Name
+  internal static var createRoomPlaceholderName: String { 
+    return VectorL10n.tr("Vector", "create_room_placeholder_name") 
+  }
+  /// Topic
+  internal static var createRoomPlaceholderTopic: String { 
+    return VectorL10n.tr("Vector", "create_room_placeholder_topic") 
+  }
+  /// Encryption can’t be disabled afterwards.
+  internal static var createRoomSectionFooterEncryption: String { 
+    return VectorL10n.tr("Vector", "create_room_section_footer_encryption") 
+  }
+  /// People join a private room only with the room invitation.
+  internal static var createRoomSectionFooterType: String { 
+    return VectorL10n.tr("Vector", "create_room_section_footer_type") 
+  }
+  /// Room address
+  internal static var createRoomSectionHeaderAddress: String { 
+    return VectorL10n.tr("Vector", "create_room_section_header_address") 
+  }
+  /// Room encryption
+  internal static var createRoomSectionHeaderEncryption: String { 
+    return VectorL10n.tr("Vector", "create_room_section_header_encryption") 
+  }
+  /// Room name
+  internal static var createRoomSectionHeaderName: String { 
+    return VectorL10n.tr("Vector", "create_room_section_header_name") 
+  }
+  /// Room topic (optional)
+  internal static var createRoomSectionHeaderTopic: String { 
+    return VectorL10n.tr("Vector", "create_room_section_header_topic") 
+  }
+  /// Room type
+  internal static var createRoomSectionHeaderType: String { 
+    return VectorL10n.tr("Vector", "create_room_section_header_type") 
+  }
+  /// Show the room in the directory
+  internal static var createRoomShowInDirectory: String { 
+    return VectorL10n.tr("Vector", "create_room_show_in_directory") 
+  }
+  /// New Room
+  internal static var createRoomTitle: String { 
+    return VectorL10n.tr("Vector", "create_room_title") 
+  }
+  /// Private Room
+  internal static var createRoomTypePrivate: String { 
+    return VectorL10n.tr("Vector", "create_room_type_private") 
+  }
+  /// Public Room
+  internal static var createRoomTypePublic: String { 
+    return VectorL10n.tr("Vector", "create_room_type_public") 
+  }
   /// Verify your other devices easier
   internal static var crossSigningSetupBannerSubtitle: String { 
     return VectorL10n.tr("Vector", "cross_signing_setup_banner_subtitle") 
@@ -925,6 +985,10 @@ internal enum VectorL10n {
   /// If you can't accessing an existing session
   internal static var deviceVerificationSelfVerifyWaitRecoverSecretsAdditionalInformation: String { 
     return VectorL10n.tr("Vector", "device_verification_self_verify_wait_recover_secrets_additional_information") 
+  }
+  /// Checking for other verification capabilities ...
+  internal static var deviceVerificationSelfVerifyWaitRecoverSecretsCheckingAvailability: String { 
+    return VectorL10n.tr("Vector", "device_verification_self_verify_wait_recover_secrets_checking_availability") 
   }
   /// Use Recovery Passphrase or Key
   internal static var deviceVerificationSelfVerifyWaitRecoverSecretsWithPassphrase: String { 
@@ -1397,6 +1461,10 @@ internal enum VectorL10n {
   /// Join
   internal static var join: String { 
     return VectorL10n.tr("Vector", "join") 
+  }
+  /// Joined
+  internal static var joined: String { 
+    return VectorL10n.tr("Vector", "joined") 
   }
   /// Done
   internal static var keyBackupRecoverDoneAction: String { 
@@ -1922,6 +1990,10 @@ internal enum VectorL10n {
   internal static var mediaTypeAccessibilityVideo: String { 
     return VectorL10n.tr("Vector", "media_type_accessibility_video") 
   }
+  /// More
+  internal static var more: String { 
+    return VectorL10n.tr("Vector", "more") 
+  }
   /// The Internet connection appears to be offline.
   internal static var networkOfflinePrompt: String { 
     return VectorL10n.tr("Vector", "network_offline_prompt") 
@@ -1966,9 +2038,17 @@ internal enum VectorL10n {
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "photo_library_access_not_granted", p1)
   }
-  /// Choose a PIN for security
+  /// Create a PIN for security
   internal static var pinProtectionChoosePin: String { 
     return VectorL10n.tr("Vector", "pin_protection_choose_pin") 
+  }
+  /// Welcome back.
+  internal static var pinProtectionChoosePinWelcomeAfterLogin: String { 
+    return VectorL10n.tr("Vector", "pin_protection_choose_pin_welcome_after_login") 
+  }
+  /// Welcome.
+  internal static var pinProtectionChoosePinWelcomeAfterRegister: String { 
+    return VectorL10n.tr("Vector", "pin_protection_choose_pin_welcome_after_register") 
   }
   /// Confirm your PIN
   internal static var pinProtectionConfirmPin: String { 
@@ -1981,6 +2061,10 @@ internal enum VectorL10n {
   /// Enter your PIN
   internal static var pinProtectionEnterPin: String { 
     return VectorL10n.tr("Vector", "pin_protection_enter_pin") 
+  }
+  /// PINs help keep your profile, messages and contacts secure, so only you can access them.
+  internal static var pinProtectionExplanatory: String { 
+    return VectorL10n.tr("Vector", "pin_protection_explanatory") 
   }
   /// Forgot PIN
   internal static var pinProtectionForgotPin: String { 
@@ -1997,6 +2081,10 @@ internal enum VectorL10n {
   /// If you can't remember your PIN, tap the forgot PIN button.
   internal static var pinProtectionMismatchTooManyTimesErrorMessage: String { 
     return VectorL10n.tr("Vector", "pin_protection_mismatch_too_many_times_error_message") 
+  }
+  /// For security reasons, this PIN isn’t available. Please try another PIN
+  internal static var pinProtectionNotAllowedPin: String { 
+    return VectorL10n.tr("Vector", "pin_protection_not_allowed_pin") 
   }
   /// Reset
   internal static var pinProtectionResetAlertActionReset: String { 
@@ -2330,7 +2418,7 @@ internal enum VectorL10n {
   internal static var roomDetailsFavouriteTag: String { 
     return VectorL10n.tr("Vector", "room_details_favourite_tag") 
   }
-  /// Files
+  /// Uploads
   internal static var roomDetailsFiles: String { 
     return VectorL10n.tr("Vector", "room_details_files") 
   }
@@ -2545,6 +2633,22 @@ internal enum VectorL10n {
   /// Failed to send
   internal static var roomEventFailedToSend: String { 
     return VectorL10n.tr("Vector", "room_event_failed_to_send") 
+  }
+  /// 1 member
+  internal static var roomInfoListOneMember: String { 
+    return VectorL10n.tr("Vector", "room_info_list_one_member") 
+  }
+  /// Messages in this room are end to end encrypted
+  internal static var roomInfoListRoomEncrypted: String { 
+    return VectorL10n.tr("Vector", "room_info_list_room_encrypted") 
+  }
+  /// Other
+  internal static var roomInfoListSectionOther: String { 
+    return VectorL10n.tr("Vector", "room_info_list_section_other") 
+  }
+  /// %@ members
+  internal static func roomInfoListSeveralMembers(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "room_info_list_several_members", p1)
   }
   /// Jump to first unread message
   internal static var roomJumpToFirstUnread: String { 
@@ -3077,6 +3181,18 @@ internal enum VectorL10n {
   /// Rooms
   internal static var searchRooms: String { 
     return VectorL10n.tr("Vector", "search_rooms") 
+  }
+  /// Create a new room
+  internal static var searchableDirectoryCreateNewRoom: String { 
+    return VectorL10n.tr("Vector", "searchable_directory_create_new_room") 
+  }
+  /// Name or ID
+  internal static var searchableDirectorySearchPlaceholder: String { 
+    return VectorL10n.tr("Vector", "searchable_directory_search_placeholder") 
+  }
+  /// %@ Network
+  internal static func searchableDirectoryXNetwork(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "searchable_directory_x_network", p1)
   }
   /// Access your secure message history and your cross-signing identity for verifying other sessions by entering your recovery key.
   internal static var secretsRecoveryWithKeyInformationDefault: String { 
@@ -3842,11 +3958,11 @@ internal enum VectorL10n {
   internal static var settingsPhoneNumber: String { 
     return VectorL10n.tr("Vector", "settings_phone_number") 
   }
-  /// Pin rooms with missed notifications
+  /// Show rooms with missed notifications first
   internal static var settingsPinRoomsWithMissedNotif: String { 
     return VectorL10n.tr("Vector", "settings_pin_rooms_with_missed_notif") 
   }
-  /// Pin rooms with unread messages
+  /// Show rooms with unread messages first
   internal static var settingsPinRoomsWithUnread: String { 
     return VectorL10n.tr("Vector", "settings_pin_rooms_with_unread") 
   }
@@ -4049,6 +4165,10 @@ internal enum VectorL10n {
   /// Secure decentralised chat/VoIP
   internal static var storeShortDescription: String { 
     return VectorL10n.tr("Vector", "store_short_description") 
+  }
+  /// Switch
+  internal static var `switch`: String { 
+    return VectorL10n.tr("Vector", "switch") 
   }
   /// Favourites
   internal static var titleFavourites: String { 

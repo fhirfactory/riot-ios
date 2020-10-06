@@ -32,10 +32,9 @@
 #import "DirectoryRecentTableViewCell.h"
 #import "RoomIdOrAliasTableViewCell.h"
 
-#import "AppDelegate.h"
 #import "Riot-Swift.h"
 
-@interface RecentsViewController ()
+@interface RecentsViewController () <CreateRoomCoordinatorBridgePresenterDelegate>
 {
     // Tell whether a recents refresh is pending (suspended during editing mode).
     BOOL isRefreshPending;
@@ -66,6 +65,8 @@
     // Observe kThemeServiceDidChangeThemeNotification to handle user interface theme change.
     id kThemeServiceDidChangeThemeNotificationObserver;
 }
+
+@property (nonatomic, strong) CreateRoomCoordinatorBridgePresenter *createRoomCoordinatorBridgePresenter;
 
 @end
 
@@ -897,7 +898,7 @@
     
     UIImage *directChatImage = [UIImage imageNamed:@"room_action_direct_chat"];
     directChatImage = [directChatImage vc_tintedImageUsingColor:isDirect ? selectedColor : unselectedColor];
-    directChatAction.image = directChatImage;
+    directChatAction.image = [directChatImage vc_notRenderedImage];
     
     // Notification toggle
     
@@ -913,7 +914,7 @@
     
     UIImage *notificationImage = [UIImage imageNamed:@"room_action_notification"];
     notificationImage = [notificationImage vc_tintedImageUsingColor:isMuted ? unselectedColor : selectedColor];
-    muteAction.image = notificationImage;
+    muteAction.image = [notificationImage vc_notRenderedImage];
     
     // Favorites management
     
@@ -942,7 +943,7 @@
     
     UIImage *favouriteImage = [UIImage imageNamed:@"room_action_favourite"];
     favouriteImage = [favouriteImage vc_tintedImageUsingColor:isFavourite ? selectedColor : unselectedColor];
-    favouriteAction.image = favouriteImage;
+    favouriteAction.image = [favouriteImage vc_notRenderedImage];
     
     // Priority toggle
     
@@ -959,7 +960,7 @@
     
     UIImage *priorityImage = isInLowPriority ? [UIImage imageNamed:@"room_action_priority_high"] : [UIImage imageNamed:@"room_action_priority_low"];
     priorityImage = [priorityImage vc_tintedImageUsingColor:unselectedColor];
-    priorityAction.image = priorityImage;
+    priorityAction.image = [priorityImage vc_notRenderedImage];
     
     // Leave action
     
@@ -973,7 +974,7 @@
     
     UIImage *leaveImage = [UIImage imageNamed:@"room_action_leave"];
     leaveImage = [leaveImage vc_tintedImageUsingColor:unselectedColor];
-    leaveAction.image = leaveImage;
+    leaveAction.image = [leaveImage vc_notRenderedImage];
         
     // Create swipe action configuration
     
@@ -1611,14 +1612,9 @@
     [plusButtonImageView.widthAnchor constraintEqualToConstant:side].active = YES;
     [plusButtonImageView.heightAnchor constraintEqualToConstant:side].active = YES;
     
-    if (@available(iOS 11.0, *)) {
-        //  align to safe area
-        [plusButtonImageView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
-        [self.view.safeAreaLayoutGuide.bottomAnchor constraintEqualToAnchor:plusButtonImageView.bottomAnchor constant:9].active = YES;
-    } else {
-        [plusButtonImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-        [self.bottomLayoutGuide.topAnchor constraintEqualToAnchor:plusButtonImageView.bottomAnchor constant:9].active = YES;
-    }
+    //  align to safe area
+    [plusButtonImageView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
+    [self.view.safeAreaLayoutGuide.bottomAnchor constraintEqualToAnchor:plusButtonImageView.bottomAnchor constant:9].active = YES;
     
     plusButtonImageView.userInteractionEnabled = YES;
     
@@ -1660,7 +1656,7 @@
                                                            typeof(self) self = weakSelf;
                                                            self->currentAlert = nil;
                                                            
-                                                           [self createAnEmptyRoom];
+                                                           [self createNewRoom];
                                                        }
                                                        
                                                    }]];
@@ -1698,76 +1694,14 @@
     [self presentViewController:currentAlert animated:YES completion:nil];
 }
 
-- (void)createAnEmptyRoom
+- (void)createNewRoom
 {
     // Sanity check
     if (self.mainSession)
     {
-        // Create one room at time
-        if (!currentRequest)
-        {
-            [self startActivityIndicator];
-            
-            // Create an empty room.
-            MXWeakify(self);
-            currentRequest = [self.mainSession createRoom:nil
-                                               visibility:kMXRoomDirectoryVisibilityPrivate
-                                                roomAlias:nil
-                                                    topic:nil
-                                                  success:^(MXRoom *room) {
-                                                      MXStrongifyAndReturnIfNil(self);
-                                                      
-                                                      self->currentRequest = nil;
-                                                      [self stopActivityIndicator];
-                                                      if (self->currentAlert)
-                                                      {
-                                                          [self->currentAlert dismissViewControllerAnimated:NO completion:nil];
-                                                          self->currentAlert = nil;
-                                                      }
-
-                                                      [self dispayRoomWithRoomId:room.roomId inMatrixSession:self.mainSession];
-
-                                                  } failure:^(NSError *error) {
-                                                      MXStrongifyAndReturnIfNil(self);
-                                                      
-                                                      self->currentRequest = nil;
-                                                      [self stopActivityIndicator];
-                                                      if (self->currentAlert)
-                                                      {
-                                                          [self->currentAlert dismissViewControllerAnimated:NO completion:nil];
-                                                          self->currentAlert = nil;
-                                                      }
-                                                      
-                                                      NSLog(@"[RecentsViewController] Create new room failed");
-                                                      
-                                                      // Alert user
-                                                      [[AppDelegate theDelegate] showErrorAsAlert:error];
-                                                      
-                                                  }];
-        }
-        else
-        {
-            // Ask the user to wait
-            __weak __typeof(self) weakSelf = self;
-            currentAlert = [UIAlertController alertControllerWithTitle:nil
-                                                               message:NSLocalizedStringFromTable(@"room_creation_wait_for_creation", @"Vector", nil)
-                                                        preferredStyle:UIAlertControllerStyleAlert];
-            
-            [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"]
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * action) {
-                                                               
-                                                               if (weakSelf)
-                                                               {
-                                                                   typeof(self) self = weakSelf;
-                                                                   self->currentAlert = nil;
-                                                               }
-                                                               
-                                                           }]];
-            
-            [currentAlert mxk_setAccessibilityIdentifier:@"RecentsVCRoomCreationInProgressAlert"];
-            [self presentViewController:currentAlert animated:YES completion:nil];
-        }
+        self.createRoomCoordinatorBridgePresenter = [[CreateRoomCoordinatorBridgePresenter alloc] initWithSession:self.mainSession];
+        self.createRoomCoordinatorBridgePresenter.delegate = self;
+        [self.createRoomCoordinatorBridgePresenter presentFrom:self animated:YES];
     }
 }
 
@@ -1938,6 +1872,22 @@
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
     [self.recentsSearchBar setShowsCancelButton:NO animated:NO];
+}
+
+#pragma mark - CreateRoomCoordinatorBridgePresenterDelegate
+
+- (void)createRoomCoordinatorBridgePresenterDelegate:(CreateRoomCoordinatorBridgePresenter *)coordinatorBridgePresenter didCreateNewRoom:(MXRoom *)room
+{
+    [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
+        [[AppDelegate theDelegate] showRoom:room.roomId andEventId:nil withMatrixSession:self.mainSession restoreInitialDisplay:NO];
+    }];
+    coordinatorBridgePresenter = nil;
+}
+
+- (void)createRoomCoordinatorBridgePresenterDelegateDidCancel:(CreateRoomCoordinatorBridgePresenter *)coordinatorBridgePresenter
+{
+    [coordinatorBridgePresenter dismissWithAnimated:YES completion:nil];
+    coordinatorBridgePresenter = nil;
 }
 
 @end

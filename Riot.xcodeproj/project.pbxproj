@@ -6934,7 +6934,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether.shareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.shareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -6978,7 +6978,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether.shareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.shareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1a3be143-50c7-4ae2-834e-00596a053141";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7017,7 +7017,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether.SiriIntents;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.SiriIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -7055,7 +7055,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether.SiriIntents;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.SiriIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "18a66f93-ffe1-4008-b343-58350cc65023";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7091,7 +7091,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether.nse;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.nse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -7128,7 +7128,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether.nse;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.nse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "31dc9316-e029-47fd-81f5-778db07d76a2";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -7256,7 +7256,9 @@
 			baseConfigurationReference = EC1CA8B424D1AA8700DE9EBF /* App-Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				APPLICATION_GROUP_IDENTIFIER = group.au.gov.act.health.aether;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BASE_BUNDLE_IDENTIFIER = au.gov.act.health.aether;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Riot/SupportingFiles/Riot.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -7276,7 +7278,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/SupportingFiles/Riot-Bridging-Header.h";
@@ -7292,7 +7294,9 @@
 			baseConfigurationReference = EC1CA8B624D1AA8D00DE9EBF /* App-Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				APPLICATION_GROUP_IDENTIFIER = group.au.gov.act.health.aether;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BASE_BUNDLE_IDENTIFIER = au.gov.act.health.aether;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Riot/SupportingFiles/Riot.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -7311,7 +7315,7 @@
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.hd.aether;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f65e7447-b8a3-46cc-8fba-fa60e55e2511";
 				PROVISIONING_PROFILE_SPECIFIER = "";

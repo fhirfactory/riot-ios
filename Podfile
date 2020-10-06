@@ -32,6 +32,13 @@ $matrixKitVersionSpec = $matrixKitVersion
 $matrixSDKVersionSpec = {}
 end
 
+######################
+# Lingo specific note - 07/10/20
+# Archiving under Xcode 12 is not correctly handling nested pod installs with the same pods in each definition
+# For the time being we need to re-define the pods so that we only have one set included across all targets
+# This should be revised with each Xcode 12 refresh
+######################
+
 # Method to import the right MatrixKit flavour
 #def import_MatrixKit
 #  pod 'MatrixSDK', $matrixSDKVersionSpec
@@ -42,8 +49,8 @@ end
 
 # Method to import the right MatrixKit/AppExtension flavour
 def import_MatrixKitAppExtension
-    pod 'MatrixKit', $matrixKitVersionSpec
-    pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
+  pod 'MatrixKit', $matrixKitVersionSpec
+  pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
   pod 'MatrixSDK', $matrixSDKVersionSpec
   pod 'MatrixSDK/SwiftSupport', $matrixSDKVersionSpec
   pod 'MatrixKit/AppExtension', $matrixKitVersionSpec

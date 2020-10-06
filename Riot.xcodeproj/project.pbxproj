@@ -750,10 +750,6 @@
 		EC1CA89A24C9C9A200DE9EBF /* SetupBiometricsCoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA89224C9C9A200DE9EBF /* SetupBiometricsCoordinatorType.swift */; };
 		EC1CA89B24C9C9A200DE9EBF /* SetupBiometricsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA89324C9C9A200DE9EBF /* SetupBiometricsViewState.swift */; };
 		EC1CA89C24C9C9A200DE9EBF /* SetupBiometricsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA89424C9C9A200DE9EBF /* SetupBiometricsViewModel.swift */; };
-		EC1CA8D424D8103400DE9EBF /* App-Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EC1CA8D324D8103400DE9EBF /* App-Common.xcconfig */; };
-		EC1CA8D624D8108700DE9EBF /* ShareExtension-Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EC1CA8D524D8108700DE9EBF /* ShareExtension-Common.xcconfig */; };
-		EC1CA8D824D8118400DE9EBF /* SiriIntents-Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EC1CA8D724D8118400DE9EBF /* SiriIntents-Common.xcconfig */; };
-		EC1CA8DA24D811B400DE9EBF /* NSE-Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = EC1CA8D924D811B400DE9EBF /* NSE-Common.xcconfig */; };
 		EC2B4EF124A1EEBD005EB739 /* DataProtectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2B4EF024A1EEBD005EB739 /* DataProtectionHelper.swift */; };
 		EC2B4EF224A1EF34005EB739 /* DataProtectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2B4EF024A1EEBD005EB739 /* DataProtectionHelper.swift */; };
 		EC31F012251B4DBD00D407DA /* RoomInfoListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC31F011251B4DBD00D407DA /* RoomInfoListViewData.swift */; };
@@ -5518,7 +5514,7 @@
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = matrix.org;
 				TargetAttributes = {
 					24CBEC4D1F0EAD310093EABB = {
@@ -5613,7 +5609,6 @@
 				B1664BCB20F4E67600808783 /* RoomsListViewController.xib in Resources */,
 				B169328520F38BE800746532 /* SegmentedViewController.xib in Resources */,
 				B1664DA420F4F96300808783 /* Vector.strings in Resources */,
-				EC1CA8D624D8108700DE9EBF /* ShareExtension-Common.xcconfig in Resources */,
 				B1664BC920F4E67600808783 /* ShareViewController.xib in Resources */,
 				B169328820F3954A00746532 /* SharedImages.xcassets in Resources */,
 				B1664BC520F4E67600808783 /* FallbackViewController.xib in Resources */,
@@ -5625,7 +5620,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC1CA8D824D8118400DE9EBF /* SiriIntents-Common.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5633,7 +5627,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC1CA8DA24D811B400DE9EBF /* NSE-Common.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5822,7 +5815,6 @@
 				B1C562E5228C7C8D0037F12A /* RoomContextualMenuViewController.storyboard in Resources */,
 				3232ABA2225730E100AD6A5C /* DeviceVerificationStartViewController.storyboard in Resources */,
 				3284A35120A07C210044F922 /* postMessageAPI.js in Resources */,
-				EC1CA8D424D8103400DE9EBF /* App-Common.xcconfig in Resources */,
 				B1B557A220EF58AD00210D55 /* ContactTableViewCell.xib in Resources */,
 				ECFBD5CE250A7AAF00DD5F5A /* DirectoryNetworkTableHeaderFooterView.xib in Resources */,
 				B1B558EB20EF768F00210D55 /* RoomIncomingTextMsgWithPaginationTitleBubbleCell.xib in Resources */,
@@ -6914,7 +6906,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotShareExtension/SupportingFiles/RiotShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20200826151407;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -6955,10 +6947,10 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = RiotShareExtension/SupportingFiles/RiotShareExtension.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20200826151407;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -6981,7 +6973,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.shareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1a3be143-50c7-4ae2-834e-00596a053141";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "au gov act health aether shareExtension Distributi";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/SupportingFiles/RiotShareExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -7000,7 +6992,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiriIntents/SiriIntents.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20200826151407;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7035,10 +7027,10 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CODE_SIGN_ENTITLEMENTS = SiriIntents/SiriIntents.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20200826151407;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7058,7 +7050,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.SiriIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "18a66f93-ffe1-4008-b343-58350cc65023";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "au gov act health aether siriintents Distribution";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "$(inherited)";
@@ -7078,7 +7070,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotNSE/RiotNSE.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20200826151407;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7113,10 +7105,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = RiotNSE/RiotNSE.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20200826151407;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7131,7 +7123,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.nse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "31dc9316-e029-47fd-81f5-778db07d76a2";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "au gov act health aether nse Distribution Profile";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -7162,6 +7154,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -7221,6 +7214,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -7244,6 +7238,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7264,6 +7259,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -7299,8 +7295,9 @@
 				BASE_BUNDLE_IDENTIFIER = au.gov.act.health.aether;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Riot/SupportingFiles/Riot.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 20201006172119;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -7318,7 +7315,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "f65e7447-b8a3-46cc-8fba-fa60e55e2511";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "au gov act health aether Distribution Profile";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PRODUCT_NAME)/SupportingFiles/Riot-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7372,7 +7369,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 20200826151407;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				FRAMEWORK_SEARCH_PATHS = (

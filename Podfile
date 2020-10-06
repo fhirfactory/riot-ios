@@ -33,15 +33,17 @@ $matrixSDKVersionSpec = {}
 end
 
 # Method to import the right MatrixKit flavour
-def import_MatrixKit
-  pod 'MatrixSDK', $matrixSDKVersionSpec
-  pod 'MatrixSDK/SwiftSupport', $matrixSDKVersionSpec
-  pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
-  pod 'MatrixKit', $matrixKitVersionSpec
-end
+#def import_MatrixKit
+#  pod 'MatrixSDK', $matrixSDKVersionSpec
+#  pod 'MatrixSDK/SwiftSupport', $matrixSDKVersionSpec
+#  pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
+#  pod 'MatrixKit', $matrixKitVersionSpec
+#end
 
 # Method to import the right MatrixKit/AppExtension flavour
 def import_MatrixKitAppExtension
+    pod 'MatrixKit', $matrixKitVersionSpec
+    pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
   pod 'MatrixSDK', $matrixSDKVersionSpec
   pod 'MatrixSDK/SwiftSupport', $matrixSDKVersionSpec
   pod 'MatrixKit/AppExtension', $matrixKitVersionSpec
@@ -69,7 +71,8 @@ abstract_target 'RiotPods' do
   pod 'SwiftLint', '~> 0.36.0'
 
   target "Riot" do
-    import_MatrixKit
+#    import_MatrixKit
+    import_MatrixKitAppExtension
     pod 'DGCollectionViewLeftAlignFlowLayout', '~> 1.0.4'
     pod 'KTCenterFlowLayout', '~> 1.3.1'
     pod 'ZXingObjC', '~> 3.6.5'

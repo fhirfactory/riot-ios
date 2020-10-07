@@ -120,6 +120,7 @@
 "room_recents_join_room" = "Belépés a szobába";
 "room_recents_join_room_title" = "Belépés a szobába";
 "room_recents_join_room_prompt" = "Írd be a szoba azonosítóját vagy a becenevét";
+"room_recents_chats_section" = "CHATS";
 // People tab
 "people_invites_section" = "MEGHÍVÓK";
 "people_conversation_section" = "BESZÉLGETÉSEK";

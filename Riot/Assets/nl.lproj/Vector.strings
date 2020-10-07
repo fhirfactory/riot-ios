@@ -124,6 +124,8 @@
 "room_recents_join_room" = "Gesprek toetreden";
 "room_recents_join_room_title" = "Neem aan een gesprek deel";
 "room_recents_join_room_prompt" = "Voer een gespreks(bij)naam in";
+"room_recents_chats_section" = "CHATS";
+
 // People tab
 "people_invites_section" = "UITNODIGINGEN";
 "people_conversation_section" = "GESPREKKEN";

@@ -2970,6 +2970,10 @@ internal enum VectorL10n {
   internal static var roomPromptResend: String { 
     return VectorL10n.tr("Vector", "room_prompt_resend") 
   }
+  /// CHATS
+  internal static var roomRecentsChatsSection: String { 
+    return VectorL10n.tr("Vector", "room_recents_chats_section") 
+  }
   /// ROOMS
   internal static var roomRecentsConversationsSection: String { 
     return VectorL10n.tr("Vector", "room_recents_conversations_section") 

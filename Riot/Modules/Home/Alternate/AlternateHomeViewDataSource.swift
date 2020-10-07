@@ -25,6 +25,17 @@ class AlternateHomeDataSource: RecentsDataSource {
         return 1
     }
     
+    func getBadgeValueForSectionMode(section: HomeViewMode) -> UInt{
+        switch section{
+        case .Favourites:
+            return super.missedFavouriteCount
+        case .Chats:
+            return super.missedChatCount
+        case .LowPriority:
+            return super.missedLowPriorityCount
+        }
+    }
+    
     //do work here sorting etc.
     func getIndexPathInUnderlying(indexPathFor uIndex: IndexPath) -> IndexPath {
         switch _viewMode {
@@ -63,11 +74,11 @@ class AlternateHomeDataSource: RecentsDataSource {
                                 peopleIndex += 1
                             }
                         } else if res == ComparrisonResult.lessThan {
-                            interleaveRecord.append((0, peopleIndex))
-                            peopleIndex += 1
-                        } else {
                             interleaveRecord.append((1, conversationIndex))
                             conversationIndex += 1
+                        } else {
+                            interleaveRecord.append((0, peopleIndex))
+                            peopleIndex += 1
                         }
                     } else if peopleCell != nil && conversationCell != nil {
                         if (peopleCell?.lastEvent.originServerTs)! >= (conversationCell?.lastEvent.originServerTs)! {
@@ -86,10 +97,6 @@ class AlternateHomeDataSource: RecentsDataSource {
                     return IndexPath(row: val.1, section: conversationSection)
                 }
             }
-
-            let somevar = (peopleSection, conversationSection)
-            let another = peopleCellDataArray
-            let andAnother = conversationCellDataArray
             if uIndex.row < peopleCellDataArray.count {
                 return IndexPath(row: uIndex.row, section: peopleSection)
             } else if uIndex.row < peopleCellDataArray.count + conversationCellDataArray.count {

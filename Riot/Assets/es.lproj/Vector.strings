@@ -155,6 +155,7 @@
 "room_recents_join_room" = "Unirse a la sala";
 "room_recents_join_room_title" = "Unirse a una sala";
 "room_recents_join_room_prompt" = "Escribe una ID o alias de sala";
+"room_recents_chats_section" = "CHATS";
 "search_people" = "Personas";
 "search_people_placeholder" = "Buscar por ID de Usuario, Nombre o correo electrónico";
 // Directory

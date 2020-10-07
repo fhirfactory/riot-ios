@@ -118,6 +118,8 @@
 "room_recents_join_room" = "Присъедини се към стая";
 "room_recents_join_room_title" = "Присъединяване към стая";
 "room_recents_join_room_prompt" = "Напишете ID или псевдоним на стая";
+"room_recents_chats_section" = "CHATS";
+
 // People tab
 "people_invites_section" = "ПОКАНИ";
 "people_conversation_section" = "РАЗГОВОРИ";

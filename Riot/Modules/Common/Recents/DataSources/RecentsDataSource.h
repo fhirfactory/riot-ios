@@ -193,4 +193,9 @@ extern NSString *const kRecentsDataSourceTapOnDirectoryServerChange;
  */
 @property (nonatomic, readonly) NSUInteger missedHighlightGroupDiscussionsCount;
 
+@property (nonatomic, readonly) NSUInteger missedChatCount;
+@property (nonatomic, readonly) NSUInteger missedFavouriteCount;
+@property (nonatomic, readonly) NSUInteger missedLowPriorityCount;
+@property (nonatomic, readonly) NSUInteger missedInviteCount;
+
 @end

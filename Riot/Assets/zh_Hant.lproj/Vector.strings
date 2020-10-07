@@ -195,6 +195,8 @@
 "room_recents_join_room" = "加入聊天室";
 "room_recents_join_room_title" = "加入聊天室";
 "room_recents_join_room_prompt" = "輸入聊天室 ID 或別名";
+"room_recents_chats_section" = "CHATS";
+
 // People tab
 "people_invites_section" = "邀請";
 "people_conversation_section" = "對話";

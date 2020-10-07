@@ -109,6 +109,8 @@
 "room_recents_join_room" = "Rejoindre le salon";
 "room_recents_join_room_title" = "Rejoindre un salon";
 "room_recents_join_room_prompt" = "Saisir un identifiant ou un alias de salon";
+"room_recents_chats_section" = "CHATS";
+
 // People tab
 "people_invites_section" = "INVITATIONS";
 "people_conversation_section" = "DISCUSSIONS";

@@ -117,6 +117,8 @@
 "room_recents_join_room" = "Tham gia phòng";
 "room_recents_join_room_title" = "Tham gia một phòng đã tồn tại";
 "room_recents_join_room_prompt" = "Nhập id phòng hoặc bí danh phòng";
+"room_recents_chats_section" = "CHATS";
+
 // People tab
 "people_invites_section" = "MỜI";
 "people_conversation_section" = "CUỘC TRÒ CHUYỆN";

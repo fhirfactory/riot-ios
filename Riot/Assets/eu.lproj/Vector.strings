@@ -140,6 +140,7 @@
 "room_recents_join_room" = "Elkartu gelara";
 "room_recents_join_room_title" = "Elkartu gela batetara";
 "room_recents_join_room_prompt" = "Idatzi gelaren IDa edo ezizena";
+"room_recents_chats_section" = "CHATS";
 // Directory
 "directory_cell_title" = "Arakatu direktorioa";
 "room_details_favourite_tag" = "Gogokoa";

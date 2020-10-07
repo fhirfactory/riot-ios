@@ -1142,6 +1142,7 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
     _missedFavouriteDiscussionsCount = _missedHighlightFavouriteDiscussionsCount = 0;
     _missedDirectDiscussionsCount = _missedHighlightDirectDiscussionsCount = 0;
     _missedGroupDiscussionsCount = _missedHighlightGroupDiscussionsCount = 0;
+    _missedFavouriteCount = _missedLowPriorityCount = _missedChatCount = _missedInviteCount = 0;
     
     secureBackupBannerSection = directorySection = favoritesSection = peopleSection = conversationSection = lowPrioritySection = serverNoticeSection = invitesSection = -1;
     
@@ -1237,6 +1238,14 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
             
             if (notificationCount)
             {
+                if (room.accountData.tags[kMXRoomTagLowPriority]){
+                    _missedLowPriorityCount ++;
+                }else if (room.accountData.tags[kMXRoomTagFavourite]){
+                    _missedFavouriteCount ++;
+                }else if (!room.accountData.tags || room.isDirect){
+                    _missedChatCount ++;
+                }
+                
                 if (room.accountData.tags[kMXRoomTagFavourite])
                 {
                     _missedFavouriteDiscussionsCount ++;
@@ -1268,6 +1277,7 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
             }
             else if (room.summary.membership == MXMembershipInvite)
             {
+                _missedInviteCount ++;
                 if (room.isDirect)
                 {
                     _missedDirectDiscussionsCount ++;

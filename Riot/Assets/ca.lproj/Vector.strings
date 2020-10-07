@@ -118,6 +118,8 @@
 "room_recents_join_room" = "Unir-se a sala";
 "room_recents_join_room_title" = "Unir-se a una sala";
 "room_recents_join_room_prompt" = "Escriu la id de la sala o el seu alias";
+"room_recents_chats_section" = "CHATS";
+
 // People tab
 "people_invites_section" = "Convits";
 "people_conversation_section" = "Converses";

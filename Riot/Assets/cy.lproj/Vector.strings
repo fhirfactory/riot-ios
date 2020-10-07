@@ -143,6 +143,7 @@
 "room_recents_join_room" = "Ymuno â'r ystafell";
 "room_recents_join_room_title" = "Ymuno â ystafell";
 "room_recents_join_room_prompt" = "Cofnodwch dynodwr ystafell neu arallenw ystafell";
+"room_recents_chats_section" = "CHATS";
 // People tab
 "people_invites_section" = "GWAHODDIADAU";
 "people_conversation_section" = "SGWRSIAU";

@@ -99,6 +99,7 @@
 "room_recents_join_room" = "Dołącz do pokoju";
 "room_recents_join_room_title" = "Dołącz do pokoju";
 "room_recents_join_room_prompt" = "Wprowadź ID lub nazwę pokoju";
+"room_recents_chats_section" = "CHATS";
 // People tab
 "people_invites_section" = "ZAPROSZENIA";
 "people_conversation_section" = "ROZMOWY";

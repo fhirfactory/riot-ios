@@ -174,7 +174,8 @@ final class BuildSettings: NSObject {
     /// Not allowed pin codes. User won't be able to select one of the pin in the list.
     static let notAllowedPINs: [String] = []
     
-    // MARK: - General Settings Screen
+    // MARK: - General Settings Screen Toggles
+    /// Booleans that hide or show different elements on the Settings screen
     
     static let settingsScreenAllowUserSignOut: Bool = false
     static let settingsScreenShowUserFirstName: Bool = false
@@ -198,16 +199,21 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowBugReportingManually: Bool = false
     static let settingsScreenAllowDeactivatingAccount: Bool = false
     static let settingsScreenShowUserInterfaceSettings: Bool = false
-    static let settingsScreenOverrideDefaultThemeSelection : NSString = "light"
     static let settingsScreenShowOLMVersion: Bool = false
     static let settingsScreenShowCopyRight: Bool = false
-    static let settingsScreenAllowClearingCacheSettings = false
-    static let settingsScreenAllowMarkAllAsRead = false
-    static let settingsScreenShowThirdPartNotice = false
-    static let settingsScreenShowAcknowledgement = true
+    static let settingsScreenAllowClearingCacheSettings: Bool = false
+    static let settingsScreenAllowMarkAllAsRead: Bool = false
+    static let settingsScreenShowThirdPartNotice: Bool = false
+    static let settingsScreenShowAcknowledgement: Bool = true
     static let settingsScreenShowPinWithMissed = false // to set the default for this setting, change the appropriate row in Riot-Defaults.plist
     static let settingsEnforceSpecificLanguage : Bool = true
     static let settingsDefaultLanguage : String = "en"
+
+    
+    // MARK: - General Settings Defaults Overrides
+    /// Override values that are used to control the value of settings that are hidden from users
+    
+    static let settingsScreenOverrideDefaultThemeSelection : NSString = "light"
     
     // MARK: - Room Settings Screen
     
@@ -225,8 +231,10 @@ final class BuildSettings: NSObject {
     // MARK: - Message
     static let messageDetailsAllowShare: Bool = true
     static let messageDetailsAllowPermalink: Bool = true
-    static let messageDetailsAllowViewSource: Bool = true
+    static let messageDetailsAllowViewSource: Bool = false
     static let messageDetailsAllowSave: Bool = true
+    static let messageDetailsAllowViewEncryptionInformation : Bool = false
+    static let messageDetailsAllowReportContent : Bool = false
     
     // MARK: - HTTP
     /// Additional HTTP headers will be sent by all requests. Not recommended to use request-specific headers, like `Authorization`.

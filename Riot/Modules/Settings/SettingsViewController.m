@@ -2188,8 +2188,6 @@ TableViewSectionsDelegate>
             markAllBtnCell.mxkButton.accessibilityIdentifier = nil;
             
             cell = markAllBtnCell;
-            
-            //if (!BuildSettings.settingsScreenAllowMarkAllAsRead)
         }
         else if (row == OTHER_CLEAR_CACHE_INDEX)
         {
@@ -3505,7 +3503,9 @@ TableViewSectionsDelegate>
 - (void)onProfileAvatarTap:(UITapGestureRecognizer *)recognizer
 {
     if (!BuildSettings.settingsScreenAllowChangingProfilePicture)
+    {
         return;
+    }
     SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
     singleImagePickerPresenter.delegate = self;
     

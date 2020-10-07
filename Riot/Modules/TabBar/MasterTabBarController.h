@@ -29,6 +29,9 @@
 #import "ContactDetailsViewController.h"
 #import "GroupDetailsViewController.h"
 
+#import <FFDropDownMenu.h>
+#import <FFDropDownMenuView.h>
+
 #define TABBAR_HOME_INDEX         0
 #define TABBAR_FAVOURITES_INDEX   1
 #define TABBAR_PEOPLE_INDEX       2
@@ -44,6 +47,8 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonIem;
+
+@property (nonatomic, strong) FFDropDownMenuView *dropDownMenu;
 
 // Associated matrix sessions (empty by default).
 @property (nonatomic, readonly) NSArray *mxSessions;

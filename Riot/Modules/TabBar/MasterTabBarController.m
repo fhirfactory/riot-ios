@@ -31,6 +31,9 @@
 
 #import "Riot-Swift.h"
 
+#import <FFDropDownMenu.h>
+#import <FFDropDownMenuView.h>
+
 @interface MasterTabBarController () <AuthenticationViewControllerDelegate>
 {
     // Array of `MXSession` instances.
@@ -605,6 +608,40 @@
 }
 
 #pragma mark -
+
+- (IBAction)displayPullDownMenu:(id)sender{
+    NSArray *menuModelsArr = [self getDropDownMenuModelsArray: sender];
+    self.dropDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:menuModelsArr menuWidth:145 eachItemHeight:40 menuRightMargin:10 triangleRightMargin:20];
+    [self.dropDownMenu showMenu];
+}
+
+- (NSArray *)getDropDownMenuModelsArray:(id)sender {
+    __weak typeof(self)weakSelf = self;
+    //菜单模型0
+    FFDropDownMenuModel *menuModel0 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil) menuItemIconName:nil menuBlock:^{
+
+        //UIViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UnifiedSearchViewController"];
+        UnifiedSearchViewController *myNewVC = [[UnifiedSearchViewController alloc] init];
+        // do any setup you need for myNewVC
+        [self showViewController:myNewVC sender:self];
+    }];
+    //菜单模型1
+    FFDropDownMenuModel *menuModel1 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"Line" menuItemIconName:nil menuBlock:^{
+        //Do Something
+    }];
+    //菜单模型2
+    FFDropDownMenuModel *menuModel2 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"QQ" menuItemIconName:nil  menuBlock:^{
+       //Do Something
+    }];
+    //菜单模型3
+    FFDropDownMenuModel *menuModel3 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"QZone" menuItemIconName:nil  menuBlock:^{
+        //Do Something
+    }];
+    
+    NSArray *menuModelArr = @[menuModel0, menuModel1, menuModel2, menuModel3];
+    
+    return menuModelArr;
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

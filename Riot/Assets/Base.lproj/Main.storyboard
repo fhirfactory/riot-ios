@@ -276,7 +276,7 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="MasterTabBarControllerSearchBarButton"/>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <segue destination="nJt-uq-tV9" kind="show" identifier="showUnifiedSearch" id="5no-rS-zX7"/>
+                                <action selector="displayPullDownMenu:" destination="xaQ-tG-rlO" id="xkT-tI-ssY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -359,7 +359,7 @@
             <objects>
                 <tableViewController id="aHG-CH-koI" customClass="DirectoryViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="tbG-uL-KGT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -590,7 +590,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="mhb-l9-pM3"/>
+        <segue reference="Tfl-tq-LQp"/>
         <segue reference="fIR-e3-ssz"/>
         <segue reference="f5u-Y1-7nt"/>
         <segue reference="vCz-dl-6xQ"/>

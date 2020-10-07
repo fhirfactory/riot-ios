@@ -38,6 +38,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.15):
     - DTFoundation/Core
+  - FFDropDownMenu (1.4.5)
   - FlowCommoniOS (1.8.7)
   - GBDeviceInfo (6.3.0):
     - GBDeviceInfo/Core (= 6.3.0)
@@ -108,6 +109,7 @@ PODS:
 DEPENDENCIES:
   - cmark
   - DGCollectionViewLeftAlignFlowLayout (~> 1.0.4)
+  - FFDropDownMenu (~> 1.4)
   - FlowCommoniOS (~> 1.8.7)
   - GBDeviceInfo (~> 6.3.0)
   - HPGrowingTextView
@@ -133,6 +135,7 @@ SPEC REPOS:
     - DGCollectionViewLeftAlignFlowLayout
     - DTCoreText
     - DTFoundation
+    - FFDropDownMenu
     - FlowCommoniOS
     - GBDeviceInfo
     - GZIP
@@ -159,6 +162,7 @@ SPEC CHECKSUMS:
   DGCollectionViewLeftAlignFlowLayout: a0fa58797373ded039cafba8133e79373d048399
   DTCoreText: e92f4cf6b36d9d71ce4436d12cf089d74ab0596b
   DTFoundation: 767ca882209ef4d5132ec7e702526d5ed5bb71a2
+  FFDropDownMenu: 3dc2b1e47d349687b9d451282a3b6bae3e0e8c7a
   FlowCommoniOS: 1647a1775b988f5d97202f635bcbcbce4f4c46a1
   GBDeviceInfo: a3f39dba1a04dcb630abff65d6f7e8fbf319eadd
   GZIP: af5c90ef903776a7e9afe6ebebd794a84a2929d4
@@ -179,6 +183,6 @@ SPEC CHECKSUMS:
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 42729c01dc00e56b55fe47af73f2a3a13fa43fb4
+PODFILE CHECKSUM: 65c4c39ff540e60aa0672008ad99b4e6452fa194
 
 COCOAPODS: 1.9.3

@@ -334,7 +334,9 @@ TableViewSectionsDelegate>
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT];
     }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX];
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
+    if (BuildSettings.settingsScreenShowPinWithMissed){
+        [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
+    }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX];
     sectionNotificationSettings.headerTitle = NSLocalizedStringFromTable(@"settings_notifications_settings", @"Vector", nil);
     [tmpSections addObject:sectionNotificationSettings];
@@ -2186,8 +2188,6 @@ TableViewSectionsDelegate>
             markAllBtnCell.mxkButton.accessibilityIdentifier = nil;
             
             cell = markAllBtnCell;
-            
-            //if (!BuildSettings.settingsScreenAllowMarkAllAsRead)
         }
         else if (row == OTHER_CLEAR_CACHE_INDEX)
         {
@@ -3503,7 +3503,9 @@ TableViewSectionsDelegate>
 - (void)onProfileAvatarTap:(UITapGestureRecognizer *)recognizer
 {
     if (!BuildSettings.settingsScreenAllowChangingProfilePicture)
+    {
         return;
+    }
     SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
     singleImagePickerPresenter.delegate = self;
     

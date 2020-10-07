@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>pinRoomsWithMissedNotif</key>
-	<true/>
+	<false/>
 	<key>pinRoomsWithUnread</key>
 	<true/>
 	<key>matrixApps</key>

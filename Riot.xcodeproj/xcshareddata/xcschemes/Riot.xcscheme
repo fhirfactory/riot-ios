@@ -61,6 +61,26 @@
                ReferencedContainer = "container:Riot.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1411D7F9252D6F30009D8908"
+               BuildableName = "LingoUITests.xctest"
+               BlueprintName = "LingoUITests"
+               ReferencedContainer = "container:Riot.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1411D81B252D7534009D8908"
+               BuildableName = "LingoTests.xctest"
+               BlueprintName = "LingoTests"
+               ReferencedContainer = "container:Riot.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

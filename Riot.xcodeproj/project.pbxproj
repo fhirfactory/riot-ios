@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1411D81F252D7534009D8908 /* LingoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D81E252D7534009D8908 /* LingoTests.swift */; };
+		1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D834252D7597009D8908 /* RoomViewControllerTests.swift */; };
 		24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BBE81E7009EC00A9B29C /* MXRoom+Riot.m */; };
 		24EEE5A31F23A8C300B3C705 /* AvatarGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BC111E7009EC00A9B29C /* AvatarGenerator.m */; };
@@ -950,6 +952,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1411D821252D7534009D8908 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F094A99A1B78D8F000B1FBBF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F094A9A11B78D8F000B1FBBF;
+			remoteInfo = Riot;
+		};
 		242661F51F12B1BA00D3FC08 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F094A99A1B78D8F000B1FBBF /* Project object */;
@@ -998,6 +1007,10 @@
 
 /* Begin PBXFileReference section */
 		129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1411D81C252D7534009D8908 /* LingoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LingoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1411D81E252D7534009D8908 /* LingoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LingoTests.swift; sourceTree = "<group>"; };
+		1411D820252D7534009D8908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1411D834252D7597009D8908 /* RoomViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewControllerTests.swift; sourceTree = "<group>"; };
 		1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_Riot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RiotShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B582BE9B2A98BCF5F740873 /* Pods-RiotPods-RiotNSE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotNSE.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotNSE/Pods-RiotPods-RiotNSE.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2170,6 +2183,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1411D819252D7534009D8908 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		24CBEC4B1F0EAD310093EABB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2214,6 +2234,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1411D81D252D7534009D8908 /* LingoTests */ = {
+			isa = PBXGroup;
+			children = (
+				1411D81E252D7534009D8908 /* LingoTests.swift */,
+				1411D820252D7534009D8908 /* Info.plist */,
+				1411D834252D7597009D8908 /* RoomViewControllerTests.swift */,
+			);
+			path = LingoTests;
+			sourceTree = "<group>";
+		};
 		24CBEC4F1F0EAD310093EABB /* RiotShareExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -5385,6 +5415,7 @@
 				24CBEC4F1F0EAD310093EABB /* RiotShareExtension */,
 				92726A441F58737A004AD26F /* SiriIntents */,
 				EC85D7442477E5F7002C44C9 /* RiotNSE */,
+				1411D81D252D7534009D8908 /* LingoTests */,
 				F094A9A31B78D8F000B1FBBF /* Products */,
 				5FC42FA41F5186AFFB6A2404 /* Frameworks */,
 				3232AAFE22564D9100AD6A5C /* Tools */,
@@ -5401,6 +5432,7 @@
 				24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */,
 				92726A431F58737A004AD26F /* SiriIntents.appex */,
 				EC85D7432477E5F7002C44C9 /* RiotNSE.appex */,
+				1411D81C252D7534009D8908 /* LingoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5408,6 +5440,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1411D81B252D7534009D8908 /* LingoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1411D823252D7534009D8908 /* Build configuration list for PBXNativeTarget "LingoTests" */;
+			buildPhases = (
+				1411D818252D7534009D8908 /* Sources */,
+				1411D819252D7534009D8908 /* Frameworks */,
+				1411D81A252D7534009D8908 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1411D822252D7534009D8908 /* PBXTargetDependency */,
+			);
+			name = LingoTests;
+			productName = LingoTests;
+			productReference = 1411D81C252D7534009D8908 /* LingoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		24CBEC4D1F0EAD310093EABB /* RiotShareExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24CBEC5C1F0EAD310093EABB /* Build configuration list for PBXNativeTarget "RiotShareExtension" */;
@@ -5513,10 +5563,14 @@
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = matrix.org;
 				TargetAttributes = {
+					1411D81B252D7534009D8908 = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = F094A9A11B78D8F000B1FBBF;
+					};
 					24CBEC4D1F0EAD310093EABB = {
 						CreatedOnToolsVersion = 8.3.2;
 						LastSwiftMigration = 1020;
@@ -5594,6 +5648,7 @@
 			targets = (
 				F094A9A11B78D8F000B1FBBF /* Riot */,
 				F094A9BD1B78D8F000B1FBBF /* RiotTests */,
+				1411D81B252D7534009D8908 /* LingoTests */,
 				24CBEC4D1F0EAD310093EABB /* RiotShareExtension */,
 				92726A421F58737A004AD26F /* SiriIntents */,
 				EC85D7422477E5F7002C44C9 /* RiotNSE */,
@@ -5602,6 +5657,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1411D81A252D7534009D8908 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		24CBEC4C1F0EAD310093EABB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6009,6 +6071,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1411D818252D7534009D8908 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1411D81F252D7534009D8908 /* LingoTests.swift in Sources */,
+				1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		24CBEC4A1F0EAD310093EABB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6775,6 +6846,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1411D822252D7534009D8908 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F094A9A11B78D8F000B1FBBF /* Riot */;
+			targetProxy = 1411D821252D7534009D8908 /* PBXContainerItemProxy */;
+		};
 		242661F61F12B1BA00D3FC08 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 24CBEC4D1F0EAD310093EABB /* RiotShareExtension */;
@@ -6893,6 +6969,71 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1411D824252D7534009D8908 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 833G2HK8E8;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = LingoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.LingoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Riot.app/Riot";
+			};
+			name = Debug;
+		};
+		1411D825252D7534009D8908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 833G2HK8E8;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = LingoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = au.gov.act.health.aether.LingoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Riot.app/Riot";
+			};
+			name = Release;
+		};
 		24CBEC5A1F0EAD310093EABB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC1CA8B824D1AD1600DE9EBF /* ShareExtension-Debug.xcconfig */;
@@ -7396,6 +7537,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1411D823252D7534009D8908 /* Build configuration list for PBXNativeTarget "LingoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1411D824252D7534009D8908 /* Debug */,
+				1411D825252D7534009D8908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		24CBEC5C1F0EAD310093EABB /* Build configuration list for PBXNativeTarget "RiotShareExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

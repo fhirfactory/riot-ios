@@ -43,6 +43,16 @@ class SettingsViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.messageDetailsAllowViewEncryptionInformation == false) // Note this is used to prevent both encryption and session information 
         
     }
+    
+    func test_192990_preventManageIntegrations() throws {
+        /// Given I am a Room Member
+        /// When I select the Room
+        /// Then the following OOTB functions are removed/unavailable, including
+        ///     Manage Integrations
+        
+        XCTAssert(UserDefaults.standard.bool(forKey: "matrixApps") == false)
+        
+    }
 
 }
 

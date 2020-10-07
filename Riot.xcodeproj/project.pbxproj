@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1411D81F252D7534009D8908 /* LingoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D81E252D7534009D8908 /* LingoTests.swift */; };
 		1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D834252D7597009D8908 /* RoomViewControllerTests.swift */; };
+		1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */; };
 		24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BBE81E7009EC00A9B29C /* MXRoom+Riot.m */; };
 		24EEE5A31F23A8C300B3C705 /* AvatarGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BC111E7009EC00A9B29C /* AvatarGenerator.m */; };
@@ -1011,6 +1012,7 @@
 		1411D81E252D7534009D8908 /* LingoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LingoTests.swift; sourceTree = "<group>"; };
 		1411D820252D7534009D8908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1411D834252D7597009D8908 /* RoomViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewControllerTests.swift; sourceTree = "<group>"; };
+		1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInputToolbarViewTests.swift; sourceTree = "<group>"; };
 		1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_Riot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RiotShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B582BE9B2A98BCF5F740873 /* Pods-RiotPods-RiotNSE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotNSE.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotNSE/Pods-RiotPods-RiotNSE.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2240,6 +2242,7 @@
 				1411D81E252D7534009D8908 /* LingoTests.swift */,
 				1411D820252D7534009D8908 /* Info.plist */,
 				1411D834252D7597009D8908 /* RoomViewControllerTests.swift */,
+				1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */,
 			);
 			path = LingoTests;
 			sourceTree = "<group>";
@@ -6077,6 +6080,7 @@
 			files = (
 				1411D81F252D7534009D8908 /* LingoTests.swift in Sources */,
 				1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */,
+				1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

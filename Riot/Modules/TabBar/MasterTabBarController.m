@@ -610,9 +610,16 @@
 #pragma mark -
 
 - (IBAction)displayPullDownMenu:(id)sender{
-    NSArray *menuModelsArr = [self getDropDownMenuModelsArray: sender];
-    self.dropDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:menuModelsArr menuWidth:145 eachItemHeight:40 menuRightMargin:10 triangleRightMargin:20];
-    [self.dropDownMenu showMenu];
+    if (false && @available(iOS 14, *)){
+        
+    }else{
+        NSArray *menuModelsArr = [self getDropDownMenuModelsArray: sender];
+        UIBarButtonItem *barButtonItem = sender;
+        CGPoint senderOrigin = barButtonItem.accessibilityFrame.origin;
+        self.dropDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:menuModelsArr menuWidth:145 eachItemHeight:40 menuRightMargin:10 triangleRightMargin:23];
+        self.dropDownMenu.triangleY = 50;
+        [self.dropDownMenu showMenu];
+    }
 }
 
 - (NSArray *)getDropDownMenuModelsArray:(id)sender {
@@ -623,6 +630,13 @@
         //UIViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UnifiedSearchViewController"];
         UnifiedSearchViewController *myNewVC = [[UnifiedSearchViewController alloc] init];
         // do any setup you need for myNewVC
+        self->unifiedSearchViewController= myNewVC;
+        
+        for (MXSession *session in self->mxSessionArray)
+        {
+            [self->unifiedSearchViewController addMatrixSession:session];
+        }
+        
         [self showViewController:myNewVC sender:self];
     }];
     //菜单模型1

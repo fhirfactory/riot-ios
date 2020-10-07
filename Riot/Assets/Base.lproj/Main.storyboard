@@ -271,7 +271,7 @@
                                 <segue destination="taU-5Q-sdv" kind="show" identifier="showSettings" id="3jh-kY-vVn"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="search_icon" id="pud-Fh-Usd">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis.circle.fill" catalog="system" id="pud-Fh-Usd">
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="MasterTabBarControllerSearchBarButton"/>
                             </userDefinedRuntimeAttributes>
@@ -597,6 +597,7 @@
         <segue reference="cUw-vU-gJq"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="ellipsis.circle.fill" catalog="system" width="128" height="121"/>
         <image name="integrations_icon" width="24" height="24"/>
         <image name="logo" width="120" height="101"/>
         <image name="search_icon" width="24" height="24"/>

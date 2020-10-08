@@ -242,6 +242,9 @@
 "room_recents_directory_section_network" = "Sarea";
 "room_recents_favourites_section" = "GOGOKOAK";
 "room_recents_invites_section" = "GONBIDAPENAK";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
 // People tab
 "people_invites_section" = "GONBIDAPENAK";
 "people_conversation_section" = "ELKARRIZKETAK";

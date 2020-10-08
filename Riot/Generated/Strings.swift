@@ -2122,6 +2122,14 @@ internal enum VectorL10n {
   internal static func publicRoomSectionTitle(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "public_room_section_title", p1)
   }
+  /// %d invites
+  internal static func pullDownInvites(_ p1: Int) -> String {
+    return VectorL10n.tr("Vector", "pull_down_invites", p1)
+  }
+  /// 1 invite
+  internal static var pullDownOneInvite: String { 
+    return VectorL10n.tr("Vector", "pull_down_one_invite") 
+  }
   /// You seem to be shaking the phone in frustration. Would you like to submit a bug report?
   internal static var rageShakePrompt: String { 
     return VectorL10n.tr("Vector", "rage_shake_prompt") 

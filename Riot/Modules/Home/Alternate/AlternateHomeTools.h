@@ -19,6 +19,7 @@
 
 
 #endif /* AlternateHomeTools_h */
+#import <MatrixKit/MatrixKit.h>
 
 typedef NS_ENUM(NSUInteger, ComparrisonResult)//enum : NSUInteger
 {
@@ -30,4 +31,5 @@ typedef NS_ENUM(NSUInteger, ComparrisonResult)//enum : NSUInteger
 @interface AlternateHomeTools : NSObject
 + (NSString*)getNSLocalized:(NSString*)String In:(NSString*)table;
 + (ComparrisonResult)runComparer:(NSComparator)Comparator Against:(id)FirstObject AndThen:(id)SecondObject;
++ (void)setDelegateForCell:(id<MXKCellRendering>)cell With:(id<MXKCellRenderingDelegate>)delegate;
 @end

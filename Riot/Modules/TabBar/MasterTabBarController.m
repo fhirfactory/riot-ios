@@ -234,6 +234,14 @@
         [unifiedSearchViewController destroy];
         unifiedSearchViewController = nil;
     }
+    
+    if (@available(iOS 14, *)){
+        [self setupPullDownMenuiOS14];
+    }
+}
+
+- (void)InvitesSelected{
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -610,27 +618,42 @@
 #pragma mark -
 
 - (IBAction)displayPullDownMenu:(id)sender{
-    if (false && @available(iOS 14, *)){
-        
+    if (@available(iOS 14, *)){
+        return;
+    }
+    NSArray *menuModelsArr = [self getDropDownMenuModelsArray];
+    UIBarButtonItem *barButtonItem = sender;
+    self.dropDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:menuModelsArr menuWidth:145 eachItemHeight:40 menuRightMargin:10 triangleRightMargin:23];
+    self.dropDownMenu.triangleY = 50;
+    [self.dropDownMenu showMenu];
+    self.dropDownMenu.triangleY = 50;
+}
+- (void)setupPullDownMenuiOS14{
+    if (@available(iOS 14, *)){
+        NSMutableArray *menuArray = [[NSMutableArray alloc] init];
+        NSArray *actions = [self getDropDownMenuModelsArray];
+        for (FFDropDownMenuModel *itm in actions) {
+            [menuArray addObject:[UIAction actionWithTitle:itm.menuItemTitle image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull __strong args){
+                itm.menuBlock();
+            }]];
+        }
+        UIMenu *menu = [UIMenu menuWithChildren:menuArray];
+        _searchBarButtonIem.menu = menu;
+        _searchBarButtonIem.action = nil;
     }else{
-        NSArray *menuModelsArr = [self getDropDownMenuModelsArray: sender];
-        UIBarButtonItem *barButtonItem = sender;
-        CGPoint senderOrigin = barButtonItem.accessibilityFrame.origin;
-        self.dropDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:menuModelsArr menuWidth:145 eachItemHeight:40 menuRightMargin:10 triangleRightMargin:23];
-        self.dropDownMenu.triangleY = 50;
-        [self.dropDownMenu showMenu];
+        return;
     }
 }
 
-- (NSArray *)getDropDownMenuModelsArray:(id)sender {
+- (NSArray *)getDropDownMenuModelsArray {
     __weak typeof(self)weakSelf = self;
-    //菜单模型0
-    FFDropDownMenuModel *menuModel0 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil) menuItemIconName:nil menuBlock:^{
+    NSMutableArray *menuModelArr = [[NSMutableArray alloc] init];
+    [menuModelArr addObject:[FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil) menuItemIconName:nil menuBlock:^{
 
         //UIViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UnifiedSearchViewController"];
         UnifiedSearchViewController *myNewVC = [[UnifiedSearchViewController alloc] init];
         // do any setup you need for myNewVC
-        self->unifiedSearchViewController= myNewVC;
+        self->unifiedSearchViewController = myNewVC;
         
         for (MXSession *session in self->mxSessionArray)
         {
@@ -638,22 +661,23 @@
         }
         
         [self showViewController:myNewVC sender:self];
-    }];
-    //菜单模型1
-    FFDropDownMenuModel *menuModel1 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"Line" menuItemIconName:nil menuBlock:^{
-        //Do Something
-    }];
-    //菜单模型2
-    FFDropDownMenuModel *menuModel2 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"QQ" menuItemIconName:nil  menuBlock:^{
-       //Do Something
-    }];
-    //菜单模型3
-    FFDropDownMenuModel *menuModel3 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"QZone" menuItemIconName:nil  menuBlock:^{
-        //Do Something
-    }];
+    }]];
     
-    NSArray *menuModelArr = @[menuModel0, menuModel1, menuModel2, menuModel3];
-    
+    NSInteger inviteCount = self->recentsDataSource.missedInviteCount;
+    if (inviteCount){
+        NSString *inviteTitle;
+        
+        if (inviteCount == 1){
+            inviteTitle = NSLocalizedStringFromTable(@"pull_down_one_invite", @"Vector", nil);
+        }else{
+            inviteTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"pull_down_invites", @"Vector", nil), inviteCount];
+        }
+        [menuModelArr addObject:[FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:inviteTitle menuItemIconName:nil menuBlock:^{
+            AlternateInviteViewController *vc = [[AlternateInviteViewController alloc] init];
+            [vc displayList:self->recentsDataSource];
+            [self showViewController:vc sender:self];
+        }]];
+    };
     return menuModelArr;
 }
 
@@ -950,6 +974,9 @@
     [self setMissedDiscussionsCount:recentsDataSource.missedGroupDiscussionsCount
                        onTabBarItem:TABBAR_ROOMS_INDEX
                      withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+    if (@available(iOS 14, *)){
+        [self setupPullDownMenuiOS14];
+    }
 }
 
 - (void)setMissedDiscussionsCount:(NSUInteger)count onTabBarItem:(NSUInteger)index withBadgeColor:(UIColor*)badgeColor

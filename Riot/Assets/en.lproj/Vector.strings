@@ -182,6 +182,10 @@
 "room_recents_join_room_title" = "Join a room";
 "room_recents_join_room_prompt" = "Type a room id or a room alias";
 
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "INVITES";
 "people_conversation_section" = "CONVERSATIONS";

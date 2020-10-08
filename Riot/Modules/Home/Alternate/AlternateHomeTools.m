@@ -16,6 +16,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AlternateHomeTools.h"
+//#import <MXKCellRendering.h>
 
 @implementation AlternateHomeTools : NSObject
 
@@ -32,6 +33,10 @@
         case (NSOrderedSame):
             return ComparrisonResultEqualTo;
     }
+}
+//this is needed because doing this in swift leads swift to believe the expression is ambiguous.
++ (void)setDelegateForCell:(id<MXKCellRendering>)cell With:(id<MXKCellRenderingDelegate>)delegate {
+    cell.delegate = delegate;
 }
 @end
 

@@ -17,7 +17,6 @@
 import Foundation
 class AlternateInviteViewController: RecentsViewController {
     
-    //this is okay, because viewWillAppear will fire before anything else that relies on the Home Data Source
     var HomeDataSource: AlternateHomeDataSource!
     
     static override func nib() -> UINib! {
@@ -30,7 +29,7 @@ class AlternateInviteViewController: RecentsViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.recentsTableView.tag = Int(RecentsDataSourceMode.home.rawValue)
-        AppDelegate.theDelegate().masterTabBarController.navigationItem.title = AlternateHomeTools.getNSLocalized("title_home", in: "Vector")
+        self.navigationItem.title = AlternateHomeTools.getNSLocalized("room_recents_invites_section", in: "Vector")
         if let something = self.dataSource as? RecentsDataSource {
             something.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
         }
@@ -39,10 +38,10 @@ class AlternateInviteViewController: RecentsViewController {
         }
         HomeDataSource = AlternateHomeDataSource(matrixSession: mxSessions.first as? MXSession)
         HomeDataSource.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
+        recentsTableView.dataSource = HomeDataSource
+        HomeDataSource.setViewMode(m: HomeViewMode.Invites)
         super.setValue(HomeDataSource, forKey: "dataSource")
         super.viewWillAppear(animated)
-        recentsTableView.dataSource = HomeDataSource
-        HomeDataSource.setViewMode(m: HomeViewMode.Favourites)
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

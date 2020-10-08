@@ -94,6 +94,9 @@
 "room_recents_create_empty_room" = "Krijo dhomë";
 "room_recents_join_room" = "Hyni në dhomë";
 "room_recents_join_room_prompt" = "Shtypni një ID ose alias dhome";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
 // People tab
 "people_invites_section" = "FTESA";
 "people_conversation_section" = "BISEDA";

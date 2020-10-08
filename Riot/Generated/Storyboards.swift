@@ -12,9 +12,6 @@ import UIKit
 
 // swiftlint:disable explicit_type_interface identifier_name line_length type_body_length type_name
 internal enum StoryboardScene {
-  internal enum AlternateInviteView: StoryboardType {
-    internal static let storyboardName = "AlternateInviteView"
-  }
   internal enum DeviceVerificationIncomingViewController: StoryboardType {
     internal static let storyboardName = "DeviceVerificationIncomingViewController"
 

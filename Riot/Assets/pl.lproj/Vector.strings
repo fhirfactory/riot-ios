@@ -360,6 +360,9 @@
 "auth_forgot_password" = "Zapomniałeś(-aś) hasło?";
 // Room recents
 "room_recents_directory_section" = "KATALOG POKOJÓW";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
 // Rooms tab
 "room_directory_no_public_room" = "Nie są dostępne publiczne pokoje";
 "directory_cell_description" = "%tu pokojów";

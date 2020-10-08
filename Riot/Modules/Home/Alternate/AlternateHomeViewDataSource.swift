@@ -33,6 +33,8 @@ class AlternateHomeDataSource: RecentsDataSource {
             return super.missedChatCount
         case .LowPriority:
             return super.missedLowPriorityCount
+        case .Invites:
+            return super.missedInviteCount
         }
     }
     
@@ -108,6 +110,8 @@ class AlternateHomeDataSource: RecentsDataSource {
             return IndexPath(row: uIndex.row, section: favoritesSection)
         case HomeViewMode.LowPriority:
             return IndexPath(row: uIndex.row, section: lowPrioritySection)
+        case HomeViewMode.Invites:
+            return IndexPath(row: uIndex.row, section: invitesSection)
         }
     }
     
@@ -126,6 +130,8 @@ class AlternateHomeDataSource: RecentsDataSource {
             return super.tableView(tableView, numberOfRowsInSection: favoritesSection)
         case HomeViewMode.LowPriority:
             return super.tableView(tableView, numberOfRowsInSection: lowPrioritySection)
+        case HomeViewMode.Invites:
+            return Int(super.missedInviteCount)
         }
     }
     
@@ -138,6 +144,10 @@ class AlternateHomeDataSource: RecentsDataSource {
         let cellData: MXKRecentCellDataStoring = self.cellData(at: indexPath)
         guard let reuseId = self.cellReuseIdentifier(for: cellData as? MXKCellData) else { return UITableViewCell() }
         guard let cell: MXKCellRendering = tableView.dequeueReusableCell(withIdentifier: reuseId, for: destination) as? MXKCellRendering else {return UITableViewCell()}
+        //(cell as AnyObject).delegate = self as AnyObject
+//        let somevalue: MXKCellRenderingDelegate?? = (self as MXKCellRenderingDelegate)
+//        cell.delegate = somevalue
+        AlternateHomeTools.setDelegateForCell(cell, with: self)
         cell.render(cellData as? MXKCellData)
         return cell as? UITableViewCell ?? UITableViewCell()
     }
@@ -147,7 +157,7 @@ class AlternateHomeDataSource: RecentsDataSource {
     }
     
     
-    func setViewMode(m: HomeViewMode){
+    func setViewMode(m: HomeViewMode) {
         _viewMode = m
         
     }

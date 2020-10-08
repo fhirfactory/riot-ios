@@ -21,6 +21,7 @@ enum HomeViewMode {
     case Chats
     case Favourites
     case LowPriority
+    case Invites
 }
 
 class AlternateHomeViewController: RecentsViewController {

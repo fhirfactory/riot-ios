@@ -728,7 +728,7 @@
 		DB1392A2332C3CAF6C9962EF /* Pods_RiotPods_RiotNSE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */; };
 		EB4A116F252D7F1E00E98120 /* AlternateInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */; };
 		EB4A117B252D7FA800E98120 /* AlternateHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */; };
-		EB4A1182252D7FEA00E98120 /* AlternateInviteView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1181252D7FEA00E98120 /* AlternateInviteView.storyboard */; };
+		EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */; };
 		EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */; };
 		EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EB505C172525D49A009C0A7A /* AlternateHomeTools.m */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
@@ -1928,7 +1928,7 @@
 		E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_RiotNSE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateInviteViewController.swift; sourceTree = "<group>"; };
 		EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateHomeViewController.xib; sourceTree = "<group>"; };
-		EB4A1181252D7FEA00E98120 /* AlternateInviteView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AlternateInviteView.storyboard; sourceTree = "<group>"; };
+		EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateInviteViewController.xib; sourceTree = "<group>"; };
 		EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewController.swift; sourceTree = "<group>"; };
 		EB505C172525D49A009C0A7A /* AlternateHomeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateHomeTools.m; sourceTree = "<group>"; };
 		EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateHomeTools.h; sourceTree = "<group>"; };
@@ -4753,7 +4753,7 @@
 			isa = PBXGroup;
 			children = (
 				EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */,
-				EB4A1181252D7FEA00E98120 /* AlternateInviteView.storyboard */,
+				EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */,
 				EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */,
 				EB505C172525D49A009C0A7A /* AlternateHomeTools.m */,
 				EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */,
@@ -5706,7 +5706,6 @@
 				B1B336C2242B933700F95EC4 /* KeyVerificationSelfVerifyStartViewController.storyboard in Resources */,
 				B1B558F220EF768F00210D55 /* RoomIncomingTextMsgWithoutSenderNameBubbleCell.xib in Resources */,
 				ECFBD5E1250B684E00DD5F5A /* ChooseAvatarTableViewCell.xib in Resources */,
-				EB4A1182252D7FEA00E98120 /* AlternateInviteView.storyboard in Resources */,
 				B1B558EA20EF768F00210D55 /* RoomOutgoingTextMsgWithPaginationTitleBubbleCell.xib in Resources */,
 				B1B558CD20EF768F00210D55 /* RoomOutgoingEncryptedAttachmentWithPaginationTitleBubbleCell.xib in Resources */,
 				B1B9DEEA22EB34EF0065E677 /* ReactionHistoryViewController.storyboard in Resources */,
@@ -5731,6 +5730,7 @@
 				B1B558F620EF768F00210D55 /* RoomOutgoingTextMsgBubbleCell.xib in Resources */,
 				B1B5574D20EE6C4D00210D55 /* MediaPickerViewController.xib in Resources */,
 				B1B5575020EE6C4D00210D55 /* AuthenticationViewController.xib in Resources */,
+				EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */,
 				B1C45A85232A8C2600165425 /* SettingsIdentityServerViewController.storyboard in Resources */,
 				B14F142E22144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyViewController.storyboard in Resources */,
 				32DB557B22FDADE50016329E /* ServiceTermsModalScreenViewController.storyboard in Resources */,

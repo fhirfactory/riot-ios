@@ -144,6 +144,10 @@
 "room_recents_join_room_title" = "Ymuno â ystafell";
 "room_recents_join_room_prompt" = "Cofnodwch dynodwr ystafell neu arallenw ystafell";
 "room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "GWAHODDIADAU";
 "people_conversation_section" = "SGWRSIAU";

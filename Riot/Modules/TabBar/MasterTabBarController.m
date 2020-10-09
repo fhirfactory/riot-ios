@@ -622,7 +622,6 @@
         return;
     }
     NSArray *menuModelsArr = [self getDropDownMenuModelsArray];
-    UIBarButtonItem *barButtonItem = sender;
     self.dropDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:menuModelsArr menuWidth:145 eachItemHeight:40 menuRightMargin:10 triangleRightMargin:23];
     self.dropDownMenu.triangleY = 50;
     [self.dropDownMenu showMenu];
@@ -643,9 +642,10 @@
         [base setAccessibilityHint:inviteTitle];
         _invitesBarBadgeButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:base];
         _invitesBarBadgeButtonItem.badgeOriginX = 17;
+        _invitesBarBadgeButtonItem.shouldHideBadgeAtZero = YES;
         self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:_invitesBarBadgeButtonItem];
     }
-    _invitesBarBadgeButtonItem.badgeValue = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self->recentsDataSource.missedInviteCount];//self->recentsDataSource.missedInviteCount;
+    _invitesBarBadgeButtonItem.badgeValue = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self->recentsDataSource.missedInviteCount];
 }
 - (void)viewInvites{
     AlternateInviteViewController *vc = [[AlternateInviteViewController alloc] init];
@@ -669,13 +669,10 @@
 }
 
 - (NSArray *)getDropDownMenuModelsArray {
-    __weak typeof(self)weakSelf = self;
     NSMutableArray *menuModelArr = [[NSMutableArray alloc] init];
     [menuModelArr addObject:[FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil) menuItemIconName:nil menuBlock:^{
 
-        //UIViewController *nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"UnifiedSearchViewController"];
         UnifiedSearchViewController *myNewVC = [[UnifiedSearchViewController alloc] init];
-        // do any setup you need for myNewVC
         self->unifiedSearchViewController = myNewVC;
         
         for (MXSession *session in self->mxSessionArray)

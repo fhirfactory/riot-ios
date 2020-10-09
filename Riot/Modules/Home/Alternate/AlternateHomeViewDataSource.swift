@@ -25,8 +25,8 @@ class AlternateHomeDataSource: RecentsDataSource {
         return 1
     }
     
-    func getBadgeValueForSectionMode(section: HomeViewMode) -> UInt{
-        switch section{
+    func getBadgeValueForSectionMode(section: HomeViewMode) -> UInt {
+        switch section {
         case .Favourites:
             return super.missedFavouriteCount
         case .Chats:
@@ -119,7 +119,6 @@ class AlternateHomeDataSource: RecentsDataSource {
         return super.tableView(tableView, canEditRowAt: getIndexPathInUnderlying(indexPathFor: indexPath))
     }
     
-    //TODO: Fix this function so it doesn't assume the user has all sections available.
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch _viewMode {
@@ -144,9 +143,8 @@ class AlternateHomeDataSource: RecentsDataSource {
         let cellData: MXKRecentCellDataStoring = self.cellData(at: indexPath)
         guard let reuseId = self.cellReuseIdentifier(for: cellData as? MXKCellData) else { return UITableViewCell() }
         guard let cell: MXKCellRendering = tableView.dequeueReusableCell(withIdentifier: reuseId, for: destination) as? MXKCellRendering else {return UITableViewCell()}
-        //(cell as AnyObject).delegate = self as AnyObject
-//        let somevalue: MXKCellRenderingDelegate?? = (self as MXKCellRenderingDelegate)
-//        cell.delegate = somevalue
+        
+        //this is needed because "cell.delegate = self" is ambiguous to Swift's type system, even when surrounded in if lets / casts
         AlternateHomeTools.setDelegateForCell(cell, with: self)
         cell.render(cellData as? MXKCellData)
         return cell as? UITableViewCell ?? UITableViewCell()

@@ -33,10 +33,10 @@ class AlternateHomeViewController: RecentsViewController {
     @IBAction private func SelectionChanged() {
         switch modeSelector.selectedSegmentIndex {
         case 0:
-            self.HomeDataSource.setViewMode(m: HomeViewMode.Favourites)
+            self.HomeDataSource.setViewMode(m: HomeViewMode.Chats)
             self.recentsTableView.reloadData()
         case 1:
-            self.HomeDataSource.setViewMode(m: HomeViewMode.Chats)
+            self.HomeDataSource.setViewMode(m: HomeViewMode.Favourites)
             self.recentsTableView.reloadData()
         case 2:
             self.HomeDataSource.setViewMode(m: HomeViewMode.LowPriority)
@@ -92,10 +92,10 @@ class AlternateHomeViewController: RecentsViewController {
             badge.removeFromSuperview()
         }
         badges = []
-        if let b = drawBadgeFor(segment: 0, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .Favourites), controller: modeSelector) {
+        if let b = drawBadgeFor(segment: 1, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .Favourites), controller: modeSelector) {
             badges.append(b)
         }
-        if let b = drawBadgeFor(segment: 1, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .Chats), controller: modeSelector) {
+        if let b = drawBadgeFor(segment: 0, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .Chats), controller: modeSelector) {
             badges.append(b)
         }
         if let b = drawBadgeFor(segment: 2, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .LowPriority), controller: modeSelector) {
@@ -118,10 +118,10 @@ class AlternateHomeViewController: RecentsViewController {
         super.setValue(HomeDataSource, forKey: "dataSource")
         super.viewWillAppear(animated)
         recentsTableView.dataSource = HomeDataSource
-        HomeDataSource.setViewMode(m: HomeViewMode.Favourites)
+        HomeDataSource.setViewMode(m: HomeViewMode.Chats)
         modeSelector.removeAllSegments()
-        modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_favourites_section", in: "Vector"), at: 0, animated: false)
-        modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_chats_section", in: "Vector"), at: 1, animated: false)
+        modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_chats_section", in: "Vector"), at: 0, animated: false)
+        modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_favourites_section", in: "Vector"), at: 1, animated: false)
         modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_low_priority_section", in: "Vector"), at: 2, animated: false)
         modeSelector.selectedSegmentIndex = 0
         

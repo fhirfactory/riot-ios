@@ -731,6 +731,7 @@
 		EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */; };
 		EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */; };
 		EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EB505C172525D49A009C0A7A /* AlternateHomeTools.m */; };
+		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
 		EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */; };
@@ -1932,6 +1933,8 @@
 		EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewController.swift; sourceTree = "<group>"; };
 		EB505C172525D49A009C0A7A /* AlternateHomeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateHomeTools.m; sourceTree = "<group>"; };
 		EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateHomeTools.h; sourceTree = "<group>"; };
+		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
+		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewDataSource.swift; sourceTree = "<group>"; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
 		EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewAction.swift; sourceTree = "<group>"; };
@@ -3148,6 +3151,7 @@
 		B183226923F59F3E0035B2E8 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				EBC6D5442530064A00940365 /* Badged */,
 				B183226A23F59F4F0035B2E8 /* Close */,
 			);
 			path = Buttons;
@@ -4763,6 +4767,15 @@
 			path = Alternate;
 			sourceTree = "<group>";
 		};
+		EBC6D5442530064A00940365 /* Badged */ = {
+			isa = PBXGroup;
+			children = (
+				EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */,
+				EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */,
+			);
+			path = Badged;
+			sourceTree = "<group>";
+		};
 		EC1CA84F24C1DEC400DE9EBF /* SetPinCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -6138,6 +6151,7 @@
 				B1B5573120EE6C4D00210D55 /* BugReportViewController.m in Sources */,
 				ECFBD5CB250A7AAF00DD5F5A /* DirectoryRoomTableViewCellVM.swift in Sources */,
 				324A2051225FC571004FE8B0 /* DeviceVerificationIncomingViewState.swift in Sources */,
+				EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */,
 				B1B4E9BF24D4703E004D5C33 /* BaseBubbleCell.swift in Sources */,
 				ECFBD5FD250FA59B00DD5F5A /* RoomCreationEventsModalViewController.swift in Sources */,
 				B16932A520F3A21C00746532 /* empty.mm in Sources */,

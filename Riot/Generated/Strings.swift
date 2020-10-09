@@ -4190,7 +4190,7 @@ internal enum VectorL10n {
   internal static var titleGroups: String { 
     return VectorL10n.tr("Vector", "title_groups") 
   }
-  /// Home
+  /// Lingo
   internal static var titleHome: String { 
     return VectorL10n.tr("Vector", "title_home") 
   }

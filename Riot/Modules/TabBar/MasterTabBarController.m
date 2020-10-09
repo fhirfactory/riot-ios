@@ -96,7 +96,7 @@
     
     // Set the accessibility labels for all buttons #1842
     [_settingsBarButtonItem setAccessibilityLabel:NSLocalizedStringFromTable(@"settings_title", @"Vector", nil)];
-    [_searchBarButtonIem setAccessibilityLabel:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil)];
+    [_moreBarButtonItem setAccessibilityLabel:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil)];
     [_homeViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_home", @"Vector", nil)];
     [_favouritesViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_favourites", @"Vector", nil)];
     [_peopleViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_people", @"Vector", nil)];
@@ -628,6 +628,31 @@
     [self.dropDownMenu showMenu];
     self.dropDownMenu.triangleY = 50;
 }
+
+- (void)updateInvitesBarButtonItem{
+    if (!_invitesBarBadgeButtonItem){
+        UIButton *base = [[UIButton alloc] init];
+        NSString *inviteTitle;
+        if (self->recentsDataSource.missedInviteCount == 1){
+            inviteTitle = NSLocalizedStringFromTable(@"pull_down_one_invite", @"Vector", nil);
+        }else{
+            inviteTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"pull_down_invites", @"Vector", nil), self->recentsDataSource.missedInviteCount];
+        }
+        [base addTarget:self action:@selector(viewInvites) forControlEvents:UIControlEventTouchUpInside];
+        [base setImage:[UIImage imageNamed:@"add_participant"] forState:UIControlStateNormal];
+        [base setAccessibilityHint:inviteTitle];
+        _invitesBarBadgeButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:base];
+        _invitesBarBadgeButtonItem.badgeOriginX = 17;
+        self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:_invitesBarBadgeButtonItem];
+    }
+    _invitesBarBadgeButtonItem.badgeValue = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self->recentsDataSource.missedInviteCount];//self->recentsDataSource.missedInviteCount;
+}
+- (void)viewInvites{
+    AlternateInviteViewController *vc = [[AlternateInviteViewController alloc] init];
+    [vc displayList:self->recentsDataSource];
+    [self showViewController:vc sender:self];
+}
+
 - (void)setupPullDownMenuiOS14{
     if (@available(iOS 14, *)){
         NSMutableArray *menuArray = [[NSMutableArray alloc] init];
@@ -638,10 +663,8 @@
             }]];
         }
         UIMenu *menu = [UIMenu menuWithChildren:menuArray];
-        _searchBarButtonIem.menu = menu;
-        _searchBarButtonIem.action = nil;
-    }else{
-        return;
+        _moreBarButtonItem.menu = menu;
+        _moreBarButtonItem.action = nil;
     }
 }
 
@@ -662,22 +685,6 @@
         
         [self showViewController:myNewVC sender:self];
     }]];
-    
-    NSInteger inviteCount = self->recentsDataSource.missedInviteCount;
-    if (inviteCount){
-        NSString *inviteTitle;
-        
-        if (inviteCount == 1){
-            inviteTitle = NSLocalizedStringFromTable(@"pull_down_one_invite", @"Vector", nil);
-        }else{
-            inviteTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"pull_down_invites", @"Vector", nil), inviteCount];
-        }
-        [menuModelArr addObject:[FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:inviteTitle menuItemIconName:nil menuBlock:^{
-            AlternateInviteViewController *vc = [[AlternateInviteViewController alloc] init];
-            [vc displayList:self->recentsDataSource];
-            [self showViewController:vc sender:self];
-        }]];
-    };
     return menuModelArr;
 }
 
@@ -977,6 +984,7 @@
     if (@available(iOS 14, *)){
         [self setupPullDownMenuiOS14];
     }
+    [self updateInvitesBarButtonItem];
 }
 
 - (void)setMissedDiscussionsCount:(NSUInteger)count onTabBarItem:(NSUInteger)index withBadgeColor:(UIColor*)badgeColor

@@ -31,6 +31,7 @@
 
 #import <FFDropDownMenu.h>
 #import <FFDropDownMenuView.h>
+#import "BBBadgeBarButtonItem.h"
 
 #define TABBAR_HOME_INDEX         0
 #define TABBAR_FAVOURITES_INDEX   1
@@ -46,9 +47,10 @@
 @interface MasterTabBarController : UITabBarController
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *searchBarButtonIem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 
 @property (nonatomic, strong) FFDropDownMenuView *dropDownMenu;
+@property (nonatomic) BBBadgeBarButtonItem *invitesBarBadgeButtonItem;
 
 // Associated matrix sessions (empty by default).
 @property (nonatomic, readonly) NSArray *mxSessions;

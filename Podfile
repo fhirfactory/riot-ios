@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 # Use frameforks to allow usage of pod written in Swift (like PiwikTracker)
 use_frameworks!
@@ -32,16 +32,25 @@ $matrixKitVersionSpec = $matrixKitVersion
 $matrixSDKVersionSpec = {}
 end
 
+######################
+# Lingo specific note - 07/10/20
+# Archiving under Xcode 12 is not correctly handling nested pod installs with the same pods in each definition
+# For the time being we need to re-define the pods so that we only have one set included across all targets
+# This should be revised with each Xcode 12 refresh
+######################
+
 # Method to import the right MatrixKit flavour
-def import_MatrixKit
-  pod 'MatrixSDK', $matrixSDKVersionSpec
-  pod 'MatrixSDK/SwiftSupport', $matrixSDKVersionSpec
-  pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
-  pod 'MatrixKit', $matrixKitVersionSpec
-end
+#def import_MatrixKit
+#  pod 'MatrixSDK', $matrixSDKVersionSpec
+#  pod 'MatrixSDK/SwiftSupport', $matrixSDKVersionSpec
+#  pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
+#  pod 'MatrixKit', $matrixKitVersionSpec
+#end
 
 # Method to import the right MatrixKit/AppExtension flavour
 def import_MatrixKitAppExtension
+  pod 'MatrixKit', $matrixKitVersionSpec
+  pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
   pod 'MatrixSDK', $matrixSDKVersionSpec
   pod 'MatrixSDK/SwiftSupport', $matrixSDKVersionSpec
   pod 'MatrixKit/AppExtension', $matrixKitVersionSpec
@@ -69,7 +78,8 @@ abstract_target 'RiotPods' do
   pod 'SwiftLint', '~> 0.36.0'
 
   target "Riot" do
-    import_MatrixKit
+#    import_MatrixKit
+    import_MatrixKitAppExtension
     pod 'DGCollectionViewLeftAlignFlowLayout', '~> 1.0.4'
     pod 'KTCenterFlowLayout', '~> 1.3.1'
     pod 'ZXingObjC', '~> 3.6.5'

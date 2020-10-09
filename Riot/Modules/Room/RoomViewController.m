@@ -2261,9 +2261,20 @@
     }
 }
 
+- (bool)getEventIsAdministrative:(MXEvent*)Event{
+    switch (Event.eventType) {
+        case MXEventTypeRoomMessage:
+            return false;
+        default:
+            return true;
+    }
+}
+
 // Display the additiontal event actions menu
 - (void)showAdditionalActionsMenuForEvent:(MXEvent*)selectedEvent inCell:(id<MXKCellRendering>)cell animated:(BOOL)animated
 {
+    bool showRemoveInActionSheet = ![self getEventIsAdministrative:selectedEvent] || BuildSettings.roomAllowRemoveAdministrativeMessage;
+    
     MXKRoomBubbleTableViewCell *roomBubbleTableViewCell = (MXKRoomBubbleTableViewCell *)cell;
     MXKAttachment *attachment = roomBubbleTableViewCell.bubbleData.attachment;
     
@@ -2564,7 +2575,7 @@
         
         // Do not allow to redact the event that enabled encryption (m.room.encryption)
         // because it breaks everything
-        if (selectedEvent.eventType != MXEventTypeRoomEncryption)
+        if (selectedEvent.eventType != MXEventTypeRoomEncryption && showRemoveInActionSheet)
         {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_redact", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault
@@ -2680,114 +2691,115 @@
             }
         }
         
-        [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_report", @"Vector", nil)
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action) {
-            
-            if (weakSelf)
-            {
-                typeof(self) self = weakSelf;
+        if (BuildSettings.messageDetailsAllowReportContent){
+            [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_report", @"Vector", nil)
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
                 
-                [self cancelEventSelection];
-                
-                // Prompt user to enter a description of the problem content.
-                self->currentAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_report_prompt_reason", @"Vector", nil)  message:nil preferredStyle:UIAlertControllerStyleAlert];
-                
-                [self->currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                    textField.secureTextEntry = NO;
-                    textField.placeholder = nil;
-                    textField.keyboardType = UIKeyboardTypeDefault;
-                }];
-                
-                [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                if (weakSelf)
+                {
+                    typeof(self) self = weakSelf;
                     
-                    if (weakSelf)
-                    {
-                        typeof(self) self = weakSelf;
-                        NSString *text = [self->currentAlert textFields].firstObject.text;
-                        self->currentAlert = nil;
+                    [self cancelEventSelection];
+                    
+                    // Prompt user to enter a description of the problem content.
+                    self->currentAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_report_prompt_reason", @"Vector", nil)  message:nil preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [self->currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                        textField.secureTextEntry = NO;
+                        textField.placeholder = nil;
+                        textField.keyboardType = UIKeyboardTypeDefault;
+                    }];
+                    
+                    [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                         
-                        [self startActivityIndicator];
+                        if (weakSelf)
+                        {
+                            typeof(self) self = weakSelf;
+                            NSString *text = [self->currentAlert textFields].firstObject.text;
+                            self->currentAlert = nil;
+                            
+                            [self startActivityIndicator];
+                            
+                            [self.roomDataSource.room reportEvent:selectedEvent.eventId score:-100 reason:text success:^{
+                                
+                                __strong __typeof(weakSelf)self = weakSelf;
+                                [self stopActivityIndicator];
+                                
+                                // Prompt user to ignore content from this user
+                                self->currentAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_report_prompt_ignore_user", @"Vector", nil)  message:nil preferredStyle:UIAlertControllerStyleAlert];
+                                
+                                [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"yes"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                    
+                                    if (weakSelf)
+                                    {
+                                        typeof(self) self = weakSelf;
+                                        self->currentAlert = nil;
+                                        
+                                        [self startActivityIndicator];
+                                        
+                                        // Add the user to the blacklist: ignored users
+                                        [self.mainSession ignoreUsers:@[selectedEvent.sender] success:^{
+                                            
+                                            __strong __typeof(weakSelf)self = weakSelf;
+                                            [self stopActivityIndicator];
+                                            
+                                        } failure:^(NSError *error) {
+                                            
+                                            __strong __typeof(weakSelf)self = weakSelf;
+                                            [self stopActivityIndicator];
+                                            
+                                            NSLog(@"[RoomVC] Ignore user (%@) failed", selectedEvent.sender);
+                                            //Alert user
+                                            [[AppDelegate theDelegate] showErrorAsAlert:error];
+                                            
+                                        }];
+                                    }
+                                    
+                                }]];
+                                
+                                [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"no"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                                    
+                                    if (weakSelf)
+                                    {
+                                        typeof(self) self = weakSelf;
+                                        self->currentAlert = nil;
+                                    }
+                                    
+                                }]];
+                                
+                                [self presentViewController:self->currentAlert animated:YES completion:nil];
+                                
+                            } failure:^(NSError *error) {
+                                
+                                __strong __typeof(weakSelf)self = weakSelf;
+                                [self stopActivityIndicator];
+                                
+                                NSLog(@"[RoomVC] Report event (%@) failed", selectedEvent.eventId);
+                                //Alert user
+                                [[AppDelegate theDelegate] showErrorAsAlert:error];
+                                
+                            }];
+                        }
                         
-                        [self.roomDataSource.room reportEvent:selectedEvent.eventId score:-100 reason:text success:^{
-                            
-                            __strong __typeof(weakSelf)self = weakSelf;
-                            [self stopActivityIndicator];
-                            
-                            // Prompt user to ignore content from this user
-                            self->currentAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_report_prompt_ignore_user", @"Vector", nil)  message:nil preferredStyle:UIAlertControllerStyleAlert];
-                            
-                            [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"yes"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                                
-                                if (weakSelf)
-                                {
-                                    typeof(self) self = weakSelf;
-                                    self->currentAlert = nil;
-                                    
-                                    [self startActivityIndicator];
-                                    
-                                    // Add the user to the blacklist: ignored users
-                                    [self.mainSession ignoreUsers:@[selectedEvent.sender] success:^{
-                                        
-                                        __strong __typeof(weakSelf)self = weakSelf;
-                                        [self stopActivityIndicator];
-                                        
-                                    } failure:^(NSError *error) {
-                                        
-                                        __strong __typeof(weakSelf)self = weakSelf;
-                                        [self stopActivityIndicator];
-                                        
-                                        NSLog(@"[RoomVC] Ignore user (%@) failed", selectedEvent.sender);
-                                        //Alert user
-                                        [[AppDelegate theDelegate] showErrorAsAlert:error];
-                                        
-                                    }];
-                                }
-                                
-                            }]];
-                            
-                            [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"no"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                                
-                                if (weakSelf)
-                                {
-                                    typeof(self) self = weakSelf;
-                                    self->currentAlert = nil;
-                                }
-                                
-                            }]];
-                            
-                            [self presentViewController:self->currentAlert animated:YES completion:nil];
-                            
-                        } failure:^(NSError *error) {
-                            
-                            __strong __typeof(weakSelf)self = weakSelf;
-                            [self stopActivityIndicator];
-                            
-                            NSLog(@"[RoomVC] Report event (%@) failed", selectedEvent.eventId);
-                            //Alert user
-                            [[AppDelegate theDelegate] showErrorAsAlert:error];
-                            
-                        }];
-                    }
+                    }]];
                     
-                }]];
+                    [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+                        
+                        if (weakSelf)
+                        {
+                            typeof(self) self = weakSelf;
+                            self->currentAlert = nil;
+                        }
+                        
+                    }]];
+                    
+                    [self presentViewController:self->currentAlert animated:YES completion:nil];
+                }
                 
-                [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
-                    
-                    if (weakSelf)
-                    {
-                        typeof(self) self = weakSelf;
-                        self->currentAlert = nil;
-                    }
-                    
-                }]];
-                
-                [self presentViewController:self->currentAlert animated:YES completion:nil];
-            }
-            
-        }]];
-        
-        if (self.roomDataSource.room.summary.isEncrypted)
+            }]];
+        }
+        if (self.roomDataSource.room.summary.isEncrypted && BuildSettings.messageDetailsAllowViewEncryptionInformation)
         {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_view_encryption", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault

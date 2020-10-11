@@ -123,6 +123,10 @@
     // Initialize here the data sources if a matrix session has been already set.
     [self initializeDataSources];
     
+    if (!BuildSettings.homeScreenShowFavourites){
+        [self removeFromTabBarAt:TABBAR_FAVOURITES_INDEX];
+    }
+    
     // Observe user interface theme change.
     kThemeServiceDidChangeThemeNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kThemeServiceDidChangeThemeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
         
@@ -130,6 +134,12 @@
         
     }];
     [self userInterfaceThemeDidChange];
+}
+
+- (void)removeFromTabBarAt:(NSInteger)Index{
+    NSMutableArray<UIViewController*>* _Nullable controllers = [NSMutableArray arrayWithArray:self.viewControllers];
+    [controllers removeObjectAtIndex:Index];
+    self.viewControllers = controllers;
 }
 
 - (void)userInterfaceThemeDidChange

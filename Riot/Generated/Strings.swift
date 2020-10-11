@@ -3962,11 +3962,11 @@ internal enum VectorL10n {
   internal static var settingsPhoneNumber: String { 
     return VectorL10n.tr("Vector", "settings_phone_number") 
   }
-  /// Pin rooms with missed notifications
+  /// Show rooms with missed notifications first
   internal static var settingsPinRoomsWithMissedNotif: String { 
     return VectorL10n.tr("Vector", "settings_pin_rooms_with_missed_notif") 
   }
-  /// Pin rooms with unread messages
+  /// Show rooms with unread messages first
   internal static var settingsPinRoomsWithUnread: String { 
     return VectorL10n.tr("Vector", "settings_pin_rooms_with_unread") 
   }

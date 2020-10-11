@@ -636,7 +636,7 @@
         }
         
         // Check whether the option Ignore may be presented
-        if (self.mxRoomMember.membership == MXMembershipJoin)
+        if (self.mxRoomMember.membership == MXMembershipJoin && BuildSettings.roomParticipantAllowHideAll)
         {
             // is he already ignored ?
             if (![self.mainSession isUserIgnored:self.mxRoomMember.userId])

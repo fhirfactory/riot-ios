@@ -445,6 +445,9 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     // Set up runtime language and fallback by considering the userDefaults object shared within the application group.
     NSUserDefaults *sharedUserDefaults = [MXKAppSettings standardAppSettings].sharedUserDefaults;
     NSString *language = [sharedUserDefaults objectForKey:@"appLanguage"];
+    if (BuildSettings.settingsEnforceSpecificLanguage && BuildSettings.settingsDefaultLanguage){
+        language = BuildSettings.settingsDefaultLanguage;
+    }
     if (!language)
     {
         // Check whether a langage was only defined at the Riot application level.

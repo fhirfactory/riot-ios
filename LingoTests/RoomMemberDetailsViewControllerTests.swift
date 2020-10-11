@@ -40,5 +40,19 @@ class RoomMemberDetailsViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.roomParticipantAllowHideAll == false)
         
     }
+    
+    func test_192995_disableBanRoomMember() throws {
+        /// Given I am a Room Member
+        /// AND I have selected the Room
+        /// AND I have selected the Room Details
+        /// AND I have selected Members
+        /// AND I am using the IOS or Android Application
+        /// When I select a Room Member
+        /// Then the following OOTB functions are removed/unavailable, including
+        ///    Ban (the selected room member)
+        
+        XCTAssert(BuildSettings.roomParticipantAllowBan == false)
+        
+    }
 
 }

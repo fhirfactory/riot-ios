@@ -53,6 +53,16 @@ class SettingsViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.roomAllowRemoveAdministrativeMessage == false)
         
     }
+    
+    func test_192990_preventManageIntegrations() throws {
+        /// Given I am a Room Member
+        /// When I select the Room
+        /// Then the following OOTB functions are removed/unavailable, including
+        ///     Manage Integrations
+        
+        XCTAssert(UserDefaults.standard.bool(forKey: "matrixApps") == false)
+        
+    }
 
 }
 

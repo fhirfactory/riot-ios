@@ -165,7 +165,7 @@ final class BuildSettings: NSObject {
     /// Force non-jailbroken app usage
     static let forceNonJailbrokenUsage: Bool = true
     
-    static let allowSendingStickers: Bool = true
+    static let allowSendingStickers: Bool = false //the integrations menu can be disabled from the Riot-Defaults plist, under: matrixApps
     
     static let allowLocalContactsAccess: Bool = false
     

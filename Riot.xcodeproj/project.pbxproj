@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1411D81F252D7534009D8908 /* LingoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D81E252D7534009D8908 /* LingoTests.swift */; };
 		1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D834252D7597009D8908 /* RoomViewControllerTests.swift */; };
+		1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */; };
 		1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */; };
 		1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */; };
 		24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -1013,6 +1014,7 @@
 		1411D81E252D7534009D8908 /* LingoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LingoTests.swift; sourceTree = "<group>"; };
 		1411D820252D7534009D8908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1411D834252D7597009D8908 /* RoomViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewControllerTests.swift; sourceTree = "<group>"; };
+		1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInputToolbarViewTests.swift; sourceTree = "<group>"; };
 		1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMemberDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTabBarControllerTests.swift; sourceTree = "<group>"; };
 		1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_Riot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2244,6 +2246,7 @@
 				1411D81E252D7534009D8908 /* LingoTests.swift */,
 				1411D820252D7534009D8908 /* Info.plist */,
 				1411D834252D7597009D8908 /* RoomViewControllerTests.swift */,
+				1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */,
 				1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */,
 				1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */,
 			);
@@ -6084,6 +6087,7 @@
 				1411D81F252D7534009D8908 /* LingoTests.swift in Sources */,
 				1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */,
 				1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */,
+				1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */,
 				1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

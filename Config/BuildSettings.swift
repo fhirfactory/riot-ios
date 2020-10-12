@@ -225,6 +225,9 @@ final class BuildSettings: NSObject {
     static let roomSettingsScreenShowFlairSettings: Bool = true
     static let roomSettingsScreenShowAdvancedSettings: Bool = true
     
+    // MARK: - Room Participants
+    static let roomParticipantAllowHideAll : Bool = false
+    
     // MARK: - Message
     static let messageDetailsAllowShare: Bool = true
     static let messageDetailsAllowPermalink: Bool = true
@@ -238,10 +241,16 @@ final class BuildSettings: NSObject {
     /// Empty dictionary by default.
     static let httpAdditionalHeaders: [String: String] = [:]
     
+    //MARK: - Room Actions
+    static let roomAllowRemoveAdministrativeMessage = false
+    
     
     // MARK: - Authentication Screen
     static let authScreenShowRegister = true
     static let authScreenShowPhoneNumber = true
     static let authScreenShowForgotPassword = true
     static let authScreenShowCustomServerOptions = true
+    
+    // MARK: - Home Screen
+    static let homeScreenShowFavourites : Bool = false
 }

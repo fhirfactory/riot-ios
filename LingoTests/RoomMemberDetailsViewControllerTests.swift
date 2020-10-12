@@ -54,5 +54,23 @@ class RoomMemberDetailsViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.roomParticipantAllowBan == false)
         
     }
+    
+    func test_192995_disableRoomSecurity() throws {
+        /// Given I am a Room Member
+        /// AND I have selected the Room
+        /// AND I have selected the Room Details
+        /// AND I have selected Members
+        /// When I select a Person Room Member
+        /// Ensure that the following OOTB information has been removed from all platforms
+        ///     Session information (of the selected room member)
+        ///     Security information including the symbol on Room Lists and the User Photo etc (of the selected room member)
+        
+        XCTAssert(BuildSettings.roomParticipantShowSecurity == false)  // this setting disables both session and security information for a room member, which are presented in the same UI
+        
+    }
+    
+    
+    
+    
 
 }

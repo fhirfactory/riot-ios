@@ -26,7 +26,7 @@ class SettingsViewControllerTests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
+    
     func test_192985_viewSourceIsHidden() throws {
         /// Given I am a Room Member
         /// AND I have selected the Room
@@ -40,7 +40,17 @@ class SettingsViewControllerTests: XCTestCase {
         
         XCTAssert(BuildSettings.messageDetailsAllowViewSource == false)  // Note this is used to prevent both view source and view decrypted source
         XCTAssert(BuildSettings.messageDetailsAllowReportContent == false)
-        XCTAssert(BuildSettings.messageDetailsAllowViewEncryptionInformation == false) // Note this is used to prevent both encryption and session information 
+        XCTAssert(BuildSettings.messageDetailsAllowViewEncryptionInformation == false) // Note this is used to prevent both encryption and session information
+        
+    }
+    
+    func test_192346_preventRemovingAdminMessages() throws {
+        /// Given I am a Room Administrator or Moderator
+        /// When I have the Room Open
+        /// AND I have selected a System generated Message from the Room Timeline
+        /// Then I am not able to Remove the system generated Message.
+        
+        XCTAssert(BuildSettings.roomAllowRemoveAdministrativeMessage == false)
         
     }
 

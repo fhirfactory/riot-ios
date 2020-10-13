@@ -19,8 +19,10 @@ private enum SectionType: Int, CaseIterable {
         switch self {
         case .PEOPLE_PROFILE:
             return "PeopleProfileTableViewCell"
-        case .PHONE_CELL, .EMAIL_CELL:
+        case .PHONE_CELL:
             return "PhoneTableViewCell"
+        case .EMAIL_CELL:
+            return "EmailTableViewCell"
         case .ROLE_CELL:
             return "RoleTableViewCell"
         }
@@ -52,6 +54,10 @@ class PeopleDetailViewController: UIViewController {
         setupTableView()
     }
     
+    func setPerson(person: ActPeople){
+        actPeople = person
+    }
+    
     
 }
 
@@ -68,6 +74,7 @@ extension PeopleDetailViewController {
         tableView.register(UINib(nibName: SectionType.PEOPLE_PROFILE.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.PEOPLE_PROFILE.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.PHONE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.PHONE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ROLE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_CELL.cellIdentifier)
+        tableView.register(UINib(nibName: SectionType.EMAIL_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.EMAIL_CELL.cellIdentifier)
     }
 }
 
@@ -92,16 +99,30 @@ extension PeopleDetailViewController: UITableViewDataSource, UITableViewDelegate
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case SectionType.EMAIL_CELL.rawValue:
+            guard actPeople != nil else { return }
+            guard let url = URL(string: "mailto:\(actPeople?.emailAddress ?? "")") else { return }
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        default:
+            break
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case SectionType.PEOPLE_PROFILE.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.PEOPLE_PROFILE.cellIdentifier) as? PeopleProfileTableViewCell else { return UITableViewCell() }
+            cell.setPerson(person: actPeople!)
             return  cell
         case SectionType.PHONE_CELL.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.PHONE_CELL.cellIdentifier) as? PhoneTableViewCell else { return UITableViewCell() }
+            cell.setUser(person: actPeople!)
             return  cell
         case SectionType.EMAIL_CELL.rawValue:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.EMAIL_CELL.cellIdentifier) as? PhoneTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.EMAIL_CELL.cellIdentifier) as? EmailTableViewCell else { return UITableViewCell() }
+            cell.setUser(person: actPeople!)
             return  cell
         case SectionType.ROLE_CELL.rawValue:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier) as? RoleTableViewCell else { return UITableViewCell() }
@@ -112,6 +133,7 @@ extension PeopleDetailViewController: UITableViewDataSource, UITableViewDelegate
             return UITableViewCell()
         }
     }
+    
 }
 
 // MARK: Role Cell Delegate

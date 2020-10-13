@@ -42,5 +42,9 @@ class PeopleTableViewCell: UITableViewCell {
     
     func setValue(actPeople: ActPeople) {
         self.actPeople = actPeople
+        name.text = actPeople.officialName
+        jobTitle.text = actPeople.jobTitle
+        businessUnit.text = actPeople.businessUnit
+        organisation.text = actPeople.organisation
     }
 }

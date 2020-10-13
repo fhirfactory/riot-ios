@@ -9,11 +9,20 @@
 import Foundation
 
 struct ActPeople {
-    var id: String
+    var baseUser: MXUser
     var officialName: String
     var jobTitle: String
-    var avatarUrl: String
     var organisation: String
     var businessUnit: String
     var isExpanded: Bool
+    var emailAddress: String?
+    var phoneNumber: String?
+    init(withBaseUser baseUser: MXUser, officialName name: String, jobTitle: String, org: String, businessUnit: String) {
+        self.baseUser = baseUser
+        self.officialName = name
+        self.jobTitle = jobTitle
+        self.organisation = org
+        self.businessUnit = businessUnit
+        self.isExpanded = false
+    }
 }

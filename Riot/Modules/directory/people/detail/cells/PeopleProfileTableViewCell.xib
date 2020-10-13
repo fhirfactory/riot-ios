@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,15 +20,15 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Gm8-q8-Dcg">
                         <rect key="frame" x="24" y="24" width="402" height="228"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_group_participant" translatesAutoresizingMaskIntoConstraints="NO" id="4G7-Kl-3IF">
+                            <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4G7-Kl-3IF" customClass="MXKImageView">
                                 <rect key="frame" x="177" y="0.0" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="NNV-h9-03z"/>
                                     <constraint firstAttribute="height" constant="48" id="zUo-xG-ZrL"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person's Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73N-aX-IJa">
-                                <rect key="frame" x="143" y="56" width="116" height="19.5"/>
+                                <rect key="frame" x="142.5" y="56" width="117" height="19.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -52,30 +52,29 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="H6h-EO-eR7">
-                                <rect key="frame" x="138" y="196" width="126" height="32"/>
+                                <rect key="frame" x="142" y="196" width="118" height="32"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call_audio_mute_off_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ife-CM-2Rd">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Yg-HK-kdu">
                                         <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
-                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="32" id="TVA-DI-nHi"/>
-                                            <constraint firstAttribute="height" constant="32" id="iRl-kD-koy"/>
-                                        </constraints>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call_audio_mute_off_icon" translatesAutoresizingMaskIntoConstraints="NO" id="t4D-V7-JBX">
-                                        <rect key="frame" x="47" y="0.0" width="32" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="68y-6t-Bis"/>
-                                            <constraint firstAttribute="width" constant="32" id="jur-UX-bRJ"/>
-                                        </constraints>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call_audio_mute_off_icon" translatesAutoresizingMaskIntoConstraints="NO" id="pR2-qh-0PG">
-                                        <rect key="frame" x="94" y="0.0" width="32" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="32" id="0wZ-81-9uJ"/>
-                                            <constraint firstAttribute="height" constant="32" id="dCL-pP-WDe"/>
-                                        </constraints>
-                                    </imageView>
+                                        <state key="normal" image="call_chat_icon"/>
+                                        <connections>
+                                            <action selector="StartChatOption:" destination="Ayv-eU-1Cc" eventType="touchUpInside" id="UCg-4X-QR8"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIm-EF-5Sj">
+                                        <rect key="frame" x="47" y="0.0" width="24" height="32"/>
+                                        <state key="normal" image="voice_call_hangon_icon"/>
+                                        <connections>
+                                            <action selector="StartAudioCallOption:" destination="Ayv-eU-1Cc" eventType="touchUpInside" id="h1z-uB-lJn"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrF-IH-cAz">
+                                        <rect key="frame" x="86" y="0.0" width="32" height="32"/>
+                                        <state key="normal" image="call_video_mute_off_icon"/>
+                                        <connections>
+                                            <action selector="StartVideoCallOption:" destination="Ayv-eU-1Cc" eventType="touchUpInside" id="GJZ-rv-lm5"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -90,7 +89,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="Sev-gP-dFk"/>
             <connections>
-                <outlet property="avatar" destination="4G7-Kl-3IF" id="4Q4-gL-zv6"/>
+                <outlet property="avatar" destination="4G7-Kl-3IF" id="rDb-mA-p5u"/>
                 <outlet property="businessUnit" destination="RZL-c8-qoQ" id="AUL-Y2-J3r"/>
                 <outlet property="jobTitle" destination="VjQ-2Q-TjO" id="VUv-w9-WlS"/>
                 <outlet property="name" destination="73N-aX-IJa" id="om6-bA-nNV"/>
@@ -100,7 +99,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="add_group_participant" width="58" height="58"/>
-        <image name="call_audio_mute_off_icon" width="32" height="32"/>
+        <image name="call_chat_icon" width="32" height="32"/>
+        <image name="call_video_mute_off_icon" width="32" height="32"/>
+        <image name="voice_call_hangon_icon" width="24" height="24"/>
     </resources>
 </document>

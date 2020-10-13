@@ -47,6 +47,12 @@ extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleTableViewCell") as? PeopleTableViewCell else { return UITableViewCell() }
+        
+        let session = (AppDelegate.the()?.mxSessions.first as? MXSession)
+        var person = ActPeople(withBaseUser: ((AppDelegate.the()?.mxSessions.first as? MXSession)?.user(withUserId: session?.myUserId))!, officialName: "Joseph Fergusson", jobTitle: "App Developer", org: "ACT Health", businessUnit: "I dunno")
+        person.emailAddress = "joseph.fergusson@outlook.com"
+        person.phoneNumber = "0448069079"
+        cell.setValue(actPeople: person)
         cell.peopleCellDelegate = self
         return cell
     }
@@ -55,6 +61,9 @@ extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
         self.tableView.deselectRow(at: indexPath, animated: true)
         let vc = PeopleDetailViewController() //your view controller
         //vc.actPeople = people[indexPath.row]
+        guard let cell = self.tableView(tableView, cellForRowAt: indexPath) as? PeopleTableViewCell else { return }
+        guard let person = cell.actPeople else { return }
+        vc.setPerson(person: person)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

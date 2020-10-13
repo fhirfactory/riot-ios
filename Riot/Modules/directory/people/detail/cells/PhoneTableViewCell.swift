@@ -13,6 +13,10 @@ class PhoneTableViewCell: UITableViewCell {
     @IBOutlet weak var heading: UILabel!
     @IBOutlet weak var value: UILabel!
     
+    func setUser(person: ActPeople){
+        value.text = person.phoneNumber
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

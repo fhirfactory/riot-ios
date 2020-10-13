@@ -28,9 +28,38 @@ class PeopleProfileTableViewCell: UITableViewCell {
         })
     }
     @IBAction private func StartAudioCallOption(_ sender: Any) {
-        
+        placeCallWithUser(withVideo: false)
     }
     @IBAction private func StartVideoCallOption(_ sender: Any) {
+        placeCallWithUser(withVideo: true)
+    }
+    
+    func placeCallWithUser(withVideo video: Bool) {
+        guard let userID = person.baseUser.userId else { return }
+        if let theSession = (AppDelegate.the()?.mxSessions.first as? MXSession) {
+            if let room: MXRoom = theSession.directJoinedRoom(withUserId: userID) {
+                room.placeCall(withVideo: video, completion: {(callResult) in
+                    if callResult.isFailure {
+                        
+                    }
+                })
+            } else {
+                let roomCreationParameters = MXRoomCreationParameters(forDirectRoomWithUser: userID)
+                theSession.createRoom(parameters: roomCreationParameters, completion: {(creationResult) in
+                    if creationResult.isSuccess {
+                        DispatchQueue.main.async {
+                            if let room = creationResult.value {
+                                room.placeCall(withVideo: video, completion: {(result) in
+                                    
+                                })
+                            }
+                        }
+                    } else {
+                        NotificationCenter.default.post(name: NSNotification.Name.mxkError, object: creationResult.error, userInfo: theSession.myUser.userId != nil ? [kMXKErrorUserIdKey: theSession.myUser.userId!] : nil)
+                    }
+                })
+            }
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -988,6 +988,9 @@
     [self setMissedDiscussionsCount:recentsDataSource.missedGroupDiscussionsCount
                        onTabBarItem:TABBAR_ROOMS_INDEX
                      withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+    [self setMissedDiscussionsCount:recentsDataSource.missedChatCount + recentsDataSource.missedLowPriorityCount + recentsDataSource.missedFavouriteCount
+                       onTabBarItem:TABBAR_HOME_INDEX
+                     withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
     if (@available(iOS 14, *)){
         [self setupPullDownMenuiOS14];
     }

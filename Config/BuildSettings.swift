@@ -249,11 +249,21 @@ final class BuildSettings: NSObject {
     
     
     // MARK: - Authentication Screen
-    static let authScreenShowRegister = true
-    static let authScreenShowPhoneNumber = true
-    static let authScreenShowForgotPassword = true
-    static let authScreenShowCustomServerOptions = true
+    static let authScreenShowRegister: Bool = true
+    static let authScreenShowPhoneNumber: Bool = true
+    static let authScreenShowPhoneNumberCountryCode: Bool = false
+    static let authScreenShowForgotPassword: Bool = true
+    static let authScreenShowCustomServerOptions: Bool = true
+    static let authScreenAllowCustomAuthenticationServers: Bool = false
+    
+    /// Value to customise the image logo at the top of the authenticaiton screen
+    static let authScreenImageLogoName: String = "lingo_logo_dark"
     
     // MARK: - Home Screen
     static let homeScreenShowFavourites : Bool = false
+    
+    // MARK: - Theme Application Settings
+    /// Additional toggles that determine if theme customisations should apply to particular elements of the application
+    static let themeAppliesToLoginPageLogo: Bool = false
+    
 }

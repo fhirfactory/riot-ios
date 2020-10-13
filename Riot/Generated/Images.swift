@@ -110,12 +110,16 @@ internal enum Asset {
     internal static let secretsSetupPassphrase = ImageAsset(name: "secrets_setup_passphrase")
     internal static let removeIconPink = ImageAsset(name: "remove_icon_pink")
     internal static let settingsIcon = ImageAsset(name: "settings_icon")
+    internal static let splashBackground = ImageAsset(name: "Splash-Background")
     internal static let tabFavourites = ImageAsset(name: "tab_favourites")
     internal static let tabGroups = ImageAsset(name: "tab_groups")
     internal static let tabHome = ImageAsset(name: "tab_home")
     internal static let tabPeople = ImageAsset(name: "tab_people")
     internal static let tabRooms = ImageAsset(name: "tab_rooms")
     internal static let launchScreenLogo = ImageAsset(name: "launch_screen_logo")
+    internal static let lingoLogoDark = ImageAsset(name: "lingo_logo_dark")
+    internal static let logoTransparent = ImageAsset(name: "logo_transparent")
+    internal static let riotSplash0Blue = ImageAsset(name: "riot_splash_0_blue")
   }
   internal enum SharedImages {
     internal static let cancel = ImageAsset(name: "cancel")

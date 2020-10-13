@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,19 +20,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="launch_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="IcW-17-3Qq">
-                                <rect key="frame" x="147" y="308" width="120" height="120"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash-Background" translatesAutoresizingMaskIntoConstraints="NO" id="YPx-Sg-Mnz">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="riot_splash_0_blue" translatesAutoresizingMaskIntoConstraints="NO" id="IcW-17-3Qq">
+                                <rect key="frame" x="82.666666666666671" y="318.66666666666669" width="248.66666666666663" height="98.666666666666686"/>
                                 <color key="tintColor" red="0.051999999999999998" green="0.74299999999999999" blue="0.54300000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="IcW-17-3Qq" secondAttribute="height" multiplier="1:1" id="nyP-l5-s1B"/>
-                                    <constraint firstAttribute="width" constant="120" id="v1s-rq-3ay"/>
+                                    <constraint firstAttribute="width" secondItem="IcW-17-3Qq" secondAttribute="height" multiplier="984:391" id="nyP-l5-s1B"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="YPx-Sg-Mnz" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="CJM-wZ-rSM"/>
                             <constraint firstItem="IcW-17-3Qq" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="F70-sn-ghB"/>
+                            <constraint firstItem="IcW-17-3Qq" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.6" id="KCC-ae-nvN"/>
+                            <constraint firstItem="YPx-Sg-Mnz" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="eTx-54-1rS"/>
+                            <constraint firstItem="YPx-Sg-Mnz" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" id="etU-wx-yF0"/>
                             <constraint firstItem="IcW-17-3Qq" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="nJz-qK-nMP"/>
+                            <constraint firstItem="YPx-Sg-Mnz" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="wks-HI-QA2"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -41,6 +49,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launch_screen_logo" width="240" height="240"/>
+        <image name="Splash-Background" width="1125" height="2436"/>
+        <image name="riot_splash_0_blue" width="969" height="438"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

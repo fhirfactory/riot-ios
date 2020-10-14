@@ -74,7 +74,7 @@ abstract_target 'RiotPods' do
   pod 'HPGrowingTextView', :inhibit_warnings => true
 
   # Tools
-  pod 'SwiftGen', '~> 6.1'
+  pod 'SwiftGen', '~> 6.4.0'
   pod 'SwiftLint', '~> 0.36.0'
 
   target "Riot" do

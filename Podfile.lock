@@ -123,7 +123,7 @@ DEPENDENCIES:
   - MatrixSDK/SwiftSupport
   - OLMKit
   - Reusable (~> 4.1)
-  - SwiftGen (~> 6.1)
+  - SwiftGen (~> 6.4.0)
   - SwiftLint (~> 0.36.0)
   - zxcvbn-ios
   - ZXingObjC (~> 3.6.5)
@@ -183,6 +183,6 @@ SPEC CHECKSUMS:
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: d0058ce68bdaa747b8f9d08f2d0d323d82f52082
+PODFILE CHECKSUM: 026032c850d5bd2c335f49cd9a34a88fecd0e698
 
 COCOAPODS: 1.9.3

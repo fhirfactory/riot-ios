@@ -18,9 +18,11 @@ import UIKit
 
 class ProfileTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var contactIcon: UILabel!
+    @IBOutlet weak var contactIcon: MXKImageView!
     @IBOutlet weak var status: UILabel!
     @IBOutlet weak var officialName: UILabel!
+    
+    var delegate: ProfileViewController!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +34,12 @@ class ProfileTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setDelegate(delegate: ProfileViewController){
+        self.delegate = delegate
+        officialName.text = delegate.mainSession.myUser.displayname
+        contactIcon.setImageURI(delegate.mainSession.myUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: delegate.mainSession.myUser.displayname), mediaManager: delegate.mainSession.mediaManager)
     }
     
 }

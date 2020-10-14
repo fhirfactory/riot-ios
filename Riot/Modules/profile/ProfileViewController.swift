@@ -125,6 +125,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         case SectionType.PROFILE_CELL.rawValue:
             guard let profileCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.PROFILE_CELL.cellIdentifier, for: indexPath) as? ProfileTableViewCell else { return UITableViewCell() }
             profileCell.selectionStyle = .none
+            profileCell.setDelegate(delegate: self)
             return profileCell
         case SectionType.ROLE_CELL.rawValue:
             guard let roleCell = self.tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier, for: indexPath) as? ProfileRoleTableViewCell else { return UITableViewCell() }

@@ -108,6 +108,11 @@
 "room_recents_join_room" = "加入聊天室";
 "room_recents_join_room_title" = "加入聊天室";
 "room_recents_join_room_prompt" = "输入房间 ID 或者房间别名";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "邀请";
 "people_conversation_section" = "对话";

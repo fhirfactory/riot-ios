@@ -90,6 +90,10 @@
 "room_recents_create_empty_room" = "Erstelle Raum";
 "room_recents_join_room" = "Trete Raum bei";
 "room_recents_join_room_title" = "Trete einem Raum bei";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 Invite";
+"pull_down_invites" = "%d Invites";
 // People tab
 "people_invites_section" = "EINLADUNGEN";
 "people_conversation_section" = "GESPRÄCHE";

@@ -117,6 +117,11 @@
 "room_recents_join_room" = "部屋へ参加";
 "room_recents_join_room_title" = "部屋へ参加";
 "room_recents_join_room_prompt" = "部屋の固有IDまたは住所表記を入力";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "招待中";
 "people_conversation_section" = "会話";

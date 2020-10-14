@@ -84,6 +84,7 @@ abstract_target 'RiotPods' do
     pod 'KTCenterFlowLayout', '~> 1.3.1'
     pod 'ZXingObjC', '~> 3.6.5'
     pod 'FlowCommoniOS', '~> 1.8.7'
+    pod 'FFDropDownMenu', '~> 1.4'
 
     target 'RiotTests' do
       inherit! :search_paths

@@ -21,7 +21,7 @@
 "store_promotional_text" = "Privacy-preserving chat and collaboration app, on an open network. Decentralised to put you in control. No datamining, no backdoors and no third party access.";
 
 // Titles
-"title_home" = "Home";
+"title_home" = "Lingo";
 "title_favourites" = "Favourites";
 "title_people" = "People";
 "title_rooms" = "Rooms";
@@ -170,6 +170,7 @@
 "room_recents_directory_section_network" = "Network";
 "room_recents_favourites_section" = "FAVOURITES";
 "room_recents_people_section" = "PEOPLE";
+"room_recents_chats_section" = "CHATS";
 "room_recents_conversations_section" = "ROOMS";
 "room_recents_no_conversation" = "No rooms";
 "room_recents_low_priority_section" = "LOW PRIORITY";
@@ -180,6 +181,10 @@
 "room_recents_join_room" = "Join room";
 "room_recents_join_room_title" = "Join a room";
 "room_recents_join_room_prompt" = "Type a room id or a room alias";
+
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
 
 // People tab
 "people_invites_section" = "INVITES";

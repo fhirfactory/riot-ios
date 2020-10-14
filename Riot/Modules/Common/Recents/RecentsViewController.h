@@ -178,6 +178,9 @@
 
 - (void)didTapOnSectionHeader:(UIGestureRecognizer*)gestureRecognizer;
 - (void)didSwipeOnSectionHeader:(UISwipeGestureRecognizer*)gestureRecognizer;
-
+/**
+ Get the edit actions available on a specific tableView cell
+ */
+- (nullable NSArray<UIContextualAction*>*)getContextualActionsFor:(UITableView *)tableView at:(NSIndexPath *)IndexPath;
 @end
 

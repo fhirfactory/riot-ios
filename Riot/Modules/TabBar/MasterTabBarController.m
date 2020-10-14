@@ -31,6 +31,9 @@
 
 #import "Riot-Swift.h"
 
+#import <FFDropDownMenu.h>
+#import <FFDropDownMenuView.h>
+
 @interface MasterTabBarController () <AuthenticationViewControllerDelegate>
 {
     // Array of `MXSession` instances.
@@ -93,7 +96,7 @@
     
     // Set the accessibility labels for all buttons #1842
     [_settingsBarButtonItem setAccessibilityLabel:NSLocalizedStringFromTable(@"settings_title", @"Vector", nil)];
-    [_searchBarButtonIem setAccessibilityLabel:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil)];
+    [_moreBarButtonItem setAccessibilityLabel:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil)];
     [_homeViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_home", @"Vector", nil)];
     [_favouritesViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_favourites", @"Vector", nil)];
     [_peopleViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_people", @"Vector", nil)];
@@ -241,6 +244,14 @@
         [unifiedSearchViewController destroy];
         unifiedSearchViewController = nil;
     }
+    
+    if (@available(iOS 14, *)){
+        [self setupPullDownMenuiOS14];
+    }
+}
+
+- (void)InvitesSelected{
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -616,6 +627,74 @@
 
 #pragma mark -
 
+- (IBAction)displayPullDownMenu:(id)sender{
+    if (@available(iOS 14, *)){
+        return;
+    }
+    NSArray *menuModelsArr = [self getDropDownMenuModelsArray];
+    self.dropDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:menuModelsArr menuWidth:145 eachItemHeight:40 menuRightMargin:10 triangleRightMargin:23];
+    self.dropDownMenu.triangleY = 50;
+    [self.dropDownMenu showMenu];
+    self.dropDownMenu.triangleY = 50;
+}
+
+- (void)updateInvitesBarButtonItem{
+    if (!_invitesBarBadgeButtonItem){
+        UIButton *base = [[UIButton alloc] init];
+        NSString *inviteTitle;
+        if (self->recentsDataSource.missedInviteCount == 1){
+            inviteTitle = NSLocalizedStringFromTable(@"pull_down_one_invite", @"Vector", nil);
+        }else{
+            inviteTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"pull_down_invites", @"Vector", nil), self->recentsDataSource.missedInviteCount];
+        }
+        [base addTarget:self action:@selector(viewInvites) forControlEvents:UIControlEventTouchUpInside];
+        [base setImage:[UIImage imageNamed:@"add_participant"] forState:UIControlStateNormal];
+        [base setAccessibilityHint:inviteTitle];
+        _invitesBarBadgeButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:base];
+        _invitesBarBadgeButtonItem.badgeOriginX = 17;
+        _invitesBarBadgeButtonItem.shouldHideBadgeAtZero = YES;
+        self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:_invitesBarBadgeButtonItem];
+    }
+    _invitesBarBadgeButtonItem.badgeValue = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self->recentsDataSource.missedInviteCount];
+}
+- (void)viewInvites{
+    AlternateInviteViewController *vc = [[AlternateInviteViewController alloc] init];
+    [vc displayList:self->recentsDataSource];
+    [self showViewController:vc sender:self];
+}
+
+- (void)setupPullDownMenuiOS14{
+    if (@available(iOS 14, *)){
+        NSMutableArray *menuArray = [[NSMutableArray alloc] init];
+        NSArray *actions = [self getDropDownMenuModelsArray];
+        for (FFDropDownMenuModel *itm in actions) {
+            [menuArray addObject:[UIAction actionWithTitle:itm.menuItemTitle image:nil identifier:nil handler:^(__kindof UIAction * _Nonnull __strong args){
+                itm.menuBlock();
+            }]];
+        }
+        UIMenu *menu = [UIMenu menuWithChildren:menuArray];
+        _moreBarButtonItem.menu = menu;
+        _moreBarButtonItem.action = nil;
+    }
+}
+
+- (NSArray *)getDropDownMenuModelsArray {
+    NSMutableArray *menuModelArr = [[NSMutableArray alloc] init];
+    [menuModelArr addObject:[FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:NSLocalizedStringFromTable(@"search_default_placeholder", @"Vector", nil) menuItemIconName:nil menuBlock:^{
+
+        UnifiedSearchViewController *myNewVC = [[UnifiedSearchViewController alloc] init];
+        self->unifiedSearchViewController = myNewVC;
+        
+        for (MXSession *session in self->mxSessionArray)
+        {
+            [self->unifiedSearchViewController addMatrixSession:session];
+        }
+        
+        [self showViewController:myNewVC sender:self];
+    }]];
+    return menuModelArr;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"showRoomDetails"] || [[segue identifier] isEqualToString:@"showContactDetails"] || [[segue identifier] isEqualToString:@"showGroupDetails"])
@@ -909,6 +988,13 @@
     [self setMissedDiscussionsCount:recentsDataSource.missedGroupDiscussionsCount
                        onTabBarItem:TABBAR_ROOMS_INDEX
                      withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+    [self setMissedDiscussionsCount:recentsDataSource.missedChatCount + recentsDataSource.missedLowPriorityCount + recentsDataSource.missedFavouriteCount
+                       onTabBarItem:TABBAR_HOME_INDEX
+                     withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+    if (@available(iOS 14, *)){
+        [self setupPullDownMenuiOS14];
+    }
+    [self updateInvitesBarButtonItem];
 }
 
 - (void)setMissedDiscussionsCount:(NSUInteger)count onTabBarItem:(NSUInteger)index withBadgeColor:(UIColor*)badgeColor

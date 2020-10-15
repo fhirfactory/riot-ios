@@ -168,6 +168,7 @@ class AlternateHomeDataSource: RecentsDataSource {
         guard let reuseId = self.cellReuseIdentifier(for: cellData as? MXKCellData) else { return UITableViewCell() }
         guard let cell: MXKCellRendering = tableView.dequeueReusableCell(withIdentifier: reuseId, for: destination) as? MXKCellRendering else {return UITableViewCell()}
         
+        
         //this is needed because "cell.delegate = self" is ambiguous to Swift's type system, even when surrounded in if lets / casts
         AlternateHomeTools.setDelegateForCell(cell, with: self)
         cell.render(cellData as? MXKCellData)

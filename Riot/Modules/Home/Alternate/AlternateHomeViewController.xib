@@ -51,7 +51,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                     <items>
                         <barButtonItem style="plain" id="bBq-tR-EUs">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="PNu-je-sjR">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="PNu-je-sjR">
                                 <rect key="frame" x="16" y="6" width="343" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                 <segments>
@@ -64,6 +64,7 @@
                             </segmentedControl>
                         </barButtonItem>
                     </items>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </toolbar>
                 <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zbr-9e-VZh">
                     <rect key="frame" x="0.0" y="44" width="375" height="44"/>

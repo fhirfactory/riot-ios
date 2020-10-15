@@ -127,7 +127,16 @@ class AlternateHomeViewController: RecentsViewController {
         super.viewWillAppear(animated)
         recentsTableView.dataSource = HomeDataSource
         HomeDataSource.setViewMode(m: HomeViewMode.Chats)
+        let t = DefaultTheme()
+        modeSelector.backgroundColor = t.tintBackgroundColor
         
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        modeSelector.setTitleTextAttributes(titleTextAttributes, for: .normal)
+        if #available(iOS 13.0, *) {
+            modeSelector.selectedSegmentTintColor = t.tintColor
+        } else {
+            // Fallback on earlier versions
+        };
         createSections()
         
     }
@@ -176,6 +185,12 @@ class AlternateHomeViewController: RecentsViewController {
             modeSelector.selectedSegmentIndex = 0
             HomeDataSource.setViewMode(m: HomeViewMode.Chats)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = UIColor.black
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

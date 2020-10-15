@@ -52,7 +52,7 @@ class AlternateHomeDataSource: RecentsDataSource {
             return super.missedInviteCount
         }
     }
-    
+        
     //do work here sorting etc.
     func getIndexPathInUnderlying(indexPathFor uIndex: IndexPath) -> IndexPath {
         switch _viewMode {

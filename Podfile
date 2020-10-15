@@ -88,6 +88,11 @@ abstract_target 'RiotPods' do
 
     target 'RiotTests' do
       inherit! :search_paths
+      pod 'FFDropDownMenu', '~> 1.4'
+    end
+    target 'LingoTests' do
+      inherit! :search_paths
+      pod 'FFDropDownMenu', '~> 1.4'
     end
   end
 

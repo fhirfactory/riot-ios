@@ -639,23 +639,32 @@
 }
 
 - (void)updateInvitesBarButtonItem{
-    if (!_invitesBarBadgeButtonItem){
-        UIButton *base = [[UIButton alloc] init];
-        NSString *inviteTitle;
-        if (self->recentsDataSource.missedInviteCount == 1){
-            inviteTitle = NSLocalizedStringFromTable(@"pull_down_one_invite", @"Vector", nil);
-        }else{
-            inviteTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"pull_down_invites", @"Vector", nil), self->recentsDataSource.missedInviteCount];
+    
+    //hide the button if there's no invites
+    if (recentsDataSource.missedInviteCount == 0){
+        NSMutableArray* items = [[NSMutableArray alloc] initWithArray:self.navigationItem.rightBarButtonItems];
+        [items removeObject:_invitesBarBadgeButtonItem];
+        self.navigationItem.rightBarButtonItems = items;
+        _invitesBarBadgeButtonItem = nil;
+    } else {
+        if (!_invitesBarBadgeButtonItem){
+            UIButton *base = [[UIButton alloc] init];
+            NSString *inviteTitle;
+            if (self->recentsDataSource.missedInviteCount == 1){
+                inviteTitle = NSLocalizedStringFromTable(@"pull_down_one_invite", @"Vector", nil);
+            }else{
+                inviteTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"pull_down_invites", @"Vector", nil), self->recentsDataSource.missedInviteCount];
+            }
+            [base addTarget:self action:@selector(viewInvites) forControlEvents:UIControlEventTouchUpInside];
+            [base setImage:[UIImage imageNamed:@"add_participant"] forState:UIControlStateNormal];
+            [base setAccessibilityHint:inviteTitle];
+            _invitesBarBadgeButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:base];
+            _invitesBarBadgeButtonItem.badgeOriginX = 17;
+            _invitesBarBadgeButtonItem.shouldHideBadgeAtZero = YES;
+            self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:_invitesBarBadgeButtonItem];
         }
-        [base addTarget:self action:@selector(viewInvites) forControlEvents:UIControlEventTouchUpInside];
-        [base setImage:[UIImage imageNamed:@"add_participant"] forState:UIControlStateNormal];
-        [base setAccessibilityHint:inviteTitle];
-        _invitesBarBadgeButtonItem = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:base];
-        _invitesBarBadgeButtonItem.badgeOriginX = 17;
-        _invitesBarBadgeButtonItem.shouldHideBadgeAtZero = YES;
-        self.navigationItem.rightBarButtonItems = [self.navigationItem.rightBarButtonItems arrayByAddingObject:_invitesBarBadgeButtonItem];
+        _invitesBarBadgeButtonItem.badgeValue = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self->recentsDataSource.missedInviteCount];
     }
-    _invitesBarBadgeButtonItem.badgeValue = [[NSString alloc] initWithFormat:@"%lu", (unsigned long)self->recentsDataSource.missedInviteCount];
 }
 - (void)viewInvites{
     AlternateInviteViewController *vc = [[AlternateInviteViewController alloc] init];

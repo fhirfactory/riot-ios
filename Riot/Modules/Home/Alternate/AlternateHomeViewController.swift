@@ -29,21 +29,26 @@ class AlternateHomeViewController: RecentsViewController {
     //this is okay, because viewWillAppear will fire before anything else that relies on the Home Data Source
     var HomeDataSource: AlternateHomeDataSource!
     
+    var favouritesIndex = -1
+    var lowPriorityIndex = -1
+    
     @IBOutlet weak var modeSelector: UISegmentedControl!
     @IBAction private func SelectionChanged() {
-        switch modeSelector.selectedSegmentIndex {
-        case 0:
+
+        if modeSelector.selectedSegmentIndex == 0 {
             self.HomeDataSource.setViewMode(m: HomeViewMode.Chats)
-            self.recentsTableView.reloadData()
-        case 1:
+        } else if modeSelector.selectedSegmentIndex == favouritesIndex {
             self.HomeDataSource.setViewMode(m: HomeViewMode.Favourites)
-            self.recentsTableView.reloadData()
-        case 2:
+        } else if modeSelector.selectedSegmentIndex == lowPriorityIndex {
             self.HomeDataSource.setViewMode(m: HomeViewMode.LowPriority)
-            self.recentsTableView.reloadData()
-        default:
-            break
         }
+        
+        self.recentsTableView.reloadData()
+        recentsTableView.reloadSectionIndexTitles()
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        nil
     }
     
     static override func nib() -> UINib! {
@@ -58,6 +63,9 @@ class AlternateHomeViewController: RecentsViewController {
     }
     
     func drawBadgeFor(segment: Int, badgeValue: UInt, controller: UISegmentedControl) -> UIView? {
+        if segment < 0 || segment >= controller.numberOfSegments {
+            return nil
+        }
         if badgeValue == 0 {
             return nil
         }
@@ -92,13 +100,13 @@ class AlternateHomeViewController: RecentsViewController {
             badge.removeFromSuperview()
         }
         badges = []
-        if let b = drawBadgeFor(segment: 1, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .Favourites), controller: modeSelector) {
+        if let b = drawBadgeFor(segment: favouritesIndex, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .Favourites), controller: modeSelector) {
             badges.append(b)
         }
         if let b = drawBadgeFor(segment: 0, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .Chats), controller: modeSelector) {
             badges.append(b)
         }
-        if let b = drawBadgeFor(segment: 2, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .LowPriority), controller: modeSelector) {
+        if let b = drawBadgeFor(segment: lowPriorityIndex, badgeValue: HomeDataSource.getBadgeValueForSectionMode(section: .LowPriority), controller: modeSelector) {
             badges.append(b)
         }
         
@@ -119,13 +127,55 @@ class AlternateHomeViewController: RecentsViewController {
         super.viewWillAppear(animated)
         recentsTableView.dataSource = HomeDataSource
         HomeDataSource.setViewMode(m: HomeViewMode.Chats)
+        
+        createSections()
+        
+    }
+    
+    func getIndex(mode: HomeViewMode) -> Int {
+        switch mode {
+        case .Chats:
+            return 0
+        case .Favourites:
+            return favouritesIndex
+        case .LowPriority:
+            return lowPriorityIndex
+        default:
+            return -1
+        }
+    }
+    
+    func createSections() {
+        guard modeSelector != nil else { return }
+        guard HomeDataSource != nil else { return }
+        guard !(HomeDataSource.conversationSection == HomeDataSource.peopleSection && HomeDataSource.peopleSection == -1) else { return }
+        //only update the sections if the data source is ready
+        guard HomeDataSource.state == MXKDataSourceStateReady else { return }
+        lowPriorityIndex = -1
+        favouritesIndex = -1
+        let currentlySelected = HomeDataSource._viewMode
+
+        var currentIndex = 0 //we draw the chats section no matter what
         modeSelector.removeAllSegments()
         modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_chats_section", in: "Vector"), at: 0, animated: false)
-        modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_favourites_section", in: "Vector"), at: 1, animated: false)
-        modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_low_priority_section", in: "Vector"), at: 2, animated: false)
-        modeSelector.selectedSegmentIndex = 0
-        
+        if HomeDataSource.favoritesSection > -1 {
+            currentIndex += 1
+            favouritesIndex = currentIndex
+            modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_favourites_section", in: "Vector"), at: favouritesIndex, animated: false)
+        }
+        if HomeDataSource.lowPrioritySection > -1 {
+            currentIndex += 1
+            lowPriorityIndex = currentIndex
+            modeSelector.insertSegment(withTitle: AlternateHomeTools.getNSLocalized("room_recents_low_priority_section", in: "Vector"), at: lowPriorityIndex, animated: false)
+        }
         drawBadges()
+        let index = getIndex(mode: currentlySelected)
+        if index > -1 {
+            modeSelector.selectedSegmentIndex = index
+        } else {
+            modeSelector.selectedSegmentIndex = 0
+            HomeDataSource.setViewMode(m: HomeViewMode.Chats)
+        }
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -138,7 +188,7 @@ class AlternateHomeViewController: RecentsViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.0
+        return 20.0
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,7 +198,7 @@ class AlternateHomeViewController: RecentsViewController {
     
     override func dataSource(_ dataSource: MXKDataSource!, didCellChange changes: Any!) {
         super.dataSource(dataSource, didCellChange: changes)
-        drawBadges()
+        createSections()
     }
     
 }

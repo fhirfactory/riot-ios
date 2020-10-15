@@ -50,7 +50,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 
 @property (nonatomic, strong) FFDropDownMenuView *dropDownMenu;
-@property (nonatomic) BBBadgeBarButtonItem *invitesBarBadgeButtonItem;
+@property (nonatomic, strong) BBBadgeBarButtonItem *invitesBarBadgeButtonItem;
 
 // Associated matrix sessions (empty by default).
 @property (nonatomic, readonly) NSArray *mxSessions;

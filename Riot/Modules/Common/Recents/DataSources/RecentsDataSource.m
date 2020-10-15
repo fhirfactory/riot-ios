@@ -1242,7 +1242,7 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
                     _missedLowPriorityCount ++;
                 }else if (room.accountData.tags[kMXRoomTagFavourite]){
                     _missedFavouriteCount ++;
-                }else if (!room.accountData.tags || room.isDirect){
+                }else if (!room.accountData.tags || room.accountData.tags.count == 0 || room.isDirect){
                     _missedChatCount ++;
                 }
                 

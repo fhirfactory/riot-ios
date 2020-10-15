@@ -25,6 +25,21 @@ class AlternateHomeDataSource: RecentsDataSource {
         return 1
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var returnString = ""
+        switch _viewMode {
+        case .Chats:
+            returnString = "Chats "
+        case .Favourites:
+            returnString = "Favourites"
+        case .Invites:
+            returnString = "Invites"
+        case .LowPriority:
+            returnString = "Low Priority"
+        }
+        return returnString + " " + String(self.tableView(tableView, numberOfRowsInSection: 0))
+    }
+    
     func getBadgeValueForSectionMode(section: HomeViewMode) -> UInt {
         switch section {
         case .Favourites:
@@ -104,7 +119,7 @@ class AlternateHomeDataSource: RecentsDataSource {
             } else if uIndex.row < peopleCellDataArray.count + conversationCellDataArray.count {
                 return IndexPath(row: uIndex.row - peopleCellDataArray.count, section: conversationSection)
             } else {
-                return IndexPath()
+                return IndexPath(row: -1, section: -1)
             }
         case HomeViewMode.Favourites:
             return IndexPath(row: uIndex.row, section: favoritesSection)
@@ -126,8 +141,14 @@ class AlternateHomeDataSource: RecentsDataSource {
             let returnval = peopleCellDataArray.count + conversationCellDataArray.count
             return returnval
         case HomeViewMode.Favourites:
+            if favoritesSection == -1 {
+                return 0
+            }
             return super.tableView(tableView, numberOfRowsInSection: favoritesSection)
         case HomeViewMode.LowPriority:
+            if lowPrioritySection == -1 {
+                return 0
+            }
             return super.tableView(tableView, numberOfRowsInSection: lowPrioritySection)
         case HomeViewMode.Invites:
             return Int(super.missedInviteCount)
@@ -136,6 +157,9 @@ class AlternateHomeDataSource: RecentsDataSource {
     
     override func cellHeight(at indexPath: IndexPath!) -> CGFloat {
         let underlyingIndexPath = getIndexPathInUnderlying(indexPathFor: indexPath)
+        if underlyingIndexPath.section < 0 || underlyingIndexPath.row < 0 {
+            return 0
+        }
         return super.cellHeight(at: underlyingIndexPath)
     }
     

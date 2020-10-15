@@ -244,7 +244,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_home" id="hNI-yH-EXj">
+                    <tabBarItem key="tabBarItem" title="" image="call_chat_icon" id="hNI-yH-EXj">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="TabBarItemHome"/>
                         </userDefinedRuntimeAttributes>
@@ -590,13 +590,14 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Tfl-tq-LQp"/>
+        <segue reference="mhb-l9-pM3"/>
         <segue reference="fIR-e3-ssz"/>
         <segue reference="f5u-Y1-7nt"/>
         <segue reference="vCz-dl-6xQ"/>
         <segue reference="cUw-vU-gJq"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="call_chat_icon" width="32" height="32"/>
         <image name="ellipsis.circle.fill" catalog="system" width="128" height="121"/>
         <image name="integrations_icon" width="24" height="24"/>
         <image name="logo" width="120" height="101"/>
@@ -604,7 +605,6 @@
         <image name="settings_icon" width="24" height="24"/>
         <image name="tab_favourites" width="24" height="24"/>
         <image name="tab_groups" width="24" height="24"/>
-        <image name="tab_home" width="20" height="23.5"/>
         <image name="tab_people" width="24" height="24"/>
         <image name="tab_rooms" width="24" height="24"/>
         <systemColor name="groupTableViewBackgroundColor">

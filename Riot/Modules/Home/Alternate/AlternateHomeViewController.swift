@@ -115,8 +115,8 @@ class AlternateHomeViewController: RecentsViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.recentsTableView.tag = Int(RecentsDataSourceMode.home.rawValue)
         AppDelegate.theDelegate().masterTabBarController.navigationItem.title = AlternateHomeTools.getNSLocalized("title_home", in: "Vector")
-        if let something = self.dataSource as? RecentsDataSource {
-            something.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
+        if let recentsDataSource = self.dataSource as? RecentsDataSource {
+            recentsDataSource.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
         }
         if mxSessions.first == nil {
             return
@@ -127,16 +127,22 @@ class AlternateHomeViewController: RecentsViewController {
         super.viewWillAppear(animated)
         recentsTableView.dataSource = HomeDataSource
         HomeDataSource.setViewMode(m: HomeViewMode.Chats)
-        let t = DefaultTheme()
-        modeSelector.backgroundColor = t.tintBackgroundColor
+        
+        // For situations where we override the theme using BuildSettings we need to make sure it is applied before referencing it further
+        // This requires us to override the selection using the default string name
+        var currentTheme = ThemeService.shared().theme
+        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+            currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+        }
+        modeSelector.backgroundColor = currentTheme.tintBackgroundColor
         
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         modeSelector.setTitleTextAttributes(titleTextAttributes, for: .normal)
         if #available(iOS 13.0, *) {
-            modeSelector.selectedSegmentTintColor = t.tintColor
+            modeSelector.selectedSegmentTintColor = currentTheme.tintColor
         } else {
             // Fallback on earlier versions
-        };
+        }
         createSections()
         
     }

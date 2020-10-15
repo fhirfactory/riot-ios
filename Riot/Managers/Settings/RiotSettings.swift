@@ -129,6 +129,9 @@ final class RiotSettings: NSObject {
     
     var userInterfaceTheme: String? {
         get {
+            
+            
+            
             return defaults.string(forKey: UserDefaultsKeys.userInterfaceTheme)
         } set {
             defaults.set(newValue, forKey: UserDefaultsKeys.userInterfaceTheme)

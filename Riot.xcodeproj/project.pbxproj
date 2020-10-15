@@ -12,6 +12,8 @@
 		1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */; };
 		1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */; };
 		1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */; };
+		1438875E253860580076981D /* LingoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438875D253860570076981D /* LingoTheme.swift */; };
+		143887652538605E0076981D /* LingoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438875D253860570076981D /* LingoTheme.swift */; };
 		14D6DCB1253575A500C29F66 /* AuthenticationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */; };
 		24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BBE81E7009EC00A9B29C /* MXRoom+Riot.m */; };
@@ -1025,6 +1027,7 @@
 		1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMemberDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInputToolbarViewTests.swift; sourceTree = "<group>"; };
 		1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTabBarControllerTests.swift; sourceTree = "<group>"; };
+		1438875D253860570076981D /* LingoTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LingoTheme.swift; sourceTree = "<group>"; };
 		14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewControllerTests.swift; sourceTree = "<group>"; };
 		1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_Riot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RiotShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2300,6 +2303,7 @@
 				32242F0F21E8FBA900725742 /* DefaultTheme.swift */,
 				32242F1021E8FBA900725742 /* DarkTheme.swift */,
 				3209451121F1C1430088CAA2 /* BlackTheme.swift */,
+				1438875D253860570076981D /* LingoTheme.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -6168,6 +6172,7 @@
 				B1664BC820F4E67600808783 /* ShareDataSource.m in Sources */,
 				B1DCC63522E72D2200625807 /* UISearchBar.swift in Sources */,
 				B1664BCD20F4E67600808783 /* RecentRoomTableViewCell.m in Sources */,
+				143887652538605E0076981D /* LingoTheme.swift in Sources */,
 				B1DB4F0C2231494F0065DBFA /* String.swift in Sources */,
 				B169331720F3CBE000746532 /* RecentCellData.m in Sources */,
 				B1664BCC20F4E67600808783 /* RoomsListViewController.m in Sources */,
@@ -6240,6 +6245,7 @@
 				B19EFA3B21F8BB4100FC070E /* KeyBackupRecoverCoordinator.swift in Sources */,
 				B1B9DEDE22E9D9890065E677 /* EmojiServiceType.swift in Sources */,
 				EC1CA89724C9C9A200DE9EBF /* SetupBiometricsViewModelType.swift in Sources */,
+				1438875E253860580076981D /* LingoTheme.swift in Sources */,
 				3232ABA9225730E100AD6A5C /* DeviceVerificationStartViewModel.swift in Sources */,
 				ECF57A4425090C23004BBF9D /* CreateRoomCoordinatorBridgePresenter.swift in Sources */,
 				B1B4E9BB24D46EB4004D5C33 /* SizingViewHeightStore.swift in Sources */,

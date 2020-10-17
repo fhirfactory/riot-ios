@@ -220,11 +220,12 @@ final class BuildSettings: NSObject {
     
     static let roomSettingsScreenShowLowPriorityOption: Bool = true
     static let roomSettingsScreenShowDirectChatOption: Bool = false
-    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = false
     static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
     static let roomSettingsScreenShowAddressSettings: Bool = false
     static let roomSettingsScreenShowFlairSettings: Bool = false
     static let roomSettingsScreenShowAdvancedSettings: Bool = false
+    static let roomSettingsScreenShowAnyoneHistoryOption: Bool = false
     
     // MARK: - Room Participants
     static let roomParticipantAllowBan : Bool = false

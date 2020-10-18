@@ -185,7 +185,14 @@ static UILabel* backgroundLabel = nil;
 
 + (UIImage*)generateAvatarForMatrixItem:(NSString*)itemId withDisplayName:(NSString*)displayname
 {
-    return [AvatarGenerator avatarForText:(displayname ? displayname : itemId) andColorIndex:[AvatarGenerator colorIndexForText:itemId]];
+    NSString* text = displayname ? displayname : itemId;
+    NSString* chars = [AvatarGenerator firstChar:text];
+    NSArray* words = [text componentsSeparatedByString:@" "];
+    NSString* lastWord = [words lastObject];
+    if (lastWord && words.count > 1){
+        chars = [chars stringByAppendingString:[AvatarGenerator firstChar:lastWord]];
+    }
+    return [AvatarGenerator imageFromText:chars withBackgroundColor:colorsList[[AvatarGenerator colorIndexForText:itemId]]];
 }
 
 + (UIImage*)generateAvatarForMatrixItem:(NSString*)itemId withDisplayName:(NSString*)displayname size:(CGFloat)size andFontSize:(CGFloat)fontSize

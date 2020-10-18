@@ -99,6 +99,7 @@
 "room_recents_join_room" = "Dołącz do pokoju";
 "room_recents_join_room_title" = "Dołącz do pokoju";
 "room_recents_join_room_prompt" = "Wprowadź ID lub nazwę pokoju";
+"room_recents_chats_section" = "CHATS";
 // People tab
 "people_invites_section" = "ZAPROSZENIA";
 "people_conversation_section" = "ROZMOWY";
@@ -133,6 +134,7 @@
 "room_participants_action_section_admin_tools" = "Narzędzia Administracyjne";
 "room_participants_action_section_direct_chats" = "Rozmowy bezpośrednie";
 "room_participants_action_section_devices" = "Urządzenia";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Zaproś";
 "room_participants_action_leave" = "Opuść pokój";
 "room_participants_action_remove" = "Usuń z pokoju";
@@ -359,6 +361,9 @@
 "auth_forgot_password" = "Zapomniałeś(-aś) hasło?";
 // Room recents
 "room_recents_directory_section" = "KATALOG POKOJÓW";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
 // Rooms tab
 "room_directory_no_public_room" = "Nie są dostępne publiczne pokoje";
 "directory_cell_description" = "%tu pokojów";

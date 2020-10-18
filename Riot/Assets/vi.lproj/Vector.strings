@@ -117,6 +117,11 @@
 "room_recents_join_room" = "Tham gia phòng";
 "room_recents_join_room_title" = "Tham gia một phòng đã tồn tại";
 "room_recents_join_room_prompt" = "Nhập id phòng hoặc bí danh phòng";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "MỜI";
 "people_conversation_section" = "CUỘC TRÒ CHUYỆN";
@@ -175,6 +180,7 @@
 "room_participants_action_section_direct_chats" = "Trò chuyện trực tiếp";
 "room_participants_action_section_devices" = "Thiết bị";
 "room_participants_action_section_other" = "Khác";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Mời";
 "room_participants_action_leave" = "Rời khỏi phòng này";
 "room_participants_action_remove" = "Loại bỏ khỏi phòng này";

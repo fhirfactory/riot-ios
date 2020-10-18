@@ -74,6 +74,11 @@
 "room_recents_create_empty_room" = "Búa til spjallrás";
 "room_recents_join_room" = "Taka þátt í spjallrás";
 "room_recents_join_room_title" = "Taka þátt í spjallrás";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "BOÐSGESTIR";
 "people_conversation_section" = "SAMTÖL";
@@ -110,6 +115,7 @@
 "room_participants_action_section_direct_chats" = "Beint spjall";
 "room_participants_action_section_devices" = "Tæki";
 "room_participants_action_section_other" = "Annað";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Bjóða";
 "room_participants_action_leave" = "Fara af spjallrás";
 "room_participants_action_remove" = "Fjarlægja úr þessari spjallrás";

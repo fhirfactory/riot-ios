@@ -38,6 +38,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.15):
     - DTFoundation/Core
+  - FFDropDownMenu (1.4.5)
   - FlowCommoniOS (1.8.8)
   - GBDeviceInfo (6.3.0):
     - GBDeviceInfo/Core (= 6.3.0)
@@ -98,7 +99,7 @@ PODS:
     - Reusable/View (= 4.1.1)
   - Reusable/Storyboard (4.1.1)
   - Reusable/View (4.1.1)
-  - SwiftGen (6.3.0)
+  - SwiftGen (6.4.0)
   - SwiftLint (0.36.0)
   - zxcvbn-ios (1.0.4)
   - ZXingObjC (3.6.5):
@@ -108,6 +109,7 @@ PODS:
 DEPENDENCIES:
   - cmark
   - DGCollectionViewLeftAlignFlowLayout (~> 1.0.4)
+  - FFDropDownMenu (~> 1.4)
   - FlowCommoniOS (~> 1.8.7)
   - GBDeviceInfo (~> 6.3.0)
   - HPGrowingTextView
@@ -121,7 +123,7 @@ DEPENDENCIES:
   - MatrixSDK/SwiftSupport
   - OLMKit
   - Reusable (~> 4.1)
-  - SwiftGen (~> 6.1)
+  - SwiftGen (~> 6.4.0)
   - SwiftLint (~> 0.36.0)
   - zxcvbn-ios
   - ZXingObjC (~> 3.6.5)
@@ -133,6 +135,7 @@ SPEC REPOS:
     - DGCollectionViewLeftAlignFlowLayout
     - DTCoreText
     - DTFoundation
+    - FFDropDownMenu
     - FlowCommoniOS
     - GBDeviceInfo
     - GZIP
@@ -159,6 +162,7 @@ SPEC CHECKSUMS:
   DGCollectionViewLeftAlignFlowLayout: a0fa58797373ded039cafba8133e79373d048399
   DTCoreText: e92f4cf6b36d9d71ce4436d12cf089d74ab0596b
   DTFoundation: 767ca882209ef4d5132ec7e702526d5ed5bb71a2
+  FFDropDownMenu: 3dc2b1e47d349687b9d451282a3b6bae3e0e8c7a
   FlowCommoniOS: 8c1e4aa04a73d74cd201caa9b29cdb3ed06efd83
   GBDeviceInfo: a3f39dba1a04dcb630abff65d6f7e8fbf319eadd
   GZIP: af5c90ef903776a7e9afe6ebebd794a84a2929d4
@@ -174,11 +178,11 @@ SPEC CHECKSUMS:
   OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
   Realm: 4eb04d7487bd43c0581256f40b424eafb711deff
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
-  SwiftGen: 3d5024a47ea79e408cded20763d7a17d18a4548c
+  SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   SwiftLint: fc9859e4e1752340664851f667bb1898b9c90114
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: e4fa30f1f5c51ac73e853432cf127247ff6959bd
+PODFILE CHECKSUM: 2bd8af2e65e02b4b248ed5323d77f368d12ea02b
 
 COCOAPODS: 1.9.3

@@ -2122,6 +2122,14 @@ internal enum VectorL10n {
   internal static func publicRoomSectionTitle(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "public_room_section_title", p1)
   }
+  /// %d invites
+  internal static func pullDownInvites(_ p1: Int) -> String {
+    return VectorL10n.tr("Vector", "pull_down_invites", p1)
+  }
+  /// 1 invite
+  internal static var pullDownOneInvite: String { 
+    return VectorL10n.tr("Vector", "pull_down_one_invite") 
+  }
   /// You seem to be shaking the phone in frustration. Would you like to submit a bug report?
   internal static var rageShakePrompt: String { 
     return VectorL10n.tr("Vector", "rage_shake_prompt") 
@@ -2358,7 +2366,7 @@ internal enum VectorL10n {
   internal static var roomDetailsCopyRoomUrl: String { 
     return VectorL10n.tr("Vector", "room_details_copy_room_url") 
   }
-  /// Direct Chat
+  /// Chat
   internal static var roomDetailsDirectChat: String { 
     return VectorL10n.tr("Vector", "room_details_direct_chat") 
   }
@@ -2762,11 +2770,15 @@ internal enum VectorL10n {
   internal static var roomParticipantsActionSectionAdminTools: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_admin_tools") 
   }
+  /// Calls
+  internal static var roomParticipantsActionSectionCall: String { 
+    return VectorL10n.tr("Vector", "room_participants_action_section_call") 
+  }
   /// Sessions
   internal static var roomParticipantsActionSectionDevices: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_devices") 
   }
-  /// Direct chats
+  /// Chats
   internal static var roomParticipantsActionSectionDirectChats: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_direct_chats") 
   }
@@ -2969,6 +2981,10 @@ internal enum VectorL10n {
   /// Resend all
   internal static var roomPromptResend: String { 
     return VectorL10n.tr("Vector", "room_prompt_resend") 
+  }
+  /// CHATS
+  internal static var roomRecentsChatsSection: String { 
+    return VectorL10n.tr("Vector", "room_recents_chats_section") 
   }
   /// ROOMS
   internal static var roomRecentsConversationsSection: String { 
@@ -4178,7 +4194,7 @@ internal enum VectorL10n {
   internal static var titleGroups: String { 
     return VectorL10n.tr("Vector", "title_groups") 
   }
-  /// Home
+  /// Lingo
   internal static var titleHome: String { 
     return VectorL10n.tr("Vector", "title_home") 
   }

@@ -109,6 +109,11 @@
 "room_recents_join_room" = "Rejoindre le salon";
 "room_recents_join_room_title" = "Rejoindre un salon";
 "room_recents_join_room_prompt" = "Saisir un identifiant ou un alias de salon";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "INVITATIONS";
 "people_conversation_section" = "DISCUSSIONS";
@@ -170,6 +175,7 @@
 "room_participants_action_section_direct_chats" = "Discussions directes";
 "room_participants_action_section_devices" = "Sessions";
 "room_participants_action_section_other" = "Options";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Inviter";
 "room_participants_action_leave" = "Quitter ce salon";
 "room_participants_action_remove" = "Exclure de ce salon";

@@ -140,6 +140,7 @@
 "room_recents_join_room" = "Elkartu gelara";
 "room_recents_join_room_title" = "Elkartu gela batetara";
 "room_recents_join_room_prompt" = "Idatzi gelaren IDa edo ezizena";
+"room_recents_chats_section" = "CHATS";
 // Directory
 "directory_cell_title" = "Arakatu direktorioa";
 "room_details_favourite_tag" = "Gogokoa";
@@ -241,6 +242,9 @@
 "room_recents_directory_section_network" = "Sarea";
 "room_recents_favourites_section" = "GOGOKOAK";
 "room_recents_invites_section" = "GONBIDAPENAK";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
 // People tab
 "people_invites_section" = "GONBIDAPENAK";
 "people_conversation_section" = "ELKARRIZKETAK";
@@ -274,6 +278,7 @@
 "room_participants_unknown" = "Ezezaguna";
 "room_participants_action_section_admin_tools" = "Kudeaketa tresnak";
 "room_participants_action_section_direct_chats" = "Txat zuzenak";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_ban" = "Debekatu gela honetan";
 "room_participants_action_start_new_chat" = "Hasi txat berria";
 "room_participants_action_start_voice_call" = "Hasi ahots deia";

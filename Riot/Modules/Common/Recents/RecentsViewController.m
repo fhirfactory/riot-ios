@@ -860,9 +860,8 @@
     return UITableViewCellEditingStyleNone;
 }
 
-- (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    MXRoom *room = [self.dataSource getRoomAtIndexPath:indexPath];
+- (nullable NSArray<UIContextualAction*>*)getContextualActionsFor:(UITableView *)tableView at:(NSIndexPath *)IndexPath{
+    MXRoom *room = [self.dataSource getRoomAtIndexPath:IndexPath];
     
     if (!room)
     {
@@ -986,9 +985,18 @@
         directChatAction
     ];
     
-    UISwipeActionsConfiguration *swipeActionConfiguration = [UISwipeActionsConfiguration configurationWithActions:actions];
-    swipeActionConfiguration.performsFirstActionWithFullSwipe = NO;
-    return swipeActionConfiguration;
+    return actions;
+}
+
+- (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray<UIContextualAction*> *actions = [self getContextualActionsFor:tableView at:indexPath];
+    if (actions){
+        UISwipeActionsConfiguration *swipeActionConfiguration = [UISwipeActionsConfiguration configurationWithActions:actions];
+        swipeActionConfiguration.performsFirstActionWithFullSwipe = NO;
+        return swipeActionConfiguration;
+    }
+    return nil;
 }
 
 - (void)leaveEditedRoom

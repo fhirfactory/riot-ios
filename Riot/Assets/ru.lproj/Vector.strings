@@ -110,6 +110,11 @@
 "room_recents_join_room" = "Войти в комнату";
 "room_recents_join_room_title" = "Вход в комнату";
 "room_recents_join_room_prompt" = "Введите идентификатор или псевдоним комнаты";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "ПРИГЛАШЕНИЯ";
 "people_conversation_section" = "БЕСЕДЫ";
@@ -153,6 +158,7 @@
 "room_participants_action_section_admin_tools" = "Инструменты администратора";
 "room_participants_action_section_devices" = "Сессии";
 "room_participants_action_section_other" = "Параметры";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_leave" = "Покинуть эту комнату";
 "room_participants_action_remove" = "Удалить из этой комнаты";
 "room_participants_action_ignore" = "Скрыть все сообщения этого пользователя";

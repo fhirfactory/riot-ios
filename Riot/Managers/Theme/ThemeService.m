@@ -64,7 +64,7 @@ NSString *const kThemeServiceDidChangeThemeNotification = @"kThemeServiceDidChan
 {
     id<Theme> theme;
     
-    if (themeId == nil && BuildSettings.settingsScreenOverrideDefaultThemeSelection != nil){
+    if (BuildSettings.settingsScreenOverrideDefaultThemeSelection != nil){
         themeId = BuildSettings.settingsScreenOverrideDefaultThemeSelection;
         RiotSettings.shared.userInterfaceTheme = themeId;
     }
@@ -90,6 +90,10 @@ NSString *const kThemeServiceDidChangeThemeNotification = @"kThemeServiceDidChan
     else if ([themeId isEqualToString:@"black"])
     {
         theme = [BlackTheme new];
+    }
+    else if ([themeId isEqualToString:@"lingo"])
+    {
+        theme = [LingoTheme new];
     }
     else
     {

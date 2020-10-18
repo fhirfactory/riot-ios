@@ -74,7 +74,7 @@ abstract_target 'RiotPods' do
   pod 'HPGrowingTextView', :inhibit_warnings => true
 
   # Tools
-  pod 'SwiftGen', '~> 6.1'
+  pod 'SwiftGen', '~> 6.4.0'
   pod 'SwiftLint', '~> 0.36.0'
 
   target "Riot" do
@@ -84,9 +84,15 @@ abstract_target 'RiotPods' do
     pod 'KTCenterFlowLayout', '~> 1.3.1'
     pod 'ZXingObjC', '~> 3.6.5'
     pod 'FlowCommoniOS', '~> 1.8.7'
+    pod 'FFDropDownMenu', '~> 1.4'
 
     target 'RiotTests' do
       inherit! :search_paths
+      pod 'FFDropDownMenu', '~> 1.4'
+    end
+    target 'LingoTests' do
+      inherit! :search_paths
+      pod 'FFDropDownMenu', '~> 1.4'
     end
   end
 

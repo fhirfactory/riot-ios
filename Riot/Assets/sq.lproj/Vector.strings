@@ -94,6 +94,9 @@
 "room_recents_create_empty_room" = "Krijo dhomë";
 "room_recents_join_room" = "Hyni në dhomë";
 "room_recents_join_room_prompt" = "Shtypni një ID ose alias dhome";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
 // People tab
 "people_invites_section" = "FTESA";
 "people_conversation_section" = "BISEDA";
@@ -150,6 +153,7 @@
 "room_participants_action_section_direct_chats" = "Fjalosje të drejtpërdrejta";
 "room_participants_action_section_devices" = "Sesione";
 "room_participants_action_section_other" = "Mundësi";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Ftoje";
 "room_participants_action_leave" = "Braktiseni këtë dhomë";
 "room_participants_action_remove" = "Hiqeni prej kësaj dhome";
@@ -400,6 +404,7 @@
 "room_creation_appearance_picture" = "Foto fjalosjeje (në daçi)";
 "room_creation_invite_another_user" = "Kërkoni / ftoni sipas ID-je Përdoruesi, Emri ose email-i";
 "room_recents_favourites_section" = "TË PARAPALQYERA";
+"room_recents_chats_section" = "CHATS";
 "room_recents_server_notice_section" = "SINJALIZIME SISTEMI";
 "room_recents_join_room_title" = "Hyni në një dhomë";
 "room_participants_invite_another_user" = "Kërkoni / ftoni sipas ID-je Përdoruesi, Emri ose email-i";

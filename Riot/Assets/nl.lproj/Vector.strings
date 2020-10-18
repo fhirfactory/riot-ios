@@ -124,6 +124,11 @@
 "room_recents_join_room" = "Gesprek toetreden";
 "room_recents_join_room_title" = "Neem aan een gesprek deel";
 "room_recents_join_room_prompt" = "Voer een gespreks(bij)naam in";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "UITNODIGINGEN";
 "people_conversation_section" = "GESPREKKEN";
@@ -179,6 +184,7 @@
 "room_participants_action_section_direct_chats" = "Tweegesprekken";
 "room_participants_action_section_devices" = "Apparaten";
 "room_participants_action_section_other" = "Overige";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_invite" = "Uitnodigen";
 "room_participants_action_leave" = "Dit gesprek verlaten";
 "room_participants_action_remove" = "Verwijderen uit dit gesprek";

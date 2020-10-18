@@ -113,6 +113,7 @@
 "room_participants_idle" = "閒置";
 "room_participants_action_section_direct_chats" = "私聊";
 "room_participants_action_section_devices" = "裝置列表";
+"room_participants_action_section_call" = "Calls";
 "room_participants_action_unban" = "解除封鎖";
 "room_participants_action_start_new_chat" = "開始新聊天";
 "room_participants_action_mention" = "提及";
@@ -195,6 +196,11 @@
 "room_recents_join_room" = "加入聊天室";
 "room_recents_join_room_title" = "加入聊天室";
 "room_recents_join_room_prompt" = "輸入聊天室 ID 或別名";
+"room_recents_chats_section" = "CHATS";
+// Pull down menu items
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+
 // People tab
 "people_invites_section" = "邀請";
 "people_conversation_section" = "對話";

@@ -9,12 +9,16 @@
 /* Begin PBXBuildFile section */
 		1411D81F252D7534009D8908 /* LingoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D81E252D7534009D8908 /* LingoTests.swift */; };
 		1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D834252D7597009D8908 /* RoomViewControllerTests.swift */; };
-		1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */; };
 		1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */; };
+		1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */; };
 		1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */; };
+		1438875E253860580076981D /* LingoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438875D253860570076981D /* LingoTheme.swift */; };
+		143887652538605E0076981D /* LingoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438875D253860570076981D /* LingoTheme.swift */; };
+		14D6DCB1253575A500C29F66 /* AuthenticationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */; };
 		24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BBE81E7009EC00A9B29C /* MXRoom+Riot.m */; };
 		24EEE5A31F23A8C300B3C705 /* AvatarGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BC111E7009EC00A9B29C /* AvatarGenerator.m */; };
+		2FE2CE49524ED5F3B502025F /* Pods_RiotPods_Riot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143887B22538693A0076981D /* Pods_RiotPods_Riot.framework */; };
 		3209451221F1C1430088CAA2 /* BlackTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3209451121F1C1430088CAA2 /* BlackTheme.swift */; };
 		3209451321F1C1D50088CAA2 /* BlackTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3209451121F1C1430088CAA2 /* BlackTheme.swift */; };
 		32242F0921E8B05F00725742 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32242F0821E8B05F00725742 /* UIColor.swift */; };
@@ -153,6 +157,7 @@
 		3AF393339D2D566CE14AC200 /* Pods_RiotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */; };
 		405FD41D306133A48D9B5AA1 /* Pods_RiotPods_Riot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */; };
 		670966FEFE120D865FD8A5B6 /* Pods_RiotPods_SiriIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */; };
+		74ED9DE814EFC4AA307E6DA7 /* Pods_LingoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 115F12746BFAB2D2EA00643A /* Pods_LingoTests.framework */; };
 		926FA53F1F4C132000F826C2 /* MXSession+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FA53E1F4C132000F826C2 /* MXSession+Riot.m */; };
 		92726A471F58737A004AD26F /* IntentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 92726A461F58737A004AD26F /* IntentHandler.m */; };
 		92726A4B1F58737A004AD26F /* SiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 92726A431F58737A004AD26F /* SiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -730,7 +735,15 @@
 		B1E5368D21FB7245001F3AFF /* KeyBackupRecoverFromPassphraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5368C21FB7245001F3AFF /* KeyBackupRecoverFromPassphraseViewController.swift */; };
 		B1E5368F21FB7258001F3AFF /* KeyBackupRecoverFromPassphraseViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1E5368E21FB7258001F3AFF /* KeyBackupRecoverFromPassphraseViewController.storyboard */; };
 		B1FDF56021F5FE5500BA3834 /* KeyBackupSetupPassphraseViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FDF55F21F5FE5500BA3834 /* KeyBackupSetupPassphraseViewAction.swift */; };
+		BC505E298EAA1F698E756BE2 /* Pods_RiotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143887B0253869270076981D /* Pods_RiotTests.framework */; };
 		DB1392A2332C3CAF6C9962EF /* Pods_RiotPods_RiotNSE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */; };
+		EB4A116F252D7F1E00E98120 /* AlternateInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */; };
+		EB4A117B252D7FA800E98120 /* AlternateHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */; };
+		EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */; };
+		EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */; };
+		EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EB505C172525D49A009C0A7A /* AlternateHomeTools.m */; };
+		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
+		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
 		EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */; };
 		EC1CA86124C1DEC400DE9EBF /* EnterPinCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */; };
@@ -1009,14 +1022,19 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		115F12746BFAB2D2EA00643A /* Pods_LingoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LingoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1411D81C252D7534009D8908 /* LingoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LingoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1411D81E252D7534009D8908 /* LingoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LingoTests.swift; sourceTree = "<group>"; };
 		1411D820252D7534009D8908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1411D834252D7597009D8908 /* RoomViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomViewControllerTests.swift; sourceTree = "<group>"; };
-		1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInputToolbarViewTests.swift; sourceTree = "<group>"; };
 		1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMemberDetailsViewControllerTests.swift; sourceTree = "<group>"; };
+		1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomInputToolbarViewTests.swift; sourceTree = "<group>"; };
 		1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTabBarControllerTests.swift; sourceTree = "<group>"; };
+		1438875D253860570076981D /* LingoTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LingoTheme.swift; sourceTree = "<group>"; };
+		143887B0253869270076981D /* Pods_RiotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_RiotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		143887B22538693A0076981D /* Pods_RiotPods_Riot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_RiotPods_Riot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewControllerTests.swift; sourceTree = "<group>"; };
 		1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_Riot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RiotShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B582BE9B2A98BCF5F740873 /* Pods-RiotPods-RiotNSE.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotNSE.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotNSE/Pods-RiotPods-RiotNSE.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1158,6 +1176,7 @@
 		43C2962BE367F59220F517FA /* Pods-RiotPods-Riot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-Riot.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-Riot/Pods-RiotPods-Riot.debug.xcconfig"; sourceTree = "<group>"; };
 		4FC6A5D63FAD1B27C2F57AFA /* Pods-RiotPods-RiotShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotShareExtension.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotShareExtension/Pods-RiotPods-RiotShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_SiriIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		589D30CE3761902AAED61ABC /* Pods-LingoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LingoTests.release.xcconfig"; path = "Target Support Files/Pods-LingoTests/Pods-LingoTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A61E94F88EA96AFE1CFD9D3 /* Pods-RiotPods-RiotNSE.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotNSE.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotNSE/Pods-RiotPods-RiotNSE.release.xcconfig"; sourceTree = "<group>"; };
 		926FA53D1F4C132000F826C2 /* MXSession+Riot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MXSession+Riot.h"; sourceTree = "<group>"; };
 		926FA53E1F4C132000F826C2 /* MXSession+Riot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MXSession+Riot.m"; sourceTree = "<group>"; };
@@ -1935,6 +1954,15 @@
 		BABB6681FBD79219B1213D6C /* Pods-RiotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotTests.debug.xcconfig"; path = "Target Support Files/Pods-RiotTests/Pods-RiotTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E2599D0ECB8DD206624E450B /* Pods-RiotPods-SiriIntents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-SiriIntents.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-SiriIntents/Pods-RiotPods-SiriIntents.release.xcconfig"; sourceTree = "<group>"; };
 		E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_RiotNSE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateInviteViewController.swift; sourceTree = "<group>"; };
+		EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateHomeViewController.xib; sourceTree = "<group>"; };
+		EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateInviteViewController.xib; sourceTree = "<group>"; };
+		EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewController.swift; sourceTree = "<group>"; };
+		EB505C172525D49A009C0A7A /* AlternateHomeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateHomeTools.m; sourceTree = "<group>"; };
+		EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateHomeTools.h; sourceTree = "<group>"; };
+		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
+		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
+		EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewDataSource.swift; sourceTree = "<group>"; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
 		EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewAction.swift; sourceTree = "<group>"; };
 		EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModel.swift; sourceTree = "<group>"; };
@@ -2150,6 +2178,7 @@
 		ECFBD5F6250FA59B00DD5F5A /* RoomCreationEventsModalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCreationEventsModalViewModel.swift; sourceTree = "<group>"; };
 		ECFBD5FF250FA98100DD5F5A /* RoomCreationModalCoordinatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCreationModalCoordinatorType.swift; sourceTree = "<group>"; };
 		ECFBD600250FA98100DD5F5A /* RoomCreationModalCoordinatorBridgePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCreationModalCoordinatorBridgePresenter.swift; sourceTree = "<group>"; };
+		EF77567D78B016814A00456D /* Pods-LingoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LingoTests.debug.xcconfig"; path = "Target Support Files/Pods-LingoTests/Pods-LingoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F05927C71FDED835009F2A68 /* MXGroup+Riot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MXGroup+Riot.m"; sourceTree = "<group>"; };
 		F05927C81FDED835009F2A68 /* MXGroup+Riot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MXGroup+Riot.h"; sourceTree = "<group>"; };
 		F083BB031E7005FD00A9B29C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2193,6 +2222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74ED9DE814EFC4AA307E6DA7 /* Pods_LingoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2226,6 +2256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				405FD41D306133A48D9B5AA1 /* Pods_RiotPods_Riot.framework in Frameworks */,
+				2FE2CE49524ED5F3B502025F /* Pods_RiotPods_Riot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2234,6 +2265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AF393339D2D566CE14AC200 /* Pods_RiotTests.framework in Frameworks */,
+				BC505E298EAA1F698E756BE2 /* Pods_RiotTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2249,6 +2281,7 @@
 				1411D865252D9089009D8908 /* RoomInputToolbarViewTests.swift */,
 				1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */,
 				1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */,
+				14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */,
 			);
 			path = LingoTests;
 			sourceTree = "<group>";
@@ -2281,6 +2314,7 @@
 				32242F0F21E8FBA900725742 /* DefaultTheme.swift */,
 				32242F1021E8FBA900725742 /* DarkTheme.swift */,
 				3209451121F1C1430088CAA2 /* BlackTheme.swift */,
+				1438875D253860570076981D /* LingoTheme.swift */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -2596,6 +2630,8 @@
 				AC34BF67FD21A9D01C16AE5D /* Pods-RiotTests.release.xcconfig */,
 				2B582BE9B2A98BCF5F740873 /* Pods-RiotPods-RiotNSE.debug.xcconfig */,
 				8A61E94F88EA96AFE1CFD9D3 /* Pods-RiotPods-RiotNSE.release.xcconfig */,
+				EF77567D78B016814A00456D /* Pods-LingoTests.debug.xcconfig */,
+				589D30CE3761902AAED61ABC /* Pods-LingoTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2603,12 +2639,15 @@
 		5FC42FA41F5186AFFB6A2404 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				143887B22538693A0076981D /* Pods_RiotPods_Riot.framework */,
+				143887B0253869270076981D /* Pods_RiotTests.framework */,
 				92726A501F587410004AD26F /* Intents.framework */,
 				1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */,
 				97151D7F0F892081250D50A3 /* Pods_RiotPods_RiotShareExtension.framework */,
 				51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */,
 				129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */,
 				E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */,
+				115F12746BFAB2D2EA00643A /* Pods_LingoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3170,6 +3209,7 @@
 		B183226923F59F3E0035B2E8 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				EBC6D5442530064A00940365 /* Badged */,
 				B183226A23F59F4F0035B2E8 /* Close */,
 			);
 			path = Buttons;
@@ -3433,6 +3473,7 @@
 		B1B5568420EE6C4C00210D55 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				EB505BF52525A345009C0A7A /* Alternate */,
 				323AB944232BD71900C1451F /* Fallback */,
 				B1B5568620EE6C4C00210D55 /* HomeViewController.h */,
 				B1B5568520EE6C4C00210D55 /* HomeViewController.m */,
@@ -4770,6 +4811,29 @@
 			path = Recover;
 			sourceTree = "<group>";
 		};
+		EB505BF52525A345009C0A7A /* Alternate */ = {
+			isa = PBXGroup;
+			children = (
+				EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */,
+				EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */,
+				EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */,
+				EB505C172525D49A009C0A7A /* AlternateHomeTools.m */,
+				EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */,
+				EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */,
+				EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */,
+			);
+			path = Alternate;
+			sourceTree = "<group>";
+		};
+		EBC6D5442530064A00940365 /* Badged */ = {
+			isa = PBXGroup;
+			children = (
+				EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */,
+				EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */,
+			);
+			path = Badged;
+			sourceTree = "<group>";
+		};
 		EC1CA84F24C1DEC400DE9EBF /* SetPinCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -5453,9 +5517,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1411D823252D7534009D8908 /* Build configuration list for PBXNativeTarget "LingoTests" */;
 			buildPhases = (
+				4561E71EE42428C70195D6C4 /* [CP] Check Pods Manifest.lock */,
 				1411D818252D7534009D8908 /* Sources */,
 				1411D819252D7534009D8908 /* Frameworks */,
 				1411D81A252D7534009D8908 /* Resources */,
+				39AC3202E055C396A59C4D11 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -5554,6 +5620,7 @@
 				F094A9BA1B78D8F000B1FBBF /* Sources */,
 				F094A9BB1B78D8F000B1FBBF /* Frameworks */,
 				F094A9BC1B78D8F000B1FBBF /* Resources */,
+				08344FF21B7D7261AC642A2C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -5721,6 +5788,7 @@
 				B1CE83D32422817200D07506 /* KeyVerificationVerifiedViewController.storyboard in Resources */,
 				B1B5590020EF768F00210D55 /* RoomOutgoingTextMsgWithoutSenderNameBubbleCell.xib in Resources */,
 				B1B5597020EFA85D00210D55 /* EncryptionInfoView.xib in Resources */,
+				EB4A117B252D7FA800E98120 /* AlternateHomeViewController.xib in Resources */,
 				EC51E7AA2514D2E100AAE7DB /* RoomInfoListViewController.storyboard in Resources */,
 				B1B558BC20EF768F00210D55 /* RoomMembershipBubbleCell.xib in Resources */,
 				B1B5571F20EE6C4D00210D55 /* ContactDetailsViewController.xib in Resources */,
@@ -5765,6 +5833,7 @@
 				B1B558F620EF768F00210D55 /* RoomOutgoingTextMsgBubbleCell.xib in Resources */,
 				B1B5574D20EE6C4D00210D55 /* MediaPickerViewController.xib in Resources */,
 				B1B5575020EE6C4D00210D55 /* AuthenticationViewController.xib in Resources */,
+				EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */,
 				B1C45A85232A8C2600165425 /* SettingsIdentityServerViewController.storyboard in Resources */,
 				B14F142E22144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyViewController.storyboard in Resources */,
 				32DB557B22FDADE50016329E /* ServiceTermsModalScreenViewController.storyboard in Resources */,
@@ -5914,6 +5983,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		08344FF21B7D7261AC642A2C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RiotTests/Pods-RiotTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RiotTests/Pods-RiotTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RiotTests/Pods-RiotTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		29FACD15A5CE317A58C9E77E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -5929,6 +6015,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RiotPods-Riot/Pods-RiotPods-Riot-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		39AC3202E055C396A59C4D11 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LingoTests/Pods-LingoTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LingoTests/Pods-LingoTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LingoTests/Pods-LingoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4561E71EE42428C70195D6C4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LingoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		47A83697FDBD51DC286B66C0 /* [CP] Check Pods Manifest.lock */ = {
@@ -6088,6 +6213,7 @@
 				1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */,
 				1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */,
 				1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */,
+				14D6DCB1253575A500C29F66 /* AuthenticationViewControllerTests.swift in Sources */,
 				1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6121,6 +6247,7 @@
 				B1664BC820F4E67600808783 /* ShareDataSource.m in Sources */,
 				B1DCC63522E72D2200625807 /* UISearchBar.swift in Sources */,
 				B1664BCD20F4E67600808783 /* RecentRoomTableViewCell.m in Sources */,
+				143887652538605E0076981D /* LingoTheme.swift in Sources */,
 				B1DB4F0C2231494F0065DBFA /* String.swift in Sources */,
 				B169331720F3CBE000746532 /* RecentCellData.m in Sources */,
 				B1664BCC20F4E67600808783 /* RoomsListViewController.m in Sources */,
@@ -6172,6 +6299,7 @@
 				EC51E7A92514D2E100AAE7DB /* RoomInfoListViewModelType.swift in Sources */,
 				324A2053225FC571004FE8B0 /* DeviceVerificationIncomingViewModel.swift in Sources */,
 				B1B557A120EF58AD00210D55 /* ContactTableViewCell.m in Sources */,
+				EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */,
 				B1CE83DE2422817200D07506 /* KeyVerificationVerifyBySASViewModelType.swift in Sources */,
 				32FD757024D2BEF700BA7B37 /* InfoPlist.swift in Sources */,
 				F083BE021E7009ED00A9B29C /* AvatarGenerator.m in Sources */,
@@ -6182,6 +6310,7 @@
 				B1B5573120EE6C4D00210D55 /* BugReportViewController.m in Sources */,
 				ECFBD5CB250A7AAF00DD5F5A /* DirectoryRoomTableViewCellVM.swift in Sources */,
 				324A2051225FC571004FE8B0 /* DeviceVerificationIncomingViewState.swift in Sources */,
+				EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */,
 				B1B4E9BF24D4703E004D5C33 /* BaseBubbleCell.swift in Sources */,
 				ECFBD5FD250FA59B00DD5F5A /* RoomCreationEventsModalViewController.swift in Sources */,
 				B16932A520F3A21C00746532 /* empty.mm in Sources */,
@@ -6191,6 +6320,7 @@
 				B19EFA3B21F8BB4100FC070E /* KeyBackupRecoverCoordinator.swift in Sources */,
 				B1B9DEDE22E9D9890065E677 /* EmojiServiceType.swift in Sources */,
 				EC1CA89724C9C9A200DE9EBF /* SetupBiometricsViewModelType.swift in Sources */,
+				1438875E253860580076981D /* LingoTheme.swift in Sources */,
 				3232ABA9225730E100AD6A5C /* DeviceVerificationStartViewModel.swift in Sources */,
 				ECF57A4425090C23004BBF9D /* CreateRoomCoordinatorBridgePresenter.swift in Sources */,
 				B1B4E9BB24D46EB4004D5C33 /* SizingViewHeightStore.swift in Sources */,
@@ -6254,6 +6384,7 @@
 				328E410624CB168500DC4490 /* AppConfiguration.swift in Sources */,
 				EC711B9624A63B37008F830C /* SecretsRecoveryWithKeyViewState.swift in Sources */,
 				B120863722EF375F001F89E0 /* ReactionHistoryBridgeCoordinatorPresenter.swift in Sources */,
+				EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */,
 				EC711B9224A63B37008F830C /* SecretsRecoveryWithKeyViewModel.swift in Sources */,
 				ECFBD5D0250A7AAF00DD5F5A /* ShowDirectoryViewModel.swift in Sources */,
 				B1B5598620EFC3E000210D55 /* RiotSettings.swift in Sources */,
@@ -6654,6 +6785,7 @@
 				B1B5575A20EE6C4D00210D55 /* UnifiedSearchViewController.m in Sources */,
 				3232AB492256558300AD6A5C /* FlowTemplateCoordinatorBridgePresenter.swift in Sources */,
 				B1B5572820EE6C4D00210D55 /* RoomViewController.m in Sources */,
+				EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */,
 				B108932123AB8D7D00802670 /* KeyVerificationIncomingRequestApprovalViewData.swift in Sources */,
 				EC85D7172477DCD7002C44C9 /* KeyVerificationScanConfirmationViewModel.swift in Sources */,
 				B18DEDDA243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewState.swift in Sources */,
@@ -6735,6 +6867,7 @@
 				EC1CA86224C1DEC400DE9EBF /* EnterPinCodeViewState.swift in Sources */,
 				EC711B8A24A63B37008F830C /* SecretsRecoveryWithPassphraseViewController.swift in Sources */,
 				B1B336C3242B933700F95EC4 /* KeyVerificationSelfVerifyStartCoordinator.swift in Sources */,
+				EB4A116F252D7F1E00E98120 /* AlternateInviteViewController.swift in Sources */,
 				B1B557CC20EF5D8000210D55 /* DirectoryServerTableViewCell.m in Sources */,
 				B1963B2B228F1C4900CBA17F /* BubbleReactionsView.swift in Sources */,
 				B1B5575C20EE6C4D00210D55 /* DirectoryViewController.m in Sources */,
@@ -6983,6 +7116,7 @@
 /* Begin XCBuildConfiguration section */
 		1411D824252D7534009D8908 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF77567D78B016814A00456D /* Pods-LingoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -7016,6 +7150,7 @@
 		};
 		1411D825252D7534009D8908 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 589D30CE3761902AAED61ABC /* Pods-LingoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -7059,7 +7194,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotShareExtension/SupportingFiles/RiotShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7103,7 +7238,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7145,7 +7280,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiriIntents/SiriIntents.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7183,7 +7318,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7223,7 +7358,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotNSE/RiotNSE.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7261,7 +7396,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7412,7 +7547,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -7450,7 +7585,7 @@
 				CODE_SIGN_ENTITLEMENTS = Riot/SupportingFiles/Riot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20201006172119;
+				CURRENT_PROJECT_VERSION = 20201012115500;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

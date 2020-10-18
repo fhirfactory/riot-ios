@@ -107,7 +107,7 @@
     
     self.defaultIdentityServerUrl = RiotSettings.shared.identityServerUrlString;
     
-    self.welcomeImageView.image = [UIImage imageNamed:@"horizontal_logo"];
+    self.welcomeImageView.image = [UIImage imageNamed:BuildSettings.authScreenImageLogoName]; 
     
     [self.submitButton.layer setCornerRadius:5];
     self.submitButton.clipsToBounds = YES;
@@ -123,6 +123,11 @@
     
     [self.customServersTickButton setImage:[UIImage imageNamed:@"selection_untick"] forState:UIControlStateNormal];
     [self.customServersTickButton setImage:[UIImage imageNamed:@"selection_untick"] forState:UIControlStateHighlighted];
+    
+    // Hide custom servers option if configured in BuildSettings
+    if (!BuildSettings.authScreenAllowCustomAuthenticationServers) {
+        [self hideCustomServers:YES];
+    }
     
     if (!BuildSettings.authScreenShowRegister)
     {
@@ -193,7 +198,9 @@
 
     self.authenticationScrollView.backgroundColor = ThemeService.shared.theme.backgroundColor;
     
-    self.welcomeImageView.tintColor = ThemeService.shared.theme.tintColor;
+    if (BuildSettings.themeAppliesToLoginPageLogo) {
+        self.welcomeImageView.tintColor = ThemeService.shared.theme.tintColor;
+    }
 
     // Style the authentication fallback webview screen so that its header matches to navigation bar style
     self.authFallbackContentView.backgroundColor = ThemeService.shared.theme.baseColor;
@@ -228,6 +235,7 @@
     [self.forgotPasswordButton setAttributedTitle:forgotPasswordTitleDisabled forState:UIControlStateDisabled];
     
     [self updateForgotPwdButtonVisibility];
+    
     
     NSAttributedString *serverOptionsTitle = [[NSAttributedString alloc] initWithString:NSLocalizedStringFromTable(@"auth_use_server_options", @"Vector", nil) attributes:@{NSForegroundColorAttributeName : ThemeService.shared.theme.textSecondaryColor, NSFontAttributeName: [UIFont systemFontOfSize:14]}];
     [self.customServersTickButton setAttributedTitle:serverOptionsTitle forState:UIControlStateNormal];

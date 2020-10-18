@@ -1875,6 +1875,72 @@
 
 #pragma mark - MXKDataSourceDelegate
 
+- (NSString*)administrativeEventDescription:(MXKRoomBubbleCellData*)event
+{
+    NSArray *bubbles = [self.roomDataSource valueForKey:@"bubbles"];
+    long i = bubbles.count - 1;
+    for (; i > 0; i--){
+        if ([bubbles[i] isEqual:event]){
+            break;
+        }
+    }
+    MXRoomPowerLevels *oldPowerLevels = nil;
+    for (long j = i - 1; j > 0; j--){
+        if ([self containsPowerEvent:bubbles[j]]){
+            oldPowerLevels = [MXRoomPowerLevels modelFromJSON:((MXKRoomBubbleCellData*)bubbles[j]).events.lastObject.content];
+            break;
+        }
+    }
+    NSString *powerLevelChanges = [NSString new];
+    for (MXEvent *evt in event.events) {
+        if (evt.eventType == MXEventTypeRoomPowerLevels){
+            MXRoomPowerLevels *powerLevels = [MXRoomPowerLevels modelFromJSON:evt.content];
+            bool change = false;
+            for (NSString *uname in powerLevels.users.allKeys){
+                if (![powerLevels.users[uname] isEqual: oldPowerLevels.users[uname]]){
+                    change = true;
+                    break;
+                }
+            }
+            if (change){
+                for (NSString *uname in powerLevels.users.allKeys){
+                    if (![powerLevels.users[uname] isEqual: oldPowerLevels.users[uname]]){
+                        enum RoomPowerLevel newPowerLevel = [powerLevels.users[uname] integerValue];
+                        switch (newPowerLevel){
+                            case RoomPowerLevelAdmin:
+                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was made an Admin\n",uname];
+                                break;
+                            case RoomPowerLevelModerator:
+                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was made a Moderator\n",uname];
+                                break;
+                            case RoomPowerLevelUser:
+                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was demoted to User\n",uname];
+                                break;
+                        }
+                        
+                    }
+                }
+                
+                oldPowerLevels = powerLevels;
+                NSLog(@"calculating description");
+                
+            }
+        }
+    }
+    return powerLevelChanges;
+}
+
+- (BOOL)containsPowerEvent:(MXKRoomBubbleCellData*)event
+{
+    bool containsPowerEvent = false;
+    for (MXEvent *evt in event.events) {
+        if (evt.eventType == MXEventTypeRoomPowerLevels){
+            containsPowerEvent = true;
+        }
+    }
+    return containsPowerEvent;
+}
+
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
     Class cellViewClass = nil;
@@ -1891,6 +1957,13 @@
         {
             roomBubbleCellData = (MXKRoomBubbleCellData*)bubbleData;
             showEncryptionBadge = roomBubbleCellData.containsBubbleComponentWithEncryptionBadge;
+        }
+        
+        bool containsPowerEvent = [self containsPowerEvent:bubbleData];
+        if (containsPowerEvent){
+            bubbleData.attributedTextMessage = [[NSAttributedString alloc] initWithString:[self administrativeEventDescription:bubbleData]];
+            cellViewClass = bubbleData.isPaginationFirstBubble ? RoomMembershipWithPaginationTitleBubbleCell.class : RoomMembershipBubbleCell.class;
+            return cellViewClass;
         }
         
         // Select the suitable table view cell class, by considering first the empty bubble cell.
@@ -5481,6 +5554,11 @@
         }];
         
     }];
+}
+
+- (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
+    
+    return [super cellReuseIdentifierForCellData:cellData];
 }
 
 - (void)reactionsMenuViewModelDidTapMoreReactions:(ReactionsMenuViewModel *)viewModel forEventId:(NSString *)eventId

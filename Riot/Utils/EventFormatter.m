@@ -254,6 +254,21 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
         attributedString = attributedStringWithEditMention;
     }
 
+    if (event.eventType == MXEventTypeRoomPowerLevels){
+        MXRoomPowerLevels *powerLevels = [MXRoomPowerLevels modelFromJSON:event.content];
+        NSDictionary* previousPowerLevels = [event.unsignedData.prevContent objectForKey:@"users"];//.prevContent objectForKey:@"previousPowerLevels"];
+        if (previousPowerLevels){
+            for (NSString *key in [previousPowerLevels allKeys]){
+                if (previousPowerLevels[key] != powerLevels.users[key]){
+                    return [[NSAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:@"%@ changed power level to %@", key, powerLevels.users[key]]];
+                }
+            }
+        }else{
+            return nil;
+        }
+        //return [[NSAttributedString alloc] initWithString:@"Power Level Event"];
+    }
+    
     return attributedString;
 }
 

@@ -245,58 +245,9 @@
         }
     }
     
-    return count + [self getAdministrativeEvents].count;
+    return count;
 }
 
-struct AdminEvent{
-    NSString *userIDChanged;
-    long powerLevelFrom;
-    long powerLevelTo;
-};
-
-- (NSArray*)getAdministrativeEvents {
-    NSMutableDictionary *powerLevelRecord = [NSMutableDictionary new];
-    NSMutableArray *administrativeEvents = [NSMutableArray new];
-    for (int i = 0; i < bubbles.count; i++){
-        MXKRoomBubbleCellData *d = bubbles[i];
-        NSArray<MXEvent*> *events = d.events;
-        for (MXEvent *evt in events){
-            if (evt.eventType == MXEventTypeRoomMember){
-                MXRoomMemberEventContent *roomMember = [MXRoomMemberEventContent modelFromJSON:evt.content];
-                if ([roomMember.membership  isEqual: @"join"]){
-                    //NSInteger *val = 0;
-                    [powerLevelRecord setObject:@(0) forKey:evt.sender];
-                    
-                }
-            }
-            if (evt.eventType == MXEventTypeRoomPowerLevels){
-                NSLog(@"Power levels event encountered.");
-                MXRoomPowerLevels *powerLevels = [MXRoomPowerLevels modelFromJSON:evt.content];
-                for (NSString *uname in powerLevels.users.allKeys) {
-                    if ([powerLevelRecord objectForKey: uname] == nil){
-                        [powerLevelRecord setObject:powerLevels.users[uname] forKey:uname];
-                        NSLog(@"Set power level of user %@ to %@", uname, powerLevels.users[uname]);
-                    }else{
-                        NSInteger newLevel = [powerLevels.users[uname] integerValue];
-                        NSInteger oldLevel = [[powerLevelRecord objectForKey:uname] integerValue];
-                        //enum RoomPowerLevel priorPowerLevel = oldLevel;
-                        //enum RoomPowerLevel newPowerLevel = newLevel;
-                        if (oldLevel != newLevel){
-                            NSLog(@"privileges of user %@ changed from %ld to %ld", uname, (long)oldLevel, newLevel);
-                            [powerLevelRecord setObject:[NSNumber numberWithInt:newLevel] forKey:uname];
-                            struct AdminEvent description;
-                            description.powerLevelTo = newLevel;
-                            description.powerLevelFrom = oldLevel;
-                            description.userIDChanged = uname;
-                            [administrativeEvents addObject:[NSValue valueWithBytes:&description objCType:@encode(struct AdminEvent)]];
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return administrativeEvents;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -1904,26 +1904,24 @@
             }
             if (change){
                 for (NSString *uname in powerLevels.users.allKeys){
+                    NSString *displayName = [self.roomDataSource.roomState.members memberWithUserId:uname].displayname;
                     if (![powerLevels.users[uname] isEqual: oldPowerLevels.users[uname]]){
                         enum RoomPowerLevel newPowerLevel = [powerLevels.users[uname] integerValue];
                         switch (newPowerLevel){
                             case RoomPowerLevelAdmin:
-                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was made an Admin\n",uname];
+                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was made an Admin\n",displayName];
                                 break;
                             case RoomPowerLevelModerator:
-                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was made a Moderator\n",uname];
+                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was made a Moderator\n",displayName];
                                 break;
                             case RoomPowerLevelUser:
-                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was demoted to User\n",uname];
+                                powerLevelChanges = [powerLevelChanges stringByAppendingFormat:@"%@ was demoted to User\n",displayName];
                                 break;
                         }
-                        
                     }
                 }
                 
                 oldPowerLevels = powerLevels;
-                NSLog(@"calculating description");
-                
             }
         }
     }
@@ -1957,13 +1955,6 @@
         {
             roomBubbleCellData = (MXKRoomBubbleCellData*)bubbleData;
             showEncryptionBadge = roomBubbleCellData.containsBubbleComponentWithEncryptionBadge;
-        }
-        
-        bool containsPowerEvent = [self containsPowerEvent:bubbleData];
-        if (containsPowerEvent){
-            bubbleData.attributedTextMessage = [[NSAttributedString alloc] initWithString:[self administrativeEventDescription:bubbleData]];
-            cellViewClass = bubbleData.isPaginationFirstBubble ? RoomMembershipWithPaginationTitleBubbleCell.class : RoomMembershipBubbleCell.class;
-            return cellViewClass;
         }
         
         // Select the suitable table view cell class, by considering first the empty bubble cell.

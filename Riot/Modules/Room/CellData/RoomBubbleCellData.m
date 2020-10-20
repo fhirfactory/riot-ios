@@ -57,7 +57,6 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
     return self;
 }
 
-//MARK: - Change things here
 - (instancetype)initWithEvent:(MXEvent *)event andRoomState:(MXRoomState *)roomState andRoomDataSource:(MXKRoomDataSource *)roomDataSource2
 {
     //inject information into the event (if it's a power level event), so that we can use it in the event formatter.
@@ -684,7 +683,6 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
     return [super hasSameSenderAsBubbleCellData:bubbleCellData];
 }
 
-//MARK: - Edit Down Here
 - (BOOL)addEvent:(MXEvent*)event andRoomState:(MXRoomState*)roomState
 {
     BOOL shouldAddEvent = YES;

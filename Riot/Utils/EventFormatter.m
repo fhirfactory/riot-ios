@@ -290,7 +290,6 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
         }else{
             return nil;
         }
-        //return [[NSAttributedString alloc] initWithString:@"Power Level Event"];
     }
     
     return attributedString;

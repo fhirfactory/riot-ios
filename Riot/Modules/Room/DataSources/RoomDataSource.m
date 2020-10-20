@@ -249,7 +249,7 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView directoryAtIndexPath:(NSIndexPath *)indexPath
 {
     // Do cell data customization that needs to be done before [MXKRoomBubbleTableViewCell render]
     RoomBubbleCellData *roomBubbleCellData = [self cellDataAtIndex:indexPath.row];

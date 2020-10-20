@@ -1033,6 +1033,10 @@
 "room_member_power_level_short_admin" = "Përgjegjës";
 "room_member_power_level_short_moderator" = "Moderator";
 "room_member_power_level_short_custom" = "Vetjak";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 // Recover from private key
 "key_backup_recover_from_private_key_info" = "Po rikthehet kopjeruajtje…";
 // MARK: Clients

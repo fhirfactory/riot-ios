@@ -1939,6 +1939,18 @@
     return containsPowerEvent;
 }
 
+- (void)redactAdministrativeEvents:(MXKRoomBubbleCellData*)event{
+    for (MXKRoomBubbleComponent *comp in event.bubbleComponents){
+        if (comp.event.eventType == MXEventTypeRoomPowerLevels){
+            if ([self.roomDataSource.roomState.powerLevels powerLevelOfUserWithUserID:self.mainSession.myUser.userId] < 50){
+                comp.attributedTextMessage = nil;
+            }else{
+                comp.attributedTextMessage = comp.event.prevContent[@"adminDescription"];
+            }
+        }
+    }
+}
+
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
     Class cellViewClass = nil;
@@ -1955,6 +1967,7 @@
         {
             roomBubbleCellData = (MXKRoomBubbleCellData*)bubbleData;
             showEncryptionBadge = roomBubbleCellData.containsBubbleComponentWithEncryptionBadge;
+            [self redactAdministrativeEvents:roomBubbleCellData];
         }
         
         // Select the suitable table view cell class, by considering first the empty bubble cell.

@@ -1018,6 +1018,10 @@
 "room_member_power_level_short_admin" = "Admin";
 "room_member_power_level_short_moderator" = "Mod";
 "room_member_power_level_short_custom" = "Benutzerdefiniert";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 "security_settings_secure_backup" = "SICHERES BACKUP";
 "security_settings_secure_backup_synchronise" = "Synchronisiere";
 "security_settings_secure_backup_delete" = "Lösche";

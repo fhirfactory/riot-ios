@@ -1878,10 +1878,10 @@
 - (void)redactAdministrativeEvents:(MXKRoomBubbleCellData*)event{
     for (MXKRoomBubbleComponent *comp in event.bubbleComponents){
         if (comp.event.eventType == MXEventTypeRoomPowerLevels){
-            if ([self.roomDataSource.roomState.powerLevels powerLevelOfUserWithUserID:self.mainSession.myUser.userId] < 50){
-                comp.attributedTextMessage = nil;
-            }else{
+            if (BuildSettings.messagesAllowViewRoomRightsChanges && [self.roomDataSource.roomState.powerLevels powerLevelOfUserWithUserID:self.mainSession.myUser.userId] >= BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges){
                 comp.attributedTextMessage = comp.event.prevContent[@"adminDescription"];
+            } else {
+                comp.attributedTextMessage = nil;
             }
         }
     }

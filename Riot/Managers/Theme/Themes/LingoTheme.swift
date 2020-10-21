@@ -42,7 +42,7 @@ class LingoTheme: NSObject, Theme {
     var textPrimaryColor: UIColor = UIColor(rgb: 0x171910)
     var textSecondaryColor: UIColor = UIColor(rgb: 0x8F97A3)
 
-    var tintColor: UIColor = UIColor(rgb: 0x3d7bff)
+    var tintColor: UIColor = UIColor(rgb: 0x022677)
     var tintBackgroundColor: UIColor = UIColor(rgb: 0xe9f0ff)
     var tabBarUnselectedItemTintColor: UIColor = UIColor(rgb: 0xC1C6CD)
     var unreadRoomIndentColor: UIColor = UIColor(rgb: 0x2E3648)

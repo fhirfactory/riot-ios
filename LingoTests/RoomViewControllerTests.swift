@@ -63,6 +63,30 @@ class RoomViewControllerTests: XCTestCase {
         XCTAssert(UserDefaults.standard.bool(forKey: "matrixApps") == false)
         
     }
+    
+    func test_194171_allowRoomRightsMessagesInRooms() throws {
+        /// Given I am a Room Member
+        /// When I am viewing the Room Timeline
+        /// Then I am able to see each change to a Room Member's Rights on the timeline including
+        /// . the display name of the user that made the change
+        /// . the display name of the user that had their room rights changed
+        /// . the change in room rights (from and to)
+
+        /// Given I am a Room Member
+        /// When I am viewing the Room Timeline
+        /// Then I am able to see the following Room Right changes on the timeline
+        /// AND it includes the following room right changes
+        /// . Normal rights to Moderator rights
+        /// . Normal rights to Administrator rights
+        /// . Moderator rights to Administrator rights
+        /// . Moderator rights to Normal rights
+        /// . Administrator rights to Moderator rights
+        /// . Administrator rights to Normal rights
+        
+        XCTAssert(BuildSettings.messagesAllowViewRoomRightsChanges == true)
+        XCTAssert(BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges == 0)
+        
+    }
 
 }
 

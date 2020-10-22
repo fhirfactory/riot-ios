@@ -1003,6 +1003,7 @@
     if (@available(iOS 14, *)){
         [self setupPullDownMenuiOS14];
     }
+    [AppDelegate.theDelegate refreshApplicationIconBadgeNumber];
     [self updateInvitesBarButtonItem];
 }
 

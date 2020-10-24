@@ -17,7 +17,7 @@
 import UIKit
 
 @objc extension UIColor {
-    convenience init(rgb: UInt) {
+    convenience init(unused: Bool, rgb: UInt) {
         self.init(
             red: CGFloat((rgb & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgb & 0x00FF00) >> 8) / 255.0,

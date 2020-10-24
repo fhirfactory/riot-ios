@@ -23,59 +23,59 @@ class DarkTheme: NSObject, Theme {
     
     var identifier: String = "dark"
 
-    var backgroundColor: UIColor = UIColor(rgb: 0x15191E)
+    var backgroundColor: UIColor = UIColor(unused: true, rgb: 0x15191E)
 
-    var baseColor: UIColor = UIColor(rgb: 0x21262C)
-    var baseIconPrimaryColor: UIColor = UIColor(rgb: 0xEDF3FF)
-    var baseTextPrimaryColor: UIColor = UIColor(rgb: 0xFFFFFF)
-    var baseTextSecondaryColor: UIColor = UIColor(rgb: 0xA9B2BC)
+    var baseColor: UIColor = UIColor(unused: true, rgb: 0x21262C)
+    var baseIconPrimaryColor: UIColor = UIColor(unused: true, rgb: 0xEDF3FF)
+    var baseTextPrimaryColor: UIColor = UIColor(unused: true, rgb: 0xFFFFFF)
+    var baseTextSecondaryColor: UIColor = UIColor(unused: true, rgb: 0xA9B2BC)
 
-    var searchBackgroundColor: UIColor = UIColor(rgb: 0x15191E)
-    var searchPlaceholderColor: UIColor = UIColor(rgb: 0xA9B2BC)
+    var searchBackgroundColor: UIColor = UIColor(unused: true, rgb: 0x15191E)
+    var searchPlaceholderColor: UIColor = UIColor(unused: true, rgb: 0xA9B2BC)
 
-    var headerBackgroundColor: UIColor = UIColor(rgb: 0x21262C)
-    var headerBorderColor: UIColor  = UIColor(rgb: 0x15191E)
-    var headerTextPrimaryColor: UIColor = UIColor(rgb: 0xFFFFFF)
-    var headerTextSecondaryColor: UIColor = UIColor(rgb: 0xA9B2BC)
+    var headerBackgroundColor: UIColor = UIColor(unused: true, rgb: 0x21262C)
+    var headerBorderColor: UIColor  = UIColor(unused: true, rgb: 0x15191E)
+    var headerTextPrimaryColor: UIColor = UIColor(unused: true, rgb: 0xFFFFFF)
+    var headerTextSecondaryColor: UIColor = UIColor(unused: true, rgb: 0xA9B2BC)
 
-    var textPrimaryColor: UIColor = UIColor(rgb: 0xFFFFFF)
-    var textSecondaryColor: UIColor = UIColor(rgb: 0xA9B2BC)
+    var textPrimaryColor: UIColor = UIColor(unused: true, rgb: 0xFFFFFF)
+    var textSecondaryColor: UIColor = UIColor(unused: true, rgb: 0xA9B2BC)
 
     var tintColor: UIColor = UIColor(displayP3Red: 0.05098039216, green: 0.7450980392, blue: 0.5450980392, alpha: 1.0)
-    var tintBackgroundColor: UIColor = UIColor(rgb: 0x1F6954)
-    var tabBarUnselectedItemTintColor: UIColor = UIColor(rgb: 0x8E99A4)
-    var unreadRoomIndentColor: UIColor = UIColor(rgb: 0x2E3648)
-    var lineBreakColor: UIColor = UIColor(rgb: 0x363D49)
+    var tintBackgroundColor: UIColor = UIColor(unused: true, rgb: 0x1F6954)
+    var tabBarUnselectedItemTintColor: UIColor = UIColor(unused: true, rgb: 0x8E99A4)
+    var unreadRoomIndentColor: UIColor = UIColor(unused: true, rgb: 0x2E3648)
+    var lineBreakColor: UIColor = UIColor(unused: true, rgb: 0x363D49)
     
-    var noticeColor: UIColor = UIColor(rgb: 0xFF4B55)
-    var noticeSecondaryColor: UIColor = UIColor(rgb: 0x61708B)
+    var noticeColor: UIColor = UIColor(unused: true, rgb: 0xFF4B55)
+    var noticeSecondaryColor: UIColor = UIColor(unused: true, rgb: 0x61708B)
 
-    var warningColor: UIColor = UIColor(rgb: 0xFF4B55)
+    var warningColor: UIColor = UIColor(unused: true, rgb: 0xFF4B55)
 
     var avatarColors: [UIColor] = [
-        UIColor(rgb: 0x03B381),
-        UIColor(rgb: 0x368BD6),
-        UIColor(rgb: 0xAC3BA8)]
+        UIColor(unused: true, rgb: 0x03B381),
+        UIColor(unused: true, rgb: 0x368BD6),
+        UIColor(unused: true, rgb: 0xAC3BA8)]
     
     var userNameColors: [UIColor] = [
-        UIColor(rgb: 0x368BD6),
-        UIColor(rgb: 0xAC3BA8),
-        UIColor(rgb: 0x03B381),
-        UIColor(rgb: 0xE64F7A),
-        UIColor(rgb: 0xFF812D),
-        UIColor(rgb: 0x2DC2C5),
-        UIColor(rgb: 0x5C56F5),
-        UIColor(rgb: 0x74D12C)
+        UIColor(unused: true, rgb: 0x368BD6),
+        UIColor(unused: true, rgb: 0xAC3BA8),
+        UIColor(unused: true, rgb: 0x03B381),
+        UIColor(unused: true, rgb: 0xE64F7A),
+        UIColor(unused: true, rgb: 0xFF812D),
+        UIColor(unused: true, rgb: 0x2DC2C5),
+        UIColor(unused: true, rgb: 0x5C56F5),
+        UIColor(unused: true, rgb: 0x74D12C)
     ]
 
     var statusBarStyle: UIStatusBarStyle = .lightContent
     var scrollBarStyle: UIScrollView.IndicatorStyle = .white
     var keyboardAppearance: UIKeyboardAppearance = .dark
 
-    var placeholderTextColor: UIColor = UIColor(rgb: 0xA1B2D1) // Use secondary text color
-    var selectedBackgroundColor: UIColor = UIColor(rgb: 0x040506)
+    var placeholderTextColor: UIColor = UIColor(unused: true, rgb: 0xA1B2D1) // Use secondary text color
+    var selectedBackgroundColor: UIColor = UIColor(unused: true, rgb: 0x040506)
     var overlayBackgroundColor: UIColor = UIColor(white: 0.7, alpha: 0.5)
-    var matrixSearchBackgroundImageTintColor: UIColor = UIColor(rgb: 0x7E7E7E)
+    var matrixSearchBackgroundImageTintColor: UIColor = UIColor(unused: true, rgb: 0x7E7E7E)
     
     func applyStyle(onTabBar tabBar: UITabBar) {
         tabBar.unselectedItemTintColor = self.tabBarUnselectedItemTintColor

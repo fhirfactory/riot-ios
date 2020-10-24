@@ -21,9 +21,9 @@ class BlackTheme: DarkTheme {
     override init() {
         super.init()
         self.identifier = "black"
-        self.backgroundColor = UIColor(rgb: 0x000000)
-        self.baseColor = UIColor(rgb: 0x000000)
-        self.headerBackgroundColor = UIColor(rgb: 0x000000)
-        self.headerBorderColor = UIColor(rgb: 0x15191E)
+        self.backgroundColor = UIColor(unused: true, rgb: 0x000000)
+        self.baseColor = UIColor(unused: true, rgb: 0x000000)
+        self.headerBackgroundColor = UIColor(unused: true, rgb: 0x000000)
+        self.headerBorderColor = UIColor(unused: true, rgb: 0x15191E)
     }
 }

@@ -112,8 +112,9 @@ NSString *const kThemeServiceDidChangeThemeNotification = @"kThemeServiceDidChan
     if (self)
     {
         // Riot Colors not yet themeable
-        _riotColorCuriousBlue = [[UIColor alloc] initWithRgb:0x2A9EDB];        
-
+        //_riotColorCuriousBlue = [[UIColor alloc] initWithRgb:0x2A9EDB];
+        _riotColorCuriousBlue = [[UIColor alloc] initWithUnused:true rgb:0x2A9EDB];
+        
         if (@available(iOS 13, *))
         {
             //  Observe application did become active for iOS appearance setting changes

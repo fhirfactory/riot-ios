@@ -2218,6 +2218,10 @@ internal enum VectorL10n {
   internal static var roomCreationAccount: String { 
     return VectorL10n.tr("Vector", "room_creation_account") 
   }
+  /// Add Members
+  internal static var roomCreationAddMembers: String { 
+    return VectorL10n.tr("Vector", "room_creation_add_members") 
+  }
   /// Appearance
   internal static var roomCreationAppearance: String { 
     return VectorL10n.tr("Vector", "room_creation_appearance") 
@@ -2990,7 +2994,7 @@ internal enum VectorL10n {
   internal static var roomRecentsConversationsSection: String { 
     return VectorL10n.tr("Vector", "room_recents_conversations_section") 
   }
-  /// Create room
+  /// Create group chat
   internal static var roomRecentsCreateEmptyRoom: String { 
     return VectorL10n.tr("Vector", "room_recents_create_empty_room") 
   }
@@ -3010,7 +3014,7 @@ internal enum VectorL10n {
   internal static var roomRecentsInvitesSection: String { 
     return VectorL10n.tr("Vector", "room_recents_invites_section") 
   }
-  /// Join room
+  /// Join a chat
   internal static var roomRecentsJoinRoom: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room") 
   }
@@ -3018,7 +3022,7 @@ internal enum VectorL10n {
   internal static var roomRecentsJoinRoomPrompt: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_prompt") 
   }
-  /// Join a room
+  /// Join a chat
   internal static var roomRecentsJoinRoomTitle: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_title") 
   }
@@ -3038,7 +3042,7 @@ internal enum VectorL10n {
   internal static var roomRecentsServerNoticeSection: String { 
     return VectorL10n.tr("Vector", "room_recents_server_notice_section") 
   }
-  /// Start chat
+  /// Create chat
   internal static var roomRecentsStartChatWith: String { 
     return VectorL10n.tr("Vector", "room_recents_start_chat_with") 
   }

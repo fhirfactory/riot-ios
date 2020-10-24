@@ -165,6 +165,8 @@
 "room_creation_invite_another_user" = "Search / invite by User ID, Name or email";
 "room_creation_error_invite_user_by_email_without_identity_server" = "No identity server is configured so you cannot add a participant with an email.";
 
+"room_creation_add_members" = "Add Members";
+
 // Room recents
 "room_recents_directory_section" = "ROOM DIRECTORY";
 "room_recents_directory_section_network" = "Network";
@@ -176,10 +178,10 @@
 "room_recents_low_priority_section" = "LOW PRIORITY";
 "room_recents_server_notice_section" = "SYSTEM ALERTS";
 "room_recents_invites_section" = "INVITES";
-"room_recents_start_chat_with" = "Start chat";
-"room_recents_create_empty_room" = "Create room";
-"room_recents_join_room" = "Join room";
-"room_recents_join_room_title" = "Join a room";
+"room_recents_start_chat_with" = "Create chat";
+"room_recents_create_empty_room" = "Create group chat";
+"room_recents_join_room" = "Join a chat";
+"room_recents_join_room_title" = "Join a chat";
 "room_recents_join_room_prompt" = "Type a room id or a room alias";
 
 // Pull down menu items

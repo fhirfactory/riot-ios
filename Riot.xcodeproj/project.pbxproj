@@ -742,6 +742,11 @@
 		EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */; };
 		EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */; };
 		EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EB505C172525D49A009C0A7A /* AlternateHomeTools.m */; };
+		EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */; };
+		EBAC79922543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */; };
+		EBAC79AE2543CDB800A0B1BF /* SearchViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */; };
+		EBAC79B62543F9EE00A0B1BF /* SelectableFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */; };
+		EBAC79BE2543FA5700A0B1BF /* SelectableFilteredSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */; };
 		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
@@ -1960,6 +1965,11 @@
 		EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewController.swift; sourceTree = "<group>"; };
 		EB505C172525D49A009C0A7A /* AlternateHomeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateHomeTools.m; sourceTree = "<group>"; };
 		EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateHomeTools.h; sourceTree = "<group>"; };
+		EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlternateRoomCreationFlowAddMembersController.xib; sourceTree = "<group>"; };
+		EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateRoomCreationFlowAddMembersController.swift; sourceTree = "<group>"; };
+		EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewSection.swift; sourceTree = "<group>"; };
+		EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableFilteredSearchController.swift; sourceTree = "<group>"; };
+		EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectableFilteredSearchController.xib; sourceTree = "<group>"; };
 		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewDataSource.swift; sourceTree = "<group>"; };
@@ -3498,6 +3508,7 @@
 		B1B5568E20EE6C4C00210D55 /* Room */ = {
 			isa = PBXGroup;
 			children = (
+				EBAC79882543AF7200A0B1BF /* AlternateCreation */,
 				EC51E7B12514D34200AAE7DB /* RoomInfo */,
 				ECFBD605250FA98900DD5F5A /* CreationModal */,
 				32A6000C22C661100042C1D9 /* EditHistory */,
@@ -4825,6 +4836,18 @@
 			path = Alternate;
 			sourceTree = "<group>";
 		};
+		EBAC79882543AF7200A0B1BF /* AlternateCreation */ = {
+			isa = PBXGroup;
+			children = (
+				EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */,
+				EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */,
+				EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */,
+				EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */,
+				EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */,
+			);
+			path = AlternateCreation;
+			sourceTree = "<group>";
+		};
 		EBC6D5442530064A00940365 /* Badged */ = {
 			isa = PBXGroup;
 			children = (
@@ -5848,6 +5871,7 @@
 				B1B558F120EF768F00210D55 /* RoomIncomingAttachmentWithPaginationTitleBubbleCell.xib in Resources */,
 				B1B557CB20EF5D8000210D55 /* DirectoryServerTableViewCell.xib in Resources */,
 				B1B558EC20EF768F00210D55 /* RoomMembershipCollapsedBubbleCell.xib in Resources */,
+				EBAC79BE2543FA5700A0B1BF /* SelectableFilteredSearchController.xib in Resources */,
 				EC711BAD24A63B58008F830C /* SecureBackupSetupIntroViewController.storyboard in Resources */,
 				B1B558D720EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithPaginationTitleBubbleCell.xib in Resources */,
 				EC711B7724A63B37008F830C /* SecretsSetupRecoveryKeyViewController.storyboard in Resources */,
@@ -5883,6 +5907,7 @@
 				EC711BB324A63B58008F830C /* SecureBackupBannerCell.xib in Resources */,
 				B1B5574C20EE6C4D00210D55 /* MediaAlbumContentViewController.xib in Resources */,
 				32607D6F243E0A55006674CC /* KeyBackupRecoverFromPrivateKeyViewController.storyboard in Resources */,
+				EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */,
 				B1B557E820EF60F500210D55 /* MessagesSearchResultTextMsgBubbleCell.xib in Resources */,
 				B1B558D920EF768F00210D55 /* RoomOutgoingEncryptedAttachmentBubbleCell.xib in Resources */,
 				B1B5573020EE6C4D00210D55 /* BugReportViewController.xib in Resources */,
@@ -6647,6 +6672,7 @@
 				B1B5574020EE6C4D00210D55 /* SegmentedViewController.m in Sources */,
 				ECF57A4C25090C23004BBF9D /* EnterNewRoomDetailsViewAction.swift in Sources */,
 				EC711BAE24A63B58008F830C /* SecureBackupSetupCoordinator.swift in Sources */,
+				EBAC79B62543F9EE00A0B1BF /* SelectableFilteredSearchController.swift in Sources */,
 				B1B5599320EFC5E400210D55 /* DecryptionFailure.m in Sources */,
 				ECFBD5D5250A7AAF00DD5F5A /* ShowDirectoryViewModelType.swift in Sources */,
 				B1CE83E12422817200D07506 /* KeyVerificationVerifyBySASCoordinator.swift in Sources */,
@@ -6657,6 +6683,7 @@
 				ECFBD5D4250A7AAF00DD5F5A /* ShowDirectoryCoordinatorType.swift in Sources */,
 				EC1CA89C24C9C9A200DE9EBF /* SetupBiometricsViewModel.swift in Sources */,
 				B157FAA323264AE900EBFBD4 /* SettingsDiscoveryThreePidDetailsViewState.swift in Sources */,
+				EBAC79AE2543CDB800A0B1BF /* SearchViewSection.swift in Sources */,
 				B1098BF921ECFE65000DDA48 /* KeyBackupSetupCoordinator.swift in Sources */,
 				B140B4A821F8AB4600E3F5FE /* KeyBackupRecoverCoordinatorBridgePresenter.swift in Sources */,
 				B1098BFE21ECFE65000DDA48 /* KeyBackupSetupPassphraseViewModelType.swift in Sources */,
@@ -6752,6 +6779,7 @@
 				B105778D2213051E00334B1E /* KeyBackupSetupSuccessFromRecoveryKeyViewController.swift in Sources */,
 				B1B557D820EF5EA900210D55 /* RoomActivitiesView.m in Sources */,
 				B1B9DEE922EB34EF0065E677 /* ReactionHistoryViewController.swift in Sources */,
+				EBAC79922543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift in Sources */,
 				B1B5596620EF9E9B00210D55 /* RoomTableViewCell.m in Sources */,
 				ECFBD5EB250F97FC00DD5F5A /* RoomCreationWithPaginationCollapsedBubbleCell.m in Sources */,
 				EC711B7D24A63B37008F830C /* SecretsSetupRecoveryPassphraseViewModel.swift in Sources */,

@@ -76,6 +76,13 @@
                         <outlet property="delegate" destination="-1" id="ejZ-kN-jKv"/>
                     </connections>
                 </searchBar>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kb9-Iq-Wla">
+                    <rect key="frame" x="299" y="599" width="60" height="60"/>
+                    <state key="normal" image="plus_floating_action"/>
+                    <connections>
+                        <action selector="CreateChat:" destination="-1" eventType="touchUpInside" id="cOk-B0-Ak0"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="4qf-KS-Fc9"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -92,8 +99,10 @@
                 <constraint firstAttribute="trailing" secondItem="EXH-mK-0eB" secondAttribute="trailing" id="bPP-yu-FTa"/>
                 <constraint firstItem="orV-HH-88x" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dTn-zC-Axs"/>
                 <constraint firstItem="XpI-Xq-UFi" firstAttribute="leading" secondItem="4qf-KS-Fc9" secondAttribute="leading" id="dcZ-em-WFF"/>
+                <constraint firstItem="4qf-KS-Fc9" firstAttribute="bottom" secondItem="kb9-Iq-Wla" secondAttribute="bottom" constant="8" id="dxb-wj-qkb"/>
                 <constraint firstItem="orV-HH-88x" firstAttribute="top" secondItem="Zbr-9e-VZh" secondAttribute="bottom" id="gLH-fV-F4f"/>
                 <constraint firstItem="Zbr-9e-VZh" firstAttribute="leading" secondItem="4qf-KS-Fc9" secondAttribute="leading" id="iuw-U1-UQf"/>
+                <constraint firstItem="4qf-KS-Fc9" firstAttribute="trailing" secondItem="kb9-Iq-Wla" secondAttribute="trailing" constant="16" id="kpY-od-3gm"/>
                 <constraint firstItem="JJC-Bw-6sa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="l5C-zt-Env"/>
                 <constraint firstAttribute="trailing" secondItem="JJC-Bw-6sa" secondAttribute="trailing" id="trw-3x-yjO"/>
                 <constraint firstItem="orV-HH-88x" firstAttribute="bottom" secondItem="4qf-KS-Fc9" secondAttribute="bottom" id="zIT-Mi-Y7K"/>
@@ -101,4 +110,7 @@
             <point key="canvasLocation" x="136.80000000000001" y="74.212893553223395"/>
         </view>
     </objects>
+    <resources>
+        <image name="plus_floating_action" width="60" height="60"/>
+    </resources>
 </document>

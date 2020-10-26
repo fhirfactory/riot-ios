@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RoomCreationCollectionViewCell" customModule="Riot" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RoomCreationCollectionViewCell" id="9xH-iv-dGo" customClass="RoomCreationCollectionViewCell" customModule="Riot" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="83" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1Ml-Uh-Fb2" customClass="RoomCreationCollectionViewCell" customModule="Riot" customModuleProvider="target">
+                <rect key="frame" x="0.0" y="0.0" width="83" height="120"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="re6-qt-lUA" customClass="MXKImageView">
+                        <rect key="frame" x="11.5" y="8" width="60" height="60"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="LAS-J4-CMi"/>
+                            <constraint firstAttribute="width" secondItem="re6-qt-lUA" secondAttribute="height" multiplier="1:1" id="vgP-FR-PNj"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Member Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PtK-ny-FSY">
+                        <rect key="frame" x="8" y="76" width="67" height="38"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xu5-pO-LE1">
+                        <rect key="frame" x="61.5" y="58" width="10" height="10"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Xu5-pO-LE1" secondAttribute="height" multiplier="1:1" id="34b-rZ-M2l"/>
+                            <constraint firstAttribute="width" constant="10" id="Hub-Sf-HSe"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pz9-DD-scL">
+                        <rect key="frame" x="49" y="2.5" width="30" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="SYG-Bx-TgI"/>
+                            <constraint firstAttribute="width" secondItem="pz9-DD-scL" secondAttribute="height" multiplier="1:1" id="k7Q-25-NfN"/>
+                        </constraints>
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal">
+                            <imageReference key="backgroundImage" image="xmark.circle" catalog="system" renderingMode="template"/>
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                        </state>
+                        <connections>
+                            <action selector="CancelButtonClicked:" destination="9xH-iv-dGo" eventType="touchUpInside" id="6xz-RP-fRe"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="PtK-ny-FSY" firstAttribute="top" secondItem="1Ml-Uh-Fb2" secondAttribute="top" constant="76" id="0mX-6D-JKv"/>
+                    <constraint firstAttribute="bottom" secondItem="PtK-ny-FSY" secondAttribute="bottom" constant="6" id="8Md-Rv-USt"/>
+                    <constraint firstItem="PtK-ny-FSY" firstAttribute="leading" secondItem="1Ml-Uh-Fb2" secondAttribute="leading" constant="8" id="Hsd-vf-3AW"/>
+                    <constraint firstItem="pz9-DD-scL" firstAttribute="top" secondItem="1Ml-Uh-Fb2" secondAttribute="top" constant="2" id="JGh-fV-Og5"/>
+                    <constraint firstAttribute="trailing" secondItem="pz9-DD-scL" secondAttribute="trailing" constant="4" id="OmJ-tp-LHz"/>
+                    <constraint firstItem="Xu5-pO-LE1" firstAttribute="bottom" secondItem="re6-qt-lUA" secondAttribute="bottom" id="QKx-Qm-x40"/>
+                    <constraint firstItem="PtK-ny-FSY" firstAttribute="centerX" secondItem="1Ml-Uh-Fb2" secondAttribute="centerX" id="YDT-aC-xmL"/>
+                    <constraint firstItem="Xu5-pO-LE1" firstAttribute="trailing" secondItem="re6-qt-lUA" secondAttribute="trailing" id="b3X-4i-dhJ"/>
+                    <constraint firstItem="re6-qt-lUA" firstAttribute="centerX" secondItem="1Ml-Uh-Fb2" secondAttribute="centerX" id="bd9-WQ-VVe"/>
+                    <constraint firstAttribute="trailing" secondItem="PtK-ny-FSY" secondAttribute="trailing" constant="8" id="doK-za-9Nq"/>
+                    <constraint firstItem="re6-qt-lUA" firstAttribute="top" secondItem="1Ml-Uh-Fb2" secondAttribute="top" constant="8" id="hf8-8P-USm"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="83" height="83"/>
+            <connections>
+                <outlet property="AvatarView" destination="re6-qt-lUA" id="dRd-ff-Gic"/>
+                <outlet property="CancelButton" destination="pz9-DD-scL" id="kXB-0Z-6KI"/>
+                <outlet property="Name" destination="PtK-ny-FSY" id="GWc-AE-PqD"/>
+                <outlet property="Presence" destination="Xu5-pO-LE1" id="lGu-KL-Lqy"/>
+            </connections>
+            <point key="canvasLocation" x="-221.01449275362322" y="-149.33035714285714"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="xmark.circle" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

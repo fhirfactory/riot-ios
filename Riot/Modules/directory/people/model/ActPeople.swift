@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ActPeople {
+struct ActPeople: Equatable {
     var baseUser: MXUser
     var officialName: String
     var jobTitle: String
@@ -24,5 +24,8 @@ struct ActPeople {
         self.organisation = org
         self.businessUnit = businessUnit
         self.isExpanded = false
+    }
+    static func == (lhs: ActPeople, rhs: ActPeople) -> Bool {
+        lhs.baseUser.userId == rhs.baseUser.userId
     }
 }

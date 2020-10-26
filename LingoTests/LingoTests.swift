@@ -35,5 +35,20 @@ class LingoTests: XCTestCase {
         XCTAssert(BuildSettings.settingsScreenOverrideDefaultThemeSelection == "lingo")
         
     }
+    
+    func test_196512_displayActualFavouritesUnreadCountInTabBar() throws {
+        /// Steps:
+        /// Ensure you have at least one chat in the Favourites tab.
+        /// Arrange to have an unread message appear that favourited chat.
+
+        /// Expected:
+        /// The Favourites chat tab, the chat in the list, and the Chats icon in the bottom navigation bar all reflect the unread message.
+        
+        XCTAssert(BuildSettings.displayActualFavouritesNotificationCountInTabBar == true)
+        
+    }
+    
+    
+    
 
 }

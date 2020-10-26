@@ -248,6 +248,9 @@ final class BuildSettings: NSObject {
     //MARK: - Room Actions
     static let roomAllowRemoveAdministrativeMessage = false
     
+    //MARK: - Tab Bar Notifications Actions
+    static let displayActualFavouritesNotificationCountInTabBar = true
+    
     
     // MARK: - Authentication Screen
     static let authScreenShowRegister: Bool = true

@@ -431,6 +431,7 @@
 "settings_fail_to_update_profile" = "S’arrihet të përditësohet profili";
 "settings_pin_rooms_with_missed_notif" = "Fikso dhomat me njoftime të humbura";
 "settings_pin_rooms_with_unread" = "Fikso dhomat me mesazhe të palexuar";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_labs_create_conference_with_jitsi" = "Krijoni thirrje konferencë me Jitsi-n";
 "settings_fail_to_update_password" = "S’arrihet të përditësohet fjalëkalimi";
 "settings_deactivate_my_account" = "Çaktivizoje llogarinë time";

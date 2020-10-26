@@ -449,6 +449,7 @@
 "settings_fail_to_update_profile" = "Mistókst að uppfæra notandasnið";
 "settings_pin_rooms_with_missed_notif" = "Festa spjallrásir með óskoðuðum tilkynningum";
 "settings_pin_rooms_with_unread" = "Festa spjallrásir með ólesnum skilaboðum";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Tilkynningum er hafnað fyrir %@, leyfðu þær í stillingum tækisins";
 "settings_ui_theme_picker_message" = "\"Sjálfvirkt\" notar \"Umsnúa litum\" stillingar tækisins";
 "settings_contacts_discover_matrix_users" = "Notaðu tölvupóstföng og símanúmer til að finna notendur";

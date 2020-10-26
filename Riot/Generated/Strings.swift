@@ -3554,7 +3554,7 @@ internal enum VectorL10n {
   internal static var serviceTermsModalTitleIdentityServer: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_title_identity_server") 
   }
-  /// Acknowledgement
+  /// Credits
   internal static var settingsAcknowledgement: String { 
     return VectorL10n.tr("Vector", "settings_acknowledgement") 
   }
@@ -3786,9 +3786,9 @@ internal enum VectorL10n {
   internal static var settingsFlair: String { 
     return VectorL10n.tr("Vector", "settings_flair") 
   }
-  /// Global notification settings are available on your %@ web client
-  internal static func settingsGlobalSettingsInfo(_ p1: String) -> String {
-    return VectorL10n.tr("Vector", "settings_global_settings_info", p1)
+  /// Controls whether to show notifications on this device.
+  internal static var settingsGlobalSettingsInfo: String { 
+    return VectorL10n.tr("Vector", "settings_global_settings_info") 
   }
   /// Using the identity server set above, you can discover and be discoverable by existing contacts you know.
   internal static var settingsIdentityServerDescription: String { 
@@ -3981,6 +3981,10 @@ internal enum VectorL10n {
   /// Show rooms with unread messages first
   internal static var settingsPinRoomsWithUnread: String { 
     return VectorL10n.tr("Vector", "settings_pin_rooms_with_unread") 
+  }
+  /// Controls whether chats with missed messages are shown first.
+  internal static var settingsPinRoomsWithUnreadDescription: String { 
+    return VectorL10n.tr("Vector", "settings_pin_rooms_with_unread_description") 
   }
   /// Privacy Policy
   internal static var settingsPrivacyPolicy: String { 

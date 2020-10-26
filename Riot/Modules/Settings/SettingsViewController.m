@@ -92,6 +92,7 @@ enum
     NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX,
     NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX,
     NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX,
+    NOTIFICATION_SETTINGS_PIN_UNREAD_DESCRIPTION_INDEX,
 };
 
 enum
@@ -338,6 +339,7 @@ TableViewSectionsDelegate>
         [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
     }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX];
+    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_DESCRIPTION_INDEX];
     sectionNotificationSettings.headerTitle = NSLocalizedStringFromTable(@"settings_notifications_settings", @"Vector", nil);
     [tmpSections addObject:sectionNotificationSettings];
     
@@ -1798,9 +1800,10 @@ TableViewSectionsDelegate>
         {
             MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
 
-            NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
+            // With the Lingo version of this descriptive string we no longer reference the bundle display name
+            // NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
 
-            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_global_settings_info", @"Vector", nil), appDisplayName];
+            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_global_settings_info", @"Vector", nil), nil];
             globalInfoCell.textLabel.numberOfLines = 0;
             
             globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1830,6 +1833,17 @@ TableViewSectionsDelegate>
             [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(togglePinRoomsWithUnread:) forControlEvents:UIControlEventTouchUpInside];
             
             cell = labelAndSwitchCell;
+        }
+        else if (row == NOTIFICATION_SETTINGS_PIN_UNREAD_DESCRIPTION_INDEX)
+        {
+            MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
+
+            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_pin_rooms_with_unread_description", @"Vector", nil), nil];
+            globalInfoCell.textLabel.numberOfLines = 0;
+            
+            globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell = globalInfoCell;
         }
     }
     else if (section == SECTION_TAG_CALLS)

@@ -334,6 +334,7 @@
 "settings_global_settings_info" = "Le impostazioni di notifica avanzate sono disponibili nel tuo %@ web client";
 "settings_pin_rooms_with_missed_notif" = "Segna le stanze con notifiche perse";
 "settings_pin_rooms_with_unread" = "Segna le stanze con messaggi non letti";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Le notifiche non sono permesse per %@, abilitale nelle impostazioni del tuo dispositivo";
 "settings_enable_callkit" = "Chiamate integrate";
 "settings_callkit_info" = "Ricevi le chiamate in arrivo sul blocca schermo. Mostra le chiamate Element nella cronologia di chiamate del dispositivo. Se iCloud è attivo, questa cronologia sarà condivisa con Apple.";
@@ -358,7 +359,7 @@
 "settings_copyright" = "Copyright";
 "settings_term_conditions" = "Termini e condizioni";
 "settings_privacy_policy" = "Privacy Policy";
-"settings_acknowledgement" = "Acknowledgement";
+"settings_acknowledgement" = "Credits";
 "settings_third_party_notices" = "Avvisi di terze parti";
 "settings_send_crash_report" = "Invia dati di utilizzo anonimi";
 "settings_enable_rageshake" = "Per segnalare un errore agita il dispositivo con rabbia";

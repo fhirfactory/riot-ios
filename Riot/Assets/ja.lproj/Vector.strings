@@ -473,6 +473,7 @@
 "room_details_advanced_e2e_encryption_prompt_message" = "End-to-end暗号化は実験的なものであり、信頼性が低い場合があります。\n\n発言を保護するためにはまだそれを信用すべきではありません。\n\n端末は、まだ参加する前の発言履歴を復号化することはできません。\n\n部屋の暗号化が今から有効になったら、もう無効にすることはできません。\n\n暗号化された発言は、まだ暗号化を実装していないアプリでは表示されません。";
 "settings_enable_callkit" = "呼び出しの統合";
 "settings_pin_rooms_with_unread" = "未読のある部屋をピン止めする";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "title_groups" = "コミュニティ";
 "room_recents_server_notice_section" = "システムアラート";
 // Groups tab

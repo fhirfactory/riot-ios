@@ -84,7 +84,7 @@ class RoomViewControllerTests: XCTestCase {
         /// . Administrator rights to Normal rights
         
         XCTAssert(BuildSettings.messagesAllowViewRoomRightsChanges == true)
-        XCTAssert(BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges == 0)
+        XCTAssert(BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges == RoomPowerLevel.user.rawValue)
         
     }
 

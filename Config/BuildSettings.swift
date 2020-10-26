@@ -240,7 +240,8 @@ final class BuildSettings: NSObject {
     static let messageDetailsAllowViewEncryptionInformation : Bool = false
     static let messageDetailsAllowReportContent : Bool = false
     static let messagesAllowViewRoomRightsChanges : Bool = true
-    static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = 0
+    static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = RoomPowerLevel.user.rawValue
+    
     
     // MARK: - HTTP
     /// Additional HTTP headers will be sent by all requests. Not recommended to use request-specific headers, like `Authorization`.

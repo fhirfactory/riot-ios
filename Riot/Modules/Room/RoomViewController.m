@@ -16,6 +16,7 @@
  limitations under the License.
  */
 
+#import "Riot-Swift.h"
 #import "RoomViewController.h"
 
 #import "RoomDataSource.h"

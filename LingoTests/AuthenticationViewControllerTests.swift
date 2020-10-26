@@ -36,5 +36,18 @@ class AuthenticationViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.authScreenImageLogoName == "lingo_logo_dark")
         
     }
+    
+    func test_195339_loginLogoDisplaysCorrectly() throws {
+        /// Steps to Reproduce:
+        /// Login to Lingo Application on iOS device
+        /// Navigate to a User settings
+        /// Verify the 'Sign Out' option
+
+        /// Expected Result:
+        /// Logged in users have functionality to sign out of the application for BYOD users.
+        
+        XCTAssert(BuildSettings.settingsScreenAllowUserSignOut == true)
+        
+    }
 
 }

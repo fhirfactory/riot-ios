@@ -291,6 +291,10 @@
 "room_member_power_level_short_admin" = "Admin";
 "room_member_power_level_short_moderator" = "Mod";
 "room_member_power_level_short_custom" = "Custom";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 
 // Chat
 "room_jump_to_first_unread" = "Jump to first unread message";

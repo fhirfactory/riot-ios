@@ -59,6 +59,8 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
 
 - (instancetype)initWithEvent:(MXEvent *)event andRoomState:(MXRoomState *)roomState andRoomDataSource:(MXKRoomDataSource *)roomDataSource2
 {
+    //inject information into the event (if it's a power level event), so that we can use it in the event formatter.
+    
     self = [super initWithEvent:event andRoomState:roomState andRoomDataSource:roomDataSource2];
     
     if (self)

@@ -1002,6 +1002,10 @@
 "room_member_power_level_short_admin" = "Gweinyddwr";
 "room_member_power_level_short_moderator" = "Cymedrolwr";
 "room_member_power_level_short_custom" = "Addasiedig";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 "security_settings_crosssigning" = "CROES-LOFNODI";
 "security_settings_crosssigning_info_not_bootstrapped" = "Nid yw croes-lofnodi eto wedi ei gyflunio.";
 "security_settings_crosssigning_info_exists" = "Mae gan eich cyfrif hunaniaeth croes-lofnodi, ond nid yw'r sesiwn hon yn ymddiried ynddo eto. Cwblhewch diogelwch y sesiwn hon.";

@@ -16,6 +16,7 @@
  limitations under the License.
  */
 
+#import "Riot-Swift.h"
 #import "RoomViewController.h"
 
 #import "RoomDataSource.h"
@@ -1875,6 +1876,18 @@
 
 #pragma mark - MXKDataSourceDelegate
 
+- (void)redactAdministrativeEvents:(MXKRoomBubbleCellData*)event{
+    for (MXKRoomBubbleComponent *comp in event.bubbleComponents){
+        if (comp.event.eventType == MXEventTypeRoomPowerLevels){
+            if (BuildSettings.messagesAllowViewRoomRightsChanges && [self.roomDataSource.roomState.powerLevels powerLevelOfUserWithUserID:self.mainSession.myUser.userId] >= BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges){
+                comp.attributedTextMessage = comp.event.prevContent[@"adminDescription"];
+            } else {
+                comp.attributedTextMessage = nil;
+            }
+        }
+    }
+}
+
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
     Class cellViewClass = nil;
@@ -1891,6 +1904,7 @@
         {
             roomBubbleCellData = (MXKRoomBubbleCellData*)bubbleData;
             showEncryptionBadge = roomBubbleCellData.containsBubbleComponentWithEncryptionBadge;
+            [self redactAdministrativeEvents:roomBubbleCellData];
         }
         
         // Select the suitable table view cell class, by considering first the empty bubble cell.
@@ -5481,6 +5495,11 @@
         }];
         
     }];
+}
+
+- (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
+    
+    return [super cellReuseIdentifierForCellData:cellData];
 }
 
 - (void)reactionsMenuViewModelDidTapMoreReactions:(ReactionsMenuViewModel *)viewModel forEventId:(NSString *)eventId

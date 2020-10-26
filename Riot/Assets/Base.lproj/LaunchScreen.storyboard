@@ -24,10 +24,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                             <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="riot_splash_0_blue" translatesAutoresizingMaskIntoConstraints="NO" id="IcW-17-3Qq">
-                                <rect key="frame" x="82.666666666666671" y="318.66666666666669" width="248.66666666666663" height="98.666666666666686"/>
+                                <rect key="frame" x="82.666666666666671" y="305.33333333333331" width="248.66666666666663" height="125.33333333333331"/>
                                 <color key="tintColor" red="0.051999999999999998" green="0.74299999999999999" blue="0.54300000000000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="IcW-17-3Qq" secondAttribute="height" multiplier="984:391" id="nyP-l5-s1B"/>
+                                    <constraint firstAttribute="width" secondItem="IcW-17-3Qq" secondAttribute="height" multiplier="869:438" id="nyP-l5-s1B"/>
                                 </constraints>
                             </imageView>
                         </subviews>

@@ -970,6 +970,10 @@
 "room_member_power_level_short_admin" = "Админ";
 "room_member_power_level_short_moderator" = "Модератор";
 "room_member_power_level_short_custom" = "Собствен";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 "room_participants_action_security_status_complete_security" = "Завършете сигурността";
 "security_settings_crypto_sessions_description" = "Доверете се на сесии за да им дадете достъп до съобщенията шифровани от-край-до-край. Ако не разпознавате дадена сесия, променете паролата си и нулирайте паролата за съобщения използваща се за резервни копия на съобщенията.";
 "security_settings_backup" = "РЕЗЕРВНИ КОПИЯ НА СЪОБЩЕНИЯ";

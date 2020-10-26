@@ -2690,6 +2690,10 @@ internal enum VectorL10n {
   internal static var roomMemberPowerLevelShortModerator: String { 
     return VectorL10n.tr("Vector", "room_member_power_level_short_moderator") 
   }
+  /// User
+  internal static var roomMemberPowerLevelShortUser: String { 
+    return VectorL10n.tr("Vector", "room_member_power_level_short_user") 
+  }
   /// Message edits
   internal static var roomMessageEditsHistoryTitle: String { 
     return VectorL10n.tr("Vector", "room_message_edits_history_title") 
@@ -2945,6 +2949,14 @@ internal enum VectorL10n {
   /// Unknown
   internal static var roomParticipantsUnknown: String { 
     return VectorL10n.tr("Vector", "room_participants_unknown") 
+  }
+  /// %@ was demoted to %@
+  internal static func roomPowerLevelChangedDown(_ p1: String, _ p2: String) -> String {
+    return VectorL10n.tr("Vector", "room_power_level_changed_down", p1, p2)
+  }
+  /// %@ was promoted to %@
+  internal static func roomPowerLevelChangedUp(_ p1: String, _ p2: String) -> String {
+    return VectorL10n.tr("Vector", "room_power_level_changed_up", p1, p2)
   }
   /// This room is a continuation of another conversation.
   internal static var roomPredecessorInformation: String { 

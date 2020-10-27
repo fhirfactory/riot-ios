@@ -41,6 +41,7 @@ class NotificationService: UNNotificationServiceExtension {
         return MXPushGatewayRestClient(pushGateway: url.scheme! + "://" + url.host!, andOnUnrecognizedCertificateBlock: nil)
     }()
     private var pushNotificationStore: PushNotificationStore = PushNotificationStore()
+    private let localAuthenticationService = LocalAuthenticationService(pinCodePreferences: .shared)
     
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         // Set static application settings
@@ -139,6 +140,10 @@ class NotificationService: UNNotificationServiceExtension {
     ///   - eventId: Event identifier to mutate best attempt content
     ///   - roomId: Room identifier to fetch display name
     func preprocessPayload(forEventId eventId: String, roomId: String) {
+        if localAuthenticationService.isProtectionSet {
+            NSLog("[NotificationService] preprocessPayload: Do not preprocess because app protection is set")
+            return
+        }
         guard let session = NotificationService.mxSession else { return }
         guard let roomDisplayName = session.store.summary?(ofRoom: roomId)?.displayname else { return }
         let isDirect = session.directUserId(inRoom: roomId) != nil
@@ -149,12 +154,23 @@ class NotificationService: UNNotificationServiceExtension {
         }
     }
     
-    func fetchEvent(withEventId eventId: String, roomId: String) {
+    func fetchEvent(withEventId eventId: String, roomId: String, allowSync: Bool = true) {
         guard let mxSession = NotificationService.mxSession else {
             //  there is something wrong, do not change the content
             NSLog("[NotificationService] fetchEvent: Either originalContent or mxSession is missing.")
             fallbackToBestAttemptContent(forEventId: eventId)
             return
+        }
+        
+        /// Inline function to handle decryption failure
+        func handleDecryptionFailure() {
+            if allowSync {
+                NSLog("[NotificationService] fetchEvent: Launch a background sync.")
+                self.launchBackgroundSync(forEventId: eventId, roomId: roomId)
+            } else {
+                NSLog("[NotificationService] fetchEvent: Do not sync anymore.")
+                self.fallbackToBestAttemptContent(forEventId: eventId)
+            }
         }
 
         /// Inline function to handle encryption for event, either from cache or from the backend
@@ -176,14 +192,22 @@ class NotificationService: UNNotificationServiceExtension {
             }
             
             //  should decrypt it first
-            if mxSession.decryptEvent(event, inTimeline: nil) {
-                //  decryption succeeded
-                NSLog("[NotificationService] fetchEvent: Event decrypted successfully.")
-                self.processEvent(event)
+            if mxSession.crypto.hasKeys(toDecryptEvent: event) {
+                //  we have keys to decrypt the event
+                NSLog("[NotificationService] fetchEvent: Event needs to be decrpyted, and we have the keys to decrypt it.")
+                if mxSession.decryptEvent(event, inTimeline: nil) {
+                    //  decryption succeeded
+                    NSLog("[NotificationService] fetchEvent: Event decrypted successfully.")
+                    self.processEvent(event)
+                } else {
+                    //  decryption failed
+                    NSLog("[NotificationService] fetchEvent: Decryption failed even crypto claimed it has the keys.")
+                    handleDecryptionFailure()
+                }
             } else {
-                //  decryption failed
-                NSLog("[NotificationService] fetchEvent: Event needs to be decrpyted, but we don't have the keys to decrypt it. Launching a background sync.")
-                self.launchBackgroundSync(forEventId: eventId, roomId: roomId)
+                //  we don't have keys to decrypt the event
+                NSLog("[NotificationService] fetchEvent: Event needs to be decrpyted, but we don't have the keys to decrypt it.")
+                handleDecryptionFailure()
             }
         }
         
@@ -236,7 +260,8 @@ class NotificationService: UNNotificationServiceExtension {
                     NSLog("[NotificationService] launchBackgroundSync: MXSession.initialBackgroundSync returned too late successfully")
                     return
                 }
-                self.fetchEvent(withEventId: eventId, roomId: roomId)
+                //  do not allow to sync anymore
+                self.fetchEvent(withEventId: eventId, roomId: roomId, allowSync: false)
                 break
             case .failure(let error):
                 guard let self = self else {
@@ -451,6 +476,12 @@ class NotificationService: UNNotificationServiceExtension {
                 break
             }
             
+            if self.localAuthenticationService.isProtectionSet {
+                NSLog("[NotificationService] notificationContentForEvent: Resetting title and body because app protection is set")
+                notificationBody = NSString.localizedUserNotificationString(forKey: "MESSAGE_PROTECTED", arguments: [])
+                notificationTitle = nil
+            }
+            
             guard notificationBody != nil else {
                 NSLog("[NotificationService] notificationContentForEvent: notificationBody is nil")
                 onComplete(nil)
@@ -529,10 +560,11 @@ class NotificationService: UNNotificationServiceExtension {
     }
     
     func notificationCategoryIdentifier(forEvent event: MXEvent) -> String? {
-        let isNotificationContentShown = !event.isEncrypted || self.showDecryptedContentInNotifications
+        let isNotificationContentShown = (!event.isEncrypted || self.showDecryptedContentInNotifications)
+            && !localAuthenticationService.isProtectionSet
         
         guard isNotificationContentShown else {
-            return nil
+            return Constants.toBeRemovedNotificationCategoryIdentifier
         }
         
         if event.eventType == .callInvite {
@@ -540,7 +572,7 @@ class NotificationService: UNNotificationServiceExtension {
         }
         
         guard event.eventType == .roomMessage || event.eventType == .roomEncrypted else {
-            return nil
+            return Constants.toBeRemovedNotificationCategoryIdentifier
         }
         
         return "QUICK_REPLY"

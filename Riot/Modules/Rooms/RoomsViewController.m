@@ -55,7 +55,9 @@
     self.recentsTableView.tag = RecentsDataSourceModeRooms;
     
     // Add the (+) button programmatically
-    [self addPlusButton];
+    plusButtonImageView = [self vc_addFABWithImage:[UIImage imageNamed:@"rooms_floating_action"]
+                                            target:self
+                                            action:@selector(onPlusButtonPressed)];
     
     plusButtonImageView.image = [UIImage imageNamed:@"rooms_floating_action"];
     

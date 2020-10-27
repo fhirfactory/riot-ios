@@ -66,10 +66,17 @@
     self.recentsTableView.tag = RecentsDataSourceModePeople;
     
     // Add the (+) button programmatically
-    [self addPlusButton];
-    
+
+// TODO:- Check this section after merge
+// JH 201028 Commenting out the next 3 lines due to merge conflict with element master 1.0.18, need to test functionality here
+//     [self addPlusButton];
     // Apply tintColor on the (+) button
-    plusButtonImageView.image = [UIImage imageNamed:@"people_floating_action"];
+//     plusButtonImageView.image = [UIImage imageNamed:@"people_floating_action"];
+
+    plusButtonImageView = [self vc_addFABWithImage:[UIImage imageNamed:@"people_floating_action"]
+                                            target:self
+                                            action:@selector(onPlusButtonPressed)];
+
     
     // Register table view cell for contacts.
     [self.recentsTableView registerClass:ContactTableViewCell.class forCellReuseIdentifier:ContactTableViewCell.defaultReuseIdentifier];

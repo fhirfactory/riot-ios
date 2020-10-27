@@ -28,7 +28,7 @@
 #import "UniversalLink.h"
 
 @protocol Configurable;
-
+@protocol LegacyAppDelegateDelegate;
 
 #pragma mark - Notifications
 /**
@@ -56,6 +56,8 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
     void (^_completionHandler)(UIBackgroundFetchResult);
 }
 
+@property (weak, nonatomic) id<LegacyAppDelegateDelegate> delegate;
+
 /**
  Application main view controller
  */
@@ -70,6 +72,12 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
 
 @property (nonatomic) BOOL isAppForeground;
 @property (nonatomic) BOOL isOffline;
+
+/**
+ Last navigated room's identifier from a push notification.
+ */
+// TODO: This property is introduced to fix #3672. Remove it when a better solution revealed to the problem.
+@property (nonatomic, copy) NSString *lastNavigatedRoomIdFromPush;
 
 
 /**
@@ -176,6 +184,8 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
 
 - (void)configureCallManagerIfRequiredForSession:(MXSession *)mxSession;
 
+- (void)authenticationDidComplete;
+
 #pragma mark - Matrix Accounts handling
 
 - (void)selectMatrixAccount:(void (^)(MXKAccount *selectedAccount))onSelection;
@@ -232,5 +242,12 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
  Check for app version related informations to display
 */
 - (void)checkAppVersion;
+
+@end
+
+@protocol LegacyAppDelegateDelegate <NSObject>
+
+- (void)legacyAppDelegate:(LegacyAppDelegate*)legacyAppDelegate wantsToPopToHomeViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion;
+- (void)legacyAppDelegateRestoreEmptyDetailsViewController:(LegacyAppDelegate*)legacyAppDelegate;
 
 @end

@@ -89,7 +89,9 @@ NSString *const AppDelegateDidValidateEmailNotificationClientSecretKey = @"AppDe
 
 NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUniversalLinkDidChangeNotification";
 
+
 @interface LegacyAppDelegate () <GDPRConsentViewControllerDelegate, KeyVerificationCoordinatorBridgePresenterDelegate, ServiceTermsModalCoordinatorBridgePresenterDelegate, PushNotificationServiceDelegate, SetPinCoordinatorBridgePresenterDelegate, MasterTabBarControllerDelegate>
+
 {
     /**
      Reachability observer
@@ -176,11 +178,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
      */
     BOOL isErrorNotificationSuspended;
     
-    /**
-     Completion block called when [self popToHomeViewControllerAnimated:] has been
-     completed.
-     */
-    void (^popToHomeViewControllerCompletion)(void);
     
     /**
      The listeners to call events.
@@ -231,6 +228,8 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
 @property (nonatomic, weak) id userDidSignInOnNewDeviceObserver;
 @property (weak, nonatomic) UIAlertController *userNewSignInAlertController;
+
+@property (nonatomic, weak) id userDidChangeCrossSigningKeysObserver;
 
 /**
  Related push notification service instance. Will be created when launch finished.
@@ -375,27 +374,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     }
 }
 
-- (UINavigationController*)secondaryNavigationController
-{
-    UIViewController* rootViewController = self.window.rootViewController;
-    
-    if ([rootViewController isKindOfClass:[UISplitViewController class]])
-    {
-        UISplitViewController *splitViewController = (UISplitViewController *)rootViewController;
-        if (splitViewController.viewControllers.count == 2)
-        {
-            UIViewController *secondViewController = [splitViewController.viewControllers lastObject];
-            
-            if ([secondViewController isKindOfClass:[UINavigationController class]])
-            {
-                return (UINavigationController*)secondViewController;
-            }
-        }
-    }
-    
-    return nil;
-}
-
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions
@@ -469,27 +447,9 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
     // To simplify navigation into the app, we retrieve here the main navigation controller and the tab bar controller.
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    splitViewController.delegate = self;
     
     _masterNavigationController = splitViewController.viewControllers[0];
     _masterTabBarController = _masterNavigationController.viewControllers.firstObject;
-    
-    // Force the background color of the fake view controller displayed when there is no details.
-    UINavigationController *secondNavController = self.secondaryNavigationController;
-    if (secondNavController)
-    {
-        [ThemeService.shared.theme applyStyleOnNavigationBar:secondNavController.navigationBar];
-        secondNavController.topViewController.view.backgroundColor = ThemeService.shared.theme.backgroundColor;
-    }
-    
-    // on IOS 8 iPad devices, force to display the primary and the secondary viewcontroller
-    // to avoid empty room View Controller in portrait orientation
-    // else, the user cannot select a room
-    // shouldHideViewController delegate method is also implemented
-    if ([(NSString*)[UIDevice currentDevice].model hasPrefix:@"iPad"])
-    {
-        splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-    }
     
     // Sanity check
     NSAssert(_masterTabBarController, @"Something wrong in Main.storyboard");
@@ -575,7 +535,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         wrongBackupVersionAlert = nil;
     }
     
-    if ([self.localAuthenticationService isProtectionSet])
+    if ([self.localAuthenticationService isProtectionSet] && ![BiometricsAuthenticationPresenter isPresenting])
     {
         if (self.setPinCoordinatorBridgePresenter)
         {
@@ -778,7 +738,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         [application keyWindow].accessibilityIgnoresInvertColors = YES;
     }
     
-    [self handleLaunchAnimation];
+    [self handleAppState];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -941,32 +901,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
 - (void)restoreEmptyDetailsViewController
 {
-    UIViewController* rootViewController = self.window.rootViewController;
-    
-    if ([rootViewController isKindOfClass:[UISplitViewController class]])
-    {
-        UISplitViewController *splitViewController = (UISplitViewController *)rootViewController;
-        
-        // Be sure that the primary is then visible too.
-        if (splitViewController.displayMode == UISplitViewControllerDisplayModePrimaryHidden)
-        {
-            splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-        }
-        
-        if (splitViewController.viewControllers.count == 2)
-        {
-            UIViewController *mainViewController = splitViewController.viewControllers[0];
-            
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-            UIViewController *emptyDetailsViewController = [storyboard instantiateViewControllerWithIdentifier:@"EmptyDetailsViewControllerStoryboardId"];
-            emptyDetailsViewController.view.backgroundColor = ThemeService.shared.theme.backgroundColor;
-            
-            splitViewController.viewControllers = @[mainViewController, emptyDetailsViewController];
-        }
-    }
-    
-    // Release the current selected item (room/contact/group...).
-    [_masterTabBarController releaseSelectedItem];
+    [self.delegate legacyAppDelegateRestoreEmptyDetailsViewController:self];
 }
 
 - (UIAlertController*)showErrorAsAlert:(NSError*)error
@@ -1139,61 +1074,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
 - (void)popToHomeViewControllerAnimated:(BOOL)animated completion:(void (^)(void))completion
 {
-    UINavigationController *secondNavController = self.secondaryNavigationController;
-    if (secondNavController)
-    {
-        [secondNavController popToRootViewControllerAnimated:animated];
-    }
-    
-    // Force back to the main screen if this is not the one that is displayed
-    if (_masterTabBarController && _masterTabBarController != _masterNavigationController.visibleViewController)
-    {
-        // Listen to the masterNavigationController changes
-        // We need to be sure that masterTabBarController is back to the screen
-        popToHomeViewControllerCompletion = completion;
-        _masterNavigationController.delegate = self;
-        
-        [_masterNavigationController popToViewController:_masterTabBarController animated:animated];
-    }
-    else
-    {
-        // Select the Home tab
-        _masterTabBarController.selectedIndex = TABBAR_HOME_INDEX;
-        
-        if (completion)
-        {
-            completion();
-        }
-    }
-}
-
-#pragma mark - UINavigationController delegate
-
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    if (viewController == _masterTabBarController)
-    {
-        _masterNavigationController.delegate = nil;
-        
-        // For unknown reason, the navigation bar is not restored correctly by [popToViewController:animated:]
-        // when a ViewController has hidden it (see MXKAttachmentsViewController).
-        // Patch: restore navigation bar by default here.
-        _masterNavigationController.navigationBarHidden = NO;
-        
-        // Release the current selected item (room/contact/...).
-        [_masterTabBarController releaseSelectedItem];
-        
-        if (popToHomeViewControllerCompletion)
-        {
-            void (^popToHomeViewControllerCompletion2)(void) = popToHomeViewControllerCompletion;
-            popToHomeViewControllerCompletion = nil;
-            
-            // Dispatch the completion in order to let navigation stack refresh itself.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                popToHomeViewControllerCompletion2();
-            });
-        }
-    }
+    [self.delegate legacyAppDelegate:self wantsToPopToHomeViewControllerAnimated:animated completion:completion];
 }
 
 #pragma mark - Crash handling
@@ -1227,6 +1108,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
 - (void)pushNotificationService:(PushNotificationService *)pushNotificationService shouldNavigateToRoomWithId:(NSString *)roomId
 {
+    _lastNavigatedRoomIdFromPush = roomId;
     [self navigateToRoomById:roomId];
 }
 
@@ -1903,6 +1785,8 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
             // Register to user new device sign in notification
             [self registerUserDidSignInOnNewDeviceNotificationForSession:mxSession];
             
+            [self registerDidChangeCrossSigningKeysNotificationForSession:mxSession];
+            
             // Register to new key verification request
             [self registerNewRequestNotificationForSession:mxSession];
             
@@ -1914,17 +1798,8 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         {
             [self removeMatrixSession:mxSession];
         }
-        else if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-        {
-            if (mxSession.state == MXSessionStateRunning)
-            {
-                // Check if we need to display a key share dialog
-                [self checkPendingRoomKeyRequests];
-                [self checkPendingIncomingKeyVerificationsInSession:mxSession];
-            }
-        }
         
-        [self handleLaunchAnimation];
+        [self handleAppState];
     }];
     
     // Register an observer in order to handle new account
@@ -2099,12 +1974,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         
         // Do the one time check on device id
         [self checkDeviceId:mxSession];
-
-        // Enable listening of incoming key share requests
-        [self enableRoomKeyRequestObserver:mxSession];
-
-        // Enable listening of incoming key verification requests
-        [self enableIncomingKeyVerificationObserver:mxSession];
     }
 }
 
@@ -2438,7 +2307,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     }];
 }
 
-- (void)handleLaunchAnimation
+- (void)handleAppState
 {
     MXSession *mainSession = self.mxSessions.firstObject;
     
@@ -2448,11 +2317,10 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         
         if (_masterTabBarController.authenticationInProgress)
         {
-            NSLog(@"[AppDelegate] handleLaunchAnimation: Authentication still in progress");
+            NSLog(@"[AppDelegate] handleAppState: Authentication still in progress");
                   
             // Wait for the return of masterTabBarControllerDidCompleteAuthentication
-            isLaunching = YES;
-            _masterTabBarController.masterVCDelegate = self;
+            isLaunching = YES;            
         }
         else
         {
@@ -2473,38 +2341,97 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
             }
         }
         
+        NSLog(@"[AppDelegate] handleAppState: isLaunching: %@", isLaunching ? @"YES" : @"NO");
+        
         if (isLaunching)
         {
-            NSLog(@"[AppDelegate] handleLaunchAnimation: LaunchLoadingView");
-            
-            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-            
-            if (!launchAnimationContainerView && window)
-            {
-                LaunchLoadingView *launchLoadingView = [LaunchLoadingView instantiate];
-                launchLoadingView.frame = window.bounds;
-                [launchLoadingView updateWithTheme:ThemeService.shared.theme];
-                launchLoadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-                
-                [window addSubview:launchLoadingView];
-                
-                launchAnimationContainerView = launchLoadingView;
-                launchAnimationStart = [NSDate date];
-            }
-            
+            NSLog(@"[AppDelegate] handleAppState: LaunchLoadingView");
+            [self showLaunchAnimation];
             return;
+        }
+
+        [self hideLaunchAnimation];
+        
+        if (self.setPinCoordinatorBridgePresenter)
+        {
+            NSLog(@"[AppDelegate] handleAppState: PIN code is presented. Do not go further");
+            return;
+        }
+        
+        if (mainSession.crypto.crossSigning)
+        {
+            NSLog(@"[AppDelegate] handleAppState: crossSigning.state: %@", @(mainSession.crypto.crossSigning.state));
+
+            
+            switch (mainSession.crypto.crossSigning.state)
+            {
+                case MXCrossSigningStateCrossSigningExists:
+                    NSLog(@"[AppDelegate] handleAppState: presentVerifyCurrentSessionAlertIfNeededWithSession");
+                    [_masterTabBarController presentVerifyCurrentSessionAlertIfNeededWithSession:mainSession];
+                    break;
+                case MXCrossSigningStateCanCrossSign:
+                    NSLog(@"[AppDelegate] handleAppState: presentReviewUnverifiedSessionsAlertIfNeededWithSession");
+                    [_masterTabBarController presentReviewUnverifiedSessionsAlertIfNeededWithSession:mainSession];
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        // TODO: We should wait that cross-signing screens are done before going further but it seems fine. Those screens
+        // protect each other.
+        
+        // This is the time to check existing requests
+        NSLog(@"[AppDelegate] handleAppState: Check pending verification requests");
+        [self checkPendingRoomKeyRequests];
+        [self checkPendingIncomingKeyVerificationsInSession:mainSession];
+            
+        // TODO: When we will have an application state, we will do all of this in a dedicated initialisation state
+        // For the moment, reuse an existing boolean to avoid register things several times
+        if (!incomingKeyVerificationObserver)
+        {
+            NSLog(@"[AppDelegate] handleAppState: Set up observers for the crypto module");
+            
+            // Enable listening of incoming key share requests
+            [self enableRoomKeyRequestObserver:mainSession];
+            
+            // Enable listening of incoming key verification requests
+            [self enableIncomingKeyVerificationObserver:mainSession];
         }
         else
         {
             NSLog(@"[AppDelegate] handleLaunchAnimation: isLaunching: NO");
         }
     }
+}
+
+- (void)showLaunchAnimation
+{
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     
+    if (!launchAnimationContainerView && window)
+    {
+        NSLog(@"[AppDelegate] showLaunchAnimation");
+        
+        LaunchLoadingView *launchLoadingView = [LaunchLoadingView instantiate];
+        launchLoadingView.frame = window.bounds;
+        [launchLoadingView updateWithTheme:ThemeService.shared.theme];
+        launchLoadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        [window addSubview:launchLoadingView];
+        
+        launchAnimationContainerView = launchLoadingView;
+        launchAnimationStart = [NSDate date];
+    }
+}
+
+- (void)hideLaunchAnimation
+{
     if (launchAnimationContainerView)
     {
         NSTimeInterval duration = [[NSDate date] timeIntervalSinceDate:launchAnimationStart];
-        NSLog(@"[AppDelegate] LaunchAnimation was shown for %.3fms", duration * 1000);
-
+        NSLog(@"[AppDelegate] hideLaunchAnimation: LaunchAnimation was shown for %.3fms", duration * 1000);
+        
         // Track it on our analytics
         [[Analytics sharedInstance] trackLaunchScreenDisplayDuration:duration];
         
@@ -2622,6 +2549,11 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         NSLog(@"[AppDelegate] checkLocalPrivateKeysInSession: request keys because keysCount = %@", @(keysCount));
         [mxSession.crypto requestAllPrivateKeys];
     }
+}
+
+- (void)authenticationDidComplete
+{
+    [self handleAppState];
 }
 
 #pragma mark -
@@ -3616,50 +3548,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     [rootController.view setNeedsLayout];
 }
 
-#pragma mark - SplitViewController delegate
-
-- (nullable UIViewController *)splitViewController:(UISplitViewController *)splitViewController separateSecondaryViewControllerFromPrimaryViewController:(UIViewController *)primaryViewController
-{
-    // Return the top view controller of the master navigation controller, if it is a navigation controller itself.
-    UIViewController *topViewController = _masterNavigationController.topViewController;
-    if ([topViewController isKindOfClass:UINavigationController.class])
-    {
-        return topViewController;
-    }
-    
-    // Else return the default empty details view controller from the storyboard.
-    // Be sure that the primary is then visible too.
-    if (splitViewController.displayMode == UISplitViewControllerDisplayModePrimaryHidden)
-    {
-        splitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-    }
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    UIViewController *emptyDetailsViewController = [storyboard instantiateViewControllerWithIdentifier:@"EmptyDetailsViewControllerStoryboardId"];
-    emptyDetailsViewController.view.backgroundColor = ThemeService.shared.theme.backgroundColor;
-    return emptyDetailsViewController;
-}
-
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController
-{
-    if (!self.masterTabBarController.currentRoomViewController && !self.masterTabBarController.currentContactDetailViewController && !self.masterTabBarController.currentGroupDetailViewController)
-    {
-        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
-}
-
-- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
-{
-    // oniPad devices, force to display the primary and the secondary viewcontroller
-    // to avoid empty room View Controller in portrait orientation
-    // else, the user cannot select a room
-    return NO;
-}
-
 #pragma mark - Status Bar Tap handling
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -4355,9 +4243,11 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
 - (void)presentNewSignInAlertForDevice:(MXDevice*)device inSession:(MXSession*)session
 {
+    NSLog(@"[AppDelegate] presentNewSignInAlertForDevice: %@", device.deviceId);
+    
     if (self.userNewSignInAlertController)
     {
-        return;
+        [self.userNewSignInAlertController dismissViewControllerAnimated:NO completion:nil];
     }
     
     NSString *deviceInfo;
@@ -4373,7 +4263,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     
     NSString *alertMessage = [NSString stringWithFormat:NSLocalizedStringFromTable(@"device_verification_self_verify_alert_message", @"Vector", nil), deviceInfo];
     
-    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"device_verification_self_verify_alert_title", @"Vector", nil)
                                                                    message:alertMessage
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -4381,18 +4270,61 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"device_verification_self_verify_alert_validate_action", @"Vector", nil)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction * action) {
-                                                
-                                                [self presentSelfVerificationForOtherDeviceId:device.deviceId inSession:session];
-                                            }]];
+        self.userNewSignInAlertController = nil;
+        [self presentSelfVerificationForOtherDeviceId:device.deviceId inSession:session];
+    }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"later", @"Vector", nil)
-                                               style:UIAlertActionStyleCancel
-                                             handler:nil]];
+                                              style:UIAlertActionStyleCancel
+                                            handler:^(UIAlertAction * action) {
+        self.userNewSignInAlertController = nil;
+    }]];
      
     [self presentViewController:alert animated:YES completion:nil];
     
     self.userNewSignInAlertController = alert;
 }
+
+
+#pragma mark - Cross-signing reset detection
+
+- (void)registerDidChangeCrossSigningKeysNotificationForSession:(MXSession*)session
+{
+    MXCrossSigning *crossSigning = session.crypto.crossSigning;
+    
+    if (!crossSigning)
+    {
+        return;
+    }
+    
+    MXWeakify(self);
+
+    self.userDidChangeCrossSigningKeysObserver = [NSNotificationCenter.defaultCenter addObserverForName:MXCrossSigningDidChangeCrossSigningKeysNotification
+                                                                                                 object:crossSigning
+                                                                                                  queue:[NSOperationQueue mainQueue]
+                                                                                             usingBlock:^(NSNotification *notification)
+                                                  {
+                                                  
+         MXStrongifyAndReturnIfNil(self);
+               
+        NSLog(@"[AppDelegate] registerDidChangeCrossSigningKeysNotificationForSession");
+        
+        if (self.userNewSignInAlertController)
+        {
+            NSLog(@"[AppDelegate] registerDidChangeCrossSigningKeysNotificationForSession: Hide NewSignInAlertController");
+            
+            [self.userNewSignInAlertController dismissViewControllerAnimated:NO completion:^{
+                [self.masterTabBarController presentVerifyCurrentSessionAlertIfNeededWithSession:session];
+            }];
+            self.userNewSignInAlertController = nil;
+        }
+        else
+        {
+            [self.masterTabBarController presentVerifyCurrentSessionAlertIfNeededWithSession:session];
+        }
+    }];
+}
+
 
 #pragma mark - Complete security
 
@@ -4706,11 +4638,19 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     [self afterAppUnlockedByPin:[UIApplication sharedApplication]];
 }
 
-- (void)setPinCoordinatorBridgePresenterDelegateDidCompleteWithReset:(SetPinCoordinatorBridgePresenter *)coordinatorBridgePresenter
+- (void)setPinCoordinatorBridgePresenterDelegateDidCompleteWithReset:(SetPinCoordinatorBridgePresenter *)coordinatorBridgePresenter dueToTooManyErrors:(BOOL)dueToTooManyErrors
 {
-    [coordinatorBridgePresenter dismiss];
-    self.setPinCoordinatorBridgePresenter = nil;
-    [self logoutWithConfirmation:NO completion:nil];
+    if (dueToTooManyErrors)
+    {
+        [self showAlertWithTitle:nil message:NSLocalizedStringFromTable(@"pin_protection_kick_user_alert_message", @"Vector", nil)];
+        [self logoutWithConfirmation:NO completion:nil];
+    }
+    else
+    {
+        [coordinatorBridgePresenter dismiss];
+        self.setPinCoordinatorBridgePresenter = nil;
+        [self logoutWithConfirmation:NO completion:nil];
+    }
 }
 
 #pragma mark - MasterTabBarControllerDelegate

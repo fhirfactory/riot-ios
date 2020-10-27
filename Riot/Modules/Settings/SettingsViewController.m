@@ -1377,6 +1377,7 @@ TableViewSectionsDelegate>
     cell.mxkTextField.borderStyle = UITextBorderStyleNone;
     cell.mxkTextField.textAlignment = NSTextAlignmentRight;
     cell.mxkTextField.textColor = ThemeService.shared.theme.textSecondaryColor;
+    cell.mxkTextField.tintColor = ThemeService.shared.theme.tintColor;
     cell.mxkTextField.font = [UIFont systemFontOfSize:16];
     cell.mxkTextField.placeholder = nil;
     
@@ -1684,7 +1685,6 @@ TableViewSectionsDelegate>
                 newPhoneCell.countryCodeButton.accessibilityIdentifier = @"SettingsVCPhoneCountryButton";
                 
                 newPhoneCell.mxkLabel.font = newPhoneCell.mxkTextField.font = [UIFont systemFontOfSize:16];
-                newPhoneCell.mxkTextField.textColor = ThemeService.shared.theme.textSecondaryColor;                
                 
                 newPhoneCell.mxkTextField.userInteractionEnabled = YES;
                 newPhoneCell.mxkTextField.keyboardType = UIKeyboardTypePhonePad;

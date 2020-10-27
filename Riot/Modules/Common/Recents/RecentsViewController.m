@@ -1007,10 +1007,21 @@
         
         __weak typeof(self) weakSelf = self;
         
+        NSString *title, *message;
+        if ([self.mainSession roomWithRoomId:currentRoomId].isDirect)
+        {
+            title = NSLocalizedStringFromTable(@"room_participants_leave_prompt_title_for_dm", @"Vector", nil);
+            message = NSLocalizedStringFromTable(@"room_participants_leave_prompt_msg_for_dm", @"Vector", nil);
+        }
+        else
+        {
+            title = NSLocalizedStringFromTable(@"room_participants_leave_prompt_title", @"Vector", nil);
+            message = NSLocalizedStringFromTable(@"room_participants_leave_prompt_msg", @"Vector", nil);
+        }
+        
         // confirm leave
-        NSString *promptMessage = NSLocalizedStringFromTable(@"room_participants_leave_prompt_msg", @"Vector", nil);
-        currentAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_participants_leave_prompt_title", @"Vector", nil)
-                                                           message:promptMessage
+        currentAlert = [UIAlertController alertControllerWithTitle:title
+                                                           message:message
                                                     preferredStyle:UIAlertControllerStyleAlert];
         
         [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"]
@@ -1603,6 +1614,7 @@
 
 #pragma mark - Room handling
 
+
 - (void)addPlusButton
 {
     // Add room options button
@@ -1632,6 +1644,7 @@
     [tap setNumberOfTapsRequired:1];
     [plusButtonImageView addGestureRecognizer:tap];
 }
+
 
 - (void)onPlusButtonPressed
 {

@@ -16,6 +16,8 @@
 
 import Foundation
 
+import MatrixKit
+
 /// BuildSettings provides settings computed at build time.
 /// In future, it may be automatically generated from xcconfig files
 @objcMembers
@@ -173,6 +175,20 @@ final class BuildSettings: NSObject {
     
     /// Not allowed pin codes. User won't be able to select one of the pin in the list.
     static let notAllowedPINs: [String] = []
+
+    
+    /// Maximum number of allowed pin failures when unlocking, before force logging out the user. Defaults to `3`
+    static let maxAllowedNumberOfPinFailures: Int = 3
+    
+    /// Maximum number of allowed biometrics failures when unlocking, before fallbacking the user to the pin if set or logging out the user. Defaults to `5`
+    static let maxAllowedNumberOfBiometricsFailures: Int = 5
+    
+    /// Indicates should the app log out the user when number of PIN failures reaches `maxAllowedNumberOfPinFailures`. Defaults to `false`
+    static let logOutUserWhenPINFailuresExceeded: Bool = false
+    
+    /// Indicates should the app log out the user when number of biometrics failures reaches `maxAllowedNumberOfBiometricsFailures`. Defaults to `false`
+    static let logOutUserWhenBiometricsFailuresExceeded: Bool = false
+    
     
     // MARK: - General Settings Screen Toggles
     /// Booleans that hide or show different elements on the Settings screen
@@ -232,6 +248,19 @@ final class BuildSettings: NSObject {
     static let roomParticipantShowVoipCallByDefault : Bool = true
     static let roomParticipantAllowHideAll : Bool = false
     
+    // MARK: - Timeline settings
+    static let roomInputToolbarCompressionMode = MXKRoomInputToolbarCompressionModePrompt
+    
+    // MARK: - Room Settings Screen
+    
+    static let roomSettingsScreenShowLowPriorityOption: Bool = true
+    static let roomSettingsScreenShowDirectChatOption: Bool = true
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
+    static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
+    static let roomSettingsScreenShowAddressSettings: Bool = true
+    static let roomSettingsScreenShowFlairSettings: Bool = true
+    static let roomSettingsScreenShowAdvancedSettings: Bool = true
+    
     // MARK: - Message
     static let messageDetailsAllowShare: Bool = true
     static let messageDetailsAllowPermalink: Bool = true
@@ -241,6 +270,8 @@ final class BuildSettings: NSObject {
     static let messageDetailsAllowReportContent : Bool = false
     static let messagesAllowViewRoomRightsChanges : Bool = true
     static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = RoomPowerLevel.user.rawValue
+    static let messageDetailsAllowCopyMedia: Bool = true
+    static let messageDetailsAllowPasteMedia: Bool = true
     
     
     // MARK: - HTTP
@@ -269,5 +300,4 @@ final class BuildSettings: NSObject {
     // MARK: - Theme Application Settings
     /// Additional toggles that determine if theme customisations should apply to particular elements of the application
     static let themeAppliesToLoginPageLogo: Bool = false
-    
 }

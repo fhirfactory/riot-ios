@@ -55,8 +55,6 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -96,5 +94,10 @@
 	<string>$(BASE_BUNDLE_IDENTIFIER)</string>
 	<key>keychainAccessGroup</key>
 	<string>$(KEYCHAIN_ACCESS_GROUP)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>http</string>
+		<string>https</string>
+	</array>
 </dict>
 </plist>

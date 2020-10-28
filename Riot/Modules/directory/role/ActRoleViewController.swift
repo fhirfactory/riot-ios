@@ -84,7 +84,7 @@ extension ActRoleViewController: UITableViewDataSource, UITableViewDelegate {
         if section == SectionType.FILTER.rawValue {
             return 1
         }
-        return roles.count
+        return 0//roles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

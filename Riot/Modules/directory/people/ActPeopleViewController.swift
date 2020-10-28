@@ -42,7 +42,7 @@ extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -50,8 +50,8 @@ extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
         
         let session = (AppDelegate.theDelegate().mxSessions.first as? MXSession)
         var person = ActPeople(withBaseUser: ((AppDelegate.theDelegate().mxSessions.first as? MXSession)?.user(withUserId: session?.myUserId))!, officialName: "Joseph Fergusson", jobTitle: "App Developer", org: "ACT Health", businessUnit: "I dunno")
-        person.emailAddress = "joseph.fergusson@outlook.com"
-        person.phoneNumber = "0448069079"
+        person.emailAddress = "email@email.com"
+        person.phoneNumber = "0412345678"
         cell.setValue(actPeople: person)
         cell.peopleCellDelegate = self
         return cell

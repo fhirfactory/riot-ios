@@ -16,7 +16,7 @@
 
 import Foundation
 
-class AlternateRoomCreationFlowAddMembersController : UIViewController, UICollectionViewDataSource {
+class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollectionViewDataSource {
     @IBOutlet weak var SearchResultContainerView: UIView!
     @IBOutlet var SearchControllerTopConstraint: NSLayoutConstraint!
     var SearchControllerSelectedShowingConstraint: NSLayoutConstraint!
@@ -30,6 +30,7 @@ class AlternateRoomCreationFlowAddMembersController : UIViewController, UICollec
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }
     var filteredSearchViewControllers: [FilteredTableViewSource]!
+    var selectionChangedComplete: (() -> Void)?
     
     func selectionChangedHandler(item: Any, added: Bool) {
         if added {
@@ -41,32 +42,43 @@ class AlternateRoomCreationFlowAddMembersController : UIViewController, UICollec
         }
         CollectionView.reloadData()
         animateResultViewIfNeeded()
+        if let completionHandler = selectionChangedComplete {
+            completionHandler()
+        }
+    }
+    
+    @objc func nextButtonWasPressed() {
+        let nextStageViewController = AlternateRoomCreationFlowDetails()
+        nextStageViewController.Setup(self)
+        self.navigationController?.show(nextStageViewController, sender: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        filteredSearchViewControllers = [PeopleFilteredSearchController(), PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:))]
-        
-        nextButton = UIBarButtonItem(title: AlternateHomeTools.getNSLocalized("next", in: "Vector"), style: .plain, target: nil, action: nil)
-        self.navigationItem.rightBarButtonItem = nextButton
-        nextButton.isEnabled = false
-        
-        self.navigationItem.title = AlternateHomeTools.getNSLocalized("room_creation_add_members", in: "Vector")
-        let search = SearchViewSection()
-        search.initWithTitles(["Roles", "People"], viewControllers: filteredSearchViewControllers, defaultSelected: 0)
-        search.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: search.view.frame.height)
-        
-        SearchResultContainerView.addSubview(search.view)
-        
-        search.view.translatesAutoresizingMaskIntoConstraints = false
-        SearchResultContainerView.addConstraints(
-            [
-                NSLayoutConstraint(item: search.view as Any, attribute: .left, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .left, multiplier: 1, constant: 0),
-                NSLayoutConstraint(item: search.view as Any, attribute: .right, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .right, multiplier: 1, constant: 0),
-                NSLayoutConstraint(item: search.view as Any, attribute: .top, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .top, multiplier: 1, constant: 0),
-                NSLayoutConstraint(item: search.view as Any, attribute: .bottom, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .bottom, multiplier: 1, constant: 0)
-        ])
-        
-        CollectionView.register(UINib(nibName: String(describing: RoomCreationCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: RoomCreationCollectionViewCell.self))
+        if filteredSearchViewControllers == nil || filteredSearchViewControllers.count == 0 {
+            filteredSearchViewControllers = [PeopleFilteredSearchController(), PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:))]
+            
+            nextButton = UIBarButtonItem(title: AlternateHomeTools.getNSLocalized("next", in: "Vector"), style: .plain, target: nil, action: #selector(nextButtonWasPressed))
+            self.navigationItem.rightBarButtonItem = nextButton
+            nextButton.isEnabled = false
+            
+            self.navigationItem.title = AlternateHomeTools.getNSLocalized("room_creation_add_members", in: "Vector")
+            let search = SearchViewSection()
+            search.initWithTitles(["Roles", "People"], viewControllers: filteredSearchViewControllers, defaultSelected: 0)
+            search.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: search.view.frame.height)
+            
+            SearchResultContainerView.addSubview(search.view)
+            
+            search.view.translatesAutoresizingMaskIntoConstraints = false
+            SearchResultContainerView.addConstraints(
+                [
+                    NSLayoutConstraint(item: search.view as Any, attribute: .left, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .left, multiplier: 1, constant: 0),
+                    NSLayoutConstraint(item: search.view as Any, attribute: .right, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .right, multiplier: 1, constant: 0),
+                    NSLayoutConstraint(item: search.view as Any, attribute: .top, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .top, multiplier: 1, constant: 0),
+                    NSLayoutConstraint(item: search.view as Any, attribute: .bottom, relatedBy: .equal, toItem: SearchResultContainerView, attribute: .bottom, multiplier: 1, constant: 0)
+            ])
+            
+            CollectionView.register(UINib(nibName: String(describing: RoomCreationCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: RoomCreationCollectionViewCell.self))
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -76,7 +88,6 @@ class AlternateRoomCreationFlowAddMembersController : UIViewController, UICollec
         let val: Any = selectedItems[indexPath.row]
         switch val {
         case let v as ActPeople:
-            print(collectionView)
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RoomCreationCollectionViewCell.self), for: indexPath) as? RoomCreationCollectionViewCell else {return UICollectionViewCell()}
             cell.renderWithAndProvideCanceller(renderer: RoomCreationCollectionViewPeopleCellRenderer.GetRendererFor(v), cancelButtonHander: {() in
                 self.selectionChangedHandler(item: v, added: false)

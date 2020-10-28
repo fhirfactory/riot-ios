@@ -59,7 +59,6 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "PeopleTableViewCell", bundle: nil), forCellReuseIdentifier: "PeopleTableViewCell")
-        tableView.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
     }
     
@@ -75,7 +74,7 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         }) {
             selected.append(val)
             selectionDidChange(val, true)
-        }else{
+        } else {
             selected.removeAll(where: {(x) in
                 return x == val
             })

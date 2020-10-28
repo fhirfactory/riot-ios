@@ -49,7 +49,8 @@ class PeopleTableViewCell: UITableViewCell {
         businessUnit.text = actPeople.businessUnit
         organisation.text = actPeople.organisation
         FavouritesButton.isHidden = !displayFavourites
-        AvatarImage.setImageURI(actPeople.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: actPeople.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
+        AvatarImage.enableInMemoryCache = true
+        AvatarImage.setImageURI(actPeople.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: actPeople.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager) //This line is a memory leak
         AvatarImage.layer.cornerRadius = AvatarImage.frame.width / 2
         AvatarImage.layer.masksToBounds = true
     }

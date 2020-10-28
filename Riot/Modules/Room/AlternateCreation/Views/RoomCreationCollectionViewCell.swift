@@ -16,19 +16,28 @@
 
 import Foundation
 
-class RoomCreationCollectionViewCell: UICollectionViewCell{
+class RoomCreationCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var AvatarView: MXKImageView!
     @IBOutlet weak var Name: UILabel!
     @IBOutlet weak var Presence: UIView!
     @IBOutlet weak var CancelButton: UIButton!
     
-    var cancelHandler: (()->Void)!
+    var cancelHandler: (() -> Void)!
     @IBAction func CancelButtonClicked(_ sender: Any) {
         cancelHandler()
     }
     
-    func renderWithAndProvideCanceller(renderer: (RoomCreationCollectionViewCell)->Void, cancelButtonHander: @escaping () -> Void){
+    func renderWithAndProvideCanceller(renderer: (RoomCreationCollectionViewCell) -> Void, cancelButtonHander: @escaping () -> Void) {
         renderer(self)
         cancelHandler = cancelButtonHander
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        if #available(iOS 13.0, *) {
+            AvatarView.largeContentImage = nil
+        }
+        AvatarView.image = nil
+        AvatarView.imageView.image = nil
     }
 }

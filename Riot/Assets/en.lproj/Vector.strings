@@ -28,6 +28,10 @@
 "title_groups" = "Communities";
 "warning" = "Warning";
 
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
+
 // Actions
 "view" = "View";
 "next" = "Next";
@@ -1489,7 +1493,7 @@
 "create_room_section_header_type" = "Room type";
 "create_room_type_private" = "Private Room";
 "create_room_type_public" = "Public Room";
-"create_room_section_footer_type" = "People join a private room only with the room invitation.";
+"create_room_section_footer_type" = "Private rooms can only be joined by invitation. Public rooms can be found by anyone.";
 "create_room_show_in_directory" = "Show the room in the directory";
 "create_room_section_header_address" = "Room address";
 "create_room_placeholder_address" = "#testroom:matrix.org";

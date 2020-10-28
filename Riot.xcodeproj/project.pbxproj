@@ -778,8 +778,6 @@
 		EB16BA02254565D30096C90F /* RoomCreationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB16BA01254565D30096C90F /* RoomCreationCollectionViewCell.swift */; };
 		EB16BA0A2545668E0096C90F /* RoomCreationCollectionViewPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB16BA092545668E0096C90F /* RoomCreationCollectionViewPeopleCell.swift */; };
 		EB2D1F2F2545754700FB80E0 /* AlternateCreationHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */; };
-		EB2D1F762546BD4900FB80E0 /* AlternateRoomCreationFlowDetailsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB2D1F752546BD4900FB80E0 /* AlternateRoomCreationFlowDetailsController.xib */; };
-		EB2D1F7E2546BD6100FB80E0 /* AlternateRoomCreationFlowDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2D1F7D2546BD6100FB80E0 /* AlternateRoomCreationFlowDetailsController.swift */; };
 		EB4A116F252D7F1E00E98120 /* AlternateInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */; };
 		EB4A117B252D7FA800E98120 /* AlternateHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */; };
 		EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */; };
@@ -2046,8 +2044,6 @@
 		EB16BA092545668E0096C90F /* RoomCreationCollectionViewPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCreationCollectionViewPeopleCell.swift; sourceTree = "<group>"; };
 		EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateCreationHelpers.m; sourceTree = "<group>"; };
 		EB2D1F362545755D00FB80E0 /* AlternateCreationHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateCreationHelpers.h; sourceTree = "<group>"; };
-		EB2D1F752546BD4900FB80E0 /* AlternateRoomCreationFlowDetailsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlternateRoomCreationFlowDetailsController.xib; sourceTree = "<group>"; };
-		EB2D1F7D2546BD6100FB80E0 /* AlternateRoomCreationFlowDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateRoomCreationFlowDetailsController.swift; sourceTree = "<group>"; };
 		EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateInviteViewController.swift; sourceTree = "<group>"; };
 		EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateHomeViewController.xib; sourceTree = "<group>"; };
 		EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateInviteViewController.xib; sourceTree = "<group>"; };
@@ -5073,8 +5069,6 @@
 				EB16B9F0254534820096C90F /* FilteredTableViewSource.swift */,
 				EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */,
 				EB2D1F362545755D00FB80E0 /* AlternateCreationHelpers.h */,
-				EB2D1F752546BD4900FB80E0 /* AlternateRoomCreationFlowDetailsController.xib */,
-				EB2D1F7D2546BD6100FB80E0 /* AlternateRoomCreationFlowDetailsController.swift */,
 				EB016D69254844760078F610 /* AlternateRoomCreationFlowDetails.swift */,
 				EB016D712549271D0078F610 /* AlternateRoomCreationFlowDetails.xib */,
 			);
@@ -6180,7 +6174,6 @@
 				B1B5571C20EE6C4D00210D55 /* DeactivateAccountViewController.storyboard in Resources */,
 				B1B5596520EF9E9B00210D55 /* RoomTableViewCell.xib in Resources */,
 				ECFBD5CD250A7AAF00DD5F5A /* DirectoryRoomTableViewCell.xib in Resources */,
-				EB2D1F762546BD4900FB80E0 /* AlternateRoomCreationFlowDetailsController.xib in Resources */,
 				B1B557C020EF5B4500210D55 /* RoomInputToolbarView.xib in Resources */,
 				B1B5583D20EF6E7F00210D55 /* GroupRoomTableViewCell.xib in Resources */,
 				ECFBD5F7250FA59B00DD5F5A /* RoomCreationEventsModalViewController.storyboard in Resources */,
@@ -7145,7 +7138,6 @@
 				B1098BE821ECFE52000DDA48 /* Coordinator.swift in Sources */,
 				B11291EC238D704C0077B478 /* FloatingPoint.swift in Sources */,
 				B1B557E920EF60F500210D55 /* MessagesSearchResultTextMsgBubbleCell.m in Sources */,
-				EB2D1F7E2546BD6100FB80E0 /* AlternateRoomCreationFlowDetailsController.swift in Sources */,
 				324A2050225FC571004FE8B0 /* DeviceVerificationIncomingViewController.swift in Sources */,
 				B1098C0D21ED07E4000DDA48 /* NavigationRouter.swift in Sources */,
 				EC711B8E24A63B37008F830C /* SecretsRecoveryMode.swift in Sources */,

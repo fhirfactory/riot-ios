@@ -558,7 +558,7 @@ internal enum VectorL10n {
   internal static var createRoomSectionFooterEncryption: String { 
     return VectorL10n.tr("Vector", "create_room_section_footer_encryption") 
   }
-  /// People join a private room only with the room invitation.
+  /// Private rooms can only be joined by invitation. Public rooms can be found by anyone.
   internal static var createRoomSectionFooterType: String { 
     return VectorL10n.tr("Vector", "create_room_section_footer_type") 
   }
@@ -2033,6 +2033,14 @@ internal enum VectorL10n {
   /// No conversations
   internal static var peopleNoConversation: String { 
     return VectorL10n.tr("Vector", "people_no_conversation") 
+  }
+  /// people
+  internal static var personPlural: String { 
+    return VectorL10n.tr("Vector", "person_plural") 
+  }
+  /// person
+  internal static var personSingle: String { 
+    return VectorL10n.tr("Vector", "person_single") 
   }
   /// %@ doesn't have permission to access photo library, please change privacy settings
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {

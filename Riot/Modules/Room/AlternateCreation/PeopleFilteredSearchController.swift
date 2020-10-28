@@ -16,10 +16,12 @@
 
 import Foundation
 
-class PeopleFilteredSearchController : SelectableFilteredSearchController<ActPeople> {
+class PeopleFilteredSearchController: SelectableFilteredSearchController<ActPeople> {
     var currentSearch: MXHTTPOperation?
     var peopleList: [ActPeople] = []
-    
+    override func registerReuseIdentifierForTableView(_ tableView: UITableView){
+        tableView.register(UINib(nibName: "PeopleTableViewCell", bundle: nil), forCellReuseIdentifier: "PeopleTableViewCell")
+    }
     override func applyFilter(_ filter: String) {
         if currentSearch != nil {
             currentSearch?.cancel()
@@ -28,13 +30,13 @@ class PeopleFilteredSearchController : SelectableFilteredSearchController<ActPeo
         currentSearch = session.matrixRestClient.searchUsers(filter, limit: 50, success: {(users) in
             self.peopleList = []
             if let usersList: [MXUser] = users?.results {
-                for p: MXUser in usersList {
-                    if p.displayname != nil {
-                        var actPerson = ActPeople(withBaseUser: p, officialName: p.displayname, jobTitle: "Worker", org: "At Org", businessUnit: "In Business Unit")
-                        actPerson.emailAddress = "noname@gmail.com"
-                        actPerson.phoneNumber = "0412345678"
-                        self.peopleList.append(actPerson)
-                    }
+                //TODO: Connect this to actual data
+                for p: MXUser in usersList where p.displayname != nil {
+
+                    var actPerson = ActPeople(withBaseUser: p, officialName: p.displayname, jobTitle: "Worker", org: "At Org", businessUnit: "In Business Unit")
+                    actPerson.emailAddress = "noname@gmail.com"
+                    actPerson.phoneNumber = "0412345678"
+                    self.peopleList.append(actPerson)
                 }
             }
             self.tableView.reloadData()
@@ -58,8 +60,15 @@ class PeopleFilteredSearchController : SelectableFilteredSearchController<ActPeo
         }
         return nil
     }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return peopleList.count
+    }
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if peopleList.count == 1 {
+            return "1 " + AlternateHomeTools.getNSLocalized("person_single", in: "Vector")
+        } else if peopleList.count > 1 {
+            return String(peopleList.count) + " " + AlternateHomeTools.getNSLocalized("person_plural", in: "Vector")
+        }
+        return nil
     }
 }

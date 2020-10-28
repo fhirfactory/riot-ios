@@ -16,7 +16,7 @@
 
 import Foundation
 
-class SearchViewSection : SegmentedViewController{
+class SearchViewSection : SegmentedViewController {
     override func viewWillAppear(_ animated: Bool) {
         
     }

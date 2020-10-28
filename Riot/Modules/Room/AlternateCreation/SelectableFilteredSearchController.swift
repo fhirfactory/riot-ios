@@ -55,11 +55,15 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }
     
+    func registerReuseIdentifierForTableView(_ tableView: UITableView) {
+        preconditionFailure("Override in deriving class")
+    }
+    
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "PeopleTableViewCell", bundle: nil), forCellReuseIdentifier: "PeopleTableViewCell")
-        
+        registerReuseIdentifierForTableView(tableView)
+        tableView.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     }
     
     func applyFilter(_ filter: String) {

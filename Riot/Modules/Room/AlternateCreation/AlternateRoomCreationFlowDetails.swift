@@ -18,25 +18,7 @@ import Foundation
 
 class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, UITableViewDataSource, SingleImagePickerPresenterDelegate, ChooseAvatarTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate {
     
-    func chooseAvatarTableViewCellDidTapChooseAvatar(_ cell: ChooseAvatarTableViewCell, sourceView: UIView) {
-        if let presenter = self.singleImagePickerPresenter {
-            presenter.present(from: self, sourceView: cell.contentView, sourceRect: cell.frame, animated: true)
-        }
-    }
-    
-    
-    func singleImagePickerPresenter(_ presenter: SingleImagePickerPresenter, didSelectImageData imageData: Data, withUTI uti: MXKUTI?) {
-        let image = UIImage(data: imageData)
-        creationParameters.roomAvatar = image
-        updateSections()
-        OptionsView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
-        presenter.dismiss(animated: true, completion: nil)
-    }
-    
-    func singleImagePickerPresenterDidCancel(_ presenter: SingleImagePickerPresenter) {
-        presenter.dismiss(animated: true, completion: nil)
-    }
-    
+    //MARK: - Instance Variables
     @IBOutlet weak var OptionsView: UITableView!
     
     private enum RowType {
@@ -61,27 +43,6 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         var footer: String?
     }
     
-    private var sections: [Section] = [] {
-        didSet {
-            OptionsView.reloadData()
-        }
-    }
-    
-    private var previousPageReference: AlternateRoomCreationFlowAddMembersController!
-    
-    var singleImagePickerPresenter: SingleImagePickerPresenter?
-    var session: MXSession!
-    func Setup(_ to: AlternateRoomCreationFlowAddMembersController) {
-        previousPageReference = to
-        if let session: MXSession = AppDelegate.theDelegate().mxSessions.first as? MXSession {
-            singleImagePickerPresenter = SingleImagePickerPresenter(session: session)
-            singleImagePickerPresenter?.delegate = self
-            self.session = session
-        }
-    }
-    
-    let theme = ThemeService.shared().theme
-    
     private enum Constants {
         static let defaultStyleCellReuseIdentifier = "default"
         static let roomNameTextFieldTag: Int = 100
@@ -102,84 +63,47 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         var roomAvatar: UIImage?
         var fallbackAvatar: UIImage?
     }
-    var creationParameters: RoomCreationParameters = RoomCreationParameters()
     
-    private func updateSections() {
-        let row_0_0 = Row(type: .avatar(image: creationParameters.roomAvatar ?? creationParameters.fallbackAvatar ?? UIImage()), text: nil, accessoryType: .none) {
-            // open image picker
-            if let presenter = self.singleImagePickerPresenter {
-                presenter.present(from: self, sourceView: self.view, sourceRect: self.view.frame, animated: true)
-            }
+    private var sections: [Section] = [] {
+        didSet {
+            OptionsView.reloadData()
         }
-        let section0 = Section(header: nil,
-                               rows: [row_0_0],
-                               footer: nil)
-        
-        let row_1_0 = Row(type: .textField(tag: Constants.roomNameTextFieldTag, placeholder: VectorL10n.createRoomPlaceholderName, delegate: self), text: creationParameters.name, accessoryType: .none) {
-            
-        }
-        let section1 = Section(header: VectorL10n.createRoomSectionHeaderName,
-                               rows: [row_1_0],
-                               footer: nil)
-        
-        let row_2_0 = Row(type: .textView(tag: Constants.roomTopicTextViewTag, placeholder: VectorL10n.createRoomPlaceholderTopic, delegate: nil), text: creationParameters.topic, accessoryType: .none) {
-            
-        }
-        let section2 = Section(header: VectorL10n.createRoomSectionHeaderTopic,
-                               rows: [row_2_0],
-                               footer: nil)
-        
-        
-        let row_3_0 = Row(type: .default, text: VectorL10n.createRoomTypePrivate, accessoryType: creationParameters.publicRoom ? .none : .checkmark) {
-            self.creationParameters.publicRoom = false
-            self.updateSections()
-        }
-        let row_3_1 = Row(type: .default, text: VectorL10n.createRoomTypePublic, accessoryType: creationParameters.publicRoom ? .checkmark : .none) {
-            self.creationParameters.publicRoom = true
-            self.updateSections()
-            //  scroll bottom to show user new fields
-            DispatchQueue.main.async {
-                self.OptionsView.scrollToRow(at: IndexPath(row: 0, section: 4), at: .bottom, animated: true)
-            }
-        }
-        let section3 = Section(header: VectorL10n.createRoomSectionHeaderType,
-                               rows: [row_3_0, row_3_1],
-                               footer: VectorL10n.createRoomSectionFooterType)
-        
-        var tmpSections: [Section] = [
-            section0,
-            section1,
-            section2,
-            section3
-        ]
-        
-        /*if creationParameters.publicRoom {
-            let row_4_0 = Row(type: .withSwitch(isOn: true, onValueChanged: { (theSwitch) in
-                
-            }), text: VectorL10n.createRoomShowInDirectory, accessoryType: .none) {
-                // no-op
-            }
-            let section4 = Section(header: nil,
-                                   rows: [row_4_0],
-                                   footer: nil)
-            
-            let row_5_0 = Row(type: .textField(tag: Constants.roomAddressTextFieldTag, placeholder: VectorL10n.createRoomPlaceholderAddress, delegate: self), text: "", accessoryType: .none) {
-                
-            }
-            let section5 = Section(header: VectorL10n.createRoomSectionHeaderAddress,
-                                   rows: [row_5_0],
-                                   footer: nil)
-            
-            tmpSections.append(contentsOf: [section4, section5])
-        }*/
-        
-        let finalSection = Section(header: "Members", rows: [Row(type: .members)], footer: nil)
-        tmpSections.append(finalSection)
-        
-        sections = tmpSections
     }
     
+    private var previousPageReference: AlternateRoomCreationFlowAddMembersController!
+    
+    var singleImagePickerPresenter: SingleImagePickerPresenter?
+    var session: MXSession!
+    
+    
+    let theme = ThemeService.shared().theme
+    var creationParameters: RoomCreationParameters = RoomCreationParameters()
+    
     var createButton: UIBarButtonItem!
+    var mediaUploader: MXMediaLoader?
+    var currentOperation: MXHTTPOperation?
+    
+    //MARK: - ChooseAvatarTableViewCellDelegate
+    func chooseAvatarTableViewCellDidTapChooseAvatar(_ cell: ChooseAvatarTableViewCell, sourceView: UIView) {
+        if let presenter = self.singleImagePickerPresenter {
+            presenter.present(from: self, sourceView: cell.contentView, sourceRect: cell.frame, animated: true)
+        }
+    }
+    
+    //MARK: - SingleImagePickerPresenterDelegate
+    func singleImagePickerPresenter(_ presenter: SingleImagePickerPresenter, didSelectImageData imageData: Data, withUTI uti: MXKUTI?) {
+        let image = UIImage(data: imageData)
+        creationParameters.roomAvatar = image
+        updateSections()
+        OptionsView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+        presenter.dismiss(animated: true, completion: nil)
+    }
+    
+    func singleImagePickerPresenterDidCancel(_ presenter: SingleImagePickerPresenter) {
+        presenter.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK:- Creating the room
     
     private func fixRoomAlias(alias: String?) -> String? {
         guard var alias = alias else { return nil }
@@ -197,9 +121,6 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         
         return alias
     }
-    
-    var mediaUploader: MXMediaLoader?
-    var currentOperation: MXHTTPOperation?
     
     private func uploadAvatarIfRequired(ofRoom room: MXRoom) {
         guard let avatar = creationParameters.roomAvatar else {
@@ -241,10 +162,9 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         
     }
     
-    var inviteCount: Int = 0
+    var inviteCount: Int = 0 //count how many invites we need to send, then decrement by one every time an invite is sent. Finalizes room creation when this reaches 0.
     
     func displayCreatedRoom(_ room: MXRoom) {
-        //navigationController?.popToRootViewController(animated: false)
         AppDelegate.theDelegate().showRoom(room.roomId, andEventId: nil, withMatrixSession: session)
     }
     
@@ -313,6 +233,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         }
     }
     
+    //MARK:- View Lifecycle and Data management
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Room Details"
@@ -337,6 +258,70 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         updateSections()
     }
     
+    private func updateSections() {
+        let row_0_0 = Row(type: .avatar(image: creationParameters.roomAvatar ?? creationParameters.fallbackAvatar ?? UIImage()), text: nil, accessoryType: .none) {
+            // open image picker
+            if let presenter = self.singleImagePickerPresenter {
+                presenter.present(from: self, sourceView: self.view, sourceRect: self.view.frame, animated: true)
+            }
+        }
+        let section0 = Section(header: nil,
+                               rows: [row_0_0],
+                               footer: nil)
+        
+        let row_1_0 = Row(type: .textField(tag: Constants.roomNameTextFieldTag, placeholder: VectorL10n.createRoomPlaceholderName, delegate: self), text: creationParameters.name, accessoryType: .none) {
+            
+        }
+        let section1 = Section(header: VectorL10n.createRoomSectionHeaderName,
+                               rows: [row_1_0],
+                               footer: nil)
+        
+        let row_2_0 = Row(type: .textView(tag: Constants.roomTopicTextViewTag, placeholder: VectorL10n.createRoomPlaceholderTopic, delegate: self), text: creationParameters.topic, accessoryType: .none) {
+            
+        }
+        let section2 = Section(header: VectorL10n.createRoomSectionHeaderTopic,
+                               rows: [row_2_0],
+                               footer: nil)
+        
+        let row_3 = Row(type: .withSwitch(isOn: false, onValueChanged: {theSwitch in
+            self.creationParameters.publicRoom = theSwitch.isOn
+        }), text: VectorL10n.createRoomTypePublic, accessoryType: .none, action: nil)
+        
+        let section3 = Section(header: VectorL10n.createRoomSectionHeaderType,
+                               rows: [row_3],
+                               footer: VectorL10n.createRoomSectionFooterType)
+        
+        var tmpSections: [Section] = [
+            section0,
+            section1,
+            section2,
+            section3
+        ]
+        
+        let membercount = previousPageReference.selectedItems.count
+        
+        let singleMemberString = AlternateHomeTools.getNSLocalized("room_info_list_one_member", in: "Vector")
+        
+        //need to run this replace because membercount is primitive, and the format string uses %@ which causes a crash
+        let multipleMemberString = AlternateHomeTools.getNSLocalized("room_info_list_several_members", in: "Vector").replacingOccurrences(of: "%@", with: "%i")
+        let memberstring = membercount == 1 ? singleMemberString : String(format: multipleMemberString, NSInteger(membercount))
+        
+        let finalSection = Section(header: memberstring, rows: [Row(type: .members)], footer: nil)
+        tmpSections.append(finalSection)
+        
+        sections = tmpSections
+    }
+    
+    func Setup(_ to: AlternateRoomCreationFlowAddMembersController) {
+        previousPageReference = to
+        if let session: MXSession = AppDelegate.theDelegate().mxSessions.first as? MXSession {
+            singleImagePickerPresenter = SingleImagePickerPresenter(session: session)
+            singleImagePickerPresenter?.delegate = self
+            self.session = session
+        }
+    }
+    
+    //MARK:- TableView Delegate / Datasource
     func numberOfSections(in tableView: UITableView) -> Int {
         sections.count
     }
@@ -516,6 +501,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         }
     }
     
+    //MARK:- Text Field Delegate
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField.tag {
         case Constants.roomNameTextFieldTag:
@@ -559,6 +545,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         }
     }
     
+    //MARK:- Text View Delegate
     func textViewDidEndEditing(_ textView: UITextView) {
         switch textView.tag {
         case Constants.roomTopicTextViewTag:

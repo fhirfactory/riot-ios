@@ -343,6 +343,7 @@
 "settings_copyright" = "Szerzői jog";
 "settings_term_conditions" = "Felhasználási feltételek";
 "settings_privacy_policy" = "Adatvédelmi szabályok";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_third_party_notices" = "Harmadik fél jegyzetek";
 "settings_send_crash_report" = "Személytelen összeomlás és felhasználási adatok küldése";
 "settings_enable_rageshake" = "Eszköz megrázása a hiba bejelentéséhez";

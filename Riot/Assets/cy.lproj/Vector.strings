@@ -408,6 +408,7 @@
 "settings_copyright" = "Hawlfraint";
 "settings_term_conditions" = "Telerau ac Amodau";
 "settings_privacy_policy" = "Polisi Preifatrwydd";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_third_party_notices" = "Hysbysiadau Trydydd Parti";
 "settings_send_crash_report" = "Anfonwch ddata namau a defnydd dienw";
 "settings_enable_rageshake" = "Ysgwydiad blin i roi gwybod am nam";

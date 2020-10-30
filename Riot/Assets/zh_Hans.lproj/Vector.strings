@@ -291,6 +291,7 @@
 "settings_copyright" = "版权";
 "settings_term_conditions" = "条款和条件";
 "settings_privacy_policy" = "隐私政策";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_third_party_notices" = "第三方通知";
 "settings_send_crash_report" = "发送崩溃和使用数据";
 "settings_clear_cache" = "清空缓存";

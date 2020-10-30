@@ -374,6 +374,7 @@
 "settings_copyright" = "版權";
 "settings_term_conditions" = "合約條款";
 "settings_privacy_policy" = "隱私權政策";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_third_party_notices" = "第三方通知";
 "settings_send_crash_report" = "傳送崩潰和使用數據";
 "settings_enable_rageshake" = "透過大力搖晃回報錯誤";

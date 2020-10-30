@@ -316,6 +316,7 @@
 "settings_copyright" = "Copyright";
 "settings_term_conditions" = "Algemene voorwaarden";
 "settings_privacy_policy" = "Privacybeleid";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_third_party_notices" = "Derdepartijmeldingen";
 "settings_send_crash_report" = "Anonieme crash- en gebruiksgegevens versturen";
 "settings_clear_cache" = "Cache verwijderen";

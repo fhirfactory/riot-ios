@@ -194,6 +194,7 @@
 "settings_copyright" = "Höfundarréttur";
 "settings_term_conditions" = "Skilmálar og kvaðir";
 "settings_privacy_policy" = "Stefna vegna meðferðar persónuupplýsinga";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_third_party_notices" = "Athugasemdir frá þriðja aðila";
 "settings_send_crash_report" = "Senda nafnlausar hrunskýrslur og upplýsingar um notkun";
 "settings_clear_cache" = "Hreinsa skyndiminni";

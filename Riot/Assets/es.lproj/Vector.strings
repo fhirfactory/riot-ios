@@ -353,6 +353,7 @@
 "settings_copyright" = "Derechos de autor";
 "settings_term_conditions" = "Términos y Condiciones";
 "settings_privacy_policy" = "Política de Privacidad";
+"settings_acknowledgement" = "Acknowledgement";
 "settings_third_party_notices" = "Avisos de Terceros";
 "settings_send_crash_report" = "Enviar datos de uso e informes de fallas anónimos";
 "settings_enable_rageshake" = "Agitar con rabia para reportar un error";

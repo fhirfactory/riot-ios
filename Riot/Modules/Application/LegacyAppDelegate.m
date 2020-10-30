@@ -330,6 +330,12 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 #ifdef BUILD_NUMBER
         buildNumber = [NSString stringWithFormat:@"#%@", @(BUILD_NUMBER)];
 #endif
+        
+        // If command line arguments were not used use the version from the plist file instaed
+        if (buildNumber == nil) {
+            buildNumber = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+        }
+        
         if (buildBranch && buildNumber)
         {
             _build = [NSString stringWithFormat:@"%@ %@", buildBranch, buildNumber];

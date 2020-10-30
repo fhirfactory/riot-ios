@@ -157,6 +157,7 @@
 "settings_contacts_phonebook_country" = "Telefono-liburuaren herrialdea";
 "settings_pin_rooms_with_missed_notif" = "Finkatu ikusi gabeko jakinarazpenak dituzten gelak";
 "settings_pin_rooms_with_unread" = "Finkatu irakurri gabeko mezuak dituzten gelak";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "room_participants_action_section_devices" = "Saioak";
 "room_creation_appearance_name" = "Izena";
 "auth_msisdn_validation_title" = "Egiaztaketa egiteke";
@@ -350,6 +351,7 @@
 "settings_olm_version" = "%@ Olm bertsioa";
 "settings_term_conditions" = "Termino eta baldintzak";
 "settings_privacy_policy" = "Pribatutasun politika";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Hirugarrengoen adierazpenak";
 "settings_send_crash_report" = "Bidali kraskatze eta erabilera datu anonimoak";
 "settings_crypto_device_name" = "Saioaren izena: ";

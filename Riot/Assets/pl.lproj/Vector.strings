@@ -232,6 +232,7 @@
 "settings_remove_prompt_title" = "Potwierdzenie";
 "settings_pin_rooms_with_missed_notif" = "Przypnij pokoje z ominiętymi powiadomieniami";
 "settings_pin_rooms_with_unread" = "Przypnij pokoje z nieprzeczytanych wiadomościami";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_ui_language" = "Język";
 "settings_ui_theme" = "Motyw";
 "settings_ui_theme_auto" = "Auto";
@@ -247,6 +248,7 @@
 "settings_copyright" = "Prawa autorskie";
 "settings_term_conditions" = "Warunki użytkowania";
 "settings_privacy_policy" = "Polityka prywatności";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Informacje o stronach trzecich";
 "settings_enable_rageshake" = "Potrząśnij wściekle, aby zgłosić błąd";
 "settings_clear_cache" = "Wyczyść pamięć podręczną";

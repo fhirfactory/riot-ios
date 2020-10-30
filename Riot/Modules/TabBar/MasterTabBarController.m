@@ -985,10 +985,20 @@
 
 - (void)refreshTabBarBadges
 {
-    // Use a middle dot to signal missed notif in favourites
-    [self setMissedDiscussionsMark:(recentsDataSource.missedFavouriteDiscussionsCount? @"\u00B7": nil)
-                      onTabBarItem:TABBAR_FAVOURITES_INDEX
-                    withBadgeColor:(recentsDataSource.missedHighlightFavouriteDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+    // For Lingo we want to display the actual notitication value not just a dot
+    // This is a setting configurable in the BuildSettings file
+    if (BuildSettings.displayActualFavouritesNotificationCountInTabBar) {
+        [self setMissedDiscussionsCount:recentsDataSource.missedFavouriteDiscussionsCount
+                          onTabBarItem:TABBAR_FAVOURITES_INDEX
+                        withBadgeColor:(recentsDataSource.missedHighlightFavouriteDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+    } else {
+        // This is the OOB Default behaviour for Element, which is the fallback if the BuildSettings toggle is not configured
+        // Use a middle dot to signal missed notif in favourites
+        [self setMissedDiscussionsMark:(recentsDataSource.missedFavouriteDiscussionsCount? @"\u00B7": nil)
+                          onTabBarItem:TABBAR_FAVOURITES_INDEX
+                        withBadgeColor:(recentsDataSource.missedHighlightFavouriteDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+    }
+    
     
     // Update the badge on People and Rooms tabs
     [self setMissedDiscussionsCount:recentsDataSource.missedDirectDiscussionsCount
@@ -1003,6 +1013,7 @@
     if (@available(iOS 14, *)){
         [self setupPullDownMenuiOS14];
     }
+    [AppDelegate.theDelegate refreshApplicationIconBadgeNumber];
     [self updateInvitesBarButtonItem];
 }
 

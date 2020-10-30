@@ -276,6 +276,7 @@
 "settings_copyright" = "Авторские права";
 "settings_term_conditions" = "Условия и положения";
 "settings_privacy_policy" = "Политика конфиденциальности";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Уведомления сторонних разработчиков";
 "settings_send_crash_report" = "Отправка данных о сбоях и использовании";
 "settings_clear_cache" = "Очистить кэш";
@@ -412,6 +413,7 @@
 "settings_remove_phone_prompt_msg" = "Вы действительно хотите удалить номер телефона %@?";
 "settings_pin_rooms_with_missed_notif" = "Закрепить комнаты с пропущенными уведомлениями";
 "settings_pin_rooms_with_unread" = "Закрепить комнаты с непрочитанными сообщениями";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_contacts_discover_matrix_users" = "Использовать email и номера телефонов для поиска пользователей";
 "settings_contacts_phonebook_country" = "Страна телефонной книги";
 "no_voip" = "%@ вызывает вас, но %@ пока не поддерживает вызовы.\nМожно пропустить это уведомление и ответить на звонок с другого устройства, или вы можете отклонить его.";

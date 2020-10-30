@@ -177,7 +177,7 @@ final class BuildSettings: NSObject {
     // MARK: - General Settings Screen Toggles
     /// Booleans that hide or show different elements on the Settings screen
     
-    static let settingsScreenAllowUserSignOut: Bool = false
+    static let settingsScreenAllowUserSignOut: Bool = true
     static let settingsScreenShowUserFirstName: Bool = false
     static let settingsScreenShowUserSurname: Bool = false
     static let settingsScreenAllowAddingEmailThreepids: Bool = false
@@ -250,6 +250,9 @@ final class BuildSettings: NSObject {
     
     //MARK: - Room Actions
     static let roomAllowRemoveAdministrativeMessage = false
+    
+    //MARK: - Tab Bar Notifications Actions
+    static let displayActualFavouritesNotificationCountInTabBar = true
     
     
     // MARK: - Authentication Screen

@@ -29,7 +29,7 @@ class AlternateHomeDataSource: RecentsDataSource {
         var returnString = ""
         switch _viewMode {
         case .Chats:
-            returnString = "Chats "
+            returnString = "Chats"
         case .Favourites:
             returnString = "Favourites"
         case .Invites:

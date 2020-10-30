@@ -318,6 +318,7 @@
 "settings_global_settings_info" = "Globális értesítési beállításokat a webes kliensedben találod: %@";
 "settings_pin_rooms_with_missed_notif" = "Szobák kitűzése elszalasztott értesítésekkel";
 "settings_pin_rooms_with_unread" = "Szobák kitűzése olvasatlan üzenetekkel";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Az értesítések tiltva vannak ehhez: %@, kérlek engedélyezd az eszköz beállításaiban";
 "settings_enable_callkit" = "Beépített hívás";
 "settings_callkit_info" = "Hívások fogadása a zárolt képernyőn. Element hívások megjelenítése a rendszer hívás naplójában. Ha az iCloud engedélyezett akkor a hívásnapló az Apple-el megosztásra kerül.";
@@ -342,6 +343,7 @@
 "settings_copyright" = "Szerzői jog";
 "settings_term_conditions" = "Felhasználási feltételek";
 "settings_privacy_policy" = "Adatvédelmi szabályok";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Harmadik fél jegyzetek";
 "settings_send_crash_report" = "Személytelen összeomlás és felhasználási adatok küldése";
 "settings_enable_rageshake" = "Eszköz megrázása a hiba bejelentéséhez";

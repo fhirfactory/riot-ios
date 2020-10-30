@@ -276,7 +276,7 @@
 "settings_copyright" = "Авторские права";
 "settings_term_conditions" = "Условия и положения";
 "settings_privacy_policy" = "Политика конфиденциальности";
-"settings_acknowledgement" = "Acknowledgement";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Уведомления сторонних разработчиков";
 "settings_send_crash_report" = "Отправка данных о сбоях и использовании";
 "settings_clear_cache" = "Очистить кэш";

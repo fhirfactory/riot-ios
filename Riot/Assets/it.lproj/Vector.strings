@@ -359,7 +359,7 @@
 "settings_copyright" = "Copyright";
 "settings_term_conditions" = "Termini e condizioni";
 "settings_privacy_policy" = "Privacy Policy";
-"settings_acknowledgement" = "Acknowledgement";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Avvisi di terze parti";
 "settings_send_crash_report" = "Invia dati di utilizzo anonimi";
 "settings_enable_rageshake" = "Per segnalare un errore agita il dispositivo con rabbia";

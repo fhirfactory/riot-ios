@@ -239,7 +239,7 @@
 "settings_copyright" = "Kopierrecht";
 "settings_term_conditions" = "Geschäftsbedingungen";
 "settings_privacy_policy" = "Datenschutzerklärung";
-"settings_acknowledgement" = "Acknowledgement";
+"settings_credits" = "Credits";
 "settings_send_crash_report" = "Sende anonyme Absturz- & Nutzungsdaten";
 "settings_change_password" = "Passwort ändern";
 "settings_old_password" = "altes Passwort";

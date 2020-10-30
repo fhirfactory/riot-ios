@@ -2138,7 +2138,7 @@ TableViewSectionsDelegate>
         {
             MXKTableViewCell *acknowledgementCell = [self getDefaultTableViewCell:tableView];
             
-            acknowledgementCell.textLabel.text = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+            acknowledgementCell.textLabel.text = NSLocalizedStringFromTable(@"settings_credits", @"Vector", nil);
             
             [acknowledgementCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             
@@ -2593,7 +2593,7 @@ TableViewSectionsDelegate>
             {
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:BuildSettings.applicationAcknowledgementUrlString];
                 
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+                webViewViewController.title = NSLocalizedStringFromTable(@"settings_credits", @"Vector", nil);
                 
                 [self pushViewController:webViewViewController];
             }

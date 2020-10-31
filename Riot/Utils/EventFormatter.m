@@ -261,7 +261,22 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
         if (previousPowerLevels){
             for (NSString *key in [powerLevels.users allKeys]){
                 if (previousPowerLevels[key] == nil || previousPowerLevels[key] != powerLevels.users[key]){
+                    RoomPowerLevel oldRoomPowerLevel = [previousPowerLevels[key] integerValue];
                     RoomPowerLevel newRoomPowerLevel = [powerLevels.users[key] integerValue];
+                    
+                    NSString *oldDescriptor = nil;
+                    switch (oldRoomPowerLevel){
+                        case RoomPowerLevelAdmin:
+                            oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_admin",@"Vector",nil);
+                            break;
+                        case RoomPowerLevelModerator:
+                            oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_moderator",@"Vector",nil);
+                            break;
+                        case RoomPowerLevelUser:
+                            oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_user",@"Vector",nil);
+                            break;
+                    }
+                    
                     NSString *powerDescriptor = nil;
                     switch (newRoomPowerLevel){
                         case RoomPowerLevelAdmin:
@@ -280,7 +295,7 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
                     }else{
                         powerLevelMessage = NSLocalizedStringFromTable(@"room_power_level_changed_down",@"Vector",nil);
                     }
-                    NSMutableAttributedString *eventDescriptor = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:powerLevelMessage, [roomState.members memberWithUserId:key].displayname, powerDescriptor]];
+                    NSMutableAttributedString *eventDescriptor = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:powerLevelMessage, [roomState.members memberWithUserId:event.sender].displayname,[roomState.members memberWithUserId:key].displayname, oldDescriptor, powerDescriptor]];
                     [eventDescriptor beginEditing];
                     [eventDescriptor setAttributes:@{
                         NSFontAttributeName: [UIFont systemFontOfSize:13],

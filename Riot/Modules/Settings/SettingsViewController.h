@@ -17,8 +17,9 @@
 #import <MatrixKit/MatrixKit.h>
 
 #import "MediaPickerViewController.h"
+#import "Riot-Swift.h"
 
-@interface SettingsViewController : MXKTableViewController<UITextFieldDelegate, MXKCountryPickerViewControllerDelegate, MXKLanguagePickerViewControllerDelegate, MXKDataSourceDelegate>
+@interface SettingsViewController : MXKTableViewController<UITextFieldDelegate, MXKCountryPickerViewControllerDelegate, MXKLanguagePickerViewControllerDelegate, MXKDataSourceDelegate, CameraPresenterDelegate>
 
 + (instancetype)instantiate;
 

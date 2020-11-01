@@ -54,16 +54,6 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         static let roomTopicMaximumNumberOfChars = 250
     }
     
-    class RoomCreationParameters {
-        var publicRoom: Bool = false
-        var topic: String?
-        var name: String?
-        var showInDirectory: Bool = false
-        var roomAddress: String?
-        var roomAvatar: UIImage?
-        var fallbackAvatar: UIImage?
-    }
-    
     private var sections: [Section] = [] {
         didSet {
             OptionsView.reloadData()
@@ -75,9 +65,8 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
     var singleImagePickerPresenter: SingleImagePickerPresenter?
     var session: MXSession!
     
-    
     let theme = ThemeService.shared().theme
-    var creationParameters: RoomCreationParameters = RoomCreationParameters()
+    var creationParameters: AlternateRoomCreationParameters = AlternateRoomCreationParameters()
     
     var createButton: UIBarButtonItem!
     var mediaUploader: MXMediaLoader?
@@ -85,6 +74,12 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
     
     //MARK: - ChooseAvatarTableViewCellDelegate
     func chooseAvatarTableViewCellDidTapChooseAvatar(_ cell: ChooseAvatarTableViewCell, sourceView: UIView) {
+        if creationParameters.roomAvatar != nil {
+            self.singleImagePickerPresenter?.enableRemoveImage = true
+        } else {
+            self.singleImagePickerPresenter?.enableRemoveImage = false
+        }
+        
         if let presenter = self.singleImagePickerPresenter {
             presenter.present(from: self, sourceView: cell.contentView, sourceRect: cell.frame, animated: true)
         }
@@ -253,7 +248,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         let createText = AlternateHomeTools.getNSLocalized("create", in: "Vector")
         createButton = UIBarButtonItem(title: createText, style: .plain, target: nil, action: #selector(finalizeAndCreateRoom))
         navigationItem.rightBarButtonItem = createButton
-        createButton.isEnabled = false
+        createButton.isEnabled = creationParameters.name?.count ?? 0 >= Constants.roomNameMinimumNumberOfChars && previousPageReference.selectedItems.count > 0
         
         updateSections()
     }
@@ -312,10 +307,16 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         sections = tmpSections
     }
     
-    func Setup(_ to: AlternateRoomCreationFlowAddMembersController) {
+    func Setup(_ to: AlternateRoomCreationFlowAddMembersController, parameters roomParams: AlternateRoomCreationParameters) {
         previousPageReference = to
+        creationParameters = roomParams
         if let session: MXSession = AppDelegate.theDelegate().mxSessions.first as? MXSession {
             singleImagePickerPresenter = SingleImagePickerPresenter(session: session)
+            singleImagePickerPresenter?.setRemoveImageHandler {
+                self.creationParameters.roomAvatar = nil
+                self.updateSections()
+                self.OptionsView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .fade)
+            }
             singleImagePickerPresenter?.delegate = self
             self.session = session
         }
@@ -495,6 +496,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
             cell.EmbeddedCollectionView.delegate = previousPageReference as? UICollectionViewDelegate
             cell.EmbeddedCollectionView.register(UINib(nibName: String(describing: RoomCreationCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: RoomCreationCollectionViewCell.self))
             previousPageReference.selectionChangedComplete = {
+                self.createButton.isEnabled = self.creationParameters.name?.count ?? 0 >= Constants.roomNameMinimumNumberOfChars && self.previousPageReference.selectedItems.count > 0
                 cell.EmbeddedCollectionView.reloadData()
             }
             return cell
@@ -528,7 +530,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         
         switch textField.tag {
         case Constants.roomNameTextFieldTag:
-            createButton.isEnabled = resultCount >= Constants.roomNameMinimumNumberOfChars
+            createButton.isEnabled = resultCount >= Constants.roomNameMinimumNumberOfChars && previousPageReference.selectedItems.count > 0
             let result = resultCount <= Constants.roomNameMaximumNumberOfChars
             if result {
                 creationParameters.name = resultString

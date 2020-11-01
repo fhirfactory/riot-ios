@@ -16,6 +16,16 @@
 
 import Foundation
 
+class AlternateRoomCreationParameters {
+    var publicRoom: Bool = false
+    var topic: String?
+    var name: String?
+    var showInDirectory: Bool = false
+    var roomAddress: String?
+    var roomAvatar: UIImage?
+    var fallbackAvatar: UIImage?
+}
+
 class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollectionViewDataSource {
     @IBOutlet weak var SearchResultContainerView: UIView!
     @IBOutlet var SearchControllerTopConstraint: NSLayoutConstraint!
@@ -25,6 +35,8 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     
     //While this should really be an array of equatable, here we have to use Any, because Swift doesn't let you use Equatable
     var selectedItems: [Any] = []
+    
+    var roomParameters: AlternateRoomCreationParameters = AlternateRoomCreationParameters()
     
     static func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
@@ -49,7 +61,7 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     
     @objc func nextButtonWasPressed() {
         let nextStageViewController = AlternateRoomCreationFlowDetails()
-        nextStageViewController.Setup(self)
+        nextStageViewController.Setup(self, parameters: roomParameters)
         self.navigationController?.show(nextStageViewController, sender: self)
     }
     

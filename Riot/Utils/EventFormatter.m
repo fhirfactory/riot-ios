@@ -295,7 +295,15 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
                     }else{
                         powerLevelMessage = NSLocalizedStringFromTable(@"room_power_level_changed_down",@"Vector",nil);
                     }
-                    NSMutableAttributedString *eventDescriptor = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:powerLevelMessage, [roomState.members memberWithUserId:event.sender].displayname,[roomState.members memberWithUserId:key].displayname, oldDescriptor, powerDescriptor]];
+                    NSString* Sender = [roomState.members memberWithUserId:event.sender].displayname;
+                    if (!Sender){
+                        Sender = event.sender;
+                    }
+                    NSString* Target = [roomState.members memberWithUserId:key].displayname;
+                    if (!Target){
+                        Target = key;
+                    }
+                    NSMutableAttributedString *eventDescriptor = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:powerLevelMessage, Sender, Target, oldDescriptor, powerDescriptor]];
                     [eventDescriptor beginEditing];
                     [eventDescriptor setAttributes:@{
                         NSFontAttributeName: [UIFont systemFontOfSize:13],

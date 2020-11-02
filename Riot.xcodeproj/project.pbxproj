@@ -789,6 +789,7 @@
 		EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */; };
 		EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */; };
 		EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EB505C172525D49A009C0A7A /* AlternateHomeTools.m */; };
+		EB54294125501CA800AFF8FF /* RoleFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */; };
 		EB6B1619253415E400BBDCC6 /* EmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */; };
 		EB6B16202534167A00BBDCC6 /* EmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */; };
 		EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */; };
@@ -2056,6 +2057,7 @@
 		EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewController.swift; sourceTree = "<group>"; };
 		EB505C172525D49A009C0A7A /* AlternateHomeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateHomeTools.m; sourceTree = "<group>"; };
 		EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateHomeTools.h; sourceTree = "<group>"; };
+		EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleFilteredSearchController.swift; sourceTree = "<group>"; };
 		EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmailTableViewCell.xib; sourceTree = "<group>"; };
 		EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTableViewCell.swift; sourceTree = "<group>"; };
 		EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlternateRoomCreationFlowAddMembersController.xib; sourceTree = "<group>"; };
@@ -5072,6 +5074,7 @@
 				EB16B9F82545622A0096C90F /* Views */,
 				EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */,
 				EB16B9E8254507AF0096C90F /* PeopleFilteredSearchController.swift */,
+				EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */,
 				EB16B9F0254534820096C90F /* FilteredTableViewSource.swift */,
 				EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */,
 				EB2D1F362545755D00FB80E0 /* AlternateCreationHelpers.h */,
@@ -6621,6 +6624,7 @@
 				B1DB4F0E22316FFF0065DBFA /* UserNameColorGenerator.swift in Sources */,
 				B157FAA123264AE900EBFBD4 /* SettingsDiscoveryThreePidDetailsCoordinatorType.swift in Sources */,
 				EC85D7302477DD33002C44C9 /* JitsiWidgetData.m in Sources */,
+				EB54294125501CA800AFF8FF /* RoleFilteredSearchController.swift in Sources */,
 				32607D6C243E0A55006674CC /* KeyBackupRecoverFromPrivateKeyViewController.swift in Sources */,
 				B1057789221304EC00334B1E /* KeyBackupSetupSuccessFromPassphraseViewController.swift in Sources */,
 				B1DCC61922E5E17100625807 /* EmojiPickerCoordinatorType.swift in Sources */,

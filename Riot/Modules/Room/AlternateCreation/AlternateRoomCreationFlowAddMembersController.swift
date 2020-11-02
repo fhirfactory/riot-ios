@@ -34,6 +34,9 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     var nextButton: UIBarButtonItem!
     
     @IBOutlet weak var SearchBar: UISearchBar!
+    @IBAction private func SearchResultAreaTapped(_ sender: Any) {
+        dismissKeyboard()
+    }
     //While this should really be an array of equatable, here we have to use Any, because Swift doesn't let you use Equatable
     var selectedItems: [Any] = []
     
@@ -70,7 +73,7 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         if filteredSearchViewControllers == nil || filteredSearchViewControllers.count == 0 {
-            filteredSearchViewControllers = [PeopleFilteredSearchController(), PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:))]
+            filteredSearchViewControllers = [RoleFilteredSearchController(), PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:), andScrollHandler: dismissKeyboard)]
             
             nextButton = UIBarButtonItem(title: AlternateHomeTools.getNSLocalized("next", in: "Vector"), style: .plain, target: nil, action: #selector(nextButtonWasPressed))
             self.navigationItem.rightBarButtonItem = nextButton
@@ -126,8 +129,12 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
         }
     }
     
+    func dismissKeyboard() {
+        SearchBar.resignFirstResponder()
+    }
+    
     override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+        dismissKeyboard()
     }
     
     override func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

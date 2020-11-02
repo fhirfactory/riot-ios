@@ -20,19 +20,21 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
     
     var selected: [T] = []
     private var selectionDidChange: ((_ item: T, _ added: Bool) -> Void)
+    private var scrollViewDidScroll: (()->Void)!
     let session: MXSession
     
     
-    init (withSelectionChangeHandler selectionChanged: @escaping ((_ item: T, _ added: Bool) -> Void)) {
+    init (withSelectionChangeHandler selectionChanged: @escaping ((_ item: T, _ added: Bool) -> Void), andScrollHandler scrollViewDidScroll: @escaping (() -> Void)) {
         selectionDidChange = selectionChanged
         session = (AppDelegate.theDelegate().mxSessions.first as? MXSession)!
+        self.scrollViewDidScroll = scrollViewDidScroll
         super.init(style: .plain)
     }
     
     convenience init() {
         self.init(withSelectionChangeHandler: {(_, _) in
             
-        })
+        }, andScrollHandler: {})
     }
     
     init?(Coder: NSCoder) {
@@ -100,6 +102,10 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         view.tintColor = currentTheme.headerBackgroundColor
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.textColor = currentTheme.headerTextPrimaryColor
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollViewDidScroll()
     }
     
     func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> T? {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct RoleModel {
+struct RoleModel: Equatable {
     var name: String
     var description: String
     var isExpanded: Bool

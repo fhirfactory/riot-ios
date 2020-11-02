@@ -58,7 +58,11 @@
                 </searchBar>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gur-0k-zgh" userLabel="Result Container">
                     <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                    <gestureRecognizers/>
                     <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="fue-oe-z1J" appends="YES" id="8gk-9j-fn8"/>
+                    </connections>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -79,6 +83,11 @@
             </constraints>
             <point key="canvasLocation" x="-178.2608695652174" y="52.901785714285715"/>
         </view>
+        <tapGestureRecognizer cancelsTouchesInView="NO" id="fue-oe-z1J">
+            <connections>
+                <action selector="SearchResultAreaTapped:" destination="-1" id="OJL-4d-zHv"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <systemColor name="systemBackgroundColor">

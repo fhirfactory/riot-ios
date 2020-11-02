@@ -19,4 +19,12 @@ import Reusable
 
 class TableViewCellWithPeopleSelector: UITableViewCell, NibReusable {
     @IBOutlet weak var EmbeddedCollectionView: UICollectionView!
+    override func awakeFromNib() {
+        var currentTheme = ThemeService.shared().theme
+        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+            currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+        }
+        
+        EmbeddedCollectionView.backgroundColor = currentTheme.backgroundColor
+    }
 }

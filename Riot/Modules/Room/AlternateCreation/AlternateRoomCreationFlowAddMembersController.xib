@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlternateRoomCreationFlowAddMembersController" customModule="Riot" customModuleProvider="target">
             <connections>
                 <outlet property="CollectionView" destination="XJf-SE-rYy" id="Zoe-Zf-rN4"/>
+                <outlet property="SearchBar" destination="xVJ-ar-AG0" id="Kw5-lY-jkF"/>
                 <outlet property="SearchControllerTopConstraint" destination="e0N-lB-HWP" id="t3v-23-toW"/>
                 <outlet property="SearchResultContainerView" destination="gur-0k-zgh" id="HJJ-OT-bBI"/>
                 <outlet property="view" destination="iN0-l3-epB" id="rdc-tM-8KN"/>

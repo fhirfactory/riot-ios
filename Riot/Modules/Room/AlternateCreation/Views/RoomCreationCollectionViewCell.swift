@@ -28,6 +28,13 @@ class RoomCreationCollectionViewCell: UICollectionViewCell {
     }
     
     func renderWithAndProvideCanceller(renderer: (RoomCreationCollectionViewCell) -> Void, cancelButtonHander: @escaping () -> Void) {
+        
+        var currentTheme = ThemeService.shared().theme
+        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+            currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+        }
+        Name.textColor = currentTheme.textPrimaryColor
+        
         renderer(self)
         cancelHandler = cancelButtonHander
     }

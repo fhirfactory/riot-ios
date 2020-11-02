@@ -53,5 +53,17 @@ class PeopleTableViewCell: UITableViewCell {
         AvatarImage.setImageURI(actPeople.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: actPeople.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager) //This line is a memory leak
         AvatarImage.layer.cornerRadius = AvatarImage.frame.width / 2
         AvatarImage.layer.masksToBounds = true
+        var currentTheme = ThemeService.shared().theme
+        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+            currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+        }
+        backgroundColor = currentTheme.backgroundColor
+        
+        AvatarImage.backgroundColor = currentTheme.backgroundColor
+        
+        jobTitle.textColor = currentTheme.textPrimaryColor
+        businessUnit.textColor = currentTheme.textPrimaryColor
+        organisation.textColor = currentTheme.textPrimaryColor
+        name.textColor = currentTheme.textPrimaryColor
     }
 }

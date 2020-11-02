@@ -65,7 +65,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
     var singleImagePickerPresenter: SingleImagePickerPresenter?
     var session: MXSession!
     
-    let theme = ThemeService.shared().theme
+    var theme: Theme = ThemeService.shared().theme
     var creationParameters: AlternateRoomCreationParameters = AlternateRoomCreationParameters()
     
     var createButton: UIBarButtonItem!
@@ -249,6 +249,13 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         createButton = UIBarButtonItem(title: createText, style: .plain, target: nil, action: #selector(finalizeAndCreateRoom))
         navigationItem.rightBarButtonItem = createButton
         createButton.isEnabled = creationParameters.name?.count ?? 0 >= Constants.roomNameMinimumNumberOfChars && previousPageReference.selectedItems.count > 0
+        
+        theme = ThemeService.shared().theme
+        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+            theme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+        }
+        view.backgroundColor = theme.headerBackgroundColor
+        OptionsView.backgroundColor = theme.headerBackgroundColor
         
         updateSections()
     }

@@ -33,8 +33,11 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     @IBOutlet weak var CollectionView: UICollectionView!
     var nextButton: UIBarButtonItem!
     
+    @IBOutlet weak var SearchBar: UISearchBar!
     //While this should really be an array of equatable, here we have to use Any, because Swift doesn't let you use Equatable
     var selectedItems: [Any] = []
+    
+    var currentTheme: Theme!
     
     var roomParameters: AlternateRoomCreationParameters = AlternateRoomCreationParameters()
     
@@ -90,6 +93,16 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
             ])
             
             CollectionView.register(UINib(nibName: String(describing: RoomCreationCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: String(describing: RoomCreationCollectionViewCell.self))
+            
+            currentTheme = ThemeService.shared().theme
+            if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+                currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+            }
+            
+            view.backgroundColor = currentTheme.backgroundColor
+            CollectionView.backgroundColor = currentTheme.backgroundColor
+            currentTheme.applyStyle(onSearchBar: SearchBar)
+            
         }
     }
     
@@ -114,6 +127,19 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     }
     
     override func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText != "" {
+            if #available(iOS 13.0, *) {
+                searchBar.searchTextField.textColor = currentTheme.textPrimaryColor
+            } else {
+                searchBar.vc_searchTextField?.textColor = currentTheme.textPrimaryColor
+            }
+        } else {
+            if #available(iOS 13.0, *) {
+                searchBar.searchTextField.textColor = currentTheme.placeholderTextColor
+            } else {
+                searchBar.vc_searchTextField?.textColor = currentTheme.placeholderTextColor
+            }
+        }
         for x in filteredSearchViewControllers {
             x.applyFilter(searchText)
         }

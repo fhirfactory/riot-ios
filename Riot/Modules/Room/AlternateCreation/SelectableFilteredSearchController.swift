@@ -59,11 +59,19 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         preconditionFailure("Override in deriving class")
     }
     
+    var currentTheme: Theme!
     override func viewDidLoad() {
         tableView.delegate = self
         tableView.dataSource = self
         registerReuseIdentifierForTableView(tableView)
-        tableView.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        
+        currentTheme = ThemeService.shared().theme
+        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+            currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+        }
+        
+        tableView.tintColor = currentTheme.textPrimaryColor
+        tableView.backgroundColor = currentTheme.backgroundColor
     }
     
     func applyFilter(_ filter: String) {
@@ -86,6 +94,12 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         }
         tableView.reloadRows(at: [indexPath], with: .fade)
         return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = currentTheme.headerBackgroundColor
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = currentTheme.headerTextPrimaryColor
     }
     
     func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> T? {
@@ -120,7 +134,8 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         } else {
             cell.accessoryType = .none
         }
-        
+        cell.selectedBackgroundView = UIView()
+        cell.selectedBackgroundView?.backgroundColor = currentTheme.selectedBackgroundColor
         return cell
     }
 }

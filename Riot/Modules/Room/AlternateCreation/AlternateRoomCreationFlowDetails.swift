@@ -20,6 +20,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
     
     //MARK: - Instance Variables
     @IBOutlet weak var OptionsView: UITableView!
+    @IBOutlet weak var LoadingBackgroundView: UIView!
     
     private enum RowType {
         case `default`
@@ -246,7 +247,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         OptionsView.estimatedSectionFooterHeight = 50
         
         let createText = AlternateHomeTools.getNSLocalized("create", in: "Vector")
-        createButton = UIBarButtonItem(title: createText, style: .plain, target: nil, action: #selector(finalizeAndCreateRoom))
+        createButton = UIBarButtonItem(title: createText, style: .plain, target: self, action: #selector(finalizeAndCreateRoom))
         navigationItem.rightBarButtonItem = createButton
         createButton.isEnabled = creationParameters.name?.count ?? 0 >= Constants.roomNameMinimumNumberOfChars && previousPageReference.selectedItems.count > 0
         
@@ -256,6 +257,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         }
         view.backgroundColor = theme.headerBackgroundColor
         OptionsView.backgroundColor = theme.headerBackgroundColor
+        LoadingBackgroundView.backgroundColor = theme.backgroundColor
         
         updateSections()
     }
@@ -327,6 +329,11 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
             singleImagePickerPresenter?.delegate = self
             self.session = session
         }
+    }
+    
+    //MARK:- ScrollView Delegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        view.endEditing(true)
     }
     
     //MARK:- TableView Delegate / Datasource

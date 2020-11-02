@@ -31,7 +31,6 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     @IBOutlet var SearchControllerTopConstraint: NSLayoutConstraint!
     var SearchControllerSelectedShowingConstraint: NSLayoutConstraint!
     @IBOutlet weak var CollectionView: UICollectionView!
-    var nextButton: UIBarButtonItem!
     
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBAction private func SearchResultAreaTapped(_ sender: Any) {
@@ -71,13 +70,19 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
         self.navigationController?.show(nextStageViewController, sender: self)
     }
     
+    func drawButton() {
+        //https://stackoverflow.com/questions/50364760/navigation-bar-item-not-clickable-when-uitextview-resigns-first-responder
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: AlternateHomeTools.getNSLocalized("next", in: "Vector"), style: .plain, target: self, action: #selector(nextButtonWasPressed))
+        self.navigationItem.rightBarButtonItem?.isEnabled = selectedItems.count > 0
+    }
+    
+    override func viewDidLoad() {
+        drawButton()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         if filteredSearchViewControllers == nil || filteredSearchViewControllers.count == 0 {
             filteredSearchViewControllers = [RoleFilteredSearchController(), PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:), andScrollHandler: dismissKeyboard)]
-            
-            nextButton = UIBarButtonItem(title: AlternateHomeTools.getNSLocalized("next", in: "Vector"), style: .plain, target: nil, action: #selector(nextButtonWasPressed))
-            self.navigationItem.rightBarButtonItem = nextButton
-            nextButton.isEnabled = false
             
             self.navigationItem.title = AlternateHomeTools.getNSLocalized("room_creation_add_members", in: "Vector")
             let search = SearchViewSection()
@@ -130,7 +135,8 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     }
     
     func dismissKeyboard() {
-        SearchBar.resignFirstResponder()
+        view.endEditing(true)
+        self.drawButton()
     }
     
     override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -170,7 +176,7 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
                 UIView.animate(withDuration: 0.2, animations: {
                      self.view.layoutIfNeeded()
                 })
-                nextButton.isEnabled = true
+                self.drawButton()
             } else {
                 //going from something else to 0, animate to hide selection area
                 view.layoutIfNeeded()
@@ -179,7 +185,7 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
                 UIView.animate(withDuration: 0.2, animations: {
                      self.view.layoutIfNeeded()
                 })
-                nextButton.isEnabled = false
+                self.drawButton()
             }
             selectedCount = selectedItems.count
         }

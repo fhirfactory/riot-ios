@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlternateRoomCreationFlowDetails" customModule="Riot" customModuleProvider="target">
             <connections>
+                <outlet property="LoadingBackgroundView" destination="xFs-jy-7yY" id="d0s-hO-l9m"/>
                 <outlet property="OptionsView" destination="fzc-q5-Uxi" id="JVJ-Xt-p3V"/>
                 <outlet property="view" destination="Zg5-mQ-sNt" id="wI2-dR-390"/>
             </connections>

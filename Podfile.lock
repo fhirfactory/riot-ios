@@ -1,0 +1,195 @@
+PODS:
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
+  - cmark (0.24.1)
+  - DGCollectionViewLeftAlignFlowLayout (1.0.4)
+  - Down (0.9.4)
+  - DTCoreText (1.6.25):
+    - DTCoreText/Core (= 1.6.25)
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTCoreText/Core (1.6.25):
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTCoreText/Extension (1.6.25):
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTFoundation/Core (1.7.16)
+  - DTFoundation/DTAnimatedGIF (1.7.16)
+  - DTFoundation/DTHTMLParser (1.7.16):
+    - DTFoundation/Core
+  - DTFoundation/UIKit (1.7.16):
+    - DTFoundation/Core
+  - FFDropDownMenu (1.4.5)
+  - FlowCommoniOS (1.9.0)
+  - GBDeviceInfo (6.4.0):
+    - GBDeviceInfo/Core (= 6.4.0)
+  - GBDeviceInfo/Core (6.4.0)
+  - GZIP (1.3.0)
+  - HPGrowingTextView (1.1)
+  - JitsiMeetSDK (2.10.0)
+  - KeychainAccess (4.2.1)
+  - KTCenterFlowLayout (1.3.1)
+  - libbase58 (0.1.4)
+  - libPhoneNumber-iOS (0.9.15)
+  - MatomoTracker (7.2.2):
+    - MatomoTracker/Core (= 7.2.2)
+  - MatomoTracker/Core (7.2.2)
+  - MatrixKit (0.12.26):
+    - Down (~> 0.9.3)
+    - DTCoreText (~> 1.6.23)
+    - HPGrowingTextView (~> 1.1)
+    - libPhoneNumber-iOS (~> 0.9.13)
+    - MatrixKit/Core (= 0.12.26)
+    - MatrixSDK (= 0.16.20)
+  - MatrixKit/AppExtension (0.12.26):
+    - Down (~> 0.9.3)
+    - DTCoreText (~> 1.6.23)
+    - DTCoreText/Extension
+    - HPGrowingTextView (~> 1.1)
+    - libPhoneNumber-iOS (~> 0.9.13)
+    - MatrixSDK (= 0.16.20)
+  - MatrixKit/Core (0.12.26):
+    - Down (~> 0.9.3)
+    - DTCoreText (~> 1.6.23)
+    - HPGrowingTextView (~> 1.1)
+    - libPhoneNumber-iOS (~> 0.9.13)
+    - MatrixSDK (= 0.16.20)
+  - MatrixSDK (0.16.20):
+    - MatrixSDK/Core (= 0.16.20)
+  - MatrixSDK/Core (0.16.20):
+    - AFNetworking (~> 4.0.0)
+    - GZIP (~> 1.3.0)
+    - libbase58 (~> 0.1.4)
+    - OLMKit (~> 3.1.0)
+    - Realm (~> 5.4.8)
+  - MatrixSDK/JingleCallStack (0.16.20):
+    - JitsiMeetSDK (= 2.10.0)
+    - MatrixSDK/Core
+  - MatrixSDK/SwiftSupport (0.16.20):
+    - MatrixSDK/Core
+  - OLMKit (3.1.0):
+    - OLMKit/olmc (= 3.1.0)
+    - OLMKit/olmcpp (= 3.1.0)
+  - OLMKit/olmc (3.1.0)
+  - OLMKit/olmcpp (3.1.0)
+  - ReadMoreTextView (3.0.1)
+  - Realm (5.4.8):
+    - Realm/Headers (= 5.4.8)
+  - Realm/Headers (5.4.8)
+  - Reusable (4.1.1):
+    - Reusable/Storyboard (= 4.1.1)
+    - Reusable/View (= 4.1.1)
+  - Reusable/Storyboard (4.1.1)
+  - Reusable/View (4.1.1)
+  - SwiftGen (6.4.0)
+  - SwiftLint (0.40.3)
+  - zxcvbn-ios (1.0.4)
+  - ZXingObjC (3.6.5):
+    - ZXingObjC/All (= 3.6.5)
+  - ZXingObjC/All (3.6.5)
+
+DEPENDENCIES:
+  - cmark
+  - DGCollectionViewLeftAlignFlowLayout (~> 1.0.4)
+  - FFDropDownMenu (~> 1.4)
+  - FlowCommoniOS (~> 1.9.0)
+  - GBDeviceInfo (~> 6.4.0)
+  - HPGrowingTextView
+  - KeychainAccess (~> 4.2.1)
+  - KTCenterFlowLayout (~> 1.3.1)
+  - MatomoTracker (~> 7.2.2)
+  - MatrixKit (= 0.12.26)
+  - MatrixKit/AppExtension (= 0.12.26)
+  - MatrixSDK
+  - MatrixSDK/JingleCallStack
+  - MatrixSDK/SwiftSupport
+  - OLMKit
+  - ReadMoreTextView (~> 3.0.1)
+  - Reusable (~> 4.1)
+  - SwiftGen (~> 6.3)
+  - SwiftLint (~> 0.40.3)
+  - zxcvbn-ios
+  - ZXingObjC (~> 3.6.5)
+
+SPEC REPOS:
+  trunk:
+    - AFNetworking
+    - cmark
+    - DGCollectionViewLeftAlignFlowLayout
+    - Down
+    - DTCoreText
+    - DTFoundation
+    - FFDropDownMenu
+    - FlowCommoniOS
+    - GBDeviceInfo
+    - GZIP
+    - HPGrowingTextView
+    - JitsiMeetSDK
+    - KeychainAccess
+    - KTCenterFlowLayout
+    - libbase58
+    - libPhoneNumber-iOS
+    - MatomoTracker
+    - MatrixKit
+    - MatrixSDK
+    - OLMKit
+    - ReadMoreTextView
+    - Realm
+    - Reusable
+    - SwiftGen
+    - SwiftLint
+    - zxcvbn-ios
+    - ZXingObjC
+
+SPEC CHECKSUMS:
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  cmark: 1d9ad0375e3b9fa281732e992467903606015520
+  DGCollectionViewLeftAlignFlowLayout: a0fa58797373ded039cafba8133e79373d048399
+  Down: 276f2c3eeeaf30345873bdad25f44b2640fcfa3a
+  DTCoreText: e92f4cf6b36d9d71ce4436d12cf089d74ab0596b
+  DTFoundation: e7781d9fd2f202bfd451fbbf8cab71ce83b46498
+  FFDropDownMenu: 3dc2b1e47d349687b9d451282a3b6bae3e0e8c7a
+  FlowCommoniOS: 2b87d7878b7a2a29c80379c00eeb78aa4590831c
+  GBDeviceInfo: f29249891446a392e64b9c9bbef9554aad2a6beb
+  GZIP: 416858efbe66b41b206895ac6dfd5493200d95b3
+  HPGrowingTextView: 88a716d97fb853bcb08a4a08e4727da17efc9b19
+  JitsiMeetSDK: cbbfc8ace742e148a8477f32b8b95ef5578acac6
+  KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
+  KTCenterFlowLayout: 6e02b50ab2bd865025ae82fe266ed13b6d9eaf97
+  libbase58: 7c040313537b8c44b6e2d15586af8e21f7354efd
+  libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
+  MatomoTracker: a59ec4da0f580be57bdc6baa708a71a86532a832
+  MatrixKit: 2caaa6d693a84c19709cf303ec4750c5b099297b
+  MatrixSDK: b4a837585997c462761b8faa894cd490e24acb11
+  OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
+  ReadMoreTextView: 19147adf93abce6d7271e14031a00303fe28720d
+  Realm: 042bbb59227a0159eda397b8a5a49fbd67495ce7
+  Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
+  SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
+  SwiftLint: dfd554ff0dff17288ee574814ccdd5cea85d76f7
+  zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
+  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
+
+PODFILE CHECKSUM: 7b434dcfa3085a0dc839a5562953411cd031e199
+
+COCOAPODS: 1.9.3

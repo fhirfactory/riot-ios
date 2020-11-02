@@ -21,6 +21,8 @@ import UIKit
 /// Color constants for the ACT Health Lingo customisation
 @objcMembers
 class LingoTheme: NSObject, Theme {
+    var userInterfaceStyle: UIUserInterfaceStyle
+    
 
     var identifier: String = "lingo"
     

@@ -260,6 +260,7 @@
 "settings_copyright" = "Të drejta kopjimi";
 "settings_term_conditions" = "Terma & Kushte";
 "settings_privacy_policy" = "Rregulla Privatësie";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Njoftime Palësh të Treta";
 "settings_clear_cache" = "Pastroje fshehtinën";
 "settings_change_password" = "Ndryshoni fjalëkalimin";
@@ -431,6 +432,7 @@
 "settings_fail_to_update_profile" = "S’arrihet të përditësohet profili";
 "settings_pin_rooms_with_missed_notif" = "Fikso dhomat me njoftime të humbura";
 "settings_pin_rooms_with_unread" = "Fikso dhomat me mesazhe të palexuar";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_labs_create_conference_with_jitsi" = "Krijoni thirrje konferencë me Jitsi-n";
 "settings_fail_to_update_password" = "S’arrihet të përditësohet fjalëkalimi";
 "settings_deactivate_my_account" = "Çaktivizoje llogarinë time";
@@ -1033,6 +1035,10 @@
 "room_member_power_level_short_admin" = "Përgjegjës";
 "room_member_power_level_short_moderator" = "Moderator";
 "room_member_power_level_short_custom" = "Vetjak";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 // Recover from private key
 "key_backup_recover_from_private_key_info" = "Po rikthehet kopjeruajtje…";
 // MARK: Clients

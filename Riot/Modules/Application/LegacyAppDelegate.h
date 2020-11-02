@@ -126,6 +126,10 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
 
 - (UIAlertController*)showErrorAsAlert:(NSError*)error;
 - (UIAlertController*)showAlertWithTitle:(NSString*)title message:(NSString*)message;
+/**
+ Refresh the application icon badge number
+ */
+- (void)refreshApplicationIconBadgeNumber;
 
 #pragma mark - Matrix Sessions handling
 

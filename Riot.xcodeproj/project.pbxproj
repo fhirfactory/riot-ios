@@ -14,6 +14,12 @@
 		1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */; };
 		1438875E253860580076981D /* LingoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438875D253860570076981D /* LingoTheme.swift */; };
 		143887652538605E0076981D /* LingoTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1438875D253860570076981D /* LingoTheme.swift */; };
+		144B5DDE2546D03800AF2EAB /* RoomPowerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D44998243CD73700959523 /* RoomPowerLevel.swift */; };
+		144B5DE52546D03900AF2EAB /* RoomPowerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D44998243CD73700959523 /* RoomPowerLevel.swift */; };
+		144B5DE62546D03900AF2EAB /* RoomPowerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D44998243CD73700959523 /* RoomPowerLevel.swift */; };
+		144B5DED2546D08000AF2EAB /* RoomPowerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D44998243CD73700959523 /* RoomPowerLevel.swift */; };
+		144B5DF42546D08100AF2EAB /* RoomPowerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D44998243CD73700959523 /* RoomPowerLevel.swift */; };
+		144B5DFB2546D08400AF2EAB /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD756324D2AD5100BA7B37 /* BuildSettings.swift */; };
 		14D6DCB1253575A500C29F66 /* AuthenticationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */; };
 		24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BBE81E7009EC00A9B29C /* MXRoom+Riot.m */; };
@@ -6481,9 +6487,11 @@
 				1411D81F252D7534009D8908 /* LingoTests.swift in Sources */,
 				1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */,
 				1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */,
+				144B5DF42546D08100AF2EAB /* RoomPowerLevel.swift in Sources */,
 				1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */,
 				14D6DCB1253575A500C29F66 /* AuthenticationViewControllerTests.swift in Sources */,
 				1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */,
+				144B5DFB2546D08400AF2EAB /* BuildSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6496,6 +6504,7 @@
 				32242F1821E8FBF800725742 /* DefaultTheme.swift in Sources */,
 				B1664BCA20F4E67600808783 /* ShareViewController.m in Sources */,
 				B1664BC620F4E67600808783 /* FallbackViewController.m in Sources */,
+				144B5DDE2546D03800AF2EAB /* RoomPowerLevel.swift in Sources */,
 				32242F1621E8FBCC00725742 /* ThemeService.m in Sources */,
 				24EEE5A31F23A8C300B3C705 /* AvatarGenerator.m in Sources */,
 				32FD757224D2BEF700BA7B37 /* InfoPlist.swift in Sources */,
@@ -6528,6 +6537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32FD757324D2BEF700BA7B37 /* InfoPlist.swift in Sources */,
+				144B5DE52546D03900AF2EAB /* RoomPowerLevel.swift in Sources */,
 				32FD757924D2C9BA00BA7B37 /* Bundle.swift in Sources */,
 				92726A471F58737A004AD26F /* IntentHandler.m in Sources */,
 				32FD755324D074C700BA7B37 /* CommonConfiguration.swift in Sources */,
@@ -6546,6 +6556,7 @@
 				EC85D757247E700F002C44C9 /* NSEMemoryStore.swift in Sources */,
 				EC2B4EF224A1EF34005EB739 /* DataProtectionHelper.swift in Sources */,
 				EC85D7462477E5F7002C44C9 /* NotificationService.swift in Sources */,
+				144B5DE62546D03900AF2EAB /* RoomPowerLevel.swift in Sources */,
 				32FD755424D074C700BA7B37 /* CommonConfiguration.swift in Sources */,
 				EC9A3EC624E1632C00A8CFAE /* PushNotificationStore.swift in Sources */,
 				32FD757424D2BEF700BA7B37 /* InfoPlist.swift in Sources */,
@@ -7278,6 +7289,7 @@
 				32FD754D24D06EBF00BA7B37 /* RiotSettings.swift in Sources */,
 				32FD757124D2BEF700BA7B37 /* InfoPlist.swift in Sources */,
 				32FD756524D2AD5100BA7B37 /* BuildSettings.swift in Sources */,
+				144B5DED2546D08000AF2EAB /* RoomPowerLevel.swift in Sources */,
 				32FD755524D0754500BA7B37 /* AppConfiguration.swift in Sources */,
 				32FD755124D074C700BA7B37 /* CommonConfiguration.swift in Sources */,
 				F083BEA51E70356E00A9B29C /* RiotTests.m in Sources */,
@@ -7491,7 +7503,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotShareExtension/SupportingFiles/RiotShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7535,7 +7547,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7577,7 +7589,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiriIntents/SiriIntents.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7615,7 +7627,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7655,7 +7667,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotNSE/RiotNSE.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7693,7 +7705,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7844,7 +7856,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -7882,7 +7894,7 @@
 				CODE_SIGN_ENTITLEMENTS = Riot/SupportingFiles/Riot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20201012115500;
+				CURRENT_PROJECT_VERSION = 20201019083500;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

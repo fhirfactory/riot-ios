@@ -279,6 +279,7 @@
 "settings_global_settings_info" = "全局通知设置可在 %@ 的网页客户端中修改";
 "settings_pin_rooms_with_missed_notif" = "置顶含有错过的通知的聊天室";
 "settings_pin_rooms_with_unread" = "置顶含有未读消息的聊天室";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "%@ 的通知请求被拒绝，请在系统设置中允许";
 "settings_unignore_user" = "显示所有来自 %@ 的消息？";
 "settings_contacts_discover_matrix_users" = "使用电子邮件和手机号码来发现用户";
@@ -290,6 +291,7 @@
 "settings_copyright" = "版权";
 "settings_term_conditions" = "条款和条件";
 "settings_privacy_policy" = "隐私政策";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "第三方通知";
 "settings_send_crash_report" = "发送崩溃和使用数据";
 "settings_clear_cache" = "清空缓存";
@@ -1000,6 +1002,10 @@
 "room_member_power_level_moderator_in" = "在 %@ 的主持人";
 "room_member_power_level_short_admin" = "管理员";
 "room_member_power_level_short_moderator" = "主持人";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 "security_settings_crosssigning" = "交叉签名";
 "security_settings_crosssigning_info_not_bootstrapped" = "交叉签名还没有被设置。";
 "security_settings_crosssigning_info_exists" = "您的帐户有一个交叉签名身份，但是还没有被这个会话信任。完全安全的会话。";

@@ -134,12 +134,14 @@ class AlternateHomeViewController: RecentsViewController {
         if mxSessions.first == nil {
             return
         }
-        HomeDataSource = AlternateHomeDataSource(matrixSession: mxSessions.first as? MXSession)
+        if HomeDataSource == nil {
+            HomeDataSource = AlternateHomeDataSource(matrixSession: mxSessions.first as? MXSession)
+        }
         HomeDataSource.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
         super.setValue(HomeDataSource, forKey: "dataSource")
         super.viewWillAppear(animated)
         recentsTableView.dataSource = HomeDataSource
-        HomeDataSource.setViewMode(m: HomeViewMode.Chats)
+        HomeDataSource.setViewMode(m: HomeDataSource._viewMode)
         
         // For situations where we override the theme using BuildSettings we need to make sure it is applied before referencing it further
         // This requires us to override the selection using the default string name

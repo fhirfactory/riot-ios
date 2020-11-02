@@ -380,6 +380,7 @@
 "settings_global_settings_info" = "Mae gosodiadau hysbysu eang ar gael ar eich cleient %@ gwe";
 "settings_pin_rooms_with_missed_notif" = "Pinio ystafelloedd gyda hysbysiadau heb eu gweld";
 "settings_pin_rooms_with_unread" = "Pinio ystafelloedd gyda negeseuon heb eu darllen";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Gwrthodir hysbysiadau i %@, caniatewch nhw yn eich gosodiadau dyfais";
 "settings_enable_callkit" = "Galw integredig";
 "settings_callkit_info" = "Derbyn galwadau sy'n dod i mewn ar eich sgrin clo. Gwelwch eich galwadau Element yn hanes galwadau'r system. Os yw iCloud wedi'i alluogi, bydd yr hanes galw hwn yn cael ei rannu gydag Apple.";
@@ -407,6 +408,7 @@
 "settings_copyright" = "Hawlfraint";
 "settings_term_conditions" = "Telerau ac Amodau";
 "settings_privacy_policy" = "Polisi Preifatrwydd";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Hysbysiadau Trydydd Parti";
 "settings_send_crash_report" = "Anfonwch ddata namau a defnydd dienw";
 "settings_enable_rageshake" = "Ysgwydiad blin i roi gwybod am nam";
@@ -1001,6 +1003,10 @@
 "room_member_power_level_short_admin" = "Gweinyddwr";
 "room_member_power_level_short_moderator" = "Cymedrolwr";
 "room_member_power_level_short_custom" = "Addasiedig";
+"room_member_power_level_short_user" = "User";
+
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 "security_settings_crosssigning" = "CROES-LOFNODI";
 "security_settings_crosssigning_info_not_bootstrapped" = "Nid yw croes-lofnodi eto wedi ei gyflunio.";
 "security_settings_crosssigning_info_exists" = "Mae gan eich cyfrif hunaniaeth croes-lofnodi, ond nid yw'r sesiwn hon yn ymddiried ynddo eto. Cwblhewch diogelwch y sesiwn hon.";

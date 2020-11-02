@@ -512,6 +512,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
             previousPageReference.selectionChangedComplete = {
                 self.createButton.isEnabled = self.creationParameters.name?.count ?? 0 >= Constants.roomNameMinimumNumberOfChars && self.previousPageReference.selectedItems.count > 0
                 cell.EmbeddedCollectionView.reloadData()
+                self.updateSections()
             }
             return cell
         }

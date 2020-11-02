@@ -22,11 +22,11 @@ final class PasswordStrengthView: UIView, NibOwnerLoadable {
     // MARK: - Constants
      
     private enum StrengthColors {
-        static let gray = UIColor(unused: true, rgb: 0xff9E9E9E)
-        static let red = UIColor(unused: true, rgb: 0xffF56679)
-        static let orange = UIColor(unused: true, rgb: 0xffFFC666)
-        static let yellow = UIColor(unused: true, rgb: 0xffF8E71C)
-        static let green = UIColor(unused: true, rgb: 0xff7AC9A1)
+        static let gray = UIColor(rgbHex: 0xff9E9E9E)
+        static let red = UIColor(rgbHex: 0xffF56679)
+        static let orange = UIColor(rgbHex: 0xffFFC666)
+        static let yellow = UIColor(rgbHex: 0xffF8E71C)
+        static let green = UIColor(rgbHex: 0xff7AC9A1)
     }
     
     // MARK: - Properties

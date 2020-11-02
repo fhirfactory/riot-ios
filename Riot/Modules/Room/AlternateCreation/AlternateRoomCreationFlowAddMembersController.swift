@@ -126,6 +126,10 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
         }
     }
     
+    override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
     override func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText != "" {
             if #available(iOS 13.0, *) {

@@ -2149,7 +2149,7 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
         UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView*)view;
         tableViewHeaderFooterView.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
         tableViewHeaderFooterView.textLabel.font = [UIFont systemFontOfSize:15];
-        tableViewHeaderFooterView.backgroundColor = ThemeService.shared.theme.headerBackgroundColor;
+        tableViewHeaderFooterView.contentView.backgroundColor = ThemeService.shared.theme.headerBackgroundColor;
     }
 }
 

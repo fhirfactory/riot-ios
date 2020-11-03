@@ -257,7 +257,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         }
         view.backgroundColor = theme.headerBackgroundColor
         OptionsView.backgroundColor = theme.headerBackgroundColor
-        LoadingBackgroundView.backgroundColor = theme.backgroundColor
+        LoadingBackgroundView.backgroundColor = theme.headerBackgroundColor
         
         updateSections()
     }
@@ -570,5 +570,13 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
         default:
             break
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == Constants.roomNameTextFieldTag {
+            textField.resignFirstResponder()
+            return false
+        }
+        return true
     }
 }

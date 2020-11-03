@@ -2838,7 +2838,7 @@ internal enum VectorL10n {
   internal static var roomParticipantsActionSetModerator: String { 
     return VectorL10n.tr("Vector", "room_participants_action_set_moderator") 
   }
-  /// Start new chat
+  /// Start Chat
   internal static var roomParticipantsActionStartNewChat: String { 
     return VectorL10n.tr("Vector", "room_participants_action_start_new_chat") 
   }

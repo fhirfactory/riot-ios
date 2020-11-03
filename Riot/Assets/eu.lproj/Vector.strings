@@ -21,6 +21,10 @@
 "or" = "edo";
 "invite" = "Gonbidatu";
 "warning" = "Abisua";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Titles
 "title_home" = "Hasiera";
 "title_favourites" = "Gogokoak";

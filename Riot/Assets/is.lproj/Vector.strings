@@ -5,6 +5,10 @@
 "title_rooms" = "Spjallrásir";
 "title_groups" = "Samfélög";
 "warning" = "Aðvörun";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Skoða";
 "next" = "Næsta";

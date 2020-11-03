@@ -5,6 +5,10 @@
 "title_rooms" = "聊天室";
 "title_groups" = "社群";
 "warning" = "警告";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "檢視";
 "next" = "下一步";

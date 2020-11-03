@@ -5,6 +5,10 @@
 "title_rooms" = "Szobák";
 "title_groups" = "Közösségek";
 "warning" = "Figyelmeztetés";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Megtekintés";
 "back" = "Vissza";

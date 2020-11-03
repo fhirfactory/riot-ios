@@ -4,6 +4,10 @@
 "title_people" = "対話";
 "title_rooms" = "部屋";
 "warning" = "警告";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "表示";
 "next" = "次へ";

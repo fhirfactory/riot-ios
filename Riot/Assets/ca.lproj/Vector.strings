@@ -4,6 +4,10 @@
 "title_people" = "Gent";
 "title_rooms" = "Sales";
 "warning" = "Avís";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Veure";
 "next" = "Següent";

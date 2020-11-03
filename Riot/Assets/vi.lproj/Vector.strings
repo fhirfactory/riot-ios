@@ -3,6 +3,10 @@
 "title_favourites" = "Yêu thích";
 "title_people" = "Danh bạ";
 "title_rooms" = "Phòng chat";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Xem";
 "next" = "Kế tiếp";

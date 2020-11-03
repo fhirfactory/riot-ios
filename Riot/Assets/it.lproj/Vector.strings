@@ -60,6 +60,10 @@
 "auth_reset_password_message" = "Per ripristinare la password inserisci l'indirizzo email associato al tuo account:";
 // String for App Store
 "store_short_description" = "Conversazioni sicure e decentralizzate";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Visualizza";
 "back" = "Indietro";

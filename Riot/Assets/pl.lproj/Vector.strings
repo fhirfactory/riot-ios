@@ -5,6 +5,10 @@
 "title_rooms" = "Pokoje";
 "title_groups" = "Społeczności";
 "warning" = "Ostrzeżenie";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Widok";
 "back" = "Powrót";

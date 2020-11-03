@@ -4,6 +4,10 @@
 "title_people" = "Люди";
 "title_rooms" = "Комнаты";
 "warning" = "Предупреждение";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Просмотр";
 "back" = "Назад";

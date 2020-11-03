@@ -7,6 +7,10 @@
 // Actions
 "view" = "Ansehen";
 "invite" = "Einladen";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Room Details
 "room_details_title" = "Raum Details";
 "title_favourites" = "Favoriten";

@@ -8,6 +8,10 @@
 "title_rooms" = "Ystafelloedd";
 "title_groups" = "Cymunedau";
 "warning" = "Rhybudd";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Gweld";
 "next" = "Nesaf";

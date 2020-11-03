@@ -561,7 +561,10 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
     if (BuildSettings.roomSettingsScreenAllowChangingHistorySettings)
     {
         Section *sectionHistory = [Section sectionWithTag:SECTION_TAG_HISTORY];
-        [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_ANYONE];
+        if (BuildSettings.roomSettingsScreenShowAnyoneHistoryOption)
+        {
+            [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_ANYONE];
+        }
         [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_MEMBERS_ONLY];
         [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_MEMBERS_ONLY_SINCE_INVITED];
         [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_MEMBERS_ONLY_SINCE_JOINED];
@@ -2146,6 +2149,7 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
         UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView*)view;
         tableViewHeaderFooterView.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
         tableViewHeaderFooterView.textLabel.font = [UIFont systemFontOfSize:15];
+        tableViewHeaderFooterView.backgroundColor = ThemeService.shared.theme.headerBackgroundColor;
     }
 }
 

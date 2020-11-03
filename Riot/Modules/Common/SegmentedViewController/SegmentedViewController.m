@@ -82,6 +82,11 @@
     viewControllers = someViewControllers;
     sectionTitles = titles;
     _selectedIndex = defaultSelected;
+    NSMutableArray<NSNumber*> *visibleMutable = [NSMutableArray new];
+    for (int i = 0; i < someViewControllers.count; i++){
+        [visibleMutable addObject:@(YES)];
+    }
+    _Visible = visibleMutable;
 }
 
 - (void)destroy
@@ -262,88 +267,108 @@
 
 - (void)createSegmentedViews
 {
+    if (!self.selectionContainer){
+        return; //Don't allow the view to be updated if it hasn't loaded
+    }
+    
+    //clear the selection area
+    if (_selectionContainer.subviews.count){
+        NSArray<UIView *> *subviews = _selectionContainer.subviews;
+        for (UIView* view in subviews) {
+            [view removeFromSuperview];
+        }
+    }
+    
     NSMutableArray* labels = [[NSMutableArray alloc] init];
     
-    NSUInteger count = viewControllers.count;
+    NSUInteger count = 0;// = viewControllers.count;
     
-    for (NSUInteger index = 0; index < count; index++)
+    for (int i = 0; i < viewControllers.count; i++) {
+        if ([_Visible[i] isEqual:@(YES)]){
+            count += 1;
+        }
+    }
+    
+    for (NSUInteger index = 0; index < viewControllers.count; index++)
     {
-        // create programmatically each label
-        UILabel *label = [[UILabel alloc] init];
-        
-        label.text = sectionTitles[index];
-        label.font = [UIFont systemFontOfSize:17];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = _sectionHeaderTintColor;
-        label.backgroundColor = [UIColor clearColor];
-        label.accessibilityIdentifier = [NSString stringWithFormat:@"SegmentedVCSectionLabel%tu", index];
-        
-        // the constraint defines the label frame
-        // so ignore any autolayout stuff
-        [label setTranslatesAutoresizingMaskIntoConstraints:NO];
-        
-        // add the label before setting the constraints
-        [self.selectionContainer addSubview:label];
-    
-        NSLayoutConstraint *leftConstraint;
-        if (labels.count)
-        {
-            leftConstraint = [NSLayoutConstraint constraintWithItem:label
-                                                          attribute:NSLayoutAttributeLeading
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:labels[index - 1]
-                                                          attribute:NSLayoutAttributeTrailing
-                                                         multiplier:1.0
-                                                           constant:0];
-        }
-        else
-        {
-            leftConstraint = [NSLayoutConstraint constraintWithItem:label
-                                         attribute:NSLayoutAttributeLeading
-                                         relatedBy:NSLayoutRelationEqual
-                                            toItem:self.selectionContainer
-                                         attribute:NSLayoutAttributeLeading
-                                        multiplier:1.0
-                                          constant:0];
-        }
-        
-        NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:label
-                                                                           attribute:NSLayoutAttributeWidth
-                                                                           relatedBy:NSLayoutRelationEqual
-                                                                              toItem:self.selectionContainer
-                                                                           attribute:NSLayoutAttributeWidth
-                                                                          multiplier:1.0 / count
-                                                                            constant:0];
-        
-        NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:label
-                                                                         attribute:NSLayoutAttributeTop
-                                                                         relatedBy:NSLayoutRelationEqual
-                                                                            toItem:self.selectionContainer
-                                                                         attribute:NSLayoutAttributeTop
-                                                                        multiplier:1.0
-                                                                          constant:0];
-        
-        
-        
-        NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:label
-                                                                            attribute:NSLayoutAttributeHeight
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:self.selectionContainer
-                                                                            attribute:NSLayoutAttributeHeight
-                                                                           multiplier:1.0
-                                                                             constant:0];
-        
-        
-        // set the constraints
-        [NSLayoutConstraint activateConstraints:@[leftConstraint, rightConstraint, topConstraint, heightConstraint]];
-        
-        UITapGestureRecognizer *labelTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onLabelTouch:)];
-        [labelTapGesture setNumberOfTouchesRequired:1];
-        [labelTapGesture setNumberOfTapsRequired:1];
-        label.userInteractionEnabled = YES;
-        [label addGestureRecognizer:labelTapGesture];
+        if ([_Visible[index] isEqual:@(YES)]){
+            // create programmatically each label
+            UILabel *label = [[UILabel alloc] init];
             
-        [labels addObject:label];
+            label.text = sectionTitles[index];
+            label.font = [UIFont systemFontOfSize:17];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.textColor = _sectionHeaderTintColor;
+            label.backgroundColor = [UIColor clearColor];
+            label.accessibilityIdentifier = [NSString stringWithFormat:@"SegmentedVCSectionLabel%tu", index];
+            
+            // the constraint defines the label frame
+            // so ignore any autolayout stuff
+            [label setTranslatesAutoresizingMaskIntoConstraints:NO];
+            
+            // add the label before setting the constraints
+            [self.selectionContainer addSubview:label];
+        
+            NSLayoutConstraint *leftConstraint;
+            if (labels.count)
+            {
+                leftConstraint = [NSLayoutConstraint constraintWithItem:label
+                                                              attribute:NSLayoutAttributeLeading
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:labels[labels.count - 1]
+                                                              attribute:NSLayoutAttributeTrailing
+                                                             multiplier:1.0
+                                                               constant:0];
+            }
+            else
+            {
+                leftConstraint = [NSLayoutConstraint constraintWithItem:label
+                                             attribute:NSLayoutAttributeLeading
+                                             relatedBy:NSLayoutRelationEqual
+                                                toItem:self.selectionContainer
+                                             attribute:NSLayoutAttributeLeading
+                                            multiplier:1.0
+                                              constant:0];
+            }
+            
+            NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:label
+                                                                               attribute:NSLayoutAttributeWidth
+                                                                               relatedBy:NSLayoutRelationEqual
+                                                                                  toItem:self.selectionContainer
+                                                                               attribute:NSLayoutAttributeWidth
+                                                                              multiplier:1.0 / count
+                                                                                constant:0];
+            
+            NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:label
+                                                                             attribute:NSLayoutAttributeTop
+                                                                             relatedBy:NSLayoutRelationEqual
+                                                                                toItem:self.selectionContainer
+                                                                             attribute:NSLayoutAttributeTop
+                                                                            multiplier:1.0
+                                                                              constant:0];
+            
+            
+            
+            NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:label
+                                                                                attribute:NSLayoutAttributeHeight
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:self.selectionContainer
+                                                                                attribute:NSLayoutAttributeHeight
+                                                                               multiplier:1.0
+                                                                                 constant:0];
+            
+            
+            // set the constraints
+            [NSLayoutConstraint activateConstraints:@[leftConstraint, rightConstraint, topConstraint, heightConstraint]];
+            
+            UITapGestureRecognizer *labelTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onLabelTouch:)];
+            [labelTapGesture setNumberOfTouchesRequired:1];
+            [labelTapGesture setNumberOfTapsRequired:1];
+            label.userInteractionEnabled = YES;
+            [label addGestureRecognizer:labelTapGesture];
+                
+            [labels addObject:label];
+        }
     }
     
     sectionLabels = labels;
@@ -403,6 +428,33 @@
     [NSLayoutConstraint activateConstraints:@[leftMarkerViewConstraint, widthConstraint, bottomConstraint, heightConstraint]];
 }
 
+- (long)getRealIndexFor:(long)baseIndex{
+    long actualIndex = 0;
+    //if (actualIndex != _selectedIndex)
+    {
+        long tempIndex = -1;
+        for (; actualIndex < viewControllers.count; actualIndex++){
+            if ([_Visible[actualIndex] isEqual:@(YES)]){
+                tempIndex++;
+                if (tempIndex == _selectedIndex){
+                    break;
+                }
+            }
+        }
+    }
+    return actualIndex;
+}
+
+- (long)getFakeIndexFor:(long)realIndex{
+    long index = -1;
+    for (long i = 0; i <= realIndex; i++){
+        if ([_Visible[i] isEqual:@(YES)]){
+            index++;
+        }
+    }
+    return index;
+}
+
 - (void)displaySelectedViewController
 {
     // Sanity check
@@ -414,7 +466,7 @@
         
         if (index != NSNotFound)
         {
-            UILabel* label = sectionLabels[index];
+            UILabel* label = sectionLabels[[self getFakeIndexFor:index]];
             label.font = [UIFont systemFontOfSize:17];
         }
         
@@ -423,7 +475,9 @@
         [_selectedViewController.view removeFromSuperview];
         [_selectedViewController removeFromParentViewController];
         
-        [NSLayoutConstraint deactivateConstraints:@[displayedVCTopConstraint, displayedVCLeftConstraint, displayedVCWidthConstraint, displayedVCHeightConstraint]];
+        if (displayedVCTopConstraint){
+            [NSLayoutConstraint deactivateConstraints:@[displayedVCTopConstraint, displayedVCLeftConstraint, displayedVCWidthConstraint, displayedVCHeightConstraint]];
+        }
     }
     
     UILabel* label = sectionLabels[_selectedIndex];
@@ -441,9 +495,9 @@
                                                              constant:0];
 
     [NSLayoutConstraint activateConstraints:@[leftMarkerViewConstraint]];
-
+    
     // Set the new selected view controller
-    _selectedViewController = viewControllers[_selectedIndex];
+    _selectedViewController = viewControllers[[self getRealIndexFor:_selectedIndex]];
 
     // Make iOS invoke selectedViewController viewWillAppear when the segmented view is already visible
     if (isViewAppeared)

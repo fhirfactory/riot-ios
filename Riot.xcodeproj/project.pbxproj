@@ -792,6 +792,8 @@
 		EB54294125501CA800AFF8FF /* RoleFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */; };
 		EB6B1619253415E400BBDCC6 /* EmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */; };
 		EB6B16202534167A00BBDCC6 /* EmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */; };
+		EBA8AB1F25515D5F00FA8383 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */; };
+		EBA8AB2725515DDA00FA8383 /* HomeTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */; };
 		EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */; };
 		EBAC79922543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */; };
 		EBAC79AE2543CDB800A0B1BF /* SearchViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */; };
@@ -799,6 +801,8 @@
 		EBAC79BE2543FA5700A0B1BF /* SelectableFilteredSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */; };
 		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
+		EBECB045255165ED0024EB47 /* TabbedHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */; };
+		EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
 		EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */; };
 		EC1CA86124C1DEC400DE9EBF /* EnterPinCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */; };
@@ -2060,6 +2064,8 @@
 		EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleFilteredSearchController.swift; sourceTree = "<group>"; };
 		EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmailTableViewCell.xib; sourceTree = "<group>"; };
 		EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTableViewCell.swift; sourceTree = "<group>"; };
+		EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
+		EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTabViewController.xib; sourceTree = "<group>"; };
 		EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlternateRoomCreationFlowAddMembersController.xib; sourceTree = "<group>"; };
 		EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateRoomCreationFlowAddMembersController.swift; sourceTree = "<group>"; };
 		EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewSection.swift; sourceTree = "<group>"; };
@@ -2068,6 +2074,8 @@
 		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewDataSource.swift; sourceTree = "<group>"; };
+		EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedHomeViewController.swift; sourceTree = "<group>"; };
+		EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabbedHomeViewController.xib; sourceTree = "<group>"; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
 		EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewAction.swift; sourceTree = "<group>"; };
 		EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModel.swift; sourceTree = "<group>"; };
@@ -5060,6 +5068,10 @@
 				EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */,
 				EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */,
 				EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */,
+				EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */,
+				EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */,
+				EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */,
+				EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */,
 			);
 			path = Alternate;
 			sourceTree = "<group>";
@@ -6125,6 +6137,7 @@
 				B1B5579C20EF575B00210D55 /* ForgotPasswordInputsView.xib in Resources */,
 				EB16B9FA254562670096C90F /* RoomCreationCollectionViewCell.xib in Resources */,
 				F083BE011E7009ED00A9B29C /* third_party_licenses.html in Resources */,
+				EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */,
 				ECFBD5EA250F97FC00DD5F5A /* RoomCreationCollapsedBubbleCell.xib in Resources */,
 				ECF57A89250A687B004BBF9D /* TextViewTableViewCell.xib in Resources */,
 				EC3B066A24AC6ADE000DF9BF /* CrossSigningSetupBannerCell.xib in Resources */,
@@ -6224,6 +6237,7 @@
 				B1B557DD20EF5FBB00210D55 /* FilesSearchTableViewCell.xib in Resources */,
 				B1B5590320EF768F00210D55 /* RoomSelectedStickerBubbleCell.xib in Resources */,
 				B1B5573F20EE6C4D00210D55 /* SegmentedViewController.xib in Resources */,
+				EBA8AB2725515DDA00FA8383 /* HomeTabViewController.xib in Resources */,
 				B1B5581E20EF625800210D55 /* RoomTitleView.xib in Resources */,
 				B1B558C020EF768F00210D55 /* RoomIncomingEncryptedTextMsgWithoutSenderInfoBubbleCell.xib in Resources */,
 				B1B5572420EE6C4D00210D55 /* RoomViewController.xib in Resources */,
@@ -7097,6 +7111,7 @@
 				B18DEDDA243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewState.swift in Sources */,
 				B1B9DEED22EB34EF0065E677 /* ReactionHistoryCoordinator.swift in Sources */,
 				ECFBD602250FA98200DD5F5A /* RoomCreationModalCoordinatorType.swift in Sources */,
+				EBA8AB1F25515D5F00FA8383 /* HomeTabViewController.swift in Sources */,
 				B1DCC62A22E60D1000625807 /* EmojiMartService.swift in Sources */,
 				EC711BA924A63B58008F830C /* SecureBackupSetupCoordinatorBridgePresenter.swift in Sources */,
 				B1B558C720EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithPaginationTitleBubbleCell.m in Sources */,
@@ -7228,6 +7243,7 @@
 				3232AB522256558300AD6A5C /* TemplateScreenViewModel.swift in Sources */,
 				B1B5575B20EE6C4D00210D55 /* HomeFilesSearchViewController.m in Sources */,
 				B139C22521FF01C100BB68EC /* KeyBackupRecoverFromPassphraseCoordinator.swift in Sources */,
+				EBECB045255165ED0024EB47 /* TabbedHomeViewController.swift in Sources */,
 				B1BEE71623DF2ACF0003A4CB /* UserVerificationCoordinatorBridgePresenter.swift in Sources */,
 				B1098BFD21ECFE65000DDA48 /* PasswordStrengthManager.swift in Sources */,
 				B1B558F520EF768F00210D55 /* RoomOutgoingTextMsgWithPaginationTitleBubbleCell.m in Sources */,

@@ -11,13 +11,16 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
+
 // limitations under the License.
 //
 
 import Foundation
-class AlternateInviteViewController: RecentsViewController {
-    
+
+class HomeTabViewController: RecentsViewController {
     var HomeDataSource: AlternateHomeDataSource!
+    var Mode: HomeViewMode = HomeViewMode.Chats
+    var NewDataReceivedDelegate: (() -> Void)?
     
     static override func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
@@ -27,21 +30,22 @@ class AlternateInviteViewController: RecentsViewController {
         super.viewWillTransition(to: size, with: coordinator)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         self.recentsTableView.tag = Int(RecentsDataSourceMode.home.rawValue)
         self.navigationItem.title = AlternateHomeTools.getNSLocalized("room_recents_invites_section", in: "Vector")
         if let recentsDataSource = self.dataSource as? RecentsDataSource {
             recentsDataSource.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
         }
-        if mxSessions.first == nil {
+        if AppDelegate.theDelegate().mxSessions.first == nil {
             return
         }
-        HomeDataSource = AlternateHomeDataSource(matrixSession: mxSessions.first as? MXSession)
+        
         HomeDataSource.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
         recentsTableView.dataSource = HomeDataSource
-        HomeDataSource.setViewMode(m: HomeViewMode.Invites)
+        HomeDataSource.setViewMode(m: Mode)
         super.setValue(HomeDataSource, forKey: "dataSource")
-        super.viewWillAppear(animated)
+        
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -64,6 +68,8 @@ class AlternateInviteViewController: RecentsViewController {
     
     override func dataSource(_ dataSource: MXKDataSource!, didCellChange changes: Any!) {
         super.dataSource(dataSource, didCellChange: changes)
+        if let item = NewDataReceivedDelegate {
+            item()
+        }
     }
-    
 }

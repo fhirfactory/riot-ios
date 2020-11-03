@@ -247,6 +247,7 @@ TableViewSectionsDelegate>
 @property (nonatomic, strong) AuthenticatedSessionViewControllerFactory *authenticatedSessionViewControllerFactory;
 
 @property (nonatomic, strong) TableViewSections *tableViewSections;
+@property (nonatomic, strong) CameraPresenter *cameraPresenter;
 
 @end
 
@@ -3520,20 +3521,28 @@ TableViewSectionsDelegate>
     {
         return;
     }
-    SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
-    singleImagePickerPresenter.delegate = self;
-    
-    NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:USER_SETTINGS_PROFILE_PICTURE_INDEX
-                                                              sectionTag:SECTION_TAG_USER_SETTINGS];
-    if (indexPath)
-    {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (BuildSettings.sharingFeaturesEnabled){
+        SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
+        singleImagePickerPresenter.delegate = self;
         
-        UIView *sourceView = cell;
-        
-        [singleImagePickerPresenter presentFrom:self sourceView:sourceView sourceRect:sourceView.bounds animated:YES];
-        
-        self.imagePickerPresenter = singleImagePickerPresenter;
+        NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:USER_SETTINGS_PROFILE_PICTURE_INDEX
+                                                                  sectionTag:SECTION_TAG_USER_SETTINGS];
+        if (indexPath)
+        {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            
+            UIView *sourceView = cell;
+            
+            [singleImagePickerPresenter presentFrom:self sourceView:sourceView sourceRect:sourceView.bounds animated:YES];
+            
+            self.imagePickerPresenter = singleImagePickerPresenter;
+        }
+    } else {
+        CameraPresenter *cameraPresenter = [CameraPresenter new];
+        cameraPresenter.delegate = self;
+        [cameraPresenter presentCameraFrom:self with:@[MXKUTI.image] animated:YES];
+
+        self.cameraPresenter = cameraPresenter;
     }
 }
 
@@ -4141,6 +4150,21 @@ TableViewSectionsDelegate>
 {
     [presenter dismissWithAnimated:YES completion:nil];
     self.imagePickerPresenter = nil;
+    
+    newAvatarImage = [UIImage imageWithData:imageData];
+    
+    [self updateSections];
+}
+
+#pragma mark - CameraPresenterDelegate
+
+-(void)cameraPresenterDidCancel:(CameraPresenter *)cameraPresenter{
+    [cameraPresenter dismissWithAnimated:YES completion:nil];
+    self.cameraPresenter = nil;
+}
+
+-(void)cameraPresenter:(CameraPresenter *)presenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti {
+    [presenter dismissWithAnimated:YES completion:nil];
     
     newAvatarImage = [UIImage imageWithData:imageData];
     

@@ -132,6 +132,7 @@
 "room_creation_wait_for_creation" = "Mae ystafell eisoes yn cael ei greu. Arhoswch os gwelwch yn dda.";
 "room_creation_invite_another_user" = "Chwilio / gwahodd yn ôl Dynodwr Defnyddiwr, Enw, new e-bost";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Nid oes unrhyw weinydd adnabod wedi'i osod felly ni allwch ychwanegu cyfranogwr gydag e-bost.";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "CYFEIRIADUR YSTAFELLOEDD";
 "room_recents_directory_section_network" = "Rhwydwaith";

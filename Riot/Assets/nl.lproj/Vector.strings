@@ -840,6 +840,7 @@
 "reaction_history_title" = "Reacties";
 "auth_forgot_password_error_no_configured_identity_server" = "Er is geen identiteitsserver geconfigureerd: voeg er een toe om uw wachtwoord opnieuw in te stellen.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen deelnemers toevoegen via e-mail.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen gesprek beginnen met een contact via e-mail.";
 // Service terms
 "service_terms_modal_title" = "Dienstvoorwaarden";

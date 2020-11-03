@@ -729,6 +729,7 @@
 "auth_softlogout_clear_data_sign_out_title" = "Czy jesteś pewien?";
 "auth_softlogout_clear_data_sign_out_msg" = "Czy napewno chcesz wyczyścić wszystkie dane znajdujące się na tym urządzeniu? Zaloguj się ponownie, aby mieć dostęp do swojego konta, oraz wiadomości.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Serwer tożsamości nie został skonfigurowany, więc nie możesz dodać uczestnika przy użyciu adresu email.";
+"room_creation_add_members" = "Add Members";
 "room_participants_remove_third_party_invite_msg" = "Usuwanie zaproszeń nie jest wspierane przez obecną wersję API";
 "room_participants_invited_section" = "ZAPROSZENI";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Serwer tożsamości nie został skonfigurowany, więc nie możesz rozpocząć rozmowy używając adresu email.";

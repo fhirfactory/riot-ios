@@ -816,6 +816,7 @@
 "photo_library_access_not_granted" = "%@ hat keine Berechtigung zum Zugriff auf die Fotobibliothek. Bitte ändere die Datenschutzeinstellungen";
 "auth_forgot_password_error_no_configured_identity_server" = "Es ist kein Identitätsserver konfiguriert: Füge einen hinzu, um dein Kennwort zurückzusetzen.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Es ist kein Identitätsserver konfiguriert, sodass du keine Teilnehmenden mit einer E-Mail hinzufügen kannst.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Es ist kein Identitätsserver konfiguriert, sodass du keinen Chat mit einem Kontakt über eine E-Mail starten kannst.";
 // Service terms
 "service_terms_modal_title" = "Nutzungsbedingungen";

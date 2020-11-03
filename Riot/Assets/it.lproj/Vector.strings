@@ -678,6 +678,7 @@
 "auth_softlogout_clear_data_sign_out_msg" = "Sei sicuro di voler cancellare tutti i dati memorizzati su questo dispositivo? Accedi di nuovo per gestire dati e messaggi del tuo account.";
 "auth_softlogout_clear_data_sign_out" = "Disconnessione";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Non è stato configuato nessun Identity Server e quindi non è possibile aggiungere partecipanti con un'e-mail.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Non è stato configurato alcun Identity Server, quindi non è possibile avviare una chat con qualcuno tramite e-mail.";
 "room_event_action_reply" = "Rispondi";
 "room_event_action_edit" = "Modifica";

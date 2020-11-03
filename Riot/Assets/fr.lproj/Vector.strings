@@ -832,6 +832,7 @@
 "photo_library_access_not_granted" = "%@ n’a pas la permission pour accéder à la médiathèque, veuillez modifier les options de vie privée";
 "auth_forgot_password_error_no_configured_identity_server" = "Aucun serveur d’identité n’est configuré : ajoutez-en un pour réinitialiser votre mot de passe.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Aucun serveur d’identité n’est configuré donc vous ne pouvez pas ajouter de participant avec un e-mail.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Aucun serveur d’identité n’est configuré donc vous ne pouvez pas commencer de discussion avec un contact en utilisant un e-mail.";
 // Service terms
 "service_terms_modal_title" = "Conditions de service";

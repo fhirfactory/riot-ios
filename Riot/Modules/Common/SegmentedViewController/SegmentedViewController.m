@@ -419,8 +419,6 @@
         }
         if (bd.ShouldDisplay && [_Visible[i] isEqual:@(YES)]){
             displaying++;
-//            CGRect *badgeFrame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>);
-//            UIView *badgeContainer = [[UIView alloc] initWithFrame:<#(CGRect)#>]
             UIView *badge = [UIView new];
             UILabel *label = [UILabel new];
             label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.BadgeNumber];
@@ -453,6 +451,8 @@
             badge.translatesAutoresizingMaskIntoConstraints = NO; //https://www.innoq.com/en/blog/ios-auto-layout-problem/
             [badge layoutIfNeeded];
             badge.layer.cornerRadius = badge.frame.size.height / 2;
+            [badge setUserInteractionEnabled:NO];
+            [label setUserInteractionEnabled:NO];
             
             badgeViews[i] = badge;
         }

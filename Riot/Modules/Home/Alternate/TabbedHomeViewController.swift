@@ -25,9 +25,14 @@ class TabbedHomeViewController: UIViewController {
     
     func redrawBadges() {
         if homeDataSource != nil {
-            sections.setBadge(BadgeData(colour: UIColor.red, andBadgeNumber: Int(homeDataSource.missedChatCount), andShouldDisplay: homeDataSource.missedChatCount > 0), forLocation: 0)
-            sections.setBadge(BadgeData(colour: UIColor.red, andBadgeNumber: Int(homeDataSource.missedFavouriteCount), andShouldDisplay: homeDataSource.missedFavouriteCount > 0), forLocation: 1)
-            sections.setBadge(BadgeData(colour: UIColor.red, andBadgeNumber: Int(homeDataSource.missedLowPriorityCount), andShouldDisplay: homeDataSource.missedLowPriorityCount > 0), forLocation: 2)
+            let colourChats = (homeDataSource.missedHighlightNonFavouriteGroupDiscussionCount + homeDataSource.missedHighlightNonFavouriteDirectChatCount) > 0 ?
+                ThemeService.shared().theme.noticeColor : ThemeService.shared().theme.noticeSecondaryColor
+            sections.setBadge(BadgeData(colour: colourChats, andBadgeNumber: Int(homeDataSource.missedChatCount), andShouldDisplay: homeDataSource.missedChatCount > 0), forLocation: 0)
+            
+            let colourFavourites = homeDataSource.missedHighlightFavouriteDiscussionsCount > 0 ? ThemeService.shared().theme.noticeColor : ThemeService.shared().theme.noticeSecondaryColor
+            sections.setBadge(BadgeData(colour: colourFavourites, andBadgeNumber: Int(homeDataSource.missedFavouriteCount), andShouldDisplay: homeDataSource.missedFavouriteCount > 0), forLocation: 1)
+            
+            sections.setBadge(BadgeData(colour: ThemeService.shared().theme.noticeColor, andBadgeNumber: Int(homeDataSource.missedLowPriorityCount), andShouldDisplay: homeDataSource.missedLowPriorityCount > 0), forLocation: 2)
             sections.drawBadges()
         }
     }
@@ -47,7 +52,7 @@ class TabbedHomeViewController: UIViewController {
         }
     }
     
-    @objc func AddRoomClicked(){
+    @objc func AddRoomClicked() {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_start_chat_with", in: "Vector"), style: .default, handler: nil)) //create 1:1 chat
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_create_empty_room", in: "Vector"), style: .default, handler: {_ in
@@ -89,7 +94,11 @@ class TabbedHomeViewController: UIViewController {
         lowPriorityContainer.HomeDataSource = AlternateHomeDataSource(matrixSession: session)
         lowPriorityContainer.addMatrixSession(session)
         
-        sections.initWithTitles(["Chats", "Favourites", "Low Priority"], viewControllers: [chatsContainer, favouritesContainer, lowPriorityContainer], defaultSelected: 0)
+        sections.initWithTitles([
+            AlternateHomeTools.getNSLocalized("room_recents_chats_section", in: "Vector") as Any,
+            AlternateHomeTools.getNSLocalized("room_recents_favourites_section", in: "Vector") as Any,
+            AlternateHomeTools.getNSLocalized("room_recents_low_priority_section", in: "Vector") as Any
+        ], viewControllers: [chatsContainer, favouritesContainer, lowPriorityContainer], defaultSelected: 0)
         redrawSections()
         
         sections.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
@@ -109,6 +118,8 @@ class TabbedHomeViewController: UIViewController {
             ]
         )
         createRoomButton.layoutIfNeeded()
+        
+        navigationItem.title = AlternateHomeTools.getNSLocalized("title_home", in: "Vector")
     }
     
     @objc func displayList(_ l: RecentsDataSource) {

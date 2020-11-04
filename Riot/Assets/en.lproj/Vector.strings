@@ -174,12 +174,12 @@
 // Room recents
 "room_recents_directory_section" = "ROOM DIRECTORY";
 "room_recents_directory_section_network" = "Network";
-"room_recents_favourites_section" = "FAVOURITES";
+"room_recents_favourites_section" = "Favourites";
 "room_recents_people_section" = "PEOPLE";
-"room_recents_chats_section" = "CHATS";
+"room_recents_chats_section" = "Chats";
 "room_recents_conversations_section" = "ROOMS";
 "room_recents_no_conversation" = "No rooms";
-"room_recents_low_priority_section" = "LOW PRIORITY";
+"room_recents_low_priority_section" = "Low Priority";
 "room_recents_server_notice_section" = "SYSTEM ALERTS";
 "room_recents_invites_section" = "INVITES";
 "room_recents_start_chat_with" = "Create chat";

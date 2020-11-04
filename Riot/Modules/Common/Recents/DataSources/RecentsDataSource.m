@@ -1140,8 +1140,8 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
     [serverNoticeCellDataArray removeAllObjects];
     
     _missedFavouriteDiscussionsCount = _missedHighlightFavouriteDiscussionsCount = 0;
-    _missedDirectDiscussionsCount = _missedHighlightDirectDiscussionsCount = 0;
-    _missedGroupDiscussionsCount = _missedHighlightGroupDiscussionsCount = 0;
+    _missedHighlightNonFavouriteDirectChatCount = _missedDirectDiscussionsCount = _missedHighlightDirectDiscussionsCount = 0;
+    _missedHighlightNonFavouriteGroupDiscussionCount = _missedGroupDiscussionsCount = _missedHighlightGroupDiscussionsCount = 0;
     _missedFavouriteCount = _missedLowPriorityCount = _missedChatCount = _missedInviteCount = 0;
     
     secureBackupBannerSection = directorySection = favoritesSection = peopleSection = conversationSection = lowPrioritySection = serverNoticeSection = invitesSection = -1;
@@ -1263,15 +1263,23 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
                     if (recentCellDataStoring.roomSummary.highlightCount)
                     {
                         _missedHighlightDirectDiscussionsCount ++;
+                        
+                        if (!room.accountData.tags[kMXRoomTagFavourite]){
+                            _missedHighlightNonFavouriteDirectChatCount ++;
+                        }
                     }
+                    
                 }
-                else if (!room.accountData.tags.count || room.accountData.tags[kMXRoomTagFavourite])
+                else if (!room.accountData.tags[kMXRoomTagLowPriority] || room.accountData.tags[kMXRoomTagFavourite]) //This used to check if the room had no tags OR if the room was marked as a favourite to check if the room should be used for calculating notification count. When we're injecting tags into rooms, this method will hurt us so it's been changed to check if the room is not low priority OR it's a favourite (although being low priority and favourite at the same time shouldn't be possible, so we should only need the first check). If this feature (group notification counts) has issues down the track, some unforseen consequence of this change is likely the culprit, so I'm marking it here.
                 {
                     _missedGroupDiscussionsCount ++;
                     
                     if (recentCellDataStoring.roomSummary.highlightCount)
                     {
                         _missedHighlightGroupDiscussionsCount ++;
+                        if (!room.accountData.tags[kMXRoomTagFavourite]){
+                            _missedHighlightNonFavouriteGroupDiscussionCount ++;
+                        }
                     }
                 }
             }

@@ -40,6 +40,9 @@ class AppConfiguration: CommonConfiguration {
         // Each room member will be considered as a potential contact.
         MXKContactManager.shared().contactManagerMXRoomSource = MXKContactManagerMXRoomSource.all
         
+        // Copying is disabled
+        MXKAppSettings.standard()?.messageDetailsAllowCopyingMedia = false
+        
         // Enable key backup on app
         MXSDKOptions.sharedInstance().enableKeyBackupWhenStartingMXCrypto = true
     }

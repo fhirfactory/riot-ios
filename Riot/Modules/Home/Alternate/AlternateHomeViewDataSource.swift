@@ -19,12 +19,17 @@ import Foundation
 class AlternateHomeDataSource: RecentsDataSource {
     var _viewMode: HomeViewMode = HomeViewMode.Chats
     var countsUpdated: (() -> Void)?
+    var countsUpdatedUnsafe: (() -> Void)?
     
     //this may be changed to include invites
     override func numberOfSections(in tableView: UITableView) -> Int {
         _ = super.numberOfSections(in: tableView) //we need to call this so that the proper number of sections is reported by the "underlying" tableview
         if let callback = countsUpdated {
-            callback()
+            if self.searchPatternsList == nil {
+                callback()
+            } else if let alternativeCallback = countsUpdatedUnsafe {
+                alternativeCallback()
+            }
         }
         return 1
     }

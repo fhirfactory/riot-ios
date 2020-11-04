@@ -16,9 +16,9 @@
 
 import Foundation
 
-class TabbedHomeViewController: UIViewController {
+class TabbedHomeViewController: RecentsViewController {
     
-    let sections = SegmentedViewController()
+    var sections = SegmentedViewController()
     var homeDataSource: AlternateHomeDataSource!
     var favouritesWasVisible = false
     var lowPriorityWasVisible = false
@@ -32,7 +32,7 @@ class TabbedHomeViewController: UIViewController {
             let colourFavourites = homeDataSource.missedHighlightFavouriteDiscussionsCount > 0 ? ThemeService.shared().theme.noticeColor : ThemeService.shared().theme.noticeSecondaryColor
             sections.setBadge(BadgeData(colour: colourFavourites, andBadgeNumber: Int(homeDataSource.missedFavouriteCount), andShouldDisplay: homeDataSource.missedFavouriteCount > 0), forLocation: 1)
             
-            sections.setBadge(BadgeData(colour: ThemeService.shared().theme.noticeColor, andBadgeNumber: Int(homeDataSource.missedLowPriorityCount), andShouldDisplay: homeDataSource.missedLowPriorityCount > 0), forLocation: 2)
+            sections.setBadge(BadgeData(colour: ThemeService.shared().theme.noticeSecondaryColor, andBadgeNumber: Int(homeDataSource.missedLowPriorityCount), andShouldDisplay: homeDataSource.missedLowPriorityCount > 0), forLocation: 2)
             sections.drawBadges()
         }
     }
@@ -57,7 +57,6 @@ class TabbedHomeViewController: UIViewController {
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_start_chat_with", in: "Vector"), style: .default, handler: nil)) //create 1:1 chat
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_create_empty_room", in: "Vector"), style: .default, handler: {_ in
             let newvc = AlternateRoomCreationFlowAddMembersController()
-            //self.present(newvc, animated: true, completion: nil)
             self.navigationController?.show(newvc, sender: self)
         })) //create group chat
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_join_room", in: "Vector"), style: .default, handler: nil)) //join a chat
@@ -66,15 +65,32 @@ class TabbedHomeViewController: UIViewController {
         self.present(menu, animated: true, completion: nil)
     }
     
+    override func onMatrixSessionChange() {
+        super.onMatrixSessionChange()
+        homeDataSource = nil
+        self.viewWillAppear(false)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         
-        guard let session = AppDelegate.theDelegate().mxSessions.first as? MXSession else { return }
+        guard let session = AppDelegate.theDelegate().mxSessions.last as? MXSession else { return }
         
         if homeDataSource == nil {
             homeDataSource = AlternateHomeDataSource(matrixSession: session)
             homeDataSource.countsUpdated = {
                 self.redrawSections()
             }
+            homeDataSource.countsUpdatedUnsafe = {
+                self.redrawBadges()
+            }
+        }
+        
+        if view.subviews.count > 0 {
+            for theview in view.subviews {
+                theview.removeFromSuperview()
+                theview.isHidden = true
+            }
+            sections = SegmentedViewController()
         }
         
         let chatsContainer = HomeTabViewController()
@@ -99,7 +115,6 @@ class TabbedHomeViewController: UIViewController {
             AlternateHomeTools.getNSLocalized("room_recents_favourites_section", in: "Vector") as Any,
             AlternateHomeTools.getNSLocalized("room_recents_low_priority_section", in: "Vector") as Any
         ], viewControllers: [chatsContainer, favouritesContainer, lowPriorityContainer], defaultSelected: 0)
-        redrawSections()
         
         sections.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         view.addSubview(sections.view)
@@ -120,13 +135,12 @@ class TabbedHomeViewController: UIViewController {
         createRoomButton.layoutIfNeeded()
         
         navigationItem.title = AlternateHomeTools.getNSLocalized("title_home", in: "Vector")
+        redrawSections()
+        
+        NSLayoutConstraint.activate([NSLayoutConstraint(item: sections.selectionContainer as Any, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0)])
     }
     
-    @objc func displayList(_ l: RecentsDataSource) {
-        //just to save us from crashing
-    }
-    
-    @objc func dataSource(_ dataSource: MXKDataSource!, didCellChange changes: Any!) {
+    @objc override func dataSource(_ dataSource: MXKDataSource!, didCellChange changes: Any!) {
         redrawSections()
     }
 }

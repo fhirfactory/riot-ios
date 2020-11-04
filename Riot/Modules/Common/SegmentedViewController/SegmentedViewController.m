@@ -318,7 +318,7 @@
             UILabel *label = [[UILabel alloc] init];
             
             label.text = sectionTitles[index];
-            label.font = [UIFont systemFontOfSize:17];
+            label.font = [UIFont systemFontOfSize:15];
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = _sectionHeaderTintColor;
             label.backgroundColor = [UIColor clearColor];
@@ -404,57 +404,69 @@
 
 - (void)drawBadges{
     NSUInteger count = 0;
-    
-    for (int i = 0; i < viewControllers.count; i++) {
-        if ([_Visible[i] isEqual:@(YES)]){
-            count += 1;
+    @synchronized (badgeViews) {
+        
+        if (!self.selectionContainer){
+            return;
         }
-    }
-    
-    long displaying = 0;
-    for (long i = 0; i < viewControllers.count; i++){
-        BadgeData *bd = badgeDataArray[i];
-        if (badgeViews[i]){
-            [badgeViews[i] removeFromSuperview];
+        
+        for (long i = 0; i < badgeViews.count; i++){
+            if (badgeViews[i]){
+                [badgeViews[i] removeFromSuperview];
+            }
         }
-        if (bd.ShouldDisplay && [_Visible[i] isEqual:@(YES)]){
-            displaying++;
-            UIView *badge = [UIView new];
-            UILabel *label = [UILabel new];
-            label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.BadgeNumber];
-            label.textAlignment = NSTextAlignmentCenter;
-            [label sizeToFit];
-            NSLayoutConstraint *labelCenterX = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
-            NSLayoutConstraint *labelCenterY = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
-            
-            [badge addSubview:label];
-            label.translatesAutoresizingMaskIntoConstraints = NO;
-            [NSLayoutConstraint activateConstraints:@[labelCenterX, labelCenterY]];
-            
-            
-            badge.backgroundColor = bd.BadgeColour;
-            NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:badge
-                                                                               attribute:NSLayoutAttributeCenterX
-                                                                               relatedBy:NSLayoutRelationEqual
-                                                                                  toItem:self.selectionContainer
-                                                                               attribute:NSLayoutAttributeTrailing
-                                                                              multiplier:(1.0 / count) * displaying
-                                                                                constant:-40];
-            NSLayoutConstraint *yPosConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.selectionContainer attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
-            NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:20.0];
-            NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:label attribute:NSLayoutAttributeWidth multiplier:1.0 constant:10.0];
-            widthConstraint.priority = 999;
-            NSLayoutConstraint *minWidthConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:20.0];
-            
-            [self.selectionContainer addSubview:badge];
-            [NSLayoutConstraint activateConstraints:@[rightConstraint, yPosConstraint, heightConstraint, widthConstraint, minWidthConstraint]];
-            badge.translatesAutoresizingMaskIntoConstraints = NO; //https://www.innoq.com/en/blog/ios-auto-layout-problem/
-            [badge layoutIfNeeded];
-            badge.layer.cornerRadius = badge.frame.size.height / 2;
-            [badge setUserInteractionEnabled:NO];
-            [label setUserInteractionEnabled:NO];
-            
-            badgeViews[i] = badge;
+        
+        for (int i = 0; i < viewControllers.count; i++) {
+            if ([_Visible[i] isEqual:@(YES)]){
+                count += 1;
+            }
+        }
+        
+        long displaying = 0;
+        for (long i = 0; i < viewControllers.count; i++){
+            BadgeData *bd = badgeDataArray[i];
+            if ([_Visible[i] isEqual:@(YES)]){
+                displaying++;
+            }
+            if (bd.ShouldDisplay && [_Visible[i] isEqual:@(YES)]){
+                
+                UIView *badge = [UIView new];
+                UILabel *label = [UILabel new];
+                label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.BadgeNumber];
+                label.textAlignment = NSTextAlignmentCenter;
+                [label sizeToFit];
+                NSLayoutConstraint *labelCenterX = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+                NSLayoutConstraint *labelCenterY = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+                
+                [badge addSubview:label];
+                label.translatesAutoresizingMaskIntoConstraints = NO;
+                [NSLayoutConstraint activateConstraints:@[labelCenterX, labelCenterY]];
+                
+                
+                badge.backgroundColor = bd.BadgeColour;
+                NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:badge
+                                                                                   attribute:NSLayoutAttributeCenterX
+                                                                                   relatedBy:NSLayoutRelationEqual
+                                                                                      toItem:self.selectionContainer
+                                                                                   attribute:NSLayoutAttributeTrailing
+                                                                                  multiplier:(1.0 / count) * (displaying)
+                                                                                    constant:-15];
+                NSLayoutConstraint *yPosConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.selectionContainer attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+                NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:20.0];
+                NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:label attribute:NSLayoutAttributeWidth multiplier:1.0 constant:10.0];
+                widthConstraint.priority = 999;
+                NSLayoutConstraint *minWidthConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:20.0];
+                
+                [self.selectionContainer addSubview:badge];
+                [NSLayoutConstraint activateConstraints:@[rightConstraint, yPosConstraint, heightConstraint, widthConstraint, minWidthConstraint]];
+                badge.translatesAutoresizingMaskIntoConstraints = NO; //https://www.innoq.com/en/blog/ios-auto-layout-problem/
+                [badge layoutIfNeeded];
+                badge.layer.cornerRadius = badge.frame.size.height / 2;
+                [badge setUserInteractionEnabled:NO];
+                [label setUserInteractionEnabled:NO];
+                
+                badgeViews[i] = badge;
+            }
         }
     }
 }
@@ -552,7 +564,7 @@
         if (index != NSNotFound)
         {
             UILabel* label = sectionLabels[[self getFakeIndexFor:index]];
-            label.font = [UIFont systemFontOfSize:17];
+            label.font = [UIFont systemFontOfSize:15];
         }
         
         [_selectedViewController willMoveToParentViewController:nil];
@@ -566,7 +578,7 @@
     }
     
     UILabel* label = sectionLabels[_selectedIndex];
-    label.font = [UIFont boldSystemFontOfSize:17];
+    label.font = [UIFont boldSystemFontOfSize:16];
 
     // update the marker view position
     [NSLayoutConstraint deactivateConstraints:@[leftMarkerViewConstraint]];

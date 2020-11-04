@@ -3006,7 +3006,7 @@ internal enum VectorL10n {
   internal static var roomPromptResend: String { 
     return VectorL10n.tr("Vector", "room_prompt_resend") 
   }
-  /// CHATS
+  /// Chats
   internal static var roomRecentsChatsSection: String { 
     return VectorL10n.tr("Vector", "room_recents_chats_section") 
   }
@@ -3026,7 +3026,7 @@ internal enum VectorL10n {
   internal static var roomRecentsDirectorySectionNetwork: String { 
     return VectorL10n.tr("Vector", "room_recents_directory_section_network") 
   }
-  /// FAVOURITES
+  /// Favourites
   internal static var roomRecentsFavouritesSection: String { 
     return VectorL10n.tr("Vector", "room_recents_favourites_section") 
   }
@@ -3046,7 +3046,7 @@ internal enum VectorL10n {
   internal static var roomRecentsJoinRoomTitle: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_title") 
   }
-  /// LOW PRIORITY
+  /// Low Priority
   internal static var roomRecentsLowPrioritySection: String { 
     return VectorL10n.tr("Vector", "room_recents_low_priority_section") 
   }

@@ -19,6 +19,14 @@ limitations under the License.
 
 #import "UIViewController+RiotSearch.h"
 
+@interface BadgeData: NSObject
+@property (nonatomic) NSInteger BadgeNumber;
+@property (nonatomic) UIColor *BadgeColour;
+@property (nonatomic) Boolean ShouldDisplay;
+-(instancetype)init;
+-(instancetype)initWithColour:(UIColor*)Colour andBadgeNumber:(long)Number andShouldDisplay:(BOOL)ShouldDisplay;
+@end
+
 /**
  This view controller manages several uiviewcontrollers like UISegmentedController manages uiTableView
  except that the managed items are custom UIViewControllers.
@@ -88,6 +96,10 @@ limitations under the License.
  @param defaultSelected index of the default selected UIViewController in the list.
  */
 - (void)initWithTitles:(NSArray*)titles viewControllers:(NSArray*)viewControllers defaultSelected:(NSUInteger)defaultSelected;
+
+- (void)setBadge:(BadgeData*)badge forLocation:(long)location;
+- (void)drawBadges;
+
 /**
  Redraw the control
  */

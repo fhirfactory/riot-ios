@@ -37,7 +37,7 @@ class HomeTabViewController: RecentsViewController {
         if let recentsDataSource = self.dataSource as? RecentsDataSource {
             recentsDataSource.setDelegate(self, andRecentsDataSourceMode: RecentsDataSourceMode.home)
         }
-        if AppDelegate.theDelegate().mxSessions.first == nil {
+        if mxSessions.first == nil {
             return
         }
         
@@ -62,7 +62,7 @@ class HomeTabViewController: RecentsViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        //super.viewDidAppear(animated)
         self.refreshRecentsTable()
     }
     

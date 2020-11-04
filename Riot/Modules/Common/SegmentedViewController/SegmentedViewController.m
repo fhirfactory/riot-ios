@@ -25,6 +25,21 @@
 #import "Riot-Swift.h"
 #endif
 
+@implementation BadgeData
+-(instancetype)init{
+    _BadgeColour = UIColor.redColor;
+    _BadgeNumber = 0;
+    _ShouldDisplay = NO;
+    return self;
+}
+-(instancetype)initWithColour:(UIColor*)Colour andBadgeNumber:(long)Number andShouldDisplay:(BOOL)ShouldDisplay{
+    _BadgeColour = Colour;
+    _BadgeNumber = Number;
+    _ShouldDisplay = ShouldDisplay;
+    return self;
+}
+@end
+
 @interface SegmentedViewController ()
 {
     // Tell whether the segmented view is appeared (see viewWillAppear/viewWillDisappear).
@@ -44,6 +59,10 @@
     
     // list of section labels
     NSArray* sectionLabels;
+    
+    //list of badges
+    NSMutableArray<BadgeData*> *badgeDataArray;
+    NSMutableArray<UIView*> *badgeViews;
     
     // the selected marker view
     UIView* selectedMarkerView;
@@ -83,10 +102,13 @@
     sectionTitles = titles;
     _selectedIndex = defaultSelected;
     NSMutableArray<NSNumber*> *visibleMutable = [NSMutableArray new];
+    NSMutableArray<BadgeData*> *badgeMutable = [NSMutableArray new];
     for (int i = 0; i < someViewControllers.count; i++){
         [visibleMutable addObject:@(YES)];
+        [badgeMutable addObject:[BadgeData new]];
     }
     _Visible = visibleMutable;
+    badgeDataArray = badgeMutable;
 }
 
 - (void)destroy
@@ -281,7 +303,7 @@
     
     NSMutableArray* labels = [[NSMutableArray alloc] init];
     
-    NSUInteger count = 0;// = viewControllers.count;
+    NSUInteger count = 0;
     
     for (int i = 0; i < viewControllers.count; i++) {
         if ([_Visible[i] isEqual:@(YES)]){
@@ -376,6 +398,69 @@
     [self addSelectedMarkerView];
     
     [self displaySelectedViewController];
+    
+    [self drawBadges];
+}
+
+- (void)drawBadges{
+    NSUInteger count = 0;
+    
+    for (int i = 0; i < viewControllers.count; i++) {
+        if ([_Visible[i] isEqual:@(YES)]){
+            count += 1;
+        }
+    }
+    
+    long displaying = 0;
+    for (long i = 0; i < viewControllers.count; i++){
+        BadgeData *bd = badgeDataArray[i];
+        if (badgeViews[i]){
+            [badgeViews[i] removeFromSuperview];
+        }
+        if (bd.ShouldDisplay && [_Visible[i] isEqual:@(YES)]){
+            displaying++;
+//            CGRect *badgeFrame = CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>);
+//            UIView *badgeContainer = [[UIView alloc] initWithFrame:<#(CGRect)#>]
+            UIView *badge = [UIView new];
+            UILabel *label = [UILabel new];
+            label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.BadgeNumber];
+            label.textAlignment = NSTextAlignmentCenter;
+            [label sizeToFit];
+            NSLayoutConstraint *labelCenterX = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
+            NSLayoutConstraint *labelCenterY = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0];
+            
+            [badge addSubview:label];
+            label.translatesAutoresizingMaskIntoConstraints = NO;
+            [NSLayoutConstraint activateConstraints:@[labelCenterX, labelCenterY]];
+            
+            
+            badge.backgroundColor = bd.BadgeColour;
+            NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:badge
+                                                                               attribute:NSLayoutAttributeCenterX
+                                                                               relatedBy:NSLayoutRelationEqual
+                                                                                  toItem:self.selectionContainer
+                                                                               attribute:NSLayoutAttributeTrailing
+                                                                              multiplier:(1.0 / count) * displaying
+                                                                                constant:-40];
+            NSLayoutConstraint *yPosConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.selectionContainer attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0];
+            NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:20.0];
+            NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:label attribute:NSLayoutAttributeWidth multiplier:1.0 constant:10.0];
+            widthConstraint.priority = 999;
+            NSLayoutConstraint *minWidthConstraint = [NSLayoutConstraint constraintWithItem:badge attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0 constant:20.0];
+            
+            [self.selectionContainer addSubview:badge];
+            [NSLayoutConstraint activateConstraints:@[rightConstraint, yPosConstraint, heightConstraint, widthConstraint, minWidthConstraint]];
+            badge.translatesAutoresizingMaskIntoConstraints = NO; //https://www.innoq.com/en/blog/ios-auto-layout-problem/
+            [badge layoutIfNeeded];
+            badge.layer.cornerRadius = badge.frame.size.height / 2;
+            
+            badgeViews[i] = badge;
+        }
+    }
+}
+
+- (void)setBadge:(BadgeData*)badge forLocation:(long)location{
+    badgeDataArray[location] = badge;
 }
 
 - (void)addSelectedMarkerView

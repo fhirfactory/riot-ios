@@ -3428,7 +3428,7 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
 
 - (void)onRoomAvatarTap:(UITapGestureRecognizer *)recognizer
 {
-    if (BuildSettings.sharingFeaturesEnabled){
+    if (BuildSettings.sharingFeaturesAllowGalleryAvatars){
         SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
         singleImagePickerPresenter.delegate = self;
         

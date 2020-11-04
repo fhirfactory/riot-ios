@@ -46,7 +46,7 @@ PODS:
   - GBDeviceInfo/Core (6.3.0)
   - GZIP (1.3.0)
   - HPGrowingTextView (1.1)
-  - JitsiMeetSDK (2.10.2)
+  - JitsiMeetSDK (2.10.0)
   - KeychainAccess (4.2.1)
   - KTCenterFlowLayout (1.3.1)
   - libbase58 (0.1.4)
@@ -83,7 +83,7 @@ PODS:
     - OLMKit (~> 3.1.0)
     - Realm (~> 5.4.8)
   - MatrixSDK/JingleCallStack (0.16.20):
-    - JitsiMeetSDK (= 2.10.2)
+    - JitsiMeetSDK (= 2.10.0)
     - MatrixSDK/Core
   - MatrixSDK/SwiftSupport (0.16.20):
     - MatrixSDK/Core
@@ -117,11 +117,11 @@ DEPENDENCIES:
   - KeychainAccess (~> 4.2)
   - KTCenterFlowLayout (~> 1.3.1)
   - MatomoTracker (~> 7.2.0)
-  - MatrixKit (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `feature/room-rights-change-events`)
-  - MatrixKit/AppExtension (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `feature/room-rights-change-events`)
-  - MatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
-  - MatrixSDK/JingleCallStack (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
-  - MatrixSDK/SwiftSupport (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
+  - MatrixKit (= 0.12.26)
+  - MatrixKit/AppExtension (= 0.12.26)
+  - MatrixSDK
+  - MatrixSDK/JingleCallStack
+  - MatrixSDK/SwiftSupport
   - OLMKit
   - Reusable (~> 4.1)
   - SwiftGen (~> 6.4.0)
@@ -148,6 +148,8 @@ SPEC REPOS:
     - libbase58
     - libPhoneNumber-iOS
     - MatomoTracker
+    - MatrixKit
+    - MatrixSDK
     - OLMKit
     - Realm
     - Reusable
@@ -155,22 +157,6 @@ SPEC REPOS:
     - SwiftLint
     - zxcvbn-ios
     - ZXingObjC
-
-EXTERNAL SOURCES:
-  MatrixKit:
-    :branch: feature/room-rights-change-events
-    :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
-  MatrixSDK:
-    :branch: develop
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
-
-CHECKOUT OPTIONS:
-  MatrixKit:
-    :commit: a92b41c181686c67254b76b70d9dbb95eea8f77b
-    :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
-  MatrixSDK:
-    :commit: 4d75332aa549adc60bd6d45db822b30b31ab7ec9
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
@@ -184,14 +170,14 @@ SPEC CHECKSUMS:
   GBDeviceInfo: a3f39dba1a04dcb630abff65d6f7e8fbf319eadd
   GZIP: 416858efbe66b41b206895ac6dfd5493200d95b3
   HPGrowingTextView: 88a716d97fb853bcb08a4a08e4727da17efc9b19
-  JitsiMeetSDK: d7612d73befd3f7f51f989458a816bbd05d0bc8e
+  JitsiMeetSDK: cbbfc8ace742e148a8477f32b8b95ef5578acac6
   KeychainAccess: 9b07f665298d13c3a85881bd3171f6f49b8151c1
   KTCenterFlowLayout: 6e02b50ab2bd865025ae82fe266ed13b6d9eaf97
   libbase58: 7c040313537b8c44b6e2d15586af8e21f7354efd
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   MatomoTracker: a59ec4da0f580be57bdc6baa708a71a86532a832
   MatrixKit: 2caaa6d693a84c19709cf303ec4750c5b099297b
-  MatrixSDK: 562899e6e9311efb8dca48038fd94b591b60cbc7
+  MatrixSDK: b4a837585997c462761b8faa894cd490e24acb11
   OLMKit: 4ee0159d63feeb86d836fdcfefe418e163511639
   Realm: 042bbb59227a0159eda397b8a5a49fbd67495ce7
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
@@ -200,6 +186,6 @@ SPEC CHECKSUMS:
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 4db9ac4c9b1775d743b19940618423c98a9b677a
+PODFILE CHECKSUM: 0c29e9867aa0a7b05183132d14679684bb555339
 
 COCOAPODS: 1.9.3

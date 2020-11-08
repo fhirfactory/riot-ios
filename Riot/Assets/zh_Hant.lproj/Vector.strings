@@ -197,6 +197,8 @@
 "room_recents_join_room_title" = "加入聊天室";
 "room_recents_join_room_prompt" = "輸入聊天室 ID 或別名";
 "room_recents_chats_section" = "CHATS";
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 // Pull down menu items
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";

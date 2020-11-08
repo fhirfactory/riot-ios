@@ -386,6 +386,8 @@
 "room_details_copy_room_id" = "Gespreks-ID kopiëren";
 "room_details_copy_room_address" = "Gespreksadres kopiëren";
 "room_details_copy_room_url" = "Gespreks-URL kopiëren";
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 // Media picker
 "media_picker_library" = "Bibliotheek";
 "media_picker_select" = "Selecteren";

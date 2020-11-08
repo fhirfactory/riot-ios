@@ -234,6 +234,8 @@
 "room_event_action_view_encryption" = "暗号についての情報";
 "room_warning_about_encryption" = "End-to-end 暗号化はベータ版であり、信頼性が低い場合があります。\n\n発言を保護するためにはまだ信用すべきではありません。\n\n端末が参加するより前の発言履歴を復号化することはまだできません。\n\n暗号化された発言は、まだ暗号化を実装していないクライアントでは表示されません。";
 "room_event_failed_to_send" = "送信失敗";
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 // Unknown devices
 "unknown_devices_alert_title" = "部屋に未知のセッションが存在します";
 "unknown_devices_alert" = "この部屋には、確認されていない未知のセッションが含まれています。\nすなわち、セッションがをユーザ本人が所有しているという保証はありません。\n続ける前に各セッションの確認を行うことをおすすめしますが、確認することなく発言を再送信することができます。";

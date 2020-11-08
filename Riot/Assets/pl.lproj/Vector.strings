@@ -564,6 +564,8 @@
 "key_backup_setup_passphrase_setup_recovery_key_info" = "Możesz też zabezpieczyć kopię zapasową przy pomocy klucza odzyskiwania, zapisując ją w bezpiecznym miejscu.";
 "key_backup_setup_passphrase_setup_recovery_key_action" = "(Zaawansowany) Konfiguruj za pomocą klucza odzyskiwania";
 "key_backup_setup_success_title" = "Sukces!";
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
 // Success from passphrase
 "key_backup_setup_success_from_passphrase_info" = "Tworzone są kopie zapasowe kluczy.\n\nTwój klucz odzyskiwania to gwarant bezpieczeństwa - możesz użyć go, aby odzyskać dostęp do zaszyfrowanych wiadomości, jeśli zapomnisz hasła.\n\nTrzymaj ten klucz w bezpiecznym miejscu (np. w menedżerze haseł).";
 "key_backup_setup_success_from_passphrase_save_recovery_key_action" = "Zapisz klucz odzyskiwania";

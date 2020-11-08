@@ -107,6 +107,7 @@
 "room_creation_make_private" = "Riêng tư";
 "room_creation_wait_for_creation" = "Phòng trò chuyện đã được tạo. Vui lòng chờ.";
 "room_creation_invite_another_user" = "Tìm / mời bằng ID người dùng, tên hoặc email";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "DANH MỤC PHÒNG";
 "room_recents_directory_section_network" = "Mạng";

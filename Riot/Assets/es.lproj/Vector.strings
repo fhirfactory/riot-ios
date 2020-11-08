@@ -8,6 +8,7 @@
 // Room Creation
 "person_single" = "person";
 "person_plural" = "people";
+"room_creation_add_members" = "Add Members";
 // Actions
 "view" = "Ver";
 "next" = "Siguiente";

@@ -87,6 +87,23 @@ class RoomViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges == RoomPowerLevel.user.rawValue)
         
     }
+    
+    func test_197523_preventUserOverrideOfMediaFileSizes() throws {
+        /// Given I am an authenticated user
+        /// AND I have selected my User Profile
+        /// When I select my User Settings
+        /// Then I am not able to see the Default Compression setting.
+
+        /// Given I am an authenticated user
+        /// When I am taking a photo in the Application
+        /// Then the Default Compression setting value = 'Original'.
+        
+        XCTAssert(BuildSettings.roomPromptForAttachmentSize == false)
+        
+    }
+    
+    
+    
 
 }
 

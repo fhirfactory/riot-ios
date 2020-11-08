@@ -13,7 +13,7 @@ use_frameworks!
 # Warning: our internal tooling depends on the name of this variable name, so be sure not to change it
 # $matrixKitVersion = '= 0.12.20'
 # $matrixKitVersion = :local
-$matrixKitVersion = {'feature/room-rights-change-events' => 'develop'}
+$matrixKitVersion = {'master' => 'develop'}
 
 ########################################
 

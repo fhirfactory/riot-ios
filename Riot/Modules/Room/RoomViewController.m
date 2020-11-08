@@ -5666,7 +5666,7 @@
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
-        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:NO];
     }
 }
 
@@ -5698,7 +5698,7 @@
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
-        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:YES];
+        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
     }
 }
 
@@ -5722,7 +5722,7 @@
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
-        [roomInputToolbarView sendSelectedAssets:assets withCompressionMode:MXKRoomInputToolbarCompressionModePrompt];
+        [roomInputToolbarView sendSelectedAssets:assets withCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone)];
     }
 }
 

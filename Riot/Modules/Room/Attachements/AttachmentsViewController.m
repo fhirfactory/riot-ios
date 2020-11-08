@@ -98,8 +98,4 @@
     [super dismissViewControllerAnimated:animated completion:completion];
 }
 
-//- (void)onCollectionViewCellLongPress:(UIGestureRecognizer*)gestureRecognizer{
-//    [super onCollectionViewCellLongPress:gestureRecognizer];
-//}
-
 @end

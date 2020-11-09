@@ -527,7 +527,6 @@
 
 - (long)getRealIndexFor:(long)baseIndex{
     long actualIndex = 0;
-    //if (actualIndex != _selectedIndex)
     {
         long tempIndex = -1;
         for (; actualIndex < viewControllers.count; actualIndex++){

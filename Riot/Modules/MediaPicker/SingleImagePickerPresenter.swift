@@ -36,6 +36,8 @@ final class SingleImagePickerPresenter: NSObject {
     private weak var presentingViewController: UIViewController?
     private var cameraPresenter: CameraPresenter?
     private var mediaPickerPresenter: MediaPickerCoordinatorBridgePresenter?
+    var enableRemoveImage: Bool = false
+    private var removeImageHandler: (()->Void)!
     
     // MARK: Public
     
@@ -48,6 +50,11 @@ final class SingleImagePickerPresenter: NSObject {
     }
     
     // MARK: - Public
+    
+    func setRemoveImageHandler(handler:@escaping ()->Void){
+        removeImageHandler = handler
+        enableRemoveImage = true
+    }
     
     func present(from presentingViewController: UIViewController,
                  sourceView: UIView?,
@@ -68,6 +75,12 @@ final class SingleImagePickerPresenter: NSObject {
         
         alert.addAction(cameraAction)
         alert.addAction(photoLibraryAction)
+        if enableRemoveImage {
+            let removeImageAction = UIAlertAction(title: VectorL10n.remove, style: .default, handler: { _ in
+                self.removeImageHandler()
+            })
+            alert.addAction(removeImageAction)
+        }
         alert.addAction(cancelAction)
         
         if let popoverPresentationController = alert.popoverPresentationController {

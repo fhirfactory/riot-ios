@@ -87,7 +87,7 @@ class RoomViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges == RoomPowerLevel.user.rawValue)
         
     }
-    
+
     func test_197523_preventUserOverrideOfMediaFileSizes() throws {
         /// Given I am an authenticated user
         /// AND I have selected my User Profile
@@ -102,8 +102,19 @@ class RoomViewControllerTests: XCTestCase {
         
     }
     
-    
-    
+    func test_197400_removeSharingFunctionality() throws {
+        /// Given I am in a Chat Room (that I am a member of)
+        /// When I view the composing options
+        /// Then the only option to add media to the Chat Room from the Chat Room is 'Take a photo or video'
+
+        /// Notes
+
+        ///     The paperclip menu is to be replaced with a camera icon that triggers the 'Take photo or video' action.
+        ///     I am not able to see or select the 'Send File' action anymore.
+        
+        XCTAssert(BuildSettings.sharingFeaturesEnabled == false)
+        
+    }
 
 }
 

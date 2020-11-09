@@ -5,6 +5,10 @@
 "title_rooms" = "Szobák";
 "title_groups" = "Közösségek";
 "warning" = "Figyelmeztetés";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Megtekintés";
 "back" = "Vissza";
@@ -825,6 +829,7 @@
 "reaction_history_title" = "Reakciók";
 "auth_forgot_password_error_no_configured_identity_server" = "Azonosítási szerver nincs beállítva: a jelszó visszaállításhoz adj hozzá egyet.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Azonosítási szerver nincs beállítva, így e-mail cím alapján nem tudsz hozzáadni résztvevőt.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Azonosítási szerver nincs beállítva, így e-mail cím alapján nem tudsz beszélgetést kezdeményezni.";
 "room_action_camera" = "Fotó vagy videó készítése";
 // Media picker

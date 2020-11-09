@@ -800,6 +800,7 @@
 		EBAC79B62543F9EE00A0B1BF /* SelectableFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */; };
 		EBAC79BE2543FA5700A0B1BF /* SelectableFilteredSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */; };
 		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
+		EBD3490125596AFA0008F5C3 /* RoomSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD3490025596AFA0008F5C3 /* RoomSelector.swift */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
 		EBECB045255165ED0024EB47 /* TabbedHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */; };
 		EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */; };
@@ -2073,6 +2074,7 @@
 		EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectableFilteredSearchController.xib; sourceTree = "<group>"; };
 		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
+		EBD3490025596AFA0008F5C3 /* RoomSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelector.swift; sourceTree = "<group>"; };
 		EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewDataSource.swift; sourceTree = "<group>"; };
 		EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedHomeViewController.swift; sourceTree = "<group>"; };
 		EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabbedHomeViewController.xib; sourceTree = "<group>"; };
@@ -5072,6 +5074,7 @@
 				EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */,
 				EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */,
 				EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */,
+				EBD3490025596AFA0008F5C3 /* RoomSelector.swift */,
 			);
 			path = Alternate;
 			sourceTree = "<group>";
@@ -6645,6 +6648,7 @@
 				B1C3360122F1ED600021BA8D /* MediaPickerCoordinatorType.swift in Sources */,
 				32F6B96D2270623100BBA352 /* KeyVerificationDataLoadingViewModel.swift in Sources */,
 				B16932B120F3AC9200746532 /* RoomSearchDataSource.m in Sources */,
+				EBD3490125596AFA0008F5C3 /* RoomSelector.swift in Sources */,
 				B1B5574520EE6C4D00210D55 /* StartChatViewController.m in Sources */,
 				3232AB4C2256558300AD6A5C /* TemplateScreenCoordinator.swift in Sources */,
 				B1B5575920EE6C4D00210D55 /* HomeMessagesSearchViewController.m in Sources */,

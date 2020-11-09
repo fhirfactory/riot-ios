@@ -53,6 +53,11 @@ class AlternateInviteViewController: RecentsViewController {
         return nil
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = dataSource.tableView(tableView, cellForRowAt: indexPath) as? InviteRecentTableViewCell else { return }
+        cell.rightButton.sendActions(for: UIControl.Event.touchUpInside)
+    }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.0
     }

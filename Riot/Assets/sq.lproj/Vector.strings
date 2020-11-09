@@ -4,6 +4,10 @@
 "title_rooms" = "Dhoma";
 "title_groups" = "Bashkësi";
 "warning" = "Sinjalizim";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Parje";
 "next" = "Pasuesja";
@@ -823,6 +827,7 @@
 "reaction_history_title" = "Reagime";
 "auth_forgot_password_error_no_configured_identity_server" = "S’ka shërbyes identitetesh të formësuar: shtoni një të tillë që të ricaktoni fjalëkalimin tuaj.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "S’ka shërbyes identitetesh të formësua, ndaj s’mund të shtoni një pjesëmarrës me një email.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "S’ka shërbyes identitetesh të formësuar, ndaj s’mund të nisni një fjalosje me një kontakt duke përdorur një email.";
 // Service terms
 "service_terms_modal_title" = "Kushte Shërbimi";

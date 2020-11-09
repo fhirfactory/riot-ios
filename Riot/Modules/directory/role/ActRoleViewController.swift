@@ -26,6 +26,9 @@ private enum SectionType: Int, CaseIterable {
 class ActRoleViewController: UIViewController {
     @IBOutlet weak var recentsTableView: UITableView!
     
+    
+    // TODO:- This needs to be replaced with appropriate code once the backend is available and can provide role information to the app
+    
     var roles = [
         RoleModel(name: "Test1", description: "Emergency Department", isExpanded: false),
         RoleModel(name: "Test2", description: "Emergency Department", isExpanded: false),

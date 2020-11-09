@@ -212,6 +212,7 @@ final class BuildSettings: NSObject {
     
     // MARK: - General Settings Defaults Overrides
     /// Override values that are used to control the value of settings that are hidden from users
+    static let sharingFeaturesEnabled: Bool = false
     
     /// Leave this as an empty string value to allow user theme selection
     static let settingsScreenOverrideDefaultThemeSelection : NSString = "lingo"
@@ -219,12 +220,13 @@ final class BuildSettings: NSObject {
     // MARK: - Room Settings Screen
     
     static let roomSettingsScreenShowLowPriorityOption: Bool = true
-    static let roomSettingsScreenShowDirectChatOption: Bool = true
-    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
+    static let roomSettingsScreenShowDirectChatOption: Bool = false
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = false
     static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
-    static let roomSettingsScreenShowAddressSettings: Bool = true
-    static let roomSettingsScreenShowFlairSettings: Bool = true
-    static let roomSettingsScreenShowAdvancedSettings: Bool = true
+    static let roomSettingsScreenShowAddressSettings: Bool = false
+    static let roomSettingsScreenShowFlairSettings: Bool = false
+    static let roomSettingsScreenShowAdvancedSettings: Bool = false
+    static let roomSettingsScreenShowAnyoneHistoryOption: Bool = false
     
     // MARK: - Room Participants
     static let roomParticipantAllowBan : Bool = false
@@ -233,10 +235,10 @@ final class BuildSettings: NSObject {
     static let roomParticipantAllowHideAll : Bool = false
     
     // MARK: - Message
-    static let messageDetailsAllowShare: Bool = true
-    static let messageDetailsAllowPermalink: Bool = true
+    static let messageDetailsAllowShare: Bool = false
+    static let messageDetailsAllowPermalink: Bool = false
     static let messageDetailsAllowViewSource: Bool = false
-    static let messageDetailsAllowSave: Bool = true
+    static let messageDetailsAllowSave: Bool = false
     static let messageDetailsAllowViewEncryptionInformation : Bool = false
     static let messageDetailsAllowReportContent : Bool = false
     static let messagesAllowViewRoomRightsChanges : Bool = true

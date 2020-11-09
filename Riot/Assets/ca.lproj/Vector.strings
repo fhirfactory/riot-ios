@@ -4,6 +4,10 @@
 "title_people" = "Gent";
 "title_rooms" = "Sales";
 "warning" = "Avís";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Veure";
 "next" = "Següent";
@@ -88,6 +92,7 @@
 "auth_reset_password_error_not_found" = "La teva adreça de correu electrònic no sembla està associada a una ID de Matrix en aquest servidor.";
 "auth_reset_password_success_message" = "La teva contrasenya ha estat restablerta.\n\nHas tancat la sessió de tots els dispositius i ja no rebràs notificacions. Per tornar a activar les notificacions, torna a iniciar la sessió a cada dispositiu.";
 "auth_add_email_and_phone_warning" = "La inscripció amb el correu electrònic i el número de telèfon alhora no són compatibles fins que no existeixi l'api. Només es tindrà en compte el número de telèfon. Pots afegir el teu correu electrònic al teu perfil a la configuració.";
+"room_creation_add_members" = "Add Members";
 // Chat creation
 "room_creation_title" = "Nou Xat";
 "room_creation_account" = "Compte";

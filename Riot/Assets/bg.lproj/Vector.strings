@@ -5,6 +5,10 @@
 "title_rooms" = "Стаи";
 "title_groups" = "Общности";
 "warning" = "Внимание";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Виж";
 "next" = "Напред";
@@ -827,6 +831,7 @@
 "photo_library_access_not_granted" = "%@ няма достъп до библиотеката със снимки. Моля, променете настройките на поверителността";
 "auth_forgot_password_error_no_configured_identity_server" = "Не е конфигуриран сървър за самоличност: добавете такъв за да може да възстановите паролата си.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Не е конфигуриран сървър за самоличност, така че не можете да поканите участник по имейл адрес.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Не е конфигуриран сървър за самоличност, така че не можете да започнете чат с контакт посредством имейл адрес.";
 // Service terms
 "service_terms_modal_title" = "Условия за ползване";

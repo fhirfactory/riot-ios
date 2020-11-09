@@ -126,7 +126,7 @@ NSString *const kRoomSettingsAdvancedCellViewIdentifier = @"kRoomSettingsAdvance
 NSString *const kRoomSettingsAdvancedEnableE2eCellViewIdentifier = @"kRoomSettingsAdvancedEnableE2eCellViewIdentifier";
 NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSettingsAdvancedE2eEnabledCellViewIdentifier";
 
-@interface RoomSettingsViewController () <SingleImagePickerPresenterDelegate, TableViewSectionsDelegate>
+@interface RoomSettingsViewController () <SingleImagePickerPresenterDelegate, TableViewSectionsDelegate, CameraPresenterDelegate>
 {
     // The updated user data
     NSMutableDictionary<NSString*, id> *updatedItemsDict;
@@ -186,6 +186,7 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
 @property (nonatomic, strong) SingleImagePickerPresenter *imagePickerPresenter;
 
 @property (nonatomic, strong) TableViewSections *tableViewSections;
+@property (nonatomic, strong) CameraPresenter *cameraPresenter;
 
 @end
 
@@ -561,7 +562,10 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
     if (BuildSettings.roomSettingsScreenAllowChangingHistorySettings)
     {
         Section *sectionHistory = [Section sectionWithTag:SECTION_TAG_HISTORY];
-        [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_ANYONE];
+        if (BuildSettings.roomSettingsScreenShowAnyoneHistoryOption)
+        {
+            [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_ANYONE];
+        }
         [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_MEMBERS_ONLY];
         [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_MEMBERS_ONLY_SINCE_INVITED];
         [sectionHistory addRowWithTag:ROOM_SETTINGS_HISTORY_VISIBILITY_SECTION_ROW_MEMBERS_ONLY_SINCE_JOINED];
@@ -2146,6 +2150,7 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
         UITableViewHeaderFooterView *tableViewHeaderFooterView = (UITableViewHeaderFooterView*)view;
         tableViewHeaderFooterView.textLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
         tableViewHeaderFooterView.textLabel.font = [UIFont systemFontOfSize:15];
+        tableViewHeaderFooterView.contentView.backgroundColor = ThemeService.shared.theme.headerBackgroundColor;
     }
 }
 
@@ -3365,7 +3370,7 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
 
 - (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [[AppDelegate theDelegate] createDirectChatWithUserId:matrixId completion:completion];
+    [[AppDelegate theDelegate] startDirectChatWithUserId:matrixId completion:completion];
 }
 
 #pragma mark - actions
@@ -3427,20 +3432,28 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
 
 - (void)onRoomAvatarTap:(UITapGestureRecognizer *)recognizer
 {
-    SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
-    singleImagePickerPresenter.delegate = self;
-    
-    UIView *sourceView;
-    
-    NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:ROOM_SETTINGS_MAIN_SECTION_ROW_PHOTO sectionTag:SECTION_TAG_MAIN];
-    if (indexPath)
-    {
-        sourceView = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (BuildSettings.sharingFeaturesEnabled){
+        SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
+        singleImagePickerPresenter.delegate = self;
+        
+        UIView *sourceView;
+        
+        NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:ROOM_SETTINGS_MAIN_SECTION_ROW_PHOTO sectionTag:SECTION_TAG_MAIN];
+        if (indexPath)
+        {
+            sourceView = [self.tableView cellForRowAtIndexPath:indexPath];
+        }
+        
+        [singleImagePickerPresenter presentFrom:self sourceView:sourceView sourceRect:sourceView.bounds animated:YES];
+        
+        self.imagePickerPresenter = singleImagePickerPresenter;
+    } else {
+        CameraPresenter *cameraPresenter = [CameraPresenter new];
+        cameraPresenter.delegate = self;
+        [cameraPresenter presentCameraFrom:self with:@[MXKUTI.image] animated:YES];
+
+        self.cameraPresenter = cameraPresenter;
     }
-    
-    [singleImagePickerPresenter presentFrom:self sourceView:sourceView sourceRect:sourceView.bounds animated:YES];
-    
-    self.imagePickerPresenter = singleImagePickerPresenter;
 }
 
 - (void)toggleRoomNotification:(UISwitch*)theSwitch
@@ -3907,6 +3920,29 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
         }
         
         [self getNavigationItem].rightBarButtonItem.enabled = (updatedItemsDict.count != 0);
+    }
+}
+
+#pragma mark - CameraPresenterDelegate
+
+-(void)cameraPresenterDidCancel:(CameraPresenter *)cameraPresenter{
+    [cameraPresenter dismissWithAnimated:YES completion:nil];
+    self.cameraPresenter = nil;
+}
+
+-(void)cameraPresenter:(CameraPresenter *)presenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti {
+    [presenter dismissWithAnimated:YES completion:nil];
+    
+    self.cameraPresenter = nil;
+    
+    UIImage *image = [UIImage imageWithData:imageData];
+    if (image)
+    {
+        [self getNavigationItem].rightBarButtonItem.enabled = YES;
+        
+        updatedItemsDict[kRoomSettingsAvatarKey] = image;
+        
+        [self refreshRoomSettings];
     }
 }
 

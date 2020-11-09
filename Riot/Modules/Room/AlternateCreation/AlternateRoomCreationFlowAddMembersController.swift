@@ -168,22 +168,14 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
             if selectedItems.count * selectedCount > 0 {
                 //if neither selectedItems nor selectedCount are 0, just change the selectedCount
                 //don't do anything here (as the selectedCount is updated elsewhere)
-            } else if selectedItems.count > 0 {
-                //going from 0 to something else, animate to show selection area, by disabling the strong constraint on the top of the search result area
-                view.layoutIfNeeded()
-                
-                SearchControllerTopConstraint.isActive = false
-                UIView.animate(withDuration: 0.2, animations: {
-                     self.view.layoutIfNeeded()
-                })
-                self.drawButton()
             } else {
-                //going from something else to 0, animate to hide selection area
+                // if going from 0 to something else, animate to show selection area, by disabling the strong constraint on the top of the search result area
+                // if going from something else to 0, animate to hide selection area
                 view.layoutIfNeeded()
                 
-                SearchControllerTopConstraint.isActive = true
+                SearchControllerTopConstraint.isActive = (selectedItems.count <= 0)
                 UIView.animate(withDuration: 0.2, animations: {
-                     self.view.layoutIfNeeded()
+                    self.view.layoutIfNeeded()
                 })
                 self.drawButton()
             }

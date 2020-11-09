@@ -5,6 +5,10 @@
 "title_rooms" = "聊天室";
 "title_groups" = "社群";
 "warning" = "警告";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "檢視";
 "next" = "下一步";
@@ -183,6 +187,7 @@
 "room_creation_make_private" = "設成私人";
 "room_creation_wait_for_creation" = "聊天室正在建立，請稍後。";
 "room_creation_invite_another_user" = "透過使用者ID、名稱、電子郵件地址來搜尋/邀請";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "聊天室目錄";
 "room_recents_directory_section_network" = "網路";

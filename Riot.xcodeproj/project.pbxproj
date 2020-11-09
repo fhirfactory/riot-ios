@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1404707825501BFA0012C425 /* SettingsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404707725501BFA0012C425 /* SettingsViewControllerTests.swift */; };
+		1404708025501CAE0012C425 /* RoomSettingsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1404707F25501CAE0012C425 /* RoomSettingsViewControllerTests.swift */; };
 		1411D81F252D7534009D8908 /* LingoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D81E252D7534009D8908 /* LingoTests.swift */; };
 		1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D834252D7597009D8908 /* RoomViewControllerTests.swift */; };
 		1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */; };
@@ -1084,6 +1086,8 @@
 /* Begin PBXFileReference section */
 		115F12746BFAB2D2EA00643A /* Pods_LingoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LingoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1404707725501BFA0012C425 /* SettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerTests.swift; sourceTree = "<group>"; };
+		1404707F25501CAE0012C425 /* RoomSettingsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSettingsViewControllerTests.swift; sourceTree = "<group>"; };
 		1411D81C252D7534009D8908 /* LingoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LingoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1411D81E252D7534009D8908 /* LingoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LingoTests.swift; sourceTree = "<group>"; };
 		1411D820252D7534009D8908 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -2397,6 +2401,8 @@
 				1411D857252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift */,
 				1411D883252E9C47009D8908 /* MasterTabBarControllerTests.swift */,
 				14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */,
+				1404707725501BFA0012C425 /* SettingsViewControllerTests.swift */,
+				1404707F25501CAE0012C425 /* RoomSettingsViewControllerTests.swift */,
 			);
 			path = LingoTests;
 			sourceTree = "<group>";
@@ -6508,9 +6514,11 @@
 				1411D884252E9C47009D8908 /* MasterTabBarControllerTests.swift in Sources */,
 				1411D835252D7597009D8908 /* RoomViewControllerTests.swift in Sources */,
 				144B5DF42546D08100AF2EAB /* RoomPowerLevel.swift in Sources */,
+				1404707825501BFA0012C425 /* SettingsViewControllerTests.swift in Sources */,
 				1411D866252D9089009D8908 /* RoomInputToolbarViewTests.swift in Sources */,
 				14D6DCB1253575A500C29F66 /* AuthenticationViewControllerTests.swift in Sources */,
 				1411D858252D88A0009D8908 /* RoomMemberDetailsViewControllerTests.swift in Sources */,
+				1404708025501CAE0012C425 /* RoomSettingsViewControllerTests.swift in Sources */,
 				144B5DFB2546D08400AF2EAB /* BuildSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

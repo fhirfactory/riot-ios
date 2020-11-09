@@ -32,10 +32,10 @@
     _shouldDisplay = NO;
     return self;
 }
--(instancetype)initWithColour:(UIColor*)Colour andBadgeNumber:(long)Number andShouldDisplay:(BOOL)ShouldDisplay{
-    _badgeColour = Colour;
-    _badgeNumber = Number;
-    _shouldDisplay = ShouldDisplay;
+-(instancetype)initWithColour:(UIColor*)colour andBadgeNumber:(long)number andShouldDisplay:(BOOL)shouldDisplay{
+    _badgeColour = colour;
+    _badgeNumber = number;
+    _shouldDisplay = shouldDisplay;
     return self;
 }
 @end

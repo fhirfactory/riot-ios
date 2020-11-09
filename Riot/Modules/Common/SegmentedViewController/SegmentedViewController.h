@@ -24,7 +24,7 @@ limitations under the License.
 @property (nonatomic) UIColor *badgeColour;
 @property (nonatomic) Boolean shouldDisplay;
 -(instancetype)init;
--(instancetype)initWithColour:(UIColor*)Colour andBadgeNumber:(long)Number andShouldDisplay:(BOOL)ShouldDisplay;
+-(instancetype)initWithColour:(UIColor*)colour andBadgeNumber:(long)number andShouldDisplay:(BOOL)shouldDisplay;
 @end
 
 /**

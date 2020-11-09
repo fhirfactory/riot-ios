@@ -252,6 +252,7 @@ final class BuildSettings: NSObject {
     
     //MARK: - Room Actions
     static let roomAllowRemoveAdministrativeMessage = false
+    static let roomPromptForAttachmentSize = false
     
     //MARK: - Tab Bar Notifications Actions
     static let displayActualFavouritesNotificationCountInTabBar = true

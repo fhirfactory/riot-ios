@@ -1177,3 +1177,10 @@
 "event_formatter_widget_removed_by_you" = "Vous avez supprimé le widget : %@";
 "event_formatter_jitsi_widget_added_by_you" = "Vous avez ajouté une conférence en VoIP";
 "event_formatter_jitsi_widget_removed_by_you" = "Vous avez supprimé une conférence en VoIP";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

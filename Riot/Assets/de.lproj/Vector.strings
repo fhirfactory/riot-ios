@@ -1192,3 +1192,9 @@
 "biometrics_cant_unlocked_alert_message_login" = "Erneut anmelden";
 "biometrics_cant_unlocked_alert_message_retry" = "Erneut probieren";
 "device_verification_self_verify_wait_recover_secrets_checking_availability" = "Nach anderen Überprüfungsfunktionen suchen ...";
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

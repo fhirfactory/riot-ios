@@ -874,3 +874,10 @@
 "auth_email_is_required" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen e-mailadres toevoegen om uw wachtwoord in de toekomst opnieuw in te stellen.";
 "auth_phone_is_required" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen telefoonnummer toevoegen om uw wachtwoord in de toekomst opnieuw in te stellen.";
 "auth_reset_password_error_is_required" = "Geen identiteitsserver ingesteld: voeg er één toe bij server opties om uw wachtwoord te wijzigen.";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

@@ -44,7 +44,7 @@ class ActRoleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabItem.title = NSLocalizedString("role_title", tableName: "Act", comment: "")
+        tabItem.title = AlternateHomeTools.getNSLocalized("role_title", in: "Vector")
         self.view.accessibilityIdentifier = "RoleVCView"
         //self.recentsTableView.accessibilityIdentifier = "RoleVCTableView"
         //self.addPlusButton()

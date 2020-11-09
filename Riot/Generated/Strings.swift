@@ -2034,6 +2034,10 @@ internal enum VectorL10n {
   internal static var peopleNoConversation: String { 
     return VectorL10n.tr("Vector", "people_no_conversation") 
   }
+  /// People
+  internal static var peopleTitle: String { 
+    return VectorL10n.tr("Vector", "people_title") 
+  }
   /// people
   internal static var personPlural: String { 
     return VectorL10n.tr("Vector", "person_plural") 
@@ -2173,6 +2177,10 @@ internal enum VectorL10n {
   /// Retry
   internal static var retry: String { 
     return VectorL10n.tr("Vector", "retry") 
+  }
+  /// Role
+  internal static var roleTitle: String { 
+    return VectorL10n.tr("Vector", "role_title") 
   }
   /// Call
   internal static var roomAccessibilityCall: String { 

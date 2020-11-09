@@ -560,3 +560,9 @@
 // Re-request confirmation dialog
 "rerequest_keys_alert_title" = "Sol·licitud enviada";
 "rerequest_keys_alert_message" = "Inicia Element en un altre dispositiu que pugui desxifrar el missatge per que pugui enviar les claus a aquest dispositiu.";
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

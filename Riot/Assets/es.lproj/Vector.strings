@@ -558,3 +558,10 @@
 "deactivate_account_forget_messages_information_part3" = ": esto provocará que los usuarios futuros vean conversaciones incompletas)";
 // String for App Store
 "store_short_description" = "Chat/VoIP descentralizado y seguro";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

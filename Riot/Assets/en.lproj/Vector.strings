@@ -1509,3 +1509,9 @@
 "room_info_list_one_member" = "1 member";
 "room_info_list_several_members" = "%@ members";
 "room_info_list_section_other" = "Other";
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

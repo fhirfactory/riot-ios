@@ -47,6 +47,19 @@ class AlternateHomeViewController: RecentsViewController {
         recentsTableView.reloadSectionIndexTitles()
     }
     
+    @IBAction private func CreateChat(_ sender: Any) {
+        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_start_chat_with", in: "Vector"), style: .default, handler: nil)) //create 1:1 chat
+        menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_create_empty_room", in: "Vector"), style: .default, handler: {_ in
+            let newvc = AlternateRoomCreationFlowAddMembersController()
+            //self.present(newvc, animated: true, completion: nil)
+            self.navigationController?.show(newvc, sender: self)
+        })) //create group chat
+        menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_join_room", in: "Vector"), style: .default, handler: nil)) //join a chat
+        
+        menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("cancel", in: "Vector"), style: .cancel, handler: nil))
+        self.present(menu, animated: true, completion: nil)
+    }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         nil
     }

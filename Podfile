@@ -64,6 +64,7 @@ abstract_target 'RiotPods' do
   pod 'Reusable', '~> 4.1'
   pod 'KeychainAccess', '~> 4.2'
  
+
   # Piwik for analytics
   pod 'MatomoTracker', '~> 7.2.0'
 
@@ -76,6 +77,7 @@ abstract_target 'RiotPods' do
   # Tools
   pod 'SwiftGen', '~> 6.4.0'
   pod 'SwiftLint', '~> 0.36.0'
+  pod 'Material', '~> 3.1.0'
 
   target "Riot" do
 #    import_MatrixKit

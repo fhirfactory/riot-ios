@@ -3587,7 +3587,7 @@
 
 - (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [[AppDelegate theDelegate] createDirectChatWithUserId:matrixId completion:completion];
+    [[AppDelegate theDelegate] startDirectChatWithUserId:matrixId completion:completion];
 }
 
 - (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController mention:(MXRoomMember*)member
@@ -5219,7 +5219,7 @@
     
     // Copy action
     
-    BOOL isCopyActionEnabled = !attachment || attachment.type != MXKAttachmentTypeSticker;
+    BOOL isCopyActionEnabled = (!attachment || attachment.type != MXKAttachmentTypeSticker) && (BuildSettings.sharingFeaturesEnabled || !attachment);
     
     if (isCopyActionEnabled)
     {
@@ -5337,14 +5337,62 @@
         [self showAdditionalActionsMenuForEvent:event inCell:cell animated:YES];
     };
     
+    RoomContextualMenuItem *removeMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionRemove];
+    
+    // Do not allow to redact the event that enabled encryption (m.room.encryption)
+    // because it breaks everything
+    bool allowRemoveMessage = (![self getEventIsAdministrative:event] || BuildSettings.roomAllowRemoveAdministrativeMessage) && event.eventType != MXEventTypeRoomEncryption;
+    removeMenuItem.action = ^{
+        if (allowRemoveMessage)
+        {
+            if (weakself)
+            {
+                typeof(self) self = weakself;
+                
+                [self cancelEventSelection];
+                
+                [self startActivityIndicator];
+                
+                [self.roomDataSource.room redactEvent:event.eventId reason:nil success:^{
+                    
+                    __strong __typeof(weakself)self = weakself;
+                    [self stopActivityIndicator];
+                    
+                } failure:^(NSError *error) {
+                    
+                    __strong __typeof(weakself)self = weakself;
+                    [self stopActivityIndicator];
+                    
+                    NSLog(@"[RoomVC] Redact event (%@) failed", event.eventId);
+                    //Alert user
+                    [[AppDelegate theDelegate] showErrorAsAlert:error];
+                    
+                }];
+            }
+            [self hideContextualMenuAnimated:YES completion:nil];
+        }
+    };
+    
     // Actions list
     
-    NSArray<RoomContextualMenuItem*> *actionItems = @[
-                                                      copyMenuItem,
-                                                      replyMenuItem,
-                                                      editMenuItem,
-                                                      moreMenuItem
-                                                      ];
+    NSMutableArray<RoomContextualMenuItem*> *actionItems = [NSMutableArray new];
+    /*@[messageDetailsAllowViewSource
+      copyMenuItem,
+      replyMenuItem,
+      editMenuItem,
+      moreMenuItem
+      ];*/
+    if (BuildSettings.sharingFeaturesEnabled){
+        [actionItems addObject:copyMenuItem];
+        [actionItems addObject:replyMenuItem];
+        [actionItems addObject:editMenuItem];
+        [actionItems addObject:moreMenuItem];
+    } else {
+        [actionItems addObject:replyMenuItem];
+        if (allowRemoveMessage){
+            [actionItems addObject:removeMenuItem];
+        }
+    }
     
     return actionItems;
 }

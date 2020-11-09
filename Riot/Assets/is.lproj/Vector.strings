@@ -5,6 +5,10 @@
 "title_rooms" = "Spjallrásir";
 "title_groups" = "Samfélög";
 "warning" = "Aðvörun";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Skoða";
 "next" = "Næsta";
@@ -79,6 +83,7 @@
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
 
+"room_creation_add_members" = "Add Members";
 // People tab
 "people_invites_section" = "BOÐSGESTIR";
 "people_conversation_section" = "SAMTÖL";

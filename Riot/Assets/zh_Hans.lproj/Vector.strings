@@ -4,6 +4,10 @@
 "title_people" = "联系人";
 "title_rooms" = "聊天室";
 "warning" = "警告";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "视图";
 "next" = "下一步";
@@ -692,6 +696,7 @@
 // Errors
 "error_user_already_logged_in" = "看上去你试图连接另一个主服务器。你想要登出吗？";
 "room_creation_error_invite_user_by_email_without_identity_server" = "未设置身份认证服务器，所以你不能用邮箱添加参与者。";
+"room_creation_add_members" = "Add Members";
 "contacts_address_book_no_identity_server" = "未设置身份认证服务器";
 "room_participants_remove_third_party_invite_prompt_msg" = "你确定想撤回这个邀请吗？";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "未设置身份认证服务器，所以你不能用邮箱和联系人开启聊天。";

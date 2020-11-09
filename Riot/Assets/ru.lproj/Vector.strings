@@ -4,6 +4,10 @@
 "title_people" = "Люди";
 "title_rooms" = "Комнаты";
 "warning" = "Предупреждение";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Просмотр";
 "back" = "Назад";
@@ -728,6 +732,7 @@
 // Errors
 "error_user_already_logged_in" = "Похоже, вы пытаетесь подключиться к другому серверу. Вы хотите выйти?";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Сервер идентификации не настроен, поэтому вы не можете добавить участника с электронной почтой.";
+"room_creation_add_members" = "Add Members";
 "room_participants_remove_third_party_invite_prompt_msg" = "Вы уверены, что хотите отозвать это приглашение?";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Сервер идентификации не настроен, поэтому вы не можете начать чат с контактом, используя электронную почту.";
 "camera_unavailable" = "Камера недоступна на вашем устройстве";

@@ -27,15 +27,15 @@
 
 @implementation BadgeData
 -(instancetype)init{
-    _BadgeColour = UIColor.redColor;
-    _BadgeNumber = 0;
-    _ShouldDisplay = NO;
+    _badgeColour = UIColor.redColor;
+    _badgeNumber = 0;
+    _shouldDisplay = NO;
     return self;
 }
 -(instancetype)initWithColour:(UIColor*)Colour andBadgeNumber:(long)Number andShouldDisplay:(BOOL)ShouldDisplay{
-    _BadgeColour = Colour;
-    _BadgeNumber = Number;
-    _ShouldDisplay = ShouldDisplay;
+    _badgeColour = Colour;
+    _badgeNumber = Number;
+    _shouldDisplay = ShouldDisplay;
     return self;
 }
 @end
@@ -107,7 +107,7 @@
         [visibleMutable addObject:@(YES)];
         [badgeMutable addObject:[BadgeData new]];
     }
-    _Visible = visibleMutable;
+    _visible = visibleMutable;
     badgeDataArray = badgeMutable;
 }
 
@@ -306,14 +306,14 @@
     NSUInteger count = 0;
     
     for (int i = 0; i < viewControllers.count; i++) {
-        if ([_Visible[i] isEqual:@(YES)]){
+        if ([_visible[i] isEqual:@(YES)]){
             count += 1;
         }
     }
     
     for (NSUInteger index = 0; index < viewControllers.count; index++)
     {
-        if ([_Visible[index] isEqual:@(YES)]){
+        if ([_visible[index] isEqual:@(YES)]){
             // create programmatically each label
             UILabel *label = [[UILabel alloc] init];
             
@@ -417,7 +417,7 @@
         }
         
         for (int i = 0; i < viewControllers.count; i++) {
-            if ([_Visible[i] isEqual:@(YES)]){
+            if ([_visible[i] isEqual:@(YES)]){
                 count += 1;
             }
         }
@@ -425,14 +425,14 @@
         long displaying = 0;
         for (long i = 0; i < viewControllers.count; i++){
             BadgeData *bd = badgeDataArray[i];
-            if ([_Visible[i] isEqual:@(YES)]){
+            if ([_visible[i] isEqual:@(YES)]){
                 displaying++;
             }
-            if (bd.ShouldDisplay && [_Visible[i] isEqual:@(YES)]){
+            if (bd.shouldDisplay && [_visible[i] isEqual:@(YES)]){
                 
                 UIView *badge = [UIView new];
                 UILabel *label = [UILabel new];
-                label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.BadgeNumber];
+                label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.badgeNumber];
                 label.textAlignment = NSTextAlignmentCenter;
                 [label sizeToFit];
                 NSLayoutConstraint *labelCenterX = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
@@ -443,7 +443,7 @@
                 [NSLayoutConstraint activateConstraints:@[labelCenterX, labelCenterY]];
                 
                 
-                badge.backgroundColor = bd.BadgeColour;
+                badge.backgroundColor = bd.badgeColour;
                 NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:badge
                                                                                    attribute:NSLayoutAttributeCenterX
                                                                                    relatedBy:NSLayoutRelationEqual
@@ -531,7 +531,7 @@
     {
         long tempIndex = -1;
         for (; actualIndex < viewControllers.count; actualIndex++){
-            if ([_Visible[actualIndex] isEqual:@(YES)]){
+            if ([_visible[actualIndex] isEqual:@(YES)]){
                 tempIndex++;
                 if (tempIndex == _selectedIndex){
                     break;
@@ -545,7 +545,7 @@
 - (long)getFakeIndexFor:(long)realIndex{
     long index = -1;
     for (long i = 0; i <= realIndex; i++){
-        if ([_Visible[i] isEqual:@(YES)]){
+        if ([_visible[i] isEqual:@(YES)]){
             index++;
         }
     }

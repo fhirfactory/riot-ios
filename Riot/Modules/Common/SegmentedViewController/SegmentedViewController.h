@@ -20,9 +20,9 @@ limitations under the License.
 #import "UIViewController+RiotSearch.h"
 
 @interface BadgeData: NSObject
-@property (nonatomic) NSInteger BadgeNumber;
-@property (nonatomic) UIColor *BadgeColour;
-@property (nonatomic) Boolean ShouldDisplay;
+@property (nonatomic) NSInteger badgeNumber;
+@property (nonatomic) UIColor *badgeColour;
+@property (nonatomic) Boolean shouldDisplay;
 -(instancetype)init;
 -(instancetype)initWithColour:(UIColor*)Colour andBadgeNumber:(long)Number andShouldDisplay:(BOOL)ShouldDisplay;
 @end
@@ -63,7 +63,7 @@ limitations under the License.
 /**
  Whether or not a specific section should be rendered
  */
-@property (nonatomic) NSArray<NSNumber*> *Visible;
+@property (nonatomic) NSArray<NSNumber*> *visible;
 
 /**
  Returns the `UINib` object initialized for a `SegmentedViewController`.

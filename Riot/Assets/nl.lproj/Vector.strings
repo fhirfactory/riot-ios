@@ -20,6 +20,10 @@
 "title_people" = "Personen";
 "title_rooms" = "Gesprekken";
 "warning" = "Waarschuwing";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Weergeven";
 "next" = "Volgende";
@@ -296,6 +300,7 @@
 "settings_global_settings_info" = "Globale meldingsinstellingen zijn beschikbaar op uw %@-webcliënt";
 "settings_pin_rooms_with_missed_notif" = "Gesprekken met gemiste meldingen vastprikken";
 "settings_pin_rooms_with_unread" = "Gesprekken met ongelezen berichten vastprikken";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Meldingen worden geweigerd voor %@, sta ze toe in uw apparaatinstellingen";
 //"settings_enable_all_notif" = "Alle notificaties aanzetten";
 //"settings_messages_my_display_name" = "Bericht dat mijn naam bevat";
@@ -315,6 +320,7 @@
 "settings_copyright" = "Copyright";
 "settings_term_conditions" = "Algemene voorwaarden";
 "settings_privacy_policy" = "Privacybeleid";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Derdepartijmeldingen";
 "settings_send_crash_report" = "Anonieme crash- en gebruiksgegevens versturen";
 "settings_clear_cache" = "Cache verwijderen";
@@ -836,6 +842,7 @@
 "reaction_history_title" = "Reacties";
 "auth_forgot_password_error_no_configured_identity_server" = "Er is geen identiteitsserver geconfigureerd: voeg er een toe om uw wachtwoord opnieuw in te stellen.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen deelnemers toevoegen via e-mail.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen gesprek beginnen met een contact via e-mail.";
 // Service terms
 "service_terms_modal_title" = "Dienstvoorwaarden";

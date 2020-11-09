@@ -21,6 +21,10 @@
 "or" = "edo";
 "invite" = "Gonbidatu";
 "warning" = "Abisua";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Titles
 "title_home" = "Hasiera";
 "title_favourites" = "Gogokoak";
@@ -157,6 +161,7 @@
 "settings_contacts_phonebook_country" = "Telefono-liburuaren herrialdea";
 "settings_pin_rooms_with_missed_notif" = "Finkatu ikusi gabeko jakinarazpenak dituzten gelak";
 "settings_pin_rooms_with_unread" = "Finkatu irakurri gabeko mezuak dituzten gelak";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "room_participants_action_section_devices" = "Saioak";
 "room_creation_appearance_name" = "Izena";
 "auth_msisdn_validation_title" = "Egiaztaketa egiteke";
@@ -350,6 +355,7 @@
 "settings_olm_version" = "%@ Olm bertsioa";
 "settings_term_conditions" = "Termino eta baldintzak";
 "settings_privacy_policy" = "Pribatutasun politika";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Hirugarrengoen adierazpenak";
 "settings_send_crash_report" = "Bidali kraskatze eta erabilera datu anonimoak";
 "settings_crypto_device_name" = "Saioaren izena: ";
@@ -802,6 +808,7 @@
 "emoji_picker_flags_category" = "Banderak";
 "auth_forgot_password_error_no_configured_identity_server" = "Ez da identitate zerbitzaririk konfiguratu: gehitu bat zure pasahitza berrezartzeko.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Ez da identitate zerbitzaririk konfiguratu, beraz ezin duzu parte-hartzaile bat e-mail bidez gehitu.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Ez da identitate zerbitzaririk konfiguratu, beraz ezin duzu kontaktu batekin txat bat hasi e-mail bat erabiliz.";
 "room_event_action_reaction_history" = "Erreakzioen historiala";
 "room_action_camera" = "Atera argazkia edo bideoa";

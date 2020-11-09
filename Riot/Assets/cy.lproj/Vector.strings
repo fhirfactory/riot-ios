@@ -8,6 +8,10 @@
 "title_rooms" = "Ystafelloedd";
 "title_groups" = "Cymunedau";
 "warning" = "Rhybudd";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Gweld";
 "next" = "Nesaf";
@@ -128,6 +132,7 @@
 "room_creation_wait_for_creation" = "Mae ystafell eisoes yn cael ei greu. Arhoswch os gwelwch yn dda.";
 "room_creation_invite_another_user" = "Chwilio / gwahodd yn ôl Dynodwr Defnyddiwr, Enw, new e-bost";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Nid oes unrhyw weinydd adnabod wedi'i osod felly ni allwch ychwanegu cyfranogwr gydag e-bost.";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "CYFEIRIADUR YSTAFELLOEDD";
 "room_recents_directory_section_network" = "Rhwydwaith";
@@ -380,6 +385,7 @@
 "settings_global_settings_info" = "Mae gosodiadau hysbysu eang ar gael ar eich cleient %@ gwe";
 "settings_pin_rooms_with_missed_notif" = "Pinio ystafelloedd gyda hysbysiadau heb eu gweld";
 "settings_pin_rooms_with_unread" = "Pinio ystafelloedd gyda negeseuon heb eu darllen";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Gwrthodir hysbysiadau i %@, caniatewch nhw yn eich gosodiadau dyfais";
 "settings_enable_callkit" = "Galw integredig";
 "settings_callkit_info" = "Derbyn galwadau sy'n dod i mewn ar eich sgrin clo. Gwelwch eich galwadau Element yn hanes galwadau'r system. Os yw iCloud wedi'i alluogi, bydd yr hanes galw hwn yn cael ei rannu gydag Apple.";
@@ -407,6 +413,7 @@
 "settings_copyright" = "Hawlfraint";
 "settings_term_conditions" = "Telerau ac Amodau";
 "settings_privacy_policy" = "Polisi Preifatrwydd";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Hysbysiadau Trydydd Parti";
 "settings_send_crash_report" = "Anfonwch ddata namau a defnydd dienw";
 "settings_enable_rageshake" = "Ysgwydiad blin i roi gwybod am nam";

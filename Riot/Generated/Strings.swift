@@ -558,7 +558,7 @@ internal enum VectorL10n {
   internal static var createRoomSectionFooterEncryption: String { 
     return VectorL10n.tr("Vector", "create_room_section_footer_encryption") 
   }
-  /// People join a private room only with the room invitation.
+  /// Private rooms can only be joined by invitation. Public rooms can be found by anyone.
   internal static var createRoomSectionFooterType: String { 
     return VectorL10n.tr("Vector", "create_room_section_footer_type") 
   }
@@ -2034,6 +2034,14 @@ internal enum VectorL10n {
   internal static var peopleNoConversation: String { 
     return VectorL10n.tr("Vector", "people_no_conversation") 
   }
+  /// people
+  internal static var personPlural: String { 
+    return VectorL10n.tr("Vector", "person_plural") 
+  }
+  /// person
+  internal static var personSingle: String { 
+    return VectorL10n.tr("Vector", "person_single") 
+  }
   /// %@ doesn't have permission to access photo library, please change privacy settings
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "photo_library_access_not_granted", p1)
@@ -2217,6 +2225,10 @@ internal enum VectorL10n {
   /// Account
   internal static var roomCreationAccount: String { 
     return VectorL10n.tr("Vector", "room_creation_account") 
+  }
+  /// Add Members
+  internal static var roomCreationAddMembers: String { 
+    return VectorL10n.tr("Vector", "room_creation_add_members") 
   }
   /// Appearance
   internal static var roomCreationAppearance: String { 
@@ -2826,7 +2838,7 @@ internal enum VectorL10n {
   internal static var roomParticipantsActionSetModerator: String { 
     return VectorL10n.tr("Vector", "room_participants_action_set_moderator") 
   }
-  /// Start new chat
+  /// Start Chat
   internal static var roomParticipantsActionStartNewChat: String { 
     return VectorL10n.tr("Vector", "room_participants_action_start_new_chat") 
   }
@@ -3002,7 +3014,7 @@ internal enum VectorL10n {
   internal static var roomRecentsConversationsSection: String { 
     return VectorL10n.tr("Vector", "room_recents_conversations_section") 
   }
-  /// Create room
+  /// Create group chat
   internal static var roomRecentsCreateEmptyRoom: String { 
     return VectorL10n.tr("Vector", "room_recents_create_empty_room") 
   }
@@ -3022,7 +3034,7 @@ internal enum VectorL10n {
   internal static var roomRecentsInvitesSection: String { 
     return VectorL10n.tr("Vector", "room_recents_invites_section") 
   }
-  /// Join room
+  /// Join a chat
   internal static var roomRecentsJoinRoom: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room") 
   }
@@ -3030,7 +3042,7 @@ internal enum VectorL10n {
   internal static var roomRecentsJoinRoomPrompt: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_prompt") 
   }
-  /// Join a room
+  /// Join a chat
   internal static var roomRecentsJoinRoomTitle: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_title") 
   }
@@ -3050,7 +3062,7 @@ internal enum VectorL10n {
   internal static var roomRecentsServerNoticeSection: String { 
     return VectorL10n.tr("Vector", "room_recents_server_notice_section") 
   }
-  /// Start chat
+  /// Create chat
   internal static var roomRecentsStartChatWith: String { 
     return VectorL10n.tr("Vector", "room_recents_start_chat_with") 
   }
@@ -3566,10 +3578,6 @@ internal enum VectorL10n {
   internal static var serviceTermsModalTitleIdentityServer: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_title_identity_server") 
   }
-  /// Acknowledgement
-  internal static var settingsAcknowledgement: String { 
-    return VectorL10n.tr("Vector", "settings_acknowledgement") 
-  }
   /// Invalid password
   internal static var settingsAdd3pidInvalidPasswordMessage: String { 
     return VectorL10n.tr("Vector", "settings_add_3pid_invalid_password_message") 
@@ -3657,6 +3665,10 @@ internal enum VectorL10n {
   /// Copyright
   internal static var settingsCopyright: String { 
     return VectorL10n.tr("Vector", "settings_copyright") 
+  }
+  /// Credits
+  internal static var settingsCredits: String { 
+    return VectorL10n.tr("Vector", "settings_credits") 
   }
   /// Encrypt to verified sessions only
   internal static var settingsCryptoBlacklistUnverifiedDevices: String { 
@@ -3798,9 +3810,9 @@ internal enum VectorL10n {
   internal static var settingsFlair: String { 
     return VectorL10n.tr("Vector", "settings_flair") 
   }
-  /// Global notification settings are available on your %@ web client
-  internal static func settingsGlobalSettingsInfo(_ p1: String) -> String {
-    return VectorL10n.tr("Vector", "settings_global_settings_info", p1)
+  /// Controls whether to show notifications on this device.
+  internal static var settingsGlobalSettingsInfo: String { 
+    return VectorL10n.tr("Vector", "settings_global_settings_info") 
   }
   /// Using the identity server set above, you can discover and be discoverable by existing contacts you know.
   internal static var settingsIdentityServerDescription: String { 
@@ -3993,6 +4005,10 @@ internal enum VectorL10n {
   /// Show rooms with unread messages first
   internal static var settingsPinRoomsWithUnread: String { 
     return VectorL10n.tr("Vector", "settings_pin_rooms_with_unread") 
+  }
+  /// Controls whether chats with missed messages are shown first.
+  internal static var settingsPinRoomsWithUnreadDescription: String { 
+    return VectorL10n.tr("Vector", "settings_pin_rooms_with_unread_description") 
   }
   /// Privacy Policy
   internal static var settingsPrivacyPolicy: String { 

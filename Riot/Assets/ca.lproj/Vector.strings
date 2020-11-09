@@ -4,6 +4,10 @@
 "title_people" = "Gent";
 "title_rooms" = "Sales";
 "warning" = "Avís";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Veure";
 "next" = "Següent";
@@ -88,6 +92,7 @@
 "auth_reset_password_error_not_found" = "La teva adreça de correu electrònic no sembla està associada a una ID de Matrix en aquest servidor.";
 "auth_reset_password_success_message" = "La teva contrasenya ha estat restablerta.\n\nHas tancat la sessió de tots els dispositius i ja no rebràs notificacions. Per tornar a activar les notificacions, torna a iniciar la sessió a cada dispositiu.";
 "auth_add_email_and_phone_warning" = "La inscripció amb el correu electrònic i el número de telèfon alhora no són compatibles fins que no existeixi l'api. Només es tindrà en compte el número de telèfon. Pots afegir el teu correu electrònic al teu perfil a la configuració.";
+"room_creation_add_members" = "Add Members";
 // Chat creation
 "room_creation_title" = "Nou Xat";
 "room_creation_account" = "Compte";
@@ -304,6 +309,7 @@
 "settings_global_settings_info" = "Els paràmetres de notificació globals estan disponibles al teu client web %@";
 "settings_pin_rooms_with_missed_notif" = "Fixa sales amb notificacions pendents";
 "settings_pin_rooms_with_unread" = "Fixa sales amb missatges pendents";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "%@ no permet notificacions, si us plau activa-les en els ajustos del teu dispositiu";
 "settings_enable_callkit" = "Trucades integrades";
 "settings_callkit_info" = "Rep les trucades entrants a la pantalla de bloqueig. Consulta les trucades de Element a l'historial de trucades del sistema. Si està habilitat iCloud, aquest historial de trucades es compartirà amb Apple.";
@@ -326,6 +332,7 @@
 "settings_copyright" = "Copyright";
 "settings_term_conditions" = "Termes i Condicions";
 "settings_privacy_policy" = "Política de Privacitat";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Avisos de tercers";
 "settings_send_crash_report" = "Envia anònimament dades de fallades i d'ús";
 "settings_enable_rageshake" = "Agitar rabiosament per informar d'errors";

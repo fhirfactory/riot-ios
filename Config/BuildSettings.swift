@@ -177,7 +177,7 @@ final class BuildSettings: NSObject {
     // MARK: - General Settings Screen Toggles
     /// Booleans that hide or show different elements on the Settings screen
     
-    static let settingsScreenAllowUserSignOut: Bool = false
+    static let settingsScreenAllowUserSignOut: Bool = true
     static let settingsScreenShowUserFirstName: Bool = false
     static let settingsScreenShowUserSurname: Bool = false
     static let settingsScreenAllowAddingEmailThreepids: Bool = false
@@ -212,6 +212,7 @@ final class BuildSettings: NSObject {
     
     // MARK: - General Settings Defaults Overrides
     /// Override values that are used to control the value of settings that are hidden from users
+    static let sharingFeaturesEnabled: Bool = false
     
     /// Leave this as an empty string value to allow user theme selection
     static let settingsScreenOverrideDefaultThemeSelection : NSString = "lingo"
@@ -219,12 +220,13 @@ final class BuildSettings: NSObject {
     // MARK: - Room Settings Screen
     
     static let roomSettingsScreenShowLowPriorityOption: Bool = true
-    static let roomSettingsScreenShowDirectChatOption: Bool = true
-    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
+    static let roomSettingsScreenShowDirectChatOption: Bool = false
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = false
     static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
-    static let roomSettingsScreenShowAddressSettings: Bool = true
-    static let roomSettingsScreenShowFlairSettings: Bool = true
-    static let roomSettingsScreenShowAdvancedSettings: Bool = true
+    static let roomSettingsScreenShowAddressSettings: Bool = false
+    static let roomSettingsScreenShowFlairSettings: Bool = false
+    static let roomSettingsScreenShowAdvancedSettings: Bool = false
+    static let roomSettingsScreenShowAnyoneHistoryOption: Bool = false
     
     // MARK: - Room Participants
     static let roomParticipantAllowBan : Bool = false
@@ -233,14 +235,15 @@ final class BuildSettings: NSObject {
     static let roomParticipantAllowHideAll : Bool = false
     
     // MARK: - Message
-    static let messageDetailsAllowShare: Bool = true
-    static let messageDetailsAllowPermalink: Bool = true
+    static let messageDetailsAllowShare: Bool = false
+    static let messageDetailsAllowPermalink: Bool = false
     static let messageDetailsAllowViewSource: Bool = false
-    static let messageDetailsAllowSave: Bool = true
+    static let messageDetailsAllowSave: Bool = false
     static let messageDetailsAllowViewEncryptionInformation : Bool = false
     static let messageDetailsAllowReportContent : Bool = false
     static let messagesAllowViewRoomRightsChanges : Bool = true
-    static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = 0
+    static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = RoomPowerLevel.user.rawValue
+    
     
     // MARK: - HTTP
     /// Additional HTTP headers will be sent by all requests. Not recommended to use request-specific headers, like `Authorization`.
@@ -249,6 +252,10 @@ final class BuildSettings: NSObject {
     
     //MARK: - Room Actions
     static let roomAllowRemoveAdministrativeMessage = false
+    static let roomPromptForAttachmentSize = false
+    
+    //MARK: - Tab Bar Notifications Actions
+    static let displayActualFavouritesNotificationCountInTabBar = true
     
     
     // MARK: - Authentication Screen

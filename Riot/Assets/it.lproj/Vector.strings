@@ -60,6 +60,10 @@
 "auth_reset_password_message" = "Per ripristinare la password inserisci l'indirizzo email associato al tuo account:";
 // String for App Store
 "store_short_description" = "Conversazioni sicure e decentralizzate";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Visualizza";
 "back" = "Indietro";
@@ -334,6 +338,7 @@
 "settings_global_settings_info" = "Le impostazioni di notifica avanzate sono disponibili nel tuo %@ web client";
 "settings_pin_rooms_with_missed_notif" = "Segna le stanze con notifiche perse";
 "settings_pin_rooms_with_unread" = "Segna le stanze con messaggi non letti";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Le notifiche non sono permesse per %@, abilitale nelle impostazioni del tuo dispositivo";
 "settings_enable_callkit" = "Chiamate integrate";
 "settings_callkit_info" = "Ricevi le chiamate in arrivo sul blocca schermo. Mostra le chiamate Element nella cronologia di chiamate del dispositivo. Se iCloud è attivo, questa cronologia sarà condivisa con Apple.";
@@ -358,7 +363,7 @@
 "settings_copyright" = "Copyright";
 "settings_term_conditions" = "Termini e condizioni";
 "settings_privacy_policy" = "Privacy Policy";
-"settings_acknowledgement" = "Acknowledgement";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Avvisi di terze parti";
 "settings_send_crash_report" = "Invia dati di utilizzo anonimi";
 "settings_enable_rageshake" = "Per segnalare un errore agita il dispositivo con rabbia";
@@ -673,6 +678,7 @@
 "auth_softlogout_clear_data_sign_out_msg" = "Sei sicuro di voler cancellare tutti i dati memorizzati su questo dispositivo? Accedi di nuovo per gestire dati e messaggi del tuo account.";
 "auth_softlogout_clear_data_sign_out" = "Disconnessione";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Non è stato configuato nessun Identity Server e quindi non è possibile aggiungere partecipanti con un'e-mail.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Non è stato configurato alcun Identity Server, quindi non è possibile avviare una chat con qualcuno tramite e-mail.";
 "room_event_action_reply" = "Rispondi";
 "room_event_action_edit" = "Modifica";

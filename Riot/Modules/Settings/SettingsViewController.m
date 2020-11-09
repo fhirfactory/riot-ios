@@ -92,6 +92,7 @@ enum
     NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX,
     NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX,
     NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX,
+    NOTIFICATION_SETTINGS_PIN_UNREAD_DESCRIPTION_INDEX,
 };
 
 enum
@@ -246,6 +247,7 @@ TableViewSectionsDelegate>
 @property (nonatomic, strong) AuthenticatedSessionViewControllerFactory *authenticatedSessionViewControllerFactory;
 
 @property (nonatomic, strong) TableViewSections *tableViewSections;
+@property (nonatomic, strong) CameraPresenter *cameraPresenter;
 
 @end
 
@@ -338,6 +340,7 @@ TableViewSectionsDelegate>
         [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_MISSED_NOTIFICATIONS_INDEX];
     }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_INDEX];
+    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_PIN_UNREAD_DESCRIPTION_INDEX];
     sectionNotificationSettings.headerTitle = NSLocalizedStringFromTable(@"settings_notifications_settings", @"Vector", nil);
     [tmpSections addObject:sectionNotificationSettings];
     
@@ -1798,9 +1801,10 @@ TableViewSectionsDelegate>
         {
             MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
 
-            NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
+            // With the Lingo version of this descriptive string we no longer reference the bundle display name
+            // NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
 
-            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_global_settings_info", @"Vector", nil), appDisplayName];
+            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_global_settings_info", @"Vector", nil), nil];
             globalInfoCell.textLabel.numberOfLines = 0;
             
             globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1830,6 +1834,17 @@ TableViewSectionsDelegate>
             [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(togglePinRoomsWithUnread:) forControlEvents:UIControlEventTouchUpInside];
             
             cell = labelAndSwitchCell;
+        }
+        else if (row == NOTIFICATION_SETTINGS_PIN_UNREAD_DESCRIPTION_INDEX)
+        {
+            MXKTableViewCell *globalInfoCell = [self getDefaultTableViewCell:tableView];
+
+            globalInfoCell.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"settings_pin_rooms_with_unread_description", @"Vector", nil), nil];
+            globalInfoCell.textLabel.numberOfLines = 0;
+            
+            globalInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell = globalInfoCell;
         }
     }
     else if (section == SECTION_TAG_CALLS)
@@ -2124,7 +2139,7 @@ TableViewSectionsDelegate>
         {
             MXKTableViewCell *acknowledgementCell = [self getDefaultTableViewCell:tableView];
             
-            acknowledgementCell.textLabel.text = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+            acknowledgementCell.textLabel.text = NSLocalizedStringFromTable(@"settings_credits", @"Vector", nil);
             
             [acknowledgementCell vc_setAccessoryDisclosureIndicatorWithCurrentTheme];
             
@@ -2579,7 +2594,7 @@ TableViewSectionsDelegate>
             {
                 WebViewViewController *webViewViewController = [[WebViewViewController alloc] initWithURL:BuildSettings.applicationAcknowledgementUrlString];
                 
-                webViewViewController.title = NSLocalizedStringFromTable(@"settings_acknowledgement", @"Vector", nil);
+                webViewViewController.title = NSLocalizedStringFromTable(@"settings_credits", @"Vector", nil);
                 
                 [self pushViewController:webViewViewController];
             }
@@ -3506,20 +3521,28 @@ TableViewSectionsDelegate>
     {
         return;
     }
-    SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
-    singleImagePickerPresenter.delegate = self;
-    
-    NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:USER_SETTINGS_PROFILE_PICTURE_INDEX
-                                                              sectionTag:SECTION_TAG_USER_SETTINGS];
-    if (indexPath)
-    {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (BuildSettings.sharingFeaturesEnabled){
+        SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
+        singleImagePickerPresenter.delegate = self;
         
-        UIView *sourceView = cell;
-        
-        [singleImagePickerPresenter presentFrom:self sourceView:sourceView sourceRect:sourceView.bounds animated:YES];
-        
-        self.imagePickerPresenter = singleImagePickerPresenter;
+        NSIndexPath *indexPath = [_tableViewSections exactIndexPathForRowTag:USER_SETTINGS_PROFILE_PICTURE_INDEX
+                                                                  sectionTag:SECTION_TAG_USER_SETTINGS];
+        if (indexPath)
+        {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+            
+            UIView *sourceView = cell;
+            
+            [singleImagePickerPresenter presentFrom:self sourceView:sourceView sourceRect:sourceView.bounds animated:YES];
+            
+            self.imagePickerPresenter = singleImagePickerPresenter;
+        }
+    } else {
+        CameraPresenter *cameraPresenter = [CameraPresenter new];
+        cameraPresenter.delegate = self;
+        [cameraPresenter presentCameraFrom:self with:@[MXKUTI.image] animated:YES];
+
+        self.cameraPresenter = cameraPresenter;
     }
 }
 
@@ -4127,6 +4150,21 @@ TableViewSectionsDelegate>
 {
     [presenter dismissWithAnimated:YES completion:nil];
     self.imagePickerPresenter = nil;
+    
+    newAvatarImage = [UIImage imageWithData:imageData];
+    
+    [self updateSections];
+}
+
+#pragma mark - CameraPresenterDelegate
+
+-(void)cameraPresenterDidCancel:(CameraPresenter *)cameraPresenter{
+    [cameraPresenter dismissWithAnimated:YES completion:nil];
+    self.cameraPresenter = nil;
+}
+
+-(void)cameraPresenter:(CameraPresenter *)presenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti {
+    [presenter dismissWithAnimated:YES completion:nil];
     
     newAvatarImage = [UIImage imageWithData:imageData];
     

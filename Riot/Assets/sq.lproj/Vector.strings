@@ -4,6 +4,10 @@
 "title_rooms" = "Dhoma";
 "title_groups" = "Bashkësi";
 "warning" = "Sinjalizim";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Parje";
 "next" = "Pasuesja";
@@ -260,6 +264,7 @@
 "settings_copyright" = "Të drejta kopjimi";
 "settings_term_conditions" = "Terma & Kushte";
 "settings_privacy_policy" = "Rregulla Privatësie";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Njoftime Palësh të Treta";
 "settings_clear_cache" = "Pastroje fshehtinën";
 "settings_change_password" = "Ndryshoni fjalëkalimin";
@@ -431,6 +436,7 @@
 "settings_fail_to_update_profile" = "S’arrihet të përditësohet profili";
 "settings_pin_rooms_with_missed_notif" = "Fikso dhomat me njoftime të humbura";
 "settings_pin_rooms_with_unread" = "Fikso dhomat me mesazhe të palexuar";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_labs_create_conference_with_jitsi" = "Krijoni thirrje konferencë me Jitsi-n";
 "settings_fail_to_update_password" = "S’arrihet të përditësohet fjalëkalimi";
 "settings_deactivate_my_account" = "Çaktivizoje llogarinë time";
@@ -821,6 +827,7 @@
 "reaction_history_title" = "Reagime";
 "auth_forgot_password_error_no_configured_identity_server" = "S’ka shërbyes identitetesh të formësuar: shtoni një të tillë që të ricaktoni fjalëkalimin tuaj.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "S’ka shërbyes identitetesh të formësua, ndaj s’mund të shtoni një pjesëmarrës me një email.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "S’ka shërbyes identitetesh të formësuar, ndaj s’mund të nisni një fjalosje me një kontakt duke përdorur një email.";
 // Service terms
 "service_terms_modal_title" = "Kushte Shërbimi";

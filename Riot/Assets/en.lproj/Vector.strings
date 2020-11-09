@@ -28,6 +28,10 @@
 "title_groups" = "Communities";
 "warning" = "Warning";
 
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
+
 // Actions
 "view" = "View";
 "next" = "Next";
@@ -164,6 +168,8 @@
 "room_creation_wait_for_creation" = "A room is already being created. Please wait.";
 "room_creation_invite_another_user" = "Search / invite by User ID, Name or email";
 "room_creation_error_invite_user_by_email_without_identity_server" = "No identity server is configured so you cannot add a participant with an email.";
+"room_creation_add_members" = "Add Members";
+
 
 // Room recents
 "room_recents_directory_section" = "ROOM DIRECTORY";
@@ -176,10 +182,10 @@
 "room_recents_low_priority_section" = "LOW PRIORITY";
 "room_recents_server_notice_section" = "SYSTEM ALERTS";
 "room_recents_invites_section" = "INVITES";
-"room_recents_start_chat_with" = "Start chat";
-"room_recents_create_empty_room" = "Create room";
-"room_recents_join_room" = "Join room";
-"room_recents_join_room_title" = "Join a room";
+"room_recents_start_chat_with" = "Create chat";
+"room_recents_create_empty_room" = "Create group chat";
+"room_recents_join_room" = "Join a chat";
+"room_recents_join_room_title" = "Join a chat";
 "room_recents_join_room_prompt" = "Type a room id or a room alias";
 
 // Pull down menu items
@@ -270,7 +276,7 @@
 "room_participants_action_set_default_power_level" = "Reset to normal user";
 "room_participants_action_set_moderator" = "Make moderator";
 "room_participants_action_set_admin" = "Make admin";
-"room_participants_action_start_new_chat" = "Start new chat";
+"room_participants_action_start_new_chat" = "Start Chat";
 "room_participants_action_start_voice_call" = "Start voice call";
 "room_participants_action_start_video_call" = "Start video call";
 "room_participants_action_mention" = "Mention";
@@ -462,9 +468,10 @@
 
 "settings_enable_push_notif" = "Notifications on this device";
 "settings_show_decrypted_content" = "Show decrypted content";
-"settings_global_settings_info" = "Global notification settings are available on your %@ web client";
+"settings_global_settings_info" = "Controls whether to show notifications on this device.";
 "settings_pin_rooms_with_missed_notif" = "Show rooms with missed notifications first";
 "settings_pin_rooms_with_unread" = "Show rooms with unread messages first";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Notifications are denied for %@, please allow them in your device settings";
 //"settings_enable_all_notif" = "Enable all notifications";
 //"settings_messages_my_display_name" = "Msg containing my display name";
@@ -507,7 +514,7 @@
 "settings_term_conditions" = "Terms & Conditions";
 "settings_privacy_policy" = "Privacy Policy";
 "settings_third_party_notices" = "Third-party Notices";
-"settings_acknowledgement" = "Acknowledgement";
+"settings_credits" = "Credits";
 "settings_send_crash_report" = "Send anon crash & usage data";
 "settings_enable_rageshake" = "Rage shake to report bug";
 "settings_clear_cache" = "Clear cache";
@@ -1491,7 +1498,7 @@
 "create_room_section_header_type" = "Room type";
 "create_room_type_private" = "Private Room";
 "create_room_type_public" = "Public Room";
-"create_room_section_footer_type" = "People join a private room only with the room invitation.";
+"create_room_section_footer_type" = "Private rooms can only be joined by invitation. Public rooms can be found by anyone.";
 "create_room_show_in_directory" = "Show the room in the directory";
 "create_room_section_header_address" = "Room address";
 "create_room_placeholder_address" = "#testroom:matrix.org";

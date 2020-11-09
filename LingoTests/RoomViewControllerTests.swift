@@ -63,6 +63,58 @@ class RoomViewControllerTests: XCTestCase {
         XCTAssert(UserDefaults.standard.bool(forKey: "matrixApps") == false)
         
     }
+    
+    func test_194171_allowRoomRightsMessagesInRooms() throws {
+        /// Given I am a Room Member
+        /// When I am viewing the Room Timeline
+        /// Then I am able to see each change to a Room Member's Rights on the timeline including
+        /// . the display name of the user that made the change
+        /// . the display name of the user that had their room rights changed
+        /// . the change in room rights (from and to)
+
+        /// Given I am a Room Member
+        /// When I am viewing the Room Timeline
+        /// Then I am able to see the following Room Right changes on the timeline
+        /// AND it includes the following room right changes
+        /// . Normal rights to Moderator rights
+        /// . Normal rights to Administrator rights
+        /// . Moderator rights to Administrator rights
+        /// . Moderator rights to Normal rights
+        /// . Administrator rights to Moderator rights
+        /// . Administrator rights to Normal rights
+        
+        XCTAssert(BuildSettings.messagesAllowViewRoomRightsChanges == true)
+        XCTAssert(BuildSettings.messagesMinimumPowerLevelAllowViewRoomRightsChanges == RoomPowerLevel.user.rawValue)
+        
+    }
+
+    func test_197523_preventUserOverrideOfMediaFileSizes() throws {
+        /// Given I am an authenticated user
+        /// AND I have selected my User Profile
+        /// When I select my User Settings
+        /// Then I am not able to see the Default Compression setting.
+
+        /// Given I am an authenticated user
+        /// When I am taking a photo in the Application
+        /// Then the Default Compression setting value = 'Original'.
+        
+        XCTAssert(BuildSettings.roomPromptForAttachmentSize == false)
+        
+    }
+    
+    func test_197400_removeSharingFunctionality() throws {
+        /// Given I am in a Chat Room (that I am a member of)
+        /// When I view the composing options
+        /// Then the only option to add media to the Chat Room from the Chat Room is 'Take a photo or video'
+
+        /// Notes
+
+        ///     The paperclip menu is to be replaced with a camera icon that triggers the 'Take photo or video' action.
+        ///     I am not able to see or select the 'Send File' action anymore.
+        
+        XCTAssert(BuildSettings.sharingFeaturesEnabled == false)
+        
+    }
 
 }
 

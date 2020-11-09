@@ -4,6 +4,10 @@
 "title_people" = "Люди";
 "title_rooms" = "Комнаты";
 "warning" = "Предупреждение";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Просмотр";
 "back" = "Назад";
@@ -276,6 +280,7 @@
 "settings_copyright" = "Авторские права";
 "settings_term_conditions" = "Условия и положения";
 "settings_privacy_policy" = "Политика конфиденциальности";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Уведомления сторонних разработчиков";
 "settings_send_crash_report" = "Отправка данных о сбоях и использовании";
 "settings_clear_cache" = "Очистить кэш";
@@ -412,6 +417,7 @@
 "settings_remove_phone_prompt_msg" = "Вы действительно хотите удалить номер телефона %@?";
 "settings_pin_rooms_with_missed_notif" = "Закрепить комнаты с пропущенными уведомлениями";
 "settings_pin_rooms_with_unread" = "Закрепить комнаты с непрочитанными сообщениями";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_contacts_discover_matrix_users" = "Использовать email и номера телефонов для поиска пользователей";
 "settings_contacts_phonebook_country" = "Страна телефонной книги";
 "no_voip" = "%@ вызывает вас, но %@ пока не поддерживает вызовы.\nМожно пропустить это уведомление и ответить на звонок с другого устройства, или вы можете отклонить его.";
@@ -726,6 +732,7 @@
 // Errors
 "error_user_already_logged_in" = "Похоже, вы пытаетесь подключиться к другому серверу. Вы хотите выйти?";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Сервер идентификации не настроен, поэтому вы не можете добавить участника с электронной почтой.";
+"room_creation_add_members" = "Add Members";
 "room_participants_remove_third_party_invite_prompt_msg" = "Вы уверены, что хотите отозвать это приглашение?";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Сервер идентификации не настроен, поэтому вы не можете начать чат с контактом, используя электронную почту.";
 "camera_unavailable" = "Камера недоступна на вашем устройстве";

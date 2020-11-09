@@ -3,6 +3,10 @@
 "title_favourites" = "Yêu thích";
 "title_people" = "Danh bạ";
 "title_rooms" = "Phòng chat";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Xem";
 "next" = "Kế tiếp";
@@ -103,6 +107,7 @@
 "room_creation_make_private" = "Riêng tư";
 "room_creation_wait_for_creation" = "Phòng trò chuyện đã được tạo. Vui lòng chờ.";
 "room_creation_invite_another_user" = "Tìm / mời bằng ID người dùng, tên hoặc email";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "DANH MỤC PHÒNG";
 "room_recents_directory_section_network" = "Mạng";
@@ -299,6 +304,7 @@
 "settings_global_settings_info" = "Cài đặt thông báo toàn cầu khả dụng trên %@ trình duyệt khách của bạn";
 "settings_pin_rooms_with_missed_notif" = "Neo phòng có thông báo bỏ lỡ";
 "settings_pin_rooms_with_unread" = "Neo phòng có tin nhắn chưa đọc";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Thông báo bị từ chối cho %@, vui lòng cho phép trong cài đặt thiết bị của bạn";
 "settings_enable_callkit" = "Cuộc gọi tích hợp";
 "settings_callkit_info" = "Nhận cuộc gọi tới trên màn hình khóa. Xem lịch sử cuộc gọi trong lịch sử cuộc gọi của hệ thống. Nếu iCloud được kích hoạt, lịch sử cuộc gọi sẽ được chia sẻ với Apple.";
@@ -320,6 +326,7 @@
 "settings_copyright" = "Bản quyền";
 "settings_term_conditions" = "Điều khoản và điều kiện";
 "settings_privacy_policy" = "Chính sách bảo mật";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Thông báo từ bên thứ ba";
 "settings_send_crash_report" = "Gửi lỗi & dữ liệu sử dụng";
 "settings_enable_rageshake" = "Lắc điện thoại để báo cáo lỗi";

@@ -5,6 +5,10 @@
 "title_rooms" = "Spjallrásir";
 "title_groups" = "Samfélög";
 "warning" = "Aðvörun";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Skoða";
 "next" = "Næsta";
@@ -79,6 +83,7 @@
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
 
+"room_creation_add_members" = "Add Members";
 // People tab
 "people_invites_section" = "BOÐSGESTIR";
 "people_conversation_section" = "SAMTÖL";
@@ -194,6 +199,7 @@
 "settings_copyright" = "Höfundarréttur";
 "settings_term_conditions" = "Skilmálar og kvaðir";
 "settings_privacy_policy" = "Stefna vegna meðferðar persónuupplýsinga";
+"settings_credits" = "Credits";
 "settings_third_party_notices" = "Athugasemdir frá þriðja aðila";
 "settings_send_crash_report" = "Senda nafnlausar hrunskýrslur og upplýsingar um notkun";
 "settings_clear_cache" = "Hreinsa skyndiminni";
@@ -451,6 +457,7 @@
 "settings_fail_to_update_profile" = "Mistókst að uppfæra notandasnið";
 "settings_pin_rooms_with_missed_notif" = "Festa spjallrásir með óskoðuðum tilkynningum";
 "settings_pin_rooms_with_unread" = "Festa spjallrásir með ólesnum skilaboðum";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Tilkynningum er hafnað fyrir %@, leyfðu þær í stillingum tækisins";
 "settings_ui_theme_picker_message" = "\"Sjálfvirkt\" notar \"Umsnúa litum\" stillingar tækisins";
 "settings_contacts_discover_matrix_users" = "Notaðu tölvupóstföng og símanúmer til að finna notendur";

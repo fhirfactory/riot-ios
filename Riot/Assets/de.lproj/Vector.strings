@@ -7,6 +7,10 @@
 // Actions
 "view" = "Ansehen";
 "invite" = "Einladen";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Room Details
 "room_details_title" = "Raum Details";
 "title_favourites" = "Favoriten";
@@ -239,6 +243,7 @@
 "settings_copyright" = "Kopierrecht";
 "settings_term_conditions" = "Geschäftsbedingungen";
 "settings_privacy_policy" = "Datenschutzerklärung";
+"settings_credits" = "Credits";
 "settings_send_crash_report" = "Sende anonyme Absturz- & Nutzungsdaten";
 "settings_change_password" = "Passwort ändern";
 "settings_old_password" = "altes Passwort";
@@ -322,6 +327,7 @@
 "settings_global_settings_info" = "Globale Benachrichtigungseinstellungen sind auf deinem %@ web-Client verfügbar";
 "settings_pin_rooms_with_missed_notif" = "Pinnen von Räumen mit verpassten Benachrichtigungen";
 "settings_pin_rooms_with_unread" = "Pinnen von Räumen mit ungelesenen Nachrichten";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
 "settings_on_denied_notification" = "Benachrichtigungen verboten für %@, bitte in den Geräte-Einstellungen erlauben";
 "settings_contacts_discover_matrix_users" = "Entdecke andere Benutzer!nnen mittels E-Mail-Adressen oder Telefonnummern";
 "settings_labs_e2e_encryption_prompt_message" = "Zum Fertigstellen der Verschlüsselung bitte neu anmelden.";
@@ -810,6 +816,7 @@
 "photo_library_access_not_granted" = "%@ hat keine Berechtigung zum Zugriff auf die Fotobibliothek. Bitte ändere die Datenschutzeinstellungen";
 "auth_forgot_password_error_no_configured_identity_server" = "Es ist kein Identitätsserver konfiguriert: Füge einen hinzu, um dein Kennwort zurückzusetzen.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Es ist kein Identitätsserver konfiguriert, sodass du keine Teilnehmenden mit einer E-Mail hinzufügen kannst.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Es ist kein Identitätsserver konfiguriert, sodass du keinen Chat mit einem Kontakt über eine E-Mail starten kannst.";
 // Service terms
 "service_terms_modal_title" = "Nutzungsbedingungen";

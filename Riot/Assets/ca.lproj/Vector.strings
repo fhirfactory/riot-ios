@@ -124,6 +124,8 @@
 "room_recents_join_room_title" = "Unir-se a una sala";
 "room_recents_join_room_prompt" = "Escriu la id de la sala o el seu alias";
 "room_recents_chats_section" = "CHATS";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Pull down menu items
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";

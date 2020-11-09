@@ -1009,8 +1009,8 @@
 "room_member_power_level_short_moderator" = "主持人";
 "room_member_power_level_short_user" = "User";
 
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 "security_settings_crosssigning" = "交叉签名";
 "security_settings_crosssigning_info_not_bootstrapped" = "交叉签名还没有被设置。";
 "security_settings_crosssigning_info_exists" = "您的帐户有一个交叉签名身份，但是还没有被这个会话信任。完全安全的会话。";

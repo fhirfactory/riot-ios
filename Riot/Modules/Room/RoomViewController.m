@@ -1907,6 +1907,10 @@
             [self redactAdministrativeEvents:roomBubbleCellData];
         }
         
+        if (bubbleData.events.firstObject.eventType == MXEventTypeRoomPowerLevels){
+            return bubbleData.isPaginationFirstBubble ? RoomMembershipWithPaginationTitleBubbleCell.class : RoomMembershipBubbleCell.class;
+        }
+        
         // Select the suitable table view cell class, by considering first the empty bubble cell.
         if (bubbleData.hasNoDisplay)
         {

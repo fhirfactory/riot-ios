@@ -525,6 +525,13 @@
     [NSLayoutConstraint activateConstraints:@[leftMarkerViewConstraint, widthConstraint, bottomConstraint, heightConstraint]];
 }
 
+// MARK: Segmented Control Index Functions
+
+/// These functions are used to determine which segmented controller segment exists at a given index of the control
+/// The real index is based upon the full set of controls, but the fake index is based on the fact that at any given time some of the controsl may be hidden
+/// (for example we don't show the Favourites control if the user has no favourited chats)
+/// This pair of functions allows us to correctly identify the visible and actual index of requried controls without having to hard-code control names and orders
+
 - (long)getRealIndexFor:(long)baseIndex{
     long actualIndex = 0;
     {

@@ -927,8 +927,8 @@
 "room_member_power_level_short_custom" = "Пользовательский";
 "room_member_power_level_short_user" = "User";
 
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 "external_link_confirmation_title" = "Перепроверьте эту ссылку";
 "external_link_confirmation_message" = "Ссылка %@ перенаправит вас на другой сайт: %@\n \nВы уверены, что хотите продолжить?";
 "settings_integrations" = "ИНТЕГРАЦИИ";

@@ -299,8 +299,8 @@
 "room_member_power_level_short_custom" = "Custom";
 "room_member_power_level_short_user" = "User";
 
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 
 // Chat
 "room_jump_to_first_unread" = "Jump to first unread message";

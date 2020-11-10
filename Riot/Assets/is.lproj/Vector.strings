@@ -232,6 +232,8 @@
 "room_details_flair_invalid_id_prompt_title" = "Ógilt snið";
 "room_details_banned_users_section" = "Bannaðir notendur";
 "room_details_advanced_section" = "Ítarlegt";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Group Details
 "group_details_title" = "Nánar um samfélag";
 "group_details_home" = "Heim";

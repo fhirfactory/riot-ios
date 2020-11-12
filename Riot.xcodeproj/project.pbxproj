@@ -23,7 +23,6 @@
 		144B5DF42546D08100AF2EAB /* RoomPowerLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D44998243CD73700959523 /* RoomPowerLevel.swift */; };
 		144B5DFB2546D08400AF2EAB /* BuildSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32FD756324D2AD5100BA7B37 /* BuildSettings.swift */; };
 		14D6DCB1253575A500C29F66 /* AuthenticationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D6DCB0253575A500C29F66 /* AuthenticationViewControllerTests.swift */; };
-		24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 24CBEC4E1F0EAD310093EABB /* RiotShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		24EEE5A21F23A8B400B3C705 /* MXRoom+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BBE81E7009EC00A9B29C /* MXRoom+Riot.m */; };
 		24EEE5A31F23A8C300B3C705 /* AvatarGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F083BC111E7009EC00A9B29C /* AvatarGenerator.m */; };
 		2FE2CE49524ED5F3B502025F /* Pods_RiotPods_Riot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143887B22538693A0076981D /* Pods_RiotPods_Riot.framework */; };
@@ -983,13 +982,6 @@
 			remoteGlobalIDString = F094A9A11B78D8F000B1FBBF;
 			remoteInfo = Riot;
 		};
-		242661F51F12B1BA00D3FC08 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F094A99A1B78D8F000B1FBBF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 24CBEC4D1F0EAD310093EABB;
-			remoteInfo = "Riot Share Extension";
-		};
 		92726A491F58737A004AD26F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F094A99A1B78D8F000B1FBBF /* Project object */;
@@ -1020,7 +1012,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				24CBEC591F0EAD310093EABB /* RiotShareExtension.appex in Embed App Extensions */,
 				92726A4B1F58737A004AD26F /* SiriIntents.appex in Embed App Extensions */,
 				EC85D74A2477E5F7002C44C9 /* RiotNSE.appex in Embed App Extensions */,
 			);
@@ -5615,7 +5606,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				242661F61F12B1BA00D3FC08 /* PBXTargetDependency */,
 				92726A4A1F58737A004AD26F /* PBXTargetDependency */,
 				EC85D7492477E5F7002C44C9 /* PBXTargetDependency */,
 			);
@@ -7015,11 +7005,6 @@
 			isa = PBXTargetDependency;
 			target = F094A9A11B78D8F000B1FBBF /* Riot */;
 			targetProxy = 1411D821252D7534009D8908 /* PBXContainerItemProxy */;
-		};
-		242661F61F12B1BA00D3FC08 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 24CBEC4D1F0EAD310093EABB /* RiotShareExtension */;
-			targetProxy = 242661F51F12B1BA00D3FC08 /* PBXContainerItemProxy */;
 		};
 		92726A4A1F58737A004AD26F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

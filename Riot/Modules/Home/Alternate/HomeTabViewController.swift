@@ -21,7 +21,21 @@ class HomeTabViewController: RecentsViewController {
     var HomeDataSource: AlternateHomeDataSource!
     var Mode: HomeViewMode = HomeViewMode.Chats
     var NewDataReceivedDelegate: (() -> Void)?
+    var SelectedHandler: ((MXRoom) -> Void)!
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //if we don't have a selectedHandler, use the default behavior
+        if SelectedHandler == nil {
+            super.tableView(tableView, didSelectRowAt: indexPath)
+        } else {
+            //else we're probably using this instance to facilitate message forwarding or something
+            guard let roomcell = tableView.cellForRow(at: indexPath) as? MXKRecentTableViewCell else { return }
+            guard let recentcell = roomcell.renderedCellData() as? MXKRecentCellDataStoring else { return }
+            guard let room = recentcell.roomSummary.mxSession.room(withRoomId: recentcell.roomSummary.roomId) else { return }
+            SelectedHandler(room)
+        }
+    }
+   
     static override func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }

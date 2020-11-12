@@ -676,6 +676,9 @@
 "room_creation_error_invite_user_by_email_without_identity_server" = "Non è stato configuato nessun Identity Server e quindi non è possibile aggiungere partecipanti con un'e-mail.";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Non è stato configurato alcun Identity Server, quindi non è possibile avviare una chat con qualcuno tramite e-mail.";
 "room_event_action_reply" = "Rispondi";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Modifica";
 "room_event_action_reaction_show_all" = "Mostra tutto";
 "room_event_action_reaction_show_less" = "Mostra meno";

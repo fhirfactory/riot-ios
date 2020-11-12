@@ -22,6 +22,7 @@ class TabbedHomeViewController: RecentsViewController {
     var homeDataSource: AlternateHomeDataSource!
     var favouritesWasVisible = false
     var lowPriorityWasVisible = false
+    var SelectedRoomHandler: ((MXRoom) -> Void)!
     
     func redrawBadges() {
         if homeDataSource != nil {
@@ -71,6 +72,8 @@ class TabbedHomeViewController: RecentsViewController {
         self.viewWillAppear(false)
     }
     
+    var enableCreateRoomButton = true
+    
     override func viewWillAppear(_ animated: Bool) {
         
         guard let session = AppDelegate.theDelegate().mxSessions.last as? MXSession else { return }
@@ -94,8 +97,11 @@ class TabbedHomeViewController: RecentsViewController {
         }
         
         let chatsContainer = HomeTabViewController()
+        chatsContainer.SelectedHandler = SelectedRoomHandler
         let favouritesContainer = HomeTabViewController()
+        favouritesContainer.SelectedHandler = SelectedRoomHandler
         let lowPriorityContainer = HomeTabViewController()
+        lowPriorityContainer.SelectedHandler = SelectedRoomHandler
         homeDataSource.setDelegate(chatsContainer, andRecentsDataSourceMode: .home)
         
         
@@ -119,20 +125,22 @@ class TabbedHomeViewController: RecentsViewController {
         sections.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         view.addSubview(sections.view)
         
-        let createRoomButton = UIButton(type: .custom)
-        createRoomButton.setImage(UIImage(asset: ImageAsset(name: "plus_floating_action")), for: .normal)
-        createRoomButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        createRoomButton.addTarget(self, action: #selector(AddRoomClicked), for: .touchUpInside)
-        view.addSubview(createRoomButton)
-        
-        NSLayoutConstraint.activate(
-            [
-                NSLayoutConstraint(item: createRoomButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: -10),
-                NSLayoutConstraint(item: createRoomButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -10)
-            ]
-        )
-        createRoomButton.layoutIfNeeded()
+        if enableCreateRoomButton {
+            let createRoomButton = UIButton(type: .custom)
+            createRoomButton.setImage(UIImage(asset: ImageAsset(name: "plus_floating_action")), for: .normal)
+            createRoomButton.translatesAutoresizingMaskIntoConstraints = false
+            
+            createRoomButton.addTarget(self, action: #selector(AddRoomClicked), for: .touchUpInside)
+            view.addSubview(createRoomButton)
+            
+            NSLayoutConstraint.activate(
+                [
+                    NSLayoutConstraint(item: createRoomButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: -10),
+                    NSLayoutConstraint(item: createRoomButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -10)
+                ]
+            )
+            createRoomButton.layoutIfNeeded()
+        }
         
         navigationItem.title = AlternateHomeTools.getNSLocalized("title_home", in: "Vector")
         redrawSections()

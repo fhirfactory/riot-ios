@@ -681,6 +681,9 @@
 "room_message_unable_open_link_error_message" = "Impossible d’ouvrir le lien.";
 "auth_autodiscover_invalid_response" = "Réponse de découverte du serveur d’accueil non valide";
 "room_event_action_reply" = "Répondre";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Éditer";
 "room_event_action_reaction_agree" = "D’accord %@";
 "room_event_action_reaction_disagree" = "Pas d’accord %@";

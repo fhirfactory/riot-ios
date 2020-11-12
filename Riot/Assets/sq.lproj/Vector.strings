@@ -677,6 +677,9 @@
 "auth_autodiscover_invalid_response" = "Përgjigje e pavlefshme pikasjeje shërbyesi Home";
 "room_details_fail_to_update_room_direct" = "S’arrihet të përditësohet shenja si e drejtpërdrejtë e kësaj dhome";
 "room_event_action_reply" = "Përgjigjuni";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Përpunoni";
 "room_event_action_reaction_agree" = "Pajtohem me %@";
 "room_event_action_reaction_disagree" = "S’pajtohem me %@";

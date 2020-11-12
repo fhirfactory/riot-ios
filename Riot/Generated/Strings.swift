@@ -2578,6 +2578,18 @@ internal enum VectorL10n {
   internal static var roomEventActionEdit: String { 
     return VectorL10n.tr("Vector", "room_event_action_edit") 
   }
+  /// Forward
+  internal static var roomEventActionForward: String { 
+    return VectorL10n.tr("Vector", "room_event_action_forward") 
+  }
+  /// Cannot forward a message to the room that sent it
+  internal static var roomEventActionForwardSameRoomErrorDescription: String { 
+    return VectorL10n.tr("Vector", "room_event_action_forward_same_room_error_description") 
+  }
+  /// Error
+  internal static var roomEventActionForwardSameRoomErrorTitle: String { 
+    return VectorL10n.tr("Vector", "room_event_action_forward_same_room_error_title") 
+  }
   /// Reason for kicking this user
   internal static var roomEventActionKickPromptReason: String { 
     return VectorL10n.tr("Vector", "room_event_action_kick_prompt_reason") 

@@ -682,6 +682,9 @@
 "room_message_unable_open_link_error_message" = "Невозможно открыть ссылку.";
 "auth_autodiscover_invalid_response" = "Неверный ответ обнаружения сервера";
 "room_event_action_reply" = "Ответ";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Редактировать";
 "room_event_action_reaction_agree" = "%@ согласен";
 "room_event_action_reaction_disagree" = "%@ несогласен";

@@ -16,13 +16,21 @@
 
 import Foundation
 
-class RoomSelector: AlternateHomeViewController {
-    var callback: ((MXRoom)->Void)!
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let roomcell = tableView.cellForRow(at: indexPath) as? MXKRecentTableViewCell else { return }
-        //guard let cellData = roomcell.value(forKey: "roomCellData") as? MXKRecentCellDataStoring else { return }
-        let account = MXKAccountManager.shared()?.accountKnowingRoom(withRoomIdOrAlias: roomcell.roomTitle.text)
-        guard let room = account?.mxSession.room(withAlias: roomcell.roomTitle.text) else { return }
-        callback(room)
+class RoomSelector: TabbedHomeViewController {
+    static override func nib() -> UINib! {
+        UINib(nibName: "TabbedHomeViewController", bundle: Bundle(for: self))
+    }
+    public var callback: ((MXRoom) -> Void)!
+    @objc public func SetCallback(_ callback : @escaping ((MXRoom) -> Void)) {
+        self.callback = {(room) in
+            //dismiss ourselves (to dismiss the popover view)
+            self.dismiss(animated: true, completion: nil)
+            callback(room)
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.enableCreateRoomButton = false
+        super.SelectedRoomHandler = callback
+        super.viewWillAppear(animated)
     }
 }

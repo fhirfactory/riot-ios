@@ -704,6 +704,9 @@
 "room_participants_security_information_room_encrypted" = "本聊天室中的消息是端到端加密的。\n\n你的消息被加锁保护，并且只有你和收信人有唯一的解密密钥。";
 "room_accessiblity_scroll_to_bottom" = "滚动到底部";
 "room_event_action_reply" = "回复";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "编辑";
 "room_event_action_reaction_show_all" = "显示所有";
 "room_event_action_reaction_show_less" = "显示更少";

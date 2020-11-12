@@ -679,6 +679,9 @@
 "auth_autodiscover_invalid_response" = "Невалиден отговор при опит за откриване на адреса на сървъра";
 "room_message_unable_open_link_error_message" = "Неуспешно отваряне на връзката.";
 "room_event_action_reply" = "Отговори";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Редактирай";
 "auth_login_single_sign_on" = "Влез със SSO";
 "room_event_action_reaction_agree" = "Съгласи се с %@";

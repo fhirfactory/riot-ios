@@ -1030,3 +1030,10 @@
 "device_verification_self_verify_alert_message" = "Defnyddiwch y sesiwn hon i wirio'ch un newydd, gan roi mynediad iddo i negeseuon wedi'u hamgryptio :%@\nOs na wnaethoch fewngofnodi i'r sesiwn hon, mae'n bosibl y bydd eich cyfrif mewn perygl..";
 "device_verification_self_verify_alert_cancel_action" = "Nid fi oedd hwn";
 "device_verification_self_verify_start_verify_action" = "Dechrau gwirio";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

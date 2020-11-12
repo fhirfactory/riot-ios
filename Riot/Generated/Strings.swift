@@ -2034,6 +2034,10 @@ internal enum VectorL10n {
   internal static var peopleNoConversation: String { 
     return VectorL10n.tr("Vector", "people_no_conversation") 
   }
+  /// People
+  internal static var peopleTitle: String { 
+    return VectorL10n.tr("Vector", "people_title") 
+  }
   /// people
   internal static var personPlural: String { 
     return VectorL10n.tr("Vector", "person_plural") 
@@ -2173,6 +2177,10 @@ internal enum VectorL10n {
   /// Retry
   internal static var retry: String { 
     return VectorL10n.tr("Vector", "retry") 
+  }
+  /// Role
+  internal static var roleTitle: String { 
+    return VectorL10n.tr("Vector", "role_title") 
   }
   /// Call
   internal static var roomAccessibilityCall: String { 
@@ -3006,7 +3014,7 @@ internal enum VectorL10n {
   internal static var roomPromptResend: String { 
     return VectorL10n.tr("Vector", "room_prompt_resend") 
   }
-  /// CHATS
+  /// Chats
   internal static var roomRecentsChatsSection: String { 
     return VectorL10n.tr("Vector", "room_recents_chats_section") 
   }
@@ -3026,7 +3034,7 @@ internal enum VectorL10n {
   internal static var roomRecentsDirectorySectionNetwork: String { 
     return VectorL10n.tr("Vector", "room_recents_directory_section_network") 
   }
-  /// FAVOURITES
+  /// Favourites
   internal static var roomRecentsFavouritesSection: String { 
     return VectorL10n.tr("Vector", "room_recents_favourites_section") 
   }
@@ -3046,7 +3054,7 @@ internal enum VectorL10n {
   internal static var roomRecentsJoinRoomTitle: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_title") 
   }
-  /// LOW PRIORITY
+  /// Low Priority
   internal static var roomRecentsLowPrioritySection: String { 
     return VectorL10n.tr("Vector", "room_recents_low_priority_section") 
   }

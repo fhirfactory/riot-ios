@@ -193,6 +193,16 @@ extern NSString *const kRecentsDataSourceTapOnDirectoryServerChange;
  */
 @property (nonatomic, readonly) NSUInteger missedHighlightGroupDiscussionsCount;
 
+/**
+ The current number of group chats which *are not favourited* which have highlighted messages.
+ */
+@property (nonatomic, readonly) NSUInteger missedHighlightNonFavouriteGroupDiscussionCount;
+
+/**
+ The current number of direct chats which *are not favourited* which have highlighted messages.
+ */
+@property (nonatomic, readonly) NSUInteger missedHighlightNonFavouriteDirectChatCount;
+
 @property (nonatomic, readonly) NSUInteger missedChatCount;
 @property (nonatomic, readonly) NSUInteger missedFavouriteCount;
 @property (nonatomic, readonly) NSUInteger missedLowPriorityCount;

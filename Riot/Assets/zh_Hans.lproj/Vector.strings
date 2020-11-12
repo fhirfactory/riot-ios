@@ -1111,3 +1111,10 @@
 "secrets_recovery_with_key_recover_action" = "使用密钥";
 "secrets_recovery_with_key_invalid_recovery_key_title" = "无法访问机密存储";
 "secrets_recovery_with_key_invalid_recovery_key_message" = "请验证您输入的恢复密钥是否正确。";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

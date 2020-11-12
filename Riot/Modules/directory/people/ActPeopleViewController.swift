@@ -13,7 +13,7 @@ class ActPeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabItem.title = NSLocalizedString("people_title", tableName: "Act", comment: "")
+        tabItem.title = AlternateHomeTools.getNSLocalized("people_title", in: "Vector")
         setupTableView()
     }
 }

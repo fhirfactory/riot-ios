@@ -1121,3 +1121,10 @@
 "secrets_recovery_with_key_recover_action" = "Erabili gakoa";
 "secrets_recovery_with_key_invalid_recovery_key_title" = "Ezin izan da biltegi sekretua atzitu";
 "secrets_recovery_with_key_invalid_recovery_key_message" = "Egiaztatu berreskuratze gako zuzena sartu duzula.";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

@@ -556,3 +556,10 @@
 "room_predecessor_information" = "此聊天室是另一對話的延續。";
 "settings_labs_room_members_lazy_loading" = "延遲載入聊天室成員";
 "settings_labs_room_members_lazy_loading_error_message" = "您的家伺服器尚未支援延遲載入聊天室成員。 請稍後再試。";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

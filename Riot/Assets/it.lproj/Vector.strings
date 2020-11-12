@@ -1191,3 +1191,10 @@
 "biometrics_cant_unlocked_alert_message_x" = "Per sbloccare, usa %@ o riaccedi e attiva %@ di nuovo";
 "biometrics_cant_unlocked_alert_message_login" = "Riaccedi";
 "biometrics_cant_unlocked_alert_message_retry" = "Riprova";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

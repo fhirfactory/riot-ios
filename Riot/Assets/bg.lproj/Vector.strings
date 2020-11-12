@@ -1150,3 +1150,10 @@
 "secrets_setup_recovery_passphrase_confirm_information" = "Въведете защитната парола отново за да потвърдите.";
 "secrets_setup_recovery_passphrase_confirm_passphrase_title" = "Потвърди";
 "secrets_setup_recovery_passphrase_confirm_passphrase_placeholder" = "Потвърдете паролата";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

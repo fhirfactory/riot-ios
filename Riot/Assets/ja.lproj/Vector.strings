@@ -583,3 +583,10 @@
 "auth_softlogout_clear_data_sign_out" = "サインアウト";
 "room_message_unable_open_link_error_message" = "リンクを開くことができません。";
 "user_verification_session_details_verify_action_other_user" = "手動で確認";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

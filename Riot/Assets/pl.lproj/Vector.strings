@@ -817,3 +817,10 @@
 "key_backup_setup_skip_alert_skip_action" = "Pomiń";
 "key_backup_setup_intro_title" = "Nigdy nie trać zaszyfrowanych wiadomości";
 "key_backup_setup_intro_info" = "Wiadomości w szyfrowanym pokoju są zabezpieczone przez end-to-end. Tylko Ty i rozmówca macie klucze, aby odczytać te wiadomości.\nWykonaj kopię zapasową kluczy, aby ich nie zgubić.";
+
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

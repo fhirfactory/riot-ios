@@ -24,7 +24,11 @@ class ActDirectoryViewController: TabsController {
         tabBar.tabBarStyle = .auto
         tabBar.dividerColor = nil
         
-        AppDelegate.theDelegate().masterTabBarController.navigationItem.title = NSLocalizedString("directory_title", tableName: "Vector", comment: "")
+        AppDelegate.theDelegate().masterTabBarController.navigationItem.title = AlternateHomeTools.getNSLocalized("directory_title", in: "Vector")
         AppDelegate.theDelegate().masterTabBarController.tabBar.tintColor = ThemeService.shared().theme.tintColor
+    }
+    
+    @objc func displayList(_ l: RecentsDataSource) {
+        //just to save us from crashing
     }
 }

@@ -174,12 +174,12 @@
 // Room recents
 "room_recents_directory_section" = "ROOM DIRECTORY";
 "room_recents_directory_section_network" = "Network";
-"room_recents_favourites_section" = "FAVOURITES";
+"room_recents_favourites_section" = "Favourites";
 "room_recents_people_section" = "PEOPLE";
-"room_recents_chats_section" = "CHATS";
+"room_recents_chats_section" = "Chats";
 "room_recents_conversations_section" = "ROOMS";
 "room_recents_no_conversation" = "No rooms";
-"room_recents_low_priority_section" = "LOW PRIORITY";
+"room_recents_low_priority_section" = "Low Priority";
 "room_recents_server_notice_section" = "SYSTEM ALERTS";
 "room_recents_invites_section" = "INVITES";
 "room_recents_start_chat_with" = "Create chat";
@@ -1509,3 +1509,9 @@
 "room_info_list_one_member" = "1 member";
 "room_info_list_several_members" = "%@ members";
 "room_info_list_section_other" = "Other";
+
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

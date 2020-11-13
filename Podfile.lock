@@ -117,8 +117,8 @@ DEPENDENCIES:
   - KeychainAccess (~> 4.2)
   - KTCenterFlowLayout (~> 1.3.1)
   - MatomoTracker (~> 7.2.0)
-  - MatrixKit (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `feature/room-rights-change-events`)
-  - MatrixKit/AppExtension (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `feature/room-rights-change-events`)
+  - MatrixKit (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `feature/expose-other-administrative-messages`)
+  - MatrixKit/AppExtension (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `feature/expose-other-administrative-messages`)
   - MatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
   - MatrixSDK/JingleCallStack (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
   - MatrixSDK/SwiftSupport (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
@@ -158,7 +158,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   MatrixKit:
-    :branch: feature/room-rights-change-events
+    :branch: feature/expose-other-administrative-messages
     :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
   MatrixSDK:
     :branch: develop
@@ -166,7 +166,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MatrixKit:
-    :commit: a92b41c181686c67254b76b70d9dbb95eea8f77b
+    :commit: 4559b4f885adb8bd3542a7ea1b4b7b58b20f77be
     :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
   MatrixSDK:
     :commit: 4d75332aa549adc60bd6d45db822b30b31ab7ec9
@@ -200,6 +200,6 @@ SPEC CHECKSUMS:
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: cf14319940e118ca84d8362391f2f1808f02620b
+PODFILE CHECKSUM: 529562b3c9ee7c0aa82c28a5bfada3516cd68bd7
 
 COCOAPODS: 1.9.3

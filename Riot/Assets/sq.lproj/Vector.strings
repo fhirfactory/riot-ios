@@ -780,6 +780,7 @@
 "room_event_action_reaction_show_all" = "Shfaqi krejt";
 "room_event_action_reaction_show_less" = "Shfaq më pak";
 "room_message_edits_history_title" = "Përpunime mesazhi";
+"room_photo_changed" = "%@ changed the room photo.";
 "auth_softlogout_signed_out" = "Keni bërë dalje";
 "auth_softlogout_sign_in" = "Hyni";
 "auth_softlogout_reason" = "Përgjegjësi i shërbyesit tuaj Home (%1$@) ka bërë daljen tuaj nga llogaria juaj %2$@ (%3$@).";

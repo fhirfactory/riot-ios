@@ -1027,6 +1027,7 @@
 
 "room_power_level_changed_up" = "%@ was promoted to %@";
 "room_power_level_changed_down" = "%@ was demoted to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 // Recover from private key
 "key_backup_recover_from_private_key_info" = "Babes-kopia berrezartzen…";
 "device_verification_self_verify_wait_title" = "Segurtasun osoa";

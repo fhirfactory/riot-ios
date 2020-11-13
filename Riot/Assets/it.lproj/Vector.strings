@@ -686,6 +686,7 @@
 "settings_labs_message_reaction" = "Reagisci ai messaggi con emoji";
 "room_participants_remove_third_party_invite_prompt_msg" = "Sei sicuro di voler revocare l'invito?";
 "settings_key_backup_button_connect" = "Connetti questa sessione al backup delle chiavi";
+"room_photo_changed" = "%@ changed the room photo.";
 // Media picker
 "media_picker_title" = "Media library";
 // Image picker

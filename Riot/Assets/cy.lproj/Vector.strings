@@ -301,6 +301,7 @@
 "room_accessibility_upload" = "Uwchlwytho";
 "room_accessibility_call" = "Galw";
 "room_accessibility_hangup" = "Dod i ben";
+"room_photo_changed" = "%@ changed the room photo.";
 "media_type_accessibility_image" = "Delwedd";
 "media_type_accessibility_audio" = "Sain";
 "media_type_accessibility_video" = "Fideo";

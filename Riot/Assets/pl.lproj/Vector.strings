@@ -504,6 +504,7 @@
 "room_event_action_edit" = "Edytuj";
 "room_action_reply" = "Odpowiedz";
 "room_preview_try_join_an_unknown_room" = "Próbujesz uzyskać dostęp do %@. Czy chciałbyś się przyłączyć, aby wziąć udział w dyskusji?";
+"room_photo_changed" = "%@ changed the room photo.";
 "account_logout_all" = "Wyloguj wszystkie konta";
 "settings_flair" = "Pokazuj wyznacznik społeczności gdzie jest to zezwolone";
 "settings_key_backup" = "KOPIA ZAPASOWA KLUCZY";

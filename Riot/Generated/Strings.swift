@@ -2950,6 +2950,10 @@ internal enum VectorL10n {
   internal static var roomParticipantsUnknown: String { 
     return VectorL10n.tr("Vector", "room_participants_unknown") 
   }
+  /// %@ changed the room photo.
+  internal static func roomPhotoChanged(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "room_photo_changed", p1)
+  }
   /// %@ has changed Room Rights of %@ from %@ to %@
   internal static func roomPowerLevelChangedDown(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
     return VectorL10n.tr("Vector", "room_power_level_changed_down", p1, p2, p3, p4)

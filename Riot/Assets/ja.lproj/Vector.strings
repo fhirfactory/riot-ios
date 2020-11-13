@@ -390,6 +390,7 @@
 "room_details_copy_room_id" = "部屋固有IDをコピー";
 "room_details_copy_room_address" = "部屋の住所表記をコピー";
 "room_details_copy_room_url" = "部屋のURLをコピー";
+"room_photo_changed" = "%@ changed the room photo.";
 // Read Receipts
 "read_receipts_list" = "既読一覧を見る";
 "receipt_status_read" = "既読状況: ";

@@ -684,6 +684,7 @@
 "room_event_action_reaction_disagree" = "Pas d’accord %@";
 "room_event_action_reaction_like" = "J’aime %@";
 "room_event_action_reaction_dislike" = "J’aime pas %@";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_action_reply" = "Répondre";
 "settings_labs_message_reaction" = "Réagir aux messages avec des émojis";
 "settings_key_backup_button_connect" = "Connecter cette session à la sauvegarde de clés";

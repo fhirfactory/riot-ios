@@ -684,6 +684,7 @@
 "room_event_action_reaction_like" = "Харесай %@";
 "room_event_action_reaction_dislike" = "Не харесай %@";
 "room_action_reply" = "Отговори";
+"room_photo_changed" = "%@ changed the room photo.";
 "settings_labs_message_reaction" = "Реагирай на съобщения с емоджи";
 "settings_key_backup_button_connect" = "Свържи сесията към резервно копие на ключове";
 "key_backup_setup_intro_setup_connect_action_with_existing_backup" = "Свържи устройството към резервно копие на ключове";

@@ -690,6 +690,7 @@
 "room_event_action_reaction_like" = "Kedveli %@";
 "room_event_action_reaction_dislike" = "Nem kedveli %@";
 "room_action_reply" = "Válasz";
+"room_photo_changed" = "%@ changed the room photo.";
 "settings_labs_message_reaction" = "Emoji reakció az üzenetre";
 "settings_key_backup_button_connect" = "Munkamenet csatlakoztatása a Kulcs Mentéshez";
 "key_backup_setup_intro_setup_connect_action_with_existing_backup" = "Eszköz csatlakoztatása a Kulcs Mentéshez";

@@ -295,6 +295,7 @@
 
 "room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
 "room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 
 // Chat
 "room_jump_to_first_unread" = "Jump to first unread message";

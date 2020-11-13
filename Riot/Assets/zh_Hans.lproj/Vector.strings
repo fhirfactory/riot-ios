@@ -715,6 +715,7 @@
 "room_accessibility_upload" = "上传";
 "room_accessibility_call" = "通话";
 "room_accessibility_hangup" = "挂断";
+"room_photo_changed" = "%@ changed the room photo.";
 "media_type_accessibility_image" = "图片";
 "media_type_accessibility_audio" = "声音";
 "media_type_accessibility_video" = "视频";

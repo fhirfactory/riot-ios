@@ -234,6 +234,7 @@
 "room_event_action_view_encryption" = "Thông tin mã hoá";
 "room_warning_about_encryption" = "Mã hoá đầu-cuối đang trong giai đoạn thử nghiệm và có thể không đáng tin cậy.\n\nBạn có thể không nên tin tưởng hoàn toàn vào sự bảo mật dữ liệu này.\n\nCác thiết bị có thể không giải mã lịch sử từ trước khi họ tham gia vào phòng.\n\nCác tin nhắn được mã hoá sẽ không hiển thị trên các máy khách chưa tích hợp mã hoá.";
 "room_event_failed_to_send" = "Gửi thất bại";
+"room_photo_changed" = "%@ changed the room photo.";
 // Unknown devices
 "unknown_devices_alert_title" = "Phòng chứa các thiết bị không xác định";
 "unknown_devices_alert" = "Phòng này có các thiết bị không xác định chưa được xác minh.\nĐiều này có nghĩa là không có đảm bảo rằng thiết bị thuộc về người dùng mà họ yêu cầu.\nChúng tôi khuyên bạn nên đi qua quá trình xác minh cho từng thiết bị trước khi tiếp tục, nhưng bạn có thể gửi lại tin nhắn mà không cần xác nhận nếu bạn muốn.";

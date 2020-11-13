@@ -274,6 +274,7 @@
 "room_message_short_placeholder" = "傳送訊息…";
 "room_unsent_messages_notification" = "訊息未被傳送。現在 %@ 或 %@ 嗎?";
 "room_unsent_messages_unknown_devices_notification" = "由於存在未知的裝置導致訊息未被傳送。現在 %@ 或 %@ 嗎?";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_conference_call_no_power" = "您需要管理此聊天室群組通話的權限";
 "room_prompt_resend" = "全部重新傳送";
 "room_prompt_cancel" = "全部取消";

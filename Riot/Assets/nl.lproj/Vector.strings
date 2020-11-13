@@ -692,6 +692,7 @@
 "room_event_action_reaction_disagree" = "Niet akkoord met %@";
 "room_event_action_reaction_like" = "Duim omhoog voor %@";
 "room_event_action_reaction_dislike" = "Duim omlaag voor %@";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_action_reply" = "Beantwoorden";
 "settings_labs_message_reaction" = "Beantwoord berichten met emoticons";
 "settings_key_backup_button_connect" = "Dit apparaat verbinden met sleutelback-up";

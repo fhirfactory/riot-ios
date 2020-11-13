@@ -145,6 +145,7 @@
 "room_event_action_resend" = "Endursenda";
 "room_event_action_delete" = "Eyða";
 "room_event_action_cancel_download" = "Hætta við niðurhal";
+"room_photo_changed" = "%@ changed the room photo.";
 "unknown_devices_send_anyway" = "Senda samt";
 "unknown_devices_verify" = "Sannreyna…";
 // Room Title

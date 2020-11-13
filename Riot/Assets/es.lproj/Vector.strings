@@ -252,6 +252,7 @@
 "room_event_action_cancel_send" = "Cancelar Envío";
 "room_event_action_cancel_download" = "Cancelar Descarga";
 "room_event_action_view_encryption" = "Información de Cifrado";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_warning_about_encryption" = "El cifrado de extremo a extremo está en beta y puede no ser confiable.\n\nAún no deberías confiar en él para proteger tus datos.\n\nLos dispositivos todavía no podrán descifrar el historial desde antes de unirse a la sala.\n\nLos mensajes cifrados no serán visibles en clientes que aún no implementen el cifrado.";
 "room_event_failed_to_send" = "Falló el envío";
 "room_action_send_photo_or_video" = "Enviar fotografía o vídeo";

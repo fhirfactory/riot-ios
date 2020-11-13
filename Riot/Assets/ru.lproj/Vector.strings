@@ -685,6 +685,7 @@
 "room_event_action_reaction_disagree" = "%@ несогласен";
 "room_event_action_reaction_like" = "%@ согласен";
 "room_event_action_reaction_dislike" = "%@ не согласны";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_action_reply" = "Ответ";
 "settings_labs_message_reaction" = "Реагировать на сообщения с Emoji";
 "settings_key_backup_button_connect" = "Подключите этот сеанс к резервному копированию ключей";

@@ -21,6 +21,7 @@ import Foundation
     case reply
     case edit
     case more
+    case remove
     
     // MARK: - Properties
     
@@ -36,6 +37,8 @@ import Foundation
             title = VectorL10n.roomEventActionEdit
         case .more:
             title = VectorL10n.roomEventActionMore
+        case .remove:
+            title = VectorL10n.remove
         }
         
         return title
@@ -53,6 +56,8 @@ import Foundation
             image = Asset.Images.roomContextMenuEdit.image
         case .more:
             image = Asset.Images.roomContextMenuMore.image
+        case .remove:
+            image = Asset.Images.removeIcon.image
         default:
             image = nil
         }

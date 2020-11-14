@@ -105,6 +105,9 @@
     self.hangupCallButton.tintColor = ThemeService.shared.theme.noticeColor;
     self.voiceCallButton.tintColor = ThemeService.shared.theme.tintColor;
     self.attachMediaButton.tintColor = ThemeService.shared.theme.tintColor;
+    
+    [self.attachMediaButton setImage:[UIImage imageNamed:@"camera"] forState:UIControlStateNormal];
+    [self.attachMediaButton setImage:[UIImage imageNamed:@"camera"] forState:UIControlStateHighlighted];
 }
 
 #pragma mark -
@@ -330,7 +333,8 @@
                                                           }]];
             
             
-            [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_action_send_photo_or_video", @"Vector", nil)
+            if (BuildSettings.sharingFeaturesEnabled){
+                [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_action_send_photo_or_video", @"Vector", nil)
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
 
@@ -343,7 +347,7 @@
                                                               }
 
                                                           }]];
-
+            }
             if (BuildSettings.allowSendingStickers)
             {
                 [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_action_send_sticker", @"Vector", nil)
@@ -361,7 +365,8 @@
                 }]];
             }
             
-            [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_action_send_file", @"Vector", nil)
+            if (BuildSettings.sharingFeaturesEnabled){
+                [actionSheet addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_action_send_file", @"Vector", nil)
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               
@@ -373,7 +378,7 @@
                                                                   [self.delegate roomInputToolbarViewDidTapFileUpload:self];
                                                               }
                                                           }]];
-
+            }
             [actionSheet addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"]
                                                             style:UIAlertActionStyleCancel
                                                           handler:^(UIAlertAction * action) {

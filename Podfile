@@ -96,9 +96,9 @@ abstract_target 'RiotPods' do
     end
   end
 
-  target "RiotShareExtension" do
-    import_MatrixKitAppExtension
-  end
+  #target "RiotShareExtension" do
+  #  import_MatrixKitAppExtension
+  #end
 
   target "SiriIntents" do
     import_MatrixKitAppExtension

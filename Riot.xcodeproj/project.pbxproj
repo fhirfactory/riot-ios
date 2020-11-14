@@ -169,7 +169,6 @@
 		92726A471F58737A004AD26F /* IntentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 92726A461F58737A004AD26F /* IntentHandler.m */; };
 		92726A4B1F58737A004AD26F /* SiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 92726A431F58737A004AD26F /* SiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		92726A511F587410004AD26F /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92726A501F587410004AD26F /* Intents.framework */; };
-		933A7148CE5984940344006C /* Pods_RiotPods_RiotShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97151D7F0F892081250D50A3 /* Pods_RiotPods_RiotShareExtension.framework */; };
 		B1057789221304EC00334B1E /* KeyBackupSetupSuccessFromPassphraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1057788221304EB00334B1E /* KeyBackupSetupSuccessFromPassphraseViewController.swift */; };
 		B105778B221304FA00334B1E /* KeyBackupSetupSuccessFromPassphraseViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B105778A221304FA00334B1E /* KeyBackupSetupSuccessFromPassphraseViewController.storyboard */; };
 		B105778D2213051E00334B1E /* KeyBackupSetupSuccessFromRecoveryKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B105778C2213051E00334B1E /* KeyBackupSetupSuccessFromRecoveryKeyViewController.swift */; };
@@ -1187,7 +1186,6 @@
 		92726A481F58737A004AD26F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92726A4F1F587393004AD26F /* SiriIntents.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = SiriIntents.entitlements; sourceTree = "<group>"; };
 		92726A501F587410004AD26F /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
-		97151D7F0F892081250D50A3 /* Pods_RiotPods_RiotShareExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_RiotShareExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C3242E3FE95BCDA9562C75D /* Pods-RiotPods-RiotShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotShareExtension/Pods-RiotPods-RiotShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		AC34BF67FD21A9D01C16AE5D /* Pods-RiotTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotTests.release.xcconfig"; path = "Target Support Files/Pods-RiotTests/Pods-RiotTests.release.xcconfig"; sourceTree = "<group>"; };
 		B1057788221304EB00334B1E /* KeyBackupSetupSuccessFromPassphraseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyBackupSetupSuccessFromPassphraseViewController.swift; sourceTree = "<group>"; };
@@ -2231,7 +2229,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				933A7148CE5984940344006C /* Pods_RiotPods_RiotShareExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2646,7 +2643,6 @@
 				143887B0253869270076981D /* Pods_RiotTests.framework */,
 				92726A501F587410004AD26F /* Intents.framework */,
 				1ACF09217ADF1D7E7A35BC02 /* Pods_RiotPods_Riot.framework */,
-				97151D7F0F892081250D50A3 /* Pods_RiotPods_RiotShareExtension.framework */,
 				51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */,
 				129EB7E27E7E4AC3F5F098F5 /* Pods_RiotTests.framework */,
 				E4D418D054E4032F2CFA8B51 /* Pods_RiotPods_RiotNSE.framework */,
@@ -5540,7 +5536,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24CBEC5C1F0EAD310093EABB /* Build configuration list for PBXNativeTarget "RiotShareExtension" */;
 			buildPhases = (
-				A34C7B2CCE489F3A560A540A /* [CP] Check Pods Manifest.lock */,
 				24CBEC4A1F0EAD310093EABB /* Sources */,
 				24CBEC4B1F0EAD310093EABB /* Frameworks */,
 				24CBEC4C1F0EAD310093EABB /* Resources */,
@@ -6074,28 +6069,6 @@
 			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-RiotPods-Riot-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A34C7B2CCE489F3A560A540A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RiotPods-RiotShareExtension-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

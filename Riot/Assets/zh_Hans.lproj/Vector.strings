@@ -507,6 +507,11 @@
 "room_message_reply_to_short_placeholder" = "发送回复…";
 "room_event_action_view_decrypted_source" = "查看经过解密的源数据";
 "room_action_send_photo_or_video" = "发送照片或视频";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "发送贴纸";
 "room_resource_limit_exceeded_message_contact_1" = " 请 ";
 "room_resource_limit_exceeded_message_contact_2_link" = "联系您的服务管理员";

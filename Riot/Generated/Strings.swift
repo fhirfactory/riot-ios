@@ -1966,6 +1966,26 @@ internal enum VectorL10n {
   internal static var mediaPickerTitle: String { 
     return VectorL10n.tr("Vector", "media_picker_title") 
   }
+  /// Consent must be obtained before capturing patient photos and videos
+  internal static var mediaTagConsentWarning: String { 
+    return VectorL10n.tr("Vector", "media_tag_consent_warning") 
+  }
+  /// Save Non-Patient Media
+  internal static var mediaTagSaveNonPatientMedia: String { 
+    return VectorL10n.tr("Vector", "media_tag_save_non_patient_media") 
+  }
+  /// Save Patient Media
+  internal static var mediaTagSavePatientMedia: String { 
+    return VectorL10n.tr("Vector", "media_tag_save_patient_media") 
+  }
+  /// Tag Patient Media Immediately
+  internal static var mediaTagSubheading: String { 
+    return VectorL10n.tr("Vector", "media_tag_subheading") 
+  }
+  /// Tag Patient
+  internal static var mediaTagTitle: String { 
+    return VectorL10n.tr("Vector", "media_tag_title") 
+  }
   /// Audio
   internal static var mediaTypeAccessibilityAudio: String { 
     return VectorL10n.tr("Vector", "media_type_accessibility_audio") 

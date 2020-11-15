@@ -521,6 +521,11 @@
 "room_event_action_kick_prompt_reason" = "Raó per a fer fora aquest usuari";
 "room_event_action_ban_prompt_reason" = "Raó per a prohibir aquest usuari";
 "room_action_send_photo_or_video" = "Envia foto o vídeo";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "Envia adhesiu";
 "room_replacement_information" = "Aquesta sala s'ha substituït i ja no està activa.";
 "room_replacement_link" = "La conversa continua aquí.";

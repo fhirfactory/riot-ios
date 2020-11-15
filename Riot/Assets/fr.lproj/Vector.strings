@@ -520,6 +520,11 @@
 "gdpr_consent_not_given_alert_message" = "Pour continuer à utiliser le serveur d'accueil %@, vous devez lire et accepter les conditions générales.";
 "gdpr_consent_not_given_alert_review_now_action" = "Voir maintenant";
 "room_action_send_photo_or_video" = "Envoyer une photo ou une vidéo";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "Envoyer un sticker";
 "settings_deactivate_account" = "DÉSACTIVER LE COMPTE";
 "settings_deactivate_my_account" = "Désactiver mon compte";

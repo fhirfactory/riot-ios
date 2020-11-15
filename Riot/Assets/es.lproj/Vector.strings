@@ -255,6 +255,11 @@
 "room_warning_about_encryption" = "El cifrado de extremo a extremo está en beta y puede no ser confiable.\n\nAún no deberías confiar en él para proteger tus datos.\n\nLos dispositivos todavía no podrán descifrar el historial desde antes de unirse a la sala.\n\nLos mensajes cifrados no serán visibles en clientes que aún no implementen el cifrado.";
 "room_event_failed_to_send" = "Falló el envío";
 "room_action_send_photo_or_video" = "Enviar fotografía o vídeo";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "Enviar pegatina";
 "room_replacement_information" = "Esta sala ha sido reemplazada y ya no está activa.";
 "room_replacement_link" = "La conversación continúa aquí.";

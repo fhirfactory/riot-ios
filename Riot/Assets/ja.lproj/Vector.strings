@@ -487,6 +487,11 @@
 "room_event_action_view_decrypted_source" = "復号化されたソースを見る";
 "room_event_action_kick_prompt_reason" = "このユーザーを追放する理由";
 "room_action_send_photo_or_video" = "写真か動画を送る";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "スタンプ送信";
 "room_replacement_information" = "この部屋は交換されており、もうアクティブではありません。";
 "room_replacement_link" = "会話はここで続けられます。";

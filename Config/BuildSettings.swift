@@ -268,6 +268,9 @@ final class BuildSettings: NSObject {
     /// Value to customise the image logo at the top of the authenticaiton screen
     static let authScreenImageLogoName: String = "lingo_logo_dark"
     
+    // MARK: - Domain Specific Settings
+    static let sendMessageRequirePatientTagging: Bool = true
+    
     // MARK: - Home Screen
     static let homeScreenShowFavourites : Bool = false
     

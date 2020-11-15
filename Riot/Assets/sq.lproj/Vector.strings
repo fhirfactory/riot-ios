@@ -419,6 +419,11 @@
 "room_event_action_kick_prompt_reason" = "Arsye për përzënien e këtij përdoruesi";
 "room_event_action_ban_prompt_reason" = "Arsye për dëbimin e këtij përdoruesi";
 "room_action_send_photo_or_video" = "Dërgoni foto ose video";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_replacement_link" = "Biseda vazhdon këtu.";
 "room_predecessor_link" = "Klikoni këtu për të parë mesazhe më të vjetër.";
 "room_resource_limit_exceeded_message_contact_1" = " Ju lutemi, ";

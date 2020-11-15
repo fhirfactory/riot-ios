@@ -254,6 +254,11 @@
 "room_warning_about_encryption" = "La crittografia E2E è in fase sperimentale e potrebbe non esser ancora affidabile.\n\nNon dovesti ancora farci affidamento per proteggere i tuoi dati.\n\nI dispositivi non potranno decifrare i messaggi precedenti alla tua entrata nella stanza.\n\nI messaggi cifrati non saranno visibili dalle applicazioni per Matrix che non hanno ancora implementato la crittografia.";
 "room_event_failed_to_send" = "Invio fallito";
 "room_action_send_photo_or_video" = "Invia foto o video";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "Invia sticker";
 "room_replacement_information" = "Questa stanza è stata sostituita da un'altra e non è più attiva.";
 "room_replacement_link" = "La conversazione continua qui.";

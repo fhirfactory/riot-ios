@@ -519,6 +519,11 @@
 "gdpr_consent_not_given_alert_message" = "За да продължите да използвате %@ трябва да се съгласите с условията за ползване.";
 "gdpr_consent_not_given_alert_review_now_action" = "Прегледай сега";
 "room_action_send_photo_or_video" = "Изпрати снимка или видео";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "Изпрати стикер";
 "settings_deactivate_account" = "ДЕАКТИВАЦИЯ НА АКАУНТ";
 "settings_deactivate_my_account" = "Деактивирай акаунта ми";

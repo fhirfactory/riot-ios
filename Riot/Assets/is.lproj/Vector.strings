@@ -145,6 +145,11 @@
 "room_event_action_resend" = "Endursenda";
 "room_event_action_delete" = "Eyða";
 "room_event_action_cancel_download" = "Hætta við niðurhal";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "unknown_devices_send_anyway" = "Senda samt";
 "unknown_devices_verify" = "Sannreyna…";
 // Room Title

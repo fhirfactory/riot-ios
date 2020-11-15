@@ -404,6 +404,11 @@
 "directory_search_results_title" = "Przeglądaj wyniki katalogów";
 "room_event_action_kick_prompt_reason" = "Powód wyrzucenia użytkownika";
 "room_action_send_photo_or_video" = "Wyślij zdjęcie lub film";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "settings_mark_all_as_read" = "Oznacz wszystkie wiadomości jako przeczytane";
 "settings_labs" = "LABORATORIUM";
 "settings_sign_out_confirmation" = "Jesteś pewny(-a)?";

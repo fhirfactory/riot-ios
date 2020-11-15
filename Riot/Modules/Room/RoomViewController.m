@@ -16,7 +16,6 @@
  limitations under the License.
  */
 
-#import "Riot-Swift.h"
 #import "RoomViewController.h"
 
 #import "RoomDataSource.h"
@@ -5708,13 +5707,36 @@
 
 - (void)cameraPresenter:(CameraPresenter *)cameraPresenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti
 {
-    [cameraPresenter dismissWithAnimated:YES completion:nil];
-    self.cameraPresenter = nil;
-    
-    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
-    if (roomInputToolbarView)
-    {
-        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+    if (BuildSettings.sendMessageRequirePatientTagging){
+        
+        [cameraPresenter dismissWithAnimated:YES completion:^{
+            PatientTaggingViewController *PatientTaggingController = [PatientTaggingViewController new];
+            [PatientTaggingController setImageTo: imageData WithHandler:^(NSArray<PatientModel*> *patientData) {
+                if (patientData.count > 0){
+                    //A patient was tagged
+                } else {
+                    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+                }
+            }];
+            [self showViewController:PatientTaggingController sender:self];
+        }];
+        self.cameraPresenter = nil;
+        
+        /*RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+        if (roomInputToolbarView)
+        {
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+        }*/
+    }else{
+        [cameraPresenter dismissWithAnimated:YES completion:nil];
+        self.cameraPresenter = nil;
+        
+        RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+        if (roomInputToolbarView)
+        {
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+        }
     }
 }
 

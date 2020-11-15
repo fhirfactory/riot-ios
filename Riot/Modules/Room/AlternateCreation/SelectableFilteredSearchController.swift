@@ -16,13 +16,18 @@
 
 import Foundation
 
-class SelectableFilteredSearchController<T : Equatable> : UITableViewController, FilteredTableViewSource {
+enum SelectionMode {
+    case Single
+    case Multiple
+}
+
+class SelectableFilteredSearchController<T: Equatable> : UITableViewController, FilteredTableViewSource {
     
     var selected: [T] = []
     private var selectionDidChange: ((_ item: T, _ added: Bool) -> Void)
-    private var scrollViewDidScroll: (()->Void)!
+    private var scrollViewDidScroll: (() -> Void)!
     let session: MXSession
-    
+    var mode: SelectionMode = .Multiple
     
     init (withSelectionChangeHandler selectionChanged: @escaping ((_ item: T, _ added: Bool) -> Void), andScrollHandler scrollViewDidScroll: @escaping (() -> Void)) {
         selectionDidChange = selectionChanged
@@ -86,8 +91,13 @@ class SelectableFilteredSearchController<T : Equatable> : UITableViewController,
         if !selected.contains(where: {(x) in
             return x == val
         }) {
-            selected.append(val)
-            selectionDidChange(val, true)
+            if self.mode == .Multiple {
+                selected.append(val)
+                selectionDidChange(val, true)
+            } else {
+                selected = [val]
+                selectionDidChange(val, true)
+            }
         } else {
             selected.removeAll(where: {(x) in
                 return x == val

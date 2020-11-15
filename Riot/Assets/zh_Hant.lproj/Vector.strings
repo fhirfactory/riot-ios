@@ -294,6 +294,11 @@
 "room_warning_about_encryption" = "點對點加密仍在測試階段，可能不太可靠。\n\n目前您不該認為他能保護您的資料。\n\n裝置將無法解密加入聊天室前的對話紀錄。\n\n加密過的訊息將無法在尚未提供加密功能的用戶端顯示。";
 "room_event_failed_to_send" = "傳送失敗";
 "room_action_send_photo_or_video" = "傳送照片或影片";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "傳送貼圖";
 "unknown_devices_alert" = "此聊天室包含未經驗證的裝置。\n無法保證這些裝置屬於他們聲稱的用戶。\n我們建議在繼續操作前驗證每一個裝置，但是你也可以選擇不驗證而重新傳送該訊息。";
 "unknown_devices_send_anyway" = "無論如何都傳送";

@@ -232,6 +232,11 @@
 "room_event_action_cancel_send" = "Huỷ Gửi";
 "room_event_action_cancel_download" = "Huỷ Tải";
 "room_event_action_view_encryption" = "Thông tin mã hoá";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_warning_about_encryption" = "Mã hoá đầu-cuối đang trong giai đoạn thử nghiệm và có thể không đáng tin cậy.\n\nBạn có thể không nên tin tưởng hoàn toàn vào sự bảo mật dữ liệu này.\n\nCác thiết bị có thể không giải mã lịch sử từ trước khi họ tham gia vào phòng.\n\nCác tin nhắn được mã hoá sẽ không hiển thị trên các máy khách chưa tích hợp mã hoá.";
 "room_event_failed_to_send" = "Gửi thất bại";
 // Unknown devices

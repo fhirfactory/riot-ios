@@ -248,6 +248,11 @@
 "room_warning_about_encryption" = "Végponttól végpontig való titkosítás béta állapotú és lehet, hogy nem elég megbízható.\n\nMég ne bízz rá titkos adatot.\n\nAz eszközök még nem tudják visszafejteni az üzeneteket amiket azelőtt küldtek mielőtt csatlakoztak volna a szobához.\n\nTitkosított üzenetek nem jelennek meg azoknál a klienseknél amik nem támogatják a titkosítást.";
 "room_event_failed_to_send" = "Hiba a küldénél";
 "room_action_send_photo_or_video" = "Kép vagy videó küldése";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "Matrica küldése";
 "room_replacement_information" = "Ezt a szobát lecserélték és már nem aktív.";
 "room_replacement_link" = "A beszélgetés itt folytatódik.";

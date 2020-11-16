@@ -24,6 +24,9 @@
                 <searchBar contentMode="redraw" placeholder="Tag patient with URN or Name" translatesAutoresizingMaskIntoConstraints="NO" id="xaJ-1C-sjr">
                     <rect key="frame" x="0.0" y="44" width="414" height="56"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="I1V-j6-1Rs"/>
+                    </connections>
                 </searchBar>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qb0-K3-HpZ">
                     <rect key="frame" x="0.0" y="100" width="414" height="762"/>

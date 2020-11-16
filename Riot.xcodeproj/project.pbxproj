@@ -802,6 +802,9 @@
 		EB6B16202534167A00BBDCC6 /* EmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */; };
 		EBA8AB1F25515D5F00FA8383 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */; };
 		EBA8AB2725515DDA00FA8383 /* HomeTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */; };
+		EBAAF566256249AC0080A268 /* AsyncQueryableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */; };
+		EBAAF56E25624A1F0080A268 /* PatientQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF56D25624A1F0080A268 /* PatientQueryService.swift */; };
+		EBAAF58525624E310080A268 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF58425624E310080A268 /* Services.swift */; };
 		EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */; };
 		EBAC79922543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */; };
 		EBAC79AE2543CDB800A0B1BF /* SearchViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */; };
@@ -2075,6 +2078,9 @@
 		EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTableViewCell.swift; sourceTree = "<group>"; };
 		EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTabViewController.xib; sourceTree = "<group>"; };
+		EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncQueryableService.swift; sourceTree = "<group>"; };
+		EBAAF56D25624A1F0080A268 /* PatientQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientQueryService.swift; sourceTree = "<group>"; };
+		EBAAF58425624E310080A268 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlternateRoomCreationFlowAddMembersController.xib; sourceTree = "<group>"; };
 		EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateRoomCreationFlowAddMembersController.swift; sourceTree = "<group>"; };
 		EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewSection.swift; sourceTree = "<group>"; };
@@ -3623,6 +3629,7 @@
 		B1B5567620EE6C4C00210D55 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				EBAAF55E2562494C0080A268 /* HealthServices */,
 				ECF57A3725090C23004BBF9D /* CreateRoom */,
 				B1BB648724FD07B3008238AE /* Application */,
 				EC1CA84F24C1DEC400DE9EBF /* SetPinCode */,
@@ -5091,6 +5098,16 @@
 				EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */,
 			);
 			path = Alternate;
+			sourceTree = "<group>";
+		};
+		EBAAF55E2562494C0080A268 /* HealthServices */ = {
+			isa = PBXGroup;
+			children = (
+				EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */,
+				EBAAF56D25624A1F0080A268 /* PatientQueryService.swift */,
+				EBAAF58425624E310080A268 /* Services.swift */,
+			);
+			path = HealthServices;
 			sourceTree = "<group>";
 		};
 		EBAC79882543AF7200A0B1BF /* AlternateCreation */ = {
@@ -6658,6 +6675,7 @@
 				EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */,
 				ECFBD5E0250B684E00DD5F5A /* ChooseAvatarTableViewCell.swift in Sources */,
 				32FD757624D2C9BA00BA7B37 /* Bundle.swift in Sources */,
+				EBAAF56E25624A1F0080A268 /* PatientQueryService.swift in Sources */,
 				B12D7A0023E2462200FACEDC /* UserVerificationStartCoordinatorType.swift in Sources */,
 				EC711B9324A63B37008F830C /* SecretsRecoveryWithKeyViewController.swift in Sources */,
 				B1B5572220EE6C4D00210D55 /* RoomSettingsViewController.m in Sources */,
@@ -7107,6 +7125,7 @@
 				3232AB492256558300AD6A5C /* FlowTemplateCoordinatorBridgePresenter.swift in Sources */,
 				B1B5572820EE6C4D00210D55 /* RoomViewController.m in Sources */,
 				EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */,
+				EBAAF58525624E310080A268 /* Services.swift in Sources */,
 				B108932123AB8D7D00802670 /* KeyVerificationIncomingRequestApprovalViewData.swift in Sources */,
 				EC85D7172477DCD7002C44C9 /* KeyVerificationScanConfirmationViewModel.swift in Sources */,
 				B18DEDDA243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewState.swift in Sources */,
@@ -7194,6 +7213,7 @@
 				EC711B8A24A63B37008F830C /* SecretsRecoveryWithPassphraseViewController.swift in Sources */,
 				B1B336C3242B933700F95EC4 /* KeyVerificationSelfVerifyStartCoordinator.swift in Sources */,
 				EB4A116F252D7F1E00E98120 /* AlternateInviteViewController.swift in Sources */,
+				EBAAF566256249AC0080A268 /* AsyncQueryableService.swift in Sources */,
 				B1B557CC20EF5D8000210D55 /* DirectoryServerTableViewCell.m in Sources */,
 				B1963B2B228F1C4900CBA17F /* BubbleReactionsView.swift in Sources */,
 				B1B5575C20EE6C4D00210D55 /* DirectoryViewController.m in Sources */,

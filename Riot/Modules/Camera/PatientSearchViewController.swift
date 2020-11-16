@@ -17,12 +17,20 @@
 import Foundation
 
 class PatientSearchViewController: SelectableFilteredSearchController<PatientModel> {
-    let patientList = [PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), PatientModel(Name: "John The Nobody", URN: "987654321", DoB: Date()), PatientModel(Name: "Jill Bejonassie", URN: "234987234", DoB: Date())]
+    var patientList: [PatientModel] = []
     override func registerReuseIdentifierForTableView(_ tableView: UITableView) {
         tableView.register(UINib(nibName: "PatientViewCell", bundle: nil), forCellReuseIdentifier: "PatientViewCell")
     }
     override func applyFilter(_ filter: String) {
-        
+        Services.PatientService().Query(queryDetails: filter, success: { (returnedList) in
+            patientList = returnedList
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        }, failure: {
+            //presumably an internet failure, in prod
+        })
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        applyFilter("")
     }
     override func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> PatientModel? {
         guard let actualCell = tableViewCell as? PatientViewCell else { return nil }

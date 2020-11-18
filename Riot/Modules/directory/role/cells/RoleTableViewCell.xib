@@ -105,7 +105,7 @@
                                                 <rect key="frame" x="0.0" y="32.5" width="325" height="27.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Speciality: Emergency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPW-Dt-Qs7" customClass="PaddingLabel" customModule="Riot" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="159" height="27.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="143" height="27.5"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -129,7 +129,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location: CH (Canberra Hospital)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObY-Xf-dac" customClass="PaddingLabel" customModule="Riot" customModuleProvider="target">
-                                                        <rect key="frame" x="167" y="0.0" width="158" height="27.5"/>
+                                                        <rect key="frame" x="151" y="0.0" width="174" height="27.5"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -190,13 +190,13 @@
     </objects>
     <designables>
         <designable name="FJQ-Oc-irm">
-            <size key="intrinsicContentSize" width="370" height="27"/>
+            <size key="intrinsicContentSize" width="354" height="17"/>
         </designable>
         <designable name="ObY-Xf-dac">
-            <size key="intrinsicContentSize" width="230.5" height="27"/>
+            <size key="intrinsicContentSize" width="214.5" height="17"/>
         </designable>
         <designable name="zPW-Dt-Qs7">
-            <size key="intrinsicContentSize" width="159" height="27"/>
+            <size key="intrinsicContentSize" width="143" height="17"/>
         </designable>
     </designables>
     <resources>

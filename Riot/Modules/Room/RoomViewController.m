@@ -367,6 +367,8 @@
     [self.bubblesTableView registerClass:RoomCreationCollapsedBubbleCell.class forCellReuseIdentifier:RoomCreationCollapsedBubbleCell.defaultReuseIdentifier];
     [self.bubblesTableView registerClass:RoomCreationWithPaginationCollapsedBubbleCell.class forCellReuseIdentifier:RoomCreationWithPaginationCollapsedBubbleCell.defaultReuseIdentifier];
     
+    [self.bubblesTableView registerNib:[RoomMessageContentCell nib] forCellReuseIdentifier:@"RoomMessageContentCell"];
+    
     // Replace the default input toolbar view.
     // Note: this operation will force the layout of subviews. That is why cell view classes must be registered before.
     [self updateRoomInputToolbarViewClassIfNeeded];
@@ -1889,6 +1891,7 @@
 
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
+    return RoomMessageContentCell.class;
     Class cellViewClass = nil;
     BOOL showEncryptionBadge = NO;
     
@@ -5546,7 +5549,7 @@
 
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
     
-    return [super cellReuseIdentifierForCellData:cellData];
+    return @"RoomMessageContentCell";//[super cellReuseIdentifierForCellData:cellData];
 }
 
 - (void)reactionsMenuViewModelDidTapMoreReactions:(ReactionsMenuViewModel *)viewModel forEventId:(NSString *)eventId

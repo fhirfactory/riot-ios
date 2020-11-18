@@ -798,6 +798,9 @@
 		EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */; };
 		EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EB505C172525D49A009C0A7A /* AlternateHomeTools.m */; };
 		EB54294125501CA800AFF8FF /* RoleFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */; };
+		EB5AE9A12563CD2400C635CD /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5AE9A02563CD2400C635CD /* MessageTextView.swift */; };
+		EB5AE9BB2563CD8000C635CD /* MessageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5AE9BA2563CD8000C635CD /* MessageTextView.xib */; };
+		EB5AE9C92563CDDB00C635CD /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5AE9C82563CDDB00C635CD /* MessageContentView.swift */; };
 		EB6B1619253415E400BBDCC6 /* EmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */; };
 		EB6B16202534167A00BBDCC6 /* EmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */; };
 		EBA8AB1F25515D5F00FA8383 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */; };
@@ -805,6 +808,8 @@
 		EBAAF566256249AC0080A268 /* AsyncQueryableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */; };
 		EBAAF56E25624A1F0080A268 /* PatientQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF56D25624A1F0080A268 /* PatientQueryService.swift */; };
 		EBAAF58525624E310080A268 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF58425624E310080A268 /* Services.swift */; };
+		EBAAF58E256275410080A268 /* RoomMessageContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAAF58D256275410080A268 /* RoomMessageContentCell.xib */; };
+		EBAAF596256275730080A268 /* RoomMessageContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF595256275730080A268 /* RoomMessageContentCell.swift */; };
 		EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */; };
 		EBAC79922543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */; };
 		EBAC79AE2543CDB800A0B1BF /* SearchViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */; };
@@ -2074,6 +2079,9 @@
 		EB505C172525D49A009C0A7A /* AlternateHomeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateHomeTools.m; sourceTree = "<group>"; };
 		EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateHomeTools.h; sourceTree = "<group>"; };
 		EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleFilteredSearchController.swift; sourceTree = "<group>"; };
+		EB5AE9A02563CD2400C635CD /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
+		EB5AE9BA2563CD8000C635CD /* MessageTextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTextView.xib; sourceTree = "<group>"; };
+		EB5AE9C82563CDDB00C635CD /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmailTableViewCell.xib; sourceTree = "<group>"; };
 		EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTableViewCell.swift; sourceTree = "<group>"; };
 		EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
@@ -2081,6 +2089,8 @@
 		EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncQueryableService.swift; sourceTree = "<group>"; };
 		EBAAF56D25624A1F0080A268 /* PatientQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientQueryService.swift; sourceTree = "<group>"; };
 		EBAAF58425624E310080A268 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		EBAAF58D256275410080A268 /* RoomMessageContentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoomMessageContentCell.xib; sourceTree = "<group>"; };
+		EBAAF595256275730080A268 /* RoomMessageContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMessageContentCell.swift; sourceTree = "<group>"; };
 		EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlternateRoomCreationFlowAddMembersController.xib; sourceTree = "<group>"; };
 		EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateRoomCreationFlowAddMembersController.swift; sourceTree = "<group>"; };
 		EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewSection.swift; sourceTree = "<group>"; };
@@ -4495,6 +4505,7 @@
 		B1B5583F20EF768E00210D55 /* BubbleCells */ = {
 			isa = PBXGroup;
 			children = (
+				EBAAF58C2562750A0080A268 /* ContentCells */,
 				ECFBD5E6250F97FC00DD5F5A /* RoomCreationCollapsedBubbleCell.h */,
 				ECFBD5E9250F97FC00DD5F5A /* RoomCreationCollapsedBubbleCell.m */,
 				ECFBD5E4250F97FC00DD5F5A /* RoomCreationCollapsedBubbleCell.xib */,
@@ -5108,6 +5119,18 @@
 				EBAAF58425624E310080A268 /* Services.swift */,
 			);
 			path = HealthServices;
+			sourceTree = "<group>";
+		};
+		EBAAF58C2562750A0080A268 /* ContentCells */ = {
+			isa = PBXGroup;
+			children = (
+				EBAAF58D256275410080A268 /* RoomMessageContentCell.xib */,
+				EBAAF595256275730080A268 /* RoomMessageContentCell.swift */,
+				EB5AE9A02563CD2400C635CD /* MessageTextView.swift */,
+				EB5AE9BA2563CD8000C635CD /* MessageTextView.xib */,
+				EB5AE9C82563CDDB00C635CD /* MessageContentView.swift */,
+			);
+			path = ContentCells;
 			sourceTree = "<group>";
 		};
 		EBAC79882543AF7200A0B1BF /* AlternateCreation */ = {
@@ -6173,6 +6196,7 @@
 				EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */,
 				ECFBD5EA250F97FC00DD5F5A /* RoomCreationCollapsedBubbleCell.xib in Resources */,
 				ECF57A89250A687B004BBF9D /* TextViewTableViewCell.xib in Resources */,
+				EB5AE9BB2563CD8000C635CD /* MessageTextView.xib in Resources */,
 				EC3B066A24AC6ADE000DF9BF /* CrossSigningSetupBannerCell.xib in Resources */,
 				B1098BFC21ECFE65000DDA48 /* PasswordStrengthView.xib in Resources */,
 				B1B5573720EE6C4D00210D55 /* GroupParticipantsViewController.xib in Resources */,
@@ -6274,6 +6298,7 @@
 				B1B5581E20EF625800210D55 /* RoomTitleView.xib in Resources */,
 				B1B558C020EF768F00210D55 /* RoomIncomingEncryptedTextMsgWithoutSenderInfoBubbleCell.xib in Resources */,
 				B1B5572420EE6C4D00210D55 /* RoomViewController.xib in Resources */,
+				EBAAF58E256275410080A268 /* RoomMessageContentCell.xib in Resources */,
 				B169331520F3CAFC00746532 /* PublicRoomTableViewCell.xib in Resources */,
 				B1C562E5228C7C8D0037F12A /* RoomContextualMenuViewController.storyboard in Resources */,
 				3232ABA2225730E100AD6A5C /* DeviceVerificationStartViewController.storyboard in Resources */,
@@ -6809,6 +6834,7 @@
 				F05927C91FDED836009F2A68 /* MXGroup+Riot.m in Sources */,
 				B1B5594520EF7BD000210D55 /* TableViewCellWithCollectionView.m in Sources */,
 				B1A6C109238828A6002882FD /* SlidingModalPresentationDelegate.swift in Sources */,
+				EB5AE9C92563CDDB00C635CD /* MessageContentView.swift in Sources */,
 				ECAE7AEE24EFDD1F002FA813 /* MXSessionState.swift in Sources */,
 				EC31F012251B4DBD00D407DA /* RoomInfoListViewData.swift in Sources */,
 				32DB557722FDADE50016329E /* ServiceTermsModalCoordinator.swift in Sources */,
@@ -6849,6 +6875,7 @@
 				EB4280E92560C5DD00B9BBBF /* PatientViewCell.swift in Sources */,
 				EC711B4624A63B13008F830C /* MXRecoveryService.swift in Sources */,
 				EC1CA86C24C1DEC400DE9EBF /* SetPinCoordinatorType.swift in Sources */,
+				EBAAF596256275730080A268 /* RoomMessageContentCell.swift in Sources */,
 				EC1CA86324C1DEC400DE9EBF /* EnterPinCodeCoordinatorType.swift in Sources */,
 				B18DEDD6243377C10075FEF7 /* KeyVerificationSelfVerifyWaitCoordinator.swift in Sources */,
 				32DB557A22FDADE50016329E /* ServiceTermsModalScreenViewController.swift in Sources */,
@@ -6983,6 +7010,7 @@
 				EC619C1924DAD96000663A80 /* UIScrollView.swift in Sources */,
 				B125FE1F231D5DF700B72806 /* SettingsDiscoveryViewModelType.swift in Sources */,
 				EC85D7162477DCD7002C44C9 /* KeyVerificationScanConfirmationViewAction.swift in Sources */,
+				EB5AE9A12563CD2400C635CD /* MessageTextView.swift in Sources */,
 				EC711BAF24A63B58008F830C /* SecureBackupSetupCoordinatorType.swift in Sources */,
 				ECFBD5D4250A7AAF00DD5F5A /* ShowDirectoryCoordinatorType.swift in Sources */,
 				EC1CA89C24C9C9A200DE9EBF /* SetupBiometricsViewModel.swift in Sources */,

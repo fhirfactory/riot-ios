@@ -190,7 +190,6 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
             parameters.preset = kMXRoomPresetPrivateChat
             parameters.visibility = kMXRoomDirectoryVisibilityPrivate
         }
-        
 //        if roomCreationParameters.isEncrypted {
 //            parameters.initialStateEvents = [MXRoomCreationParameters.initialStateEventForEncryption(withAlgorithm: kMXCryptoMegolmAlgorithm)]
 //        }

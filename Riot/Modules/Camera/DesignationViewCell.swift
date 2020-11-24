@@ -16,19 +16,12 @@
 
 import Foundation
 
-class Services{
-    private static var instancePatientQueryService: PatientQueryService!
-    static func PatientService() -> PatientQueryService{
-        if instancePatientQueryService == nil {
-            instancePatientQueryService = PatientQueryService()
-        }
-        return instancePatientQueryService
-    }
-    private static var instanceRoleQueryService: RoleQueryService!
-    static func RoleService() -> RoleQueryService{
-        if instanceRoleQueryService == nil {
-            instanceRoleQueryService = RoleQueryService()
-        }
-        return instanceRoleQueryService
+class DesignationViewCell: QueryTableViewCell<Role> {
+    @IBOutlet weak var DesignationDetails: UILabel!
+    
+    override func RenderWith(Object value: Role) {
+        super.RenderWith(Object: value)
+        ThemeService.shared().theme.recursiveApply(on: self.contentView)
+        DesignationDetails.text = value.Designation
     }
 }

@@ -1140,3 +1140,58 @@
 "secure_key_backup_setup_existing_backup_error_delete_it" = "Kustuta varukoopia";
 "device_verification_self_verify_wait_recover_secrets_additional_information" = "Või kui sa ei saa neid kasutada, siis võid olemasolevas sessioonis";
 "device_verification_self_verify_wait_recover_secrets_checking_availability" = "Kontrollin teiste verifikatsioonivõimaluste olemasolu ...";
+
+
+//TODO: Translate these strings
+"person_single" = "person";
+"person_plural" = "people";
+"joined" = "Joined";
+"switch" = "Switch";
+"more" = "More";
+"yes" = "Yes";
+"no" = "No";
+"room_creation_add_members" = "Add Members";
+"room_recents_chats_section" = "Chats";
+"pull_down_one_invite" = "1 invite";
+"pull_down_invites" = "%d invites";
+"room_participants_action_section_call" = "Calls";
+"room_member_power_level_short_user" = "User";
+"room_power_level_changed_up" = "%@ was promoted to %@";
+"room_power_level_changed_down" = "%@ was demoted to %@";
+"media_tag_save_patient_media" = "Save";
+"media_tag_save_non_patient_media" = "Save";
+"media_tag_title" = "Tag Patient";
+"media_tag_untagged_alert_description" = "Are you sure you want to save without tagging a patient?";
+"media_tag_policy" = "Please ensure CHS policy is followed when documenting patient consent";
+"settings_pin_rooms_with_unread_description" = "Controls whether chats with missed messages are shown first.";
+"settings_credits" = "Credits";
+"pin_protection_choose_pin_welcome_after_login" = "Welcome back.";
+"pin_protection_choose_pin_welcome_after_register" = "Welcome.";
+"pin_protection_not_allowed_pin" = "For security reasons, this PIN isn’t available. Please try another PIN";
+"pin_protection_explanatory" = "PINs help keep your profile, messages and contacts secure, so only you can access them.";
+"biometrics_desetup_subtitle" = "";
+"searchable_directory_create_new_room" = "Create a new room";
+"searchable_directory_x_network" = "%@ Network";
+"searchable_directory_search_placeholder" = "Name or ID";
+"create_room_title" = "New Room";
+"create_room_section_header_name" = "Room name";
+"create_room_placeholder_name" = "Name";
+"create_room_section_header_topic" = "Room topic (optional)";
+"create_room_placeholder_topic" = "Topic";
+"create_room_section_header_encryption" = "Room encryption";
+"create_room_enable_encryption" = "Enable Encryption";
+"create_room_section_footer_encryption" = "Encryption can’t be disabled afterwards.";
+"create_room_section_header_type" = "Room type";
+"create_room_type_private" = "Private Room";
+"create_room_type_public" = "Public Room";
+"create_room_section_footer_type" = "Private rooms can only be joined by invitation. Public rooms can be found by anyone.";
+"create_room_show_in_directory" = "Show the room in the directory";
+"create_room_section_header_address" = "Room address";
+"create_room_placeholder_address" = "#testroom:matrix.org";
+"room_info_list_room_encrypted" = "Messages in this room are end to end encrypted";
+"room_info_list_one_member" = "1 member";
+"room_info_list_several_members" = "%@ members";
+"room_info_list_section_other" = "Other";
+
+
+//TODO: Translate these strings

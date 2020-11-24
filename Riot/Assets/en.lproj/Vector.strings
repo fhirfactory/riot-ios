@@ -66,6 +66,8 @@
 "joined" = "Joined";
 "switch" = "Switch";
 "more" = "More";
+"yes" = "Yes";
+"no" = "No";
 
 // Accessibility
 "accessibility_checkbox_label" = "checkbox";
@@ -357,11 +359,11 @@
 "room_event_failed_to_send" = "Failed to send";
 "room_action_camera" = "Take photo or video";
 "room_action_send_photo_or_video" = "Send photo or video";
-"media_tag_save_patient_media" = "Save Patient Media";
-"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_save_patient_media" = "Save";
+"media_tag_save_non_patient_media" = "Save";
 "media_tag_title" = "Tag Patient";
-"media_tag_subheading" = "Tag Patient Media Immediately";
-"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
+"media_tag_untagged_alert_description" = "Are you sure you want to save without tagging a patient?";
+"media_tag_policy" = "Please ensure CHS policy is followed when documenting patient consent";
 "room_action_send_sticker" = "Send sticker";
 "room_action_send_file" = "Send file";
 "room_action_reply" = "Reply";
@@ -1514,3 +1516,8 @@
 "room_info_list_one_member" = "1 member";
 "room_info_list_several_members" = "%@ members";
 "room_info_list_section_other" = "Other";
+
+// MARK: - Health Specific
+"designation_select" = "Select a Designation";
+"image_description_placeholder" = "Provide an image description";
+"image_description_name" = "Description";

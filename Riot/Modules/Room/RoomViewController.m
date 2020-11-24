@@ -5762,14 +5762,35 @@
 
 - (void)mediaPickerCoordinatorBridgePresenter:(MediaPickerCoordinatorBridgePresenter *)coordinatorBridgePresenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti
 {
-    [coordinatorBridgePresenter dismissWithAnimated:YES completion:nil];
-    self.mediaPickerPresenter = nil;
-    
+    if (BuildSettings.sendMessageRequirePatientTagging){
+        [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
+            PatientTaggingViewController *PatientTaggingController = [PatientTaggingViewController new];
+            [PatientTaggingController setImageTo: imageData WithHandler:^(NSArray<PatientModel*> *patientData) {
+                if (patientData.count > 0){
+                    //A patient was tagged
+                } else {
+                    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+                }
+            }];
+            [self showViewController:PatientTaggingController sender:self];
+        }];
+        self.mediaPickerPresenter = nil;
+        
+    } else {
+        RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+        if (roomInputToolbarView)
+        {
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:YES];
+        }
+    }
+    /*
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
         [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:YES];
     }
+     */
 }
 
 - (void)mediaPickerCoordinatorBridgePresenter:(MediaPickerCoordinatorBridgePresenter *)coordinatorBridgePresenter didSelectVideoAt:(NSURL *)url

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilteredSearchPopoverViewController" customModule="Riot" customModuleProvider="target">
+            <connections>
+                <outlet property="FilteredSearchViewControllerContainer" destination="uTv-NR-mKO" id="7Mx-eg-Nrf"/>
+                <outlet property="attachedSearchBar" destination="ZDx-P9-BQJ" id="6BE-qf-6yS"/>
+                <outlet property="view" destination="EUF-o2-2zB" id="Jum-CO-rsx"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="EUF-o2-2zB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTv-NR-mKO">
+                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </view>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="ZDx-P9-BQJ">
+                    <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="mky-GL-82L"/>
+                    </connections>
+                </searchBar>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="BhB-WM-Oc4"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="BhB-WM-Oc4" firstAttribute="bottom" secondItem="uTv-NR-mKO" secondAttribute="bottom" id="36x-JR-6fd"/>
+                <constraint firstItem="uTv-NR-mKO" firstAttribute="top" secondItem="ZDx-P9-BQJ" secondAttribute="bottom" id="AgE-Fy-Ic4"/>
+                <constraint firstItem="ZDx-P9-BQJ" firstAttribute="top" secondItem="BhB-WM-Oc4" secondAttribute="top" id="DXd-4T-lIP"/>
+                <constraint firstItem="uTv-NR-mKO" firstAttribute="leading" secondItem="BhB-WM-Oc4" secondAttribute="leading" id="Go0-fB-Mx5"/>
+                <constraint firstItem="BhB-WM-Oc4" firstAttribute="trailing" secondItem="ZDx-P9-BQJ" secondAttribute="trailing" id="I6K-d0-Rjs"/>
+                <constraint firstItem="ZDx-P9-BQJ" firstAttribute="leading" secondItem="BhB-WM-Oc4" secondAttribute="leading" id="Qjx-UQ-8Nb"/>
+                <constraint firstItem="BhB-WM-Oc4" firstAttribute="trailing" secondItem="uTv-NR-mKO" secondAttribute="trailing" id="w4b-VK-NpA"/>
+            </constraints>
+            <point key="canvasLocation" x="-481.15942028985512" y="-129.24107142857142"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

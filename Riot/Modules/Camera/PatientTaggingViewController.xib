@@ -11,104 +11,143 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PatientTaggingViewController" customModule="Riot" customModuleProvider="target">
             <connections>
-                <outlet property="CancelButton" destination="5Y6-cf-Tma" id="H9c-za-7Ej"/>
-                <outlet property="ConsentMustBeObtained" destination="zg8-BQ-bQE" id="cRC-ZR-EEe"/>
-                <outlet property="ImagePreview" destination="4df-hf-Coq" id="kJN-dm-XJu"/>
-                <outlet property="SaveButton" destination="Qpu-ue-tos" id="v4A-aS-uDq"/>
-                <outlet property="TagPatientButton" destination="zD7-f2-UhN" id="xhu-zL-KPO"/>
-                <outlet property="TagPatientImmediately" destination="X0C-p8-D0A" id="Rkt-fV-uAu"/>
-                <outlet property="TagPatientTitle" destination="jg8-ZR-kI7" id="MVA-bC-U4f"/>
-                <outlet property="tableView" destination="PEE-2t-kcH" id="IpY-8b-q9y"/>
-                <outlet property="view" destination="iN0-l3-epB" id="dFc-lH-icB"/>
+                <outlet property="CancelButton" destination="yed-Rf-11x" id="Cw4-Sd-uAI"/>
+                <outlet property="ImagePreview" destination="82f-5P-Vci" id="y0t-aF-DaP"/>
+                <outlet property="PolicyReminder" destination="Woe-Gz-fC4" id="sAJ-w4-dXa"/>
+                <outlet property="SaveButton" destination="T03-jB-yKg" id="hqR-60-lDJ"/>
+                <outlet property="TagPatientButton" destination="YMq-qH-SHP" id="ZUo-uN-Cfo"/>
+                <outlet property="TagPatientTitle" destination="QkS-IM-JRJ" id="BTP-pW-mHG"/>
+                <outlet property="tableView" destination="WmW-oE-YeH" id="5fL-fM-QML"/>
+                <outlet property="view" destination="pBd-ht-taB" id="hhA-eF-D1Z"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" id="pBd-ht-taB">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag Patient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jg8-ZR-kI7">
-                    <rect key="frame" x="147.5" y="64" width="119" height="30"/>
-                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="25"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="deI-vk-2eo">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="10"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="M7V-cE-BIW"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag Patient" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkS-IM-JRJ">
+                    <rect key="frame" x="0.0" y="10" width="414" height="0.0"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4df-hf-Coq">
-                    <rect key="frame" x="107" y="104.5" width="200" height="260"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jof-Ni-hr0">
+                    <rect key="frame" x="0.0" y="10" width="414" height="276"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="82f-5P-Vci">
+                            <rect key="frame" x="111" y="11" width="192" height="260"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="260" id="FKN-mz-UDw"/>
+                                <constraint firstAttribute="width" secondItem="82f-5P-Vci" secondAttribute="height" multiplier="20:29" constant="12.241379310344826" id="Sb0-aX-UAH"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="260" id="O20-5N-hIO"/>
-                        <constraint firstAttribute="width" constant="200" id="dmv-Yq-4mb"/>
+                        <constraint firstItem="82f-5P-Vci" firstAttribute="top" secondItem="jof-Ni-hr0" secondAttribute="top" constant="11" id="Pdg-dj-d0a"/>
+                        <constraint firstItem="82f-5P-Vci" firstAttribute="centerX" secondItem="jof-Ni-hr0" secondAttribute="centerX" id="Sot-ZH-BJB"/>
+                        <constraint firstAttribute="width" secondItem="jof-Ni-hr0" secondAttribute="height" multiplier="3:2" id="ceo-Tl-pfU"/>
                     </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag Patient Media Immediately" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-p8-D0A">
-                    <rect key="frame" x="78" y="389" width="258" height="23"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consent must be obtained before capturing patient photos and videos" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zg8-BQ-bQE">
-                    <rect key="frame" x="31.5" y="432" width="351" height="41"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ahb-3A-qQQ">
+                    <rect key="frame" x="0.0" y="286" width="414" height="10"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="351" id="mkI-Yk-YXg"/>
+                        <constraint firstAttribute="height" constant="10" id="jkf-HN-P0p"/>
                     </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="87h-k6-hvj">
+                    <rect key="frame" x="0.0" y="296" width="414" height="36"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMq-qH-SHP">
+                            <rect key="frame" x="100.5" y="3" width="213" height="30"/>
+                            <state key="normal" title="Tag patient using URN or name"/>
+                            <connections>
+                                <action selector="TagButtonClicked:" destination="-1" eventType="touchUpInside" id="7aN-4u-wRE"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="YMq-qH-SHP" secondAttribute="bottom" constant="3" id="cQr-6Z-WDH"/>
+                        <constraint firstItem="YMq-qH-SHP" firstAttribute="top" secondItem="87h-k6-hvj" secondAttribute="top" constant="3" id="z5y-in-FPi"/>
+                        <constraint firstItem="YMq-qH-SHP" firstAttribute="centerX" secondItem="87h-k6-hvj" secondAttribute="centerX" id="zeh-WU-h7M"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jM-Pg-5ON">
+                    <rect key="frame" x="0.0" y="332" width="414" height="458"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WmW-oE-YeH">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="458"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="voo-mY-Hma"/>
+                                <outlet property="delegate" destination="-1" id="tyo-vf-53M"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="WmW-oE-YeH" secondAttribute="bottom" id="1OD-7s-gJR"/>
+                        <constraint firstAttribute="trailing" secondItem="WmW-oE-YeH" secondAttribute="trailing" id="YOx-s8-o0y"/>
+                        <constraint firstItem="WmW-oE-YeH" firstAttribute="top" secondItem="3jM-Pg-5ON" secondAttribute="top" id="itn-AQ-6WA"/>
+                        <constraint firstItem="WmW-oE-YeH" firstAttribute="leading" secondItem="3jM-Pg-5ON" secondAttribute="leading" id="rf3-JJ-bt0"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please ensure CHS policy is followed when documenting patient consent" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Woe-Gz-fC4">
+                    <rect key="frame" x="0.0" y="790" width="414" height="41"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qpu-ue-tos">
-                    <rect key="frame" x="228" y="832" width="166" height="30"/>
-                    <state key="normal" title="Save Non-Patient Media"/>
-                    <connections>
-                        <action selector="SaveAction:" destination="-1" eventType="touchUpInside" id="rfc-8Z-d7a"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Y6-cf-Tma">
-                    <rect key="frame" x="20" y="832" width="48" height="30"/>
-                    <state key="normal" title="Cancel"/>
-                    <connections>
-                        <action selector="CancelAction:" destination="-1" eventType="touchUpInside" id="ykw-f0-HEy"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zD7-f2-UhN">
-                    <rect key="frame" x="100.5" y="483" width="213" height="30"/>
-                    <state key="normal" title="Tag patient using URN or name"/>
-                    <connections>
-                        <action selector="TagButtonClicked:" destination="-1" eventType="touchUpInside" id="JIp-Au-cPS"/>
-                    </connections>
-                </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="PEE-2t-kcH">
-                    <rect key="frame" x="0.0" y="483" width="414" height="339"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="q49-3N-zPT"/>
-                        <outlet property="delegate" destination="-1" id="5cd-nO-nta"/>
-                    </connections>
-                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PdT-kk-Usa">
+                    <rect key="frame" x="0.0" y="831" width="414" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yed-Rf-11x">
+                            <rect key="frame" x="8" y="10" width="48" height="30"/>
+                            <state key="normal" title="Cancel"/>
+                            <connections>
+                                <action selector="CancelAction:" destination="-1" eventType="touchUpInside" id="XEx-jc-elt"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T03-jB-yKg">
+                            <rect key="frame" x="240" y="10" width="166" height="30"/>
+                            <state key="normal" title="Save Non-Patient Media"/>
+                            <connections>
+                                <action selector="SaveAction:" destination="-1" eventType="touchUpInside" id="vTz-aN-JsS"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="yed-Rf-11x" secondAttribute="bottom" constant="10" id="A7I-il-t9R"/>
+                        <constraint firstItem="yed-Rf-11x" firstAttribute="leading" secondItem="PdT-kk-Usa" secondAttribute="leading" constant="8" id="Ol2-3X-ecW"/>
+                        <constraint firstAttribute="height" constant="50" id="PO1-Ut-LUd"/>
+                        <constraint firstItem="T03-jB-yKg" firstAttribute="centerY" secondItem="yed-Rf-11x" secondAttribute="centerY" id="jyK-fP-hOR"/>
+                        <constraint firstAttribute="trailing" secondItem="T03-jB-yKg" secondAttribute="trailing" constant="8" id="mfd-Gk-RGG"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sGQ-pa-bOv">
+                    <rect key="frame" x="0.0" y="881" width="414" height="15"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="tr8-Ca-yrN"/>
+                    </constraints>
+                </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="5Y6-cf-Tma" secondAttribute="bottom" id="15n-g3-Iz4"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Qpu-ue-tos" secondAttribute="trailing" constant="20" id="Ax5-GC-cQO"/>
-                <constraint firstItem="jg8-ZR-kI7" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="Hcv-EK-cn4"/>
-                <constraint firstItem="zD7-f2-UhN" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="HlS-2D-Af1"/>
-                <constraint firstItem="zg8-BQ-bQE" firstAttribute="centerX" secondItem="X0C-p8-D0A" secondAttribute="centerX" id="Odm-gE-Zt0"/>
-                <constraint firstItem="5Y6-cf-Tma" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="X6Q-xa-66E"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="PEE-2t-kcH" secondAttribute="trailing" id="awr-5L-943"/>
-                <constraint firstItem="jg8-ZR-kI7" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="bMl-jd-QEm"/>
-                <constraint firstItem="PEE-2t-kcH" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="bof-DZ-9Zr"/>
-                <constraint firstItem="4df-hf-Coq" firstAttribute="firstBaseline" secondItem="jg8-ZR-kI7" secondAttribute="baseline" constant="16.5" symbolType="layoutAnchor" id="c7s-Md-NcZ"/>
-                <constraint firstItem="X0C-p8-D0A" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="eFh-hu-ZPY"/>
-                <constraint firstItem="PEE-2t-kcH" firstAttribute="top" secondItem="zg8-BQ-bQE" secondAttribute="bottom" constant="10" id="gc9-lr-XwC"/>
-                <constraint firstItem="X0C-p8-D0A" firstAttribute="top" secondItem="4df-hf-Coq" secondAttribute="bottom" constant="24.5" id="mz8-IJ-oD5"/>
-                <constraint firstItem="zg8-BQ-bQE" firstAttribute="top" secondItem="X0C-p8-D0A" secondAttribute="bottom" constant="20" id="ns8-lb-nwG"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Qpu-ue-tos" secondAttribute="bottom" id="oDR-d3-u9x"/>
-                <constraint firstItem="zD7-f2-UhN" firstAttribute="top" secondItem="zg8-BQ-bQE" secondAttribute="bottom" constant="10" id="oyI-RM-Of0"/>
-                <constraint firstItem="PEE-2t-kcH" firstAttribute="bottom" secondItem="5Y6-cf-Tma" secondAttribute="top" constant="-10" id="sbo-5m-T5I"/>
-                <constraint firstItem="4df-hf-Coq" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="uf1-Fq-rVE"/>
-                <constraint firstItem="PEE-2t-kcH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ze0-lG-AZh"/>
-            </constraints>
-            <point key="canvasLocation" x="-175.36231884057972" y="55.580357142857139"/>
-        </view>
+            <viewLayoutGuide key="safeArea" id="GOa-oN-K8B"/>
+            <point key="canvasLocation" x="-622" y="-595"/>
+        </stackView>
     </objects>
     <resources>
         <systemColor name="systemBackgroundColor">

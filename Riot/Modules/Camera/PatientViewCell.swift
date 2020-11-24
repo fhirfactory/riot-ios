@@ -16,11 +16,10 @@
 
 import Foundation
 
-class PatientViewCell: UITableViewCell {
+class PatientViewCell: QueryTableViewCell<PatientModel> {
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var URNLabel: UILabel!
     @IBOutlet weak var DateOfBirthLabel: UILabel!
-    var CurrentPatient: PatientModel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,7 +34,8 @@ class PatientViewCell: UITableViewCell {
         return (firstNamesSubstring.trimmingCharacters(in: CharacterSet(charactersIn: " ")), String(lastname))
     }
     
-    func RenderWith(Patient PatientDetails: PatientModel) {
+    override func RenderWith(Object value: PatientModel) {
+        super.RenderWith(Object: value)
         contentView.backgroundColor = ThemeService.shared().theme.backgroundColor
         accessoryView?.backgroundColor = ThemeService.shared().theme.backgroundColor
         NameLabel.textColor = ThemeService.shared().theme.textPrimaryColor
@@ -43,15 +43,14 @@ class PatientViewCell: UITableViewCell {
         DateOfBirthLabel.textColor = ThemeService.shared().theme.textPrimaryColor
         let formatter = DateFormatter()
         formatter.dateFormat = "d-MMM-yyyy"
-        DateOfBirthLabel.text = formatter.string(from: PatientDetails.DoB)
-        URNLabel.text = PatientDetails.URN
-        let nameStringDetails = ReorderNameString(Name: PatientDetails.Name)
+        DateOfBirthLabel.text = formatter.string(from: value.DoB)
+        URNLabel.text = value.URN
+        let nameStringDetails = ReorderNameString(Name: value.Name)
         let nameString = nameStringDetails.1 + ", " + nameStringDetails.0
         let attributedNameString = NSMutableAttributedString(string: nameString)
         attributedNameString.beginEditing()
         attributedNameString.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: NameLabel.fontSize), range: _NSRange(location: 0, length: nameStringDetails.1.count))
         attributedNameString.endEditing()
         NameLabel.attributedText = attributedNameString
-        CurrentPatient = PatientDetails
     }
 }

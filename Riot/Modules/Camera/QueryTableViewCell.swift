@@ -16,19 +16,15 @@
 
 import Foundation
 
-class Services{
-    private static var instancePatientQueryService: PatientQueryService!
-    static func PatientService() -> PatientQueryService{
-        if instancePatientQueryService == nil {
-            instancePatientQueryService = PatientQueryService()
-        }
-        return instancePatientQueryService
+class QueryTableViewCell<T>: UITableViewCell, RendersWith {
+    typealias ObjectType = T
+    
+    func RenderWith(Object value: T) {
+        CurrentValue = value
     }
-    private static var instanceRoleQueryService: RoleQueryService!
-    static func RoleService() -> RoleQueryService{
-        if instanceRoleQueryService == nil {
-            instanceRoleQueryService = RoleQueryService()
-        }
-        return instanceRoleQueryService
+    var CurrentValue: T!
+    
+    func copyValue(into object: inout T){
+        object = CurrentValue
     }
 }

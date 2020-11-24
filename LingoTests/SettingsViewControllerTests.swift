@@ -39,6 +39,7 @@ class SettingsViewControllerTests: XCTestCase {
         /// The remainder of the functionality is OOTB and described in another story.
         
         XCTAssert(BuildSettings.sharingFeaturesEnabled == false)
+        XCTAssert(BuildSettings.sharingFeaturesAllowGalleryAvatars == true)
         
     }
 

@@ -16,7 +16,6 @@
  limitations under the License.
  */
 
-#import "Riot-Swift.h"
 #import "RoomViewController.h"
 
 #import "RoomDataSource.h"
@@ -121,8 +120,8 @@
 
 #import "EventFormatter.h"
 #import <MatrixKit/MXKSlashCommands.h>
-#import <objc/message.h>
-//#import "Riot-Swift.h"
+
+#import "Riot-Swift.h"
 
 @interface RoomViewController () <UISearchBarDelegate, UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate, RoomTitleViewTapGestureDelegate, RoomParticipantsViewControllerDelegate, MXKRoomMemberDetailsViewControllerDelegate, ContactsTableViewControllerDelegate, MXServerNoticesDelegate, RoomContextualMenuViewControllerDelegate,
     ReactionsMenuViewModelCoordinatorDelegate, EditHistoryCoordinatorBridgePresenterDelegate, MXKDocumentPickerPresenterDelegate, EmojiPickerCoordinatorBridgePresenterDelegate,
@@ -1905,6 +1904,16 @@
             roomBubbleCellData = (MXKRoomBubbleCellData*)bubbleData;
             showEncryptionBadge = roomBubbleCellData.containsBubbleComponentWithEncryptionBadge;
             [self redactAdministrativeEvents:roomBubbleCellData];
+        }
+        
+        switch (bubbleData.events.firstObject.eventType) {
+            case MXEventTypeRoomPowerLevels:
+            case MXEventTypeRoomTopic:
+            case MXEventTypeRoomName:
+            case MXEventTypeRoomAvatar:
+                return bubbleData.isPaginationFirstBubble ? RoomMembershipWithPaginationTitleBubbleCell.class : RoomMembershipBubbleCell.class;
+            default:
+                break;
         }
         
         // Select the suitable table view cell class, by considering first the empty bubble cell.
@@ -5219,7 +5228,7 @@
     
     // Copy action
     
-    BOOL isCopyActionEnabled = (!attachment || attachment.type != MXKAttachmentTypeSticker) && (BuildSettings.sharingFeaturesEnabled || !attachment);
+    BOOL isCopyActionEnabled = !attachment || attachment.type != MXKAttachmentTypeSticker;
     
     if (isCopyActionEnabled)
     {
@@ -5337,96 +5346,14 @@
         [self showAdditionalActionsMenuForEvent:event inCell:cell animated:YES];
     };
     
-    RoomContextualMenuItem *removeMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionRemove];
-    
-    // Do not allow to redact the event that enabled encryption (m.room.encryption)
-    // because it breaks everything
-    bool allowRemoveMessage = (![self getEventIsAdministrative:event] || BuildSettings.roomAllowRemoveAdministrativeMessage) && event.eventType != MXEventTypeRoomEncryption;
-    removeMenuItem.action = ^{
-        if (allowRemoveMessage)
-        {
-            if (weakself)
-            {
-                typeof(self) self = weakself;
-                
-                [self cancelEventSelection];
-                
-                [self startActivityIndicator];
-                
-                [self.roomDataSource.room redactEvent:event.eventId reason:nil success:^{
-                    
-                    __strong __typeof(weakself)self = weakself;
-                    [self stopActivityIndicator];
-                    
-                } failure:^(NSError *error) {
-                    
-                    __strong __typeof(weakself)self = weakself;
-                    [self stopActivityIndicator];
-                    
-                    NSLog(@"[RoomVC] Redact event (%@) failed", event.eventId);
-                    //Alert user
-                    [[AppDelegate theDelegate] showErrorAsAlert:error];
-                    
-                }];
-            }
-            [self hideContextualMenuAnimated:YES completion:nil];
-        }
-    };
-    
     // Actions list
     
-    NSMutableArray<RoomContextualMenuItem*> *actionItems = [NSMutableArray new];
-    /*@[messageDetailsAllowViewSource
-      copyMenuItem,
-      replyMenuItem,
-      editMenuItem,
-      moreMenuItem
-      ];*/
-    if (BuildSettings.sharingFeaturesEnabled){
-        [actionItems addObject:copyMenuItem];
-        [actionItems addObject:replyMenuItem];
-        [actionItems addObject:editMenuItem];
-        [actionItems addObject:moreMenuItem];
-    } else {
-        [actionItems addObject:replyMenuItem];
-        //only allow forwarding attachments
-        if (attachment){
-            RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
-            menuItem.action = ^{
-                RoomSelector *nextDisplay = [RoomSelector new];
-                [nextDisplay SetCallback: ^(MXRoom* room){
-                    NSString* roomId = self.roomDataSource.roomId;
-                    //disallow a user forwarding an attachment to the same room
-                    if ([room.roomId isEqual:roomId]){
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_forward_same_room_error_title", @"Vector", nil) message:NSLocalizedStringFromTable(@"room_event_action_forward_same_room_error_description", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"close", @"Vector", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            //we don't need to do anything here, the alert was just to warn of the error
-                        }];
-                        [alert addAction:action];
-                        [self presentViewController:alert animated:YES completion:nil];
-                    }else{
-                        //We actually have to create a room data source in order to send the message if we want the message to be visible to the sender in this matrix session.
-                        //This isn't very efficient, and is an inelegant solution, but I guess at least it works.
-                        [RoomDataSource loadRoomDataSourceWithRoomId:room.roomId initialEventId:nil andMatrixSession:self.mainSession onComplete:^(id roomDataSource) {
-                            MXKRoomDataSource *rds = roomDataSource;
-                            [rds sendMessageWithContent:event.content success:^(NSString *eventId) {
-                                [rds invalidateBubblesCellDataCache]; //this appears to fix an issue whereby if a message was received at the same time that we forwarded a message, a room could end up having duplicate timelines. I don't know why this was a thing that could happen, and I don't really want to know, but this fix seems to mean we can send the message from this current room, rather than having to actually display the room we're forwarding to.
-                                [rds markAllAsRead]; //This is another gross thing we have to do. If we don't the system won't mark the attachment we just sent at having been read by us, so phantom notifications will begin to appear over time. Worse still, since the messages were sent by us, the read receipt counting system won't display the badge unless there's also a notification from someone else, so depending on how many attachments you've sent, you can end up with a situation where, from one message from someone else, the number of missed notifications on a room will jump from 0 (or no badge) to greater than 10.
-                            } failure:^(NSError *error) {
-                                //currently, there's not really much we can probably do if there's an error. This is an incredibly unlikely situation though, as the message will typically be under a kilobyte, and even if it doesn't correctly send due to network issues, can usually be resent when reconnected.
-                            }];
-                        }];
-                    }
-                }];
-                [self presentViewController:nextDisplay animated:YES completion:nil];
-                [self hideContextualMenuAnimated:YES];
-            };
-            [actionItems addObject:menuItem];
-        }
-        if (allowRemoveMessage){
-            [actionItems addObject:removeMenuItem];
-        }
-    }
+    NSArray<RoomContextualMenuItem*> *actionItems = @[
+                                                      copyMenuItem,
+                                                      replyMenuItem,
+                                                      editMenuItem,
+                                                      moreMenuItem
+                                                      ];
     
     return actionItems;
 }

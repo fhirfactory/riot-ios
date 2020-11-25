@@ -43,6 +43,7 @@ class MessageContentView: UIView {
     internal func applyTheStyle(_ theme: Theme) {
         preconditionFailure("Override in inherriting class")
     }
+    var delegate: RoomMessageContentCell!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

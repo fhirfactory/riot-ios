@@ -16,16 +16,23 @@
 
 import Foundation
 
-class MessageTextView: MessageContentView {
-    @IBOutlet weak var TextContent: UILabel!
+class MessageImageView: MessageContentView {
+    @IBOutlet weak var ImageContent: MXKImageView!
     override class func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }
     override internal func renderData(_ celldata: MXKRoomBubbleCellData) {
-        TextContent.text = celldata.attributedTextMessage.string
+        let attachment = celldata.attachment
+        ImageContent.mediaFolder = celldata.roomId
+        ImageContent.setAttachmentThumb(attachment)
+        ImageContent.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageClicked)))
+        frame.size = celldata.contentSize
+        backgroundColor = .cyan
+    }
+    @IBAction func imageClicked() {
+        delegate.delegate.cell(delegate, didRecognizeAction: kMXKRoomBubbleCellTapOnAttachmentView, userInfo: nil)
     }
     override func applyTheStyle(_ theme: Theme) {
-        TextContent.textColor = theme.textPrimaryColor
         self.backgroundColor = .none
     }
 }

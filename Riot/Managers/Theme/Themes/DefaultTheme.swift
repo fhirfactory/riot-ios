@@ -38,8 +38,15 @@ class DefaultTheme: NSObject, Theme {
     var headerTextPrimaryColor: UIColor = UIColor(rgbHex: 0x171910)
     var headerTextSecondaryColor: UIColor = UIColor(rgbHex: 0x8F97A3)
 
+<<<<<<< HEAD
     var textPrimaryColor: UIColor = UIColor(rgbHex: 0x171910)
     var textSecondaryColor: UIColor = UIColor(rgbHex: 0x8F97A3)
+=======
+    var textPrimaryColor: UIColor = UIColor(rgb: 0x171910)
+    var textSecondaryColor: UIColor = UIColor(rgb: 0x8F97A3)
+    
+    var sideMenuProfileBackground: UIColor = UIColor(rgb: 0x414141)
+>>>>>>> feature/profile
 
     var tintColor: UIColor = UIColor(displayP3Red: 0.05098039216, green: 0.7450980392, blue: 0.5450980392, alpha: 1.0)
     var tintBackgroundColor: UIColor = UIColor(rgbHex: 0xe9fff9)

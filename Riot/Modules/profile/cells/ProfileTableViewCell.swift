@@ -28,6 +28,9 @@ class ProfileTableViewCell: UITableViewCell {
         super.awakeFromNib()
         contactIcon.layer.cornerRadius = contactIcon.bounds.height / 2
         contactIcon.clipsToBounds = true
+        backgroundColor = ThemeService.shared().theme.sideMenuProfileBackground
+        status.textColor = ThemeService.shared().theme.textPrimaryColor
+        officialName.textColor = ThemeService.shared().theme.textPrimaryColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -36,7 +39,7 @@ class ProfileTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setDelegate(delegate: ProfileViewController){
+    func setDelegate(delegate: ProfileViewController) {
         self.delegate = delegate
         officialName.text = delegate.mainSession.myUser.displayname
         contactIcon.setImageURI(delegate.mainSession.myUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: delegate.mainSession.myUser.displayname), mediaManager: delegate.mainSession.mediaManager)

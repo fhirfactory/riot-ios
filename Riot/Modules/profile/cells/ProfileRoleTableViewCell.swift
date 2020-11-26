@@ -24,6 +24,8 @@ class ProfileRoleTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        backgroundColor = ThemeService.shared().theme.sideMenuProfileBackground
+        roleName.textColor = ThemeService.shared().theme.textPrimaryColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

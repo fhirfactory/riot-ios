@@ -652,6 +652,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f3z-s3-uNQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3372" y="-2860"/>
+        </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="73g-3y-oAL">
             <objects>

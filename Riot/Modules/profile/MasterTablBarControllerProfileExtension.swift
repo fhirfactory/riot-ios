@@ -28,6 +28,8 @@ extension MasterTabBarController {
         settings.presentationStyle = .menuSlideIn
         //let screenSize: CGRect = UIScreen.main.bounds
         settings.menuWidth = min(view.frame.width, view.frame.height) * 0.75 //CGFloat(screenWidthSlider.value)
+        settings.blurEffectStyle = .none
+        
         return settings
     }
 }

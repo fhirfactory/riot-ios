@@ -59,7 +59,7 @@ class ProfileViewController: MXKViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Add each matrix session, to update the view controller appearance according to mx sessions state
-        if let sessions = AppDelegate.the().mxSessions {
+        if let sessions = AppDelegate.theDelegate().mxSessions {
             for mxSession in sessions {
                 guard let mxSession = mxSession as? MXSession else {
                     continue
@@ -69,9 +69,13 @@ class ProfileViewController: MXKViewController {
         }
         
         signOutAlertPresenter.delegate = self
+        tableView.backgroundColor = theme.sideMenuProfileBackground
         
         //hiding the navigation bar's shadow
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        self.navigationController?.navigationBar.backgroundColor = theme.sideMenuProfileBackground
+        view.backgroundColor = theme.sideMenuProfileBackground
+        self.navigationController?.navigationBar.backgroundColor = theme.sideMenuProfileBackground
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -174,7 +178,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 webViewViewController.title = NSLocalizedString("settings_privacy_policy", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")
                 navigationController?.pushViewController(webViewViewController, animated: true)
             }
-            break
         default:
             break
         }
@@ -194,7 +197,7 @@ extension ProfileViewController: SignOutAlertPresenterDelegate {
         view.isUserInteractionEnabled = false
         startActivityIndicator()
         //MXWeakify(self)
-        AppDelegate.the().logout(withConfirmation: false) { isLoggedOut in
+        AppDelegate.theDelegate().logout(withConfirmation: false) { isLoggedOut in
             //MXStrongifyAndReturnIfNil(self)
             self.stopActivityIndicator()
             self.view.isUserInteractionEnabled = true

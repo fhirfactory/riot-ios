@@ -320,7 +320,28 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
             return nil;
         }
     }
-    
+    if (event.eventType == MXEventTypeRoomAvatar){
+        NSString* Sender = [roomState.members memberWithUserId:event.sender].displayname;
+        NSMutableAttributedString *messagecontent = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:NSLocalizedStringFromTable(@"%@ changed the room photo.", @"Vector", nil), Sender]];
+        [messagecontent beginEditing];
+        [messagecontent setAttributes:@{
+            NSFontAttributeName: [UIFont systemFontOfSize:13],
+            NSForegroundColorAttributeName: ThemeService.shared.theme.textSecondaryColor
+        } range:NSMakeRange(0, messagecontent.length)];
+        [messagecontent endEditing];
+        return messagecontent;
+        
+    }
+    if (event.eventType == MXEventTypeRoomTopic || event.eventType == MXEventTypeRoomName){
+        NSMutableAttributedString *messagecontent = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithString:attributedString.string]];
+        [messagecontent beginEditing];
+        [messagecontent setAttributes:@{
+            NSFontAttributeName: [UIFont systemFontOfSize:13],
+            NSForegroundColorAttributeName: ThemeService.shared.theme.textSecondaryColor
+        } range:NSMakeRange(0, messagecontent.length)];
+        [messagecontent endEditing];
+        return messagecontent;
+    }
     return attributedString;
 }
 

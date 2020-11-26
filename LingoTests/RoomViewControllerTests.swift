@@ -127,6 +127,8 @@ class RoomViewControllerTests: XCTestCase {
         ///     I am not able to see or select the 'Send File' action anymore.
         
         XCTAssert(BuildSettings.sharingFeaturesEnabled == false)
+        XCTAssert(BuildSettings.sharingFeaturesAllowGalleryAvatars == true)
+        
         
     }
 

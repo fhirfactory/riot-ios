@@ -3521,7 +3521,7 @@ TableViewSectionsDelegate>
     {
         return;
     }
-    if (BuildSettings.sharingFeaturesEnabled){
+    if (BuildSettings.sharingFeaturesAllowGalleryAvatars){
         SingleImagePickerPresenter *singleImagePickerPresenter = [[SingleImagePickerPresenter alloc] initWithSession:self.mainSession];
         singleImagePickerPresenter.delegate = self;
         

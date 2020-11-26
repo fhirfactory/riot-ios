@@ -14,7 +14,7 @@ use_frameworks!
 $matrixKitVersion = '= 0.13.1'
 
 # $matrixKitVersion = :local
-$matrixKitVersion = {'feature/master-merge' => 'develop'}
+$matrixKitVersion = {'master' => 'develop'}
 
 ########################################
 

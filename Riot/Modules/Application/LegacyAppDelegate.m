@@ -1069,34 +1069,24 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         
         __weak typeof(self) weakSelf = self;
-        
-        [cryptoDataCorruptedAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"later"]
-                                                                     style:UIAlertActionStyleDefault
-                                                                   handler:^(UIAlertAction * action) {
-                                                                       
-                                                                       if (weakSelf)
-                                                                       {
-                                                                           typeof(self) self = weakSelf;
-                                                                           self->cryptoDataCorruptedAlert = nil;
-                                                                       }
-                                                                       
-                                                                   }]];
-        
-        [cryptoDataCorruptedAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"settings_sign_out"]
-                                                                     style:UIAlertActionStyleDefault
-                                                                   handler:^(UIAlertAction * action) {
-                                                                       
-                                                                       if (weakSelf)
-                                                                       {
-                                                                           typeof(self) self = weakSelf;
-                                                                           self->cryptoDataCorruptedAlert = nil;
+        [[MXKAccountManager sharedManager] removeAccount:account completion:^{
+            [self->cryptoDataCorruptedAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"settings_sign_out"]
+                                                                         style:UIAlertActionStyleDefault
+                                                                       handler:^(UIAlertAction * action) {
                                                                            
-                                                                           [[MXKAccountManager sharedManager] removeAccount:account completion:nil];
-                                                                       }
-                                                                       
-                                                                   }]];
+                                                                           if (weakSelf)
+                                                                           {
+                                                                               typeof(self) self = weakSelf;
+                                                                               self->cryptoDataCorruptedAlert = nil;
+                                                                               
+                                                                               
+                                                                           }
+                                                                           
+                                                                       }]];
+            
+            [self showNotificationAlert:self->cryptoDataCorruptedAlert];
+        }];
         
-        [self showNotificationAlert:cryptoDataCorruptedAlert];
     }
 }
 

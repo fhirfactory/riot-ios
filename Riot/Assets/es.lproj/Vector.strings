@@ -318,6 +318,8 @@
 "settings_cryptography" = "CRIPTOGRAFÍA";
 "settings_deactivate_account" = "DESACTIVAR CUENTA";
 "settings_sign_out" = "Cerrar Sesión";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "¿Estás seguro?";
 "settings_sign_out_e2e_warn" = "Perderás tus claves de cifrado de extremo a extremo. Esto significa que no podrás leer mensajes antiguos en salas cifradas desde este dispositivo.";
 "settings_profile_picture" = "Imagen de Perfil";

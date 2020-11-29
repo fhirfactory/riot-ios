@@ -286,6 +286,8 @@
 "settings_devices" = "セッション";
 "settings_cryptography" = "暗号化";
 "settings_sign_out" = "通信完全切断";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "本当によろしいですか？";
 "settings_sign_out_e2e_warn" = "あなたはend-to-end暗号鍵を紛失してしまったようです。すなわち、この端末で暗号化された部屋の昔の発言を読むことができなくなります。";
 "settings_profile_picture" = "自分のアイコン画像";

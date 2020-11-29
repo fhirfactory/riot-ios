@@ -448,6 +448,9 @@
 "settings_deactivate_account" = "DEACTIVATE ACCOUNT";
 
 "settings_sign_out" = "Sign Out";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
+
 "settings_sign_out_confirmation" = "Are you sure?";
 "settings_sign_out_e2e_warn" = "You will lose your end-to-end encryption keys. That means you will no longer be able to read old messages in encrypted rooms on this device.";
 "settings_profile_picture" = "Profile Picture";

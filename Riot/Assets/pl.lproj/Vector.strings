@@ -231,6 +231,8 @@
 "settings_cryptography" = "KRYPTOGRAFIA";
 "settings_deactivate_account" = "DEZAKTYWUJ KONTO";
 "settings_sign_out" = "Wyloguj się";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_profile_picture" = "Obraz profilowy";
 "settings_display_name" = "Wyświetlana nazwa";
 "settings_remove_prompt_title" = "Potwierdzenie";

@@ -269,6 +269,8 @@
 "settings_devices" = "SESSIONS";
 "settings_cryptography" = "CHIFFREMENT";
 "settings_sign_out" = "Se déconnecter";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Êtes-vous sûr(e) ?";
 "settings_sign_out_e2e_warn" = "Vous perdrez vos clés de chiffrement de bout en bout. Cela signifie que vous ne pourrez plus lire les anciens messages des salons chiffrés depuis cet appareil.";
 "settings_profile_picture" = "Image de profil";

@@ -279,6 +279,8 @@
 "settings_devices" = "APPARATEN";
 "settings_cryptography" = "CRYPTOGRAFIE";
 "settings_sign_out" = "Afmelden";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Weet u het zeker?";
 "settings_sign_out_e2e_warn" = "U zult uw sleutels voor eind-tot-eind-versleuteling kwijtraken. Dat betekent dat u op dit apparaat geen oude berichten in versleutelde gesprekken meer zult kunnen lezen.";
 "settings_profile_picture" = "Profielfoto";

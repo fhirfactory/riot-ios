@@ -222,6 +222,8 @@
 "settings_devices" = "SITZUNGEN";
 "settings_cryptography" = "VERSCHLÜSSELUNG";
 "settings_sign_out" = "Abmelden";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Bist du sicher?";
 "settings_display_name" = "Anzeigename";
 "settings_profile_picture" = "Profilbild";

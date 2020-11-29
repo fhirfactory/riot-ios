@@ -263,6 +263,8 @@
 "settings_devices" = "会话";
 "settings_cryptography" = "加密";
 "settings_sign_out" = "注销";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "你确定？";
 "settings_sign_out_e2e_warn" = "您将丢失所有端对端加密密钥。这意味着在此设备上您将再也无法阅读已加密聊天室里的旧消息。";
 "settings_profile_picture" = "档案图片";

@@ -235,6 +235,8 @@
 "settings_devices" = "SESIONE";
 "settings_cryptography" = "KRIPTOGRAFI";
 "settings_sign_out" = "Dilni";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Jeni i sigurt?";
 "settings_profile_picture" = "Foto Profili";
 "settings_display_name" = "Emër Në Ekran";

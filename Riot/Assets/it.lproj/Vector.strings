@@ -316,6 +316,8 @@
 "settings_key_backup" = "BACKUP DELLE CHIAVI";
 "settings_deactivate_account" = "DISATTIVA ACCOUNT";
 "settings_sign_out" = "Disconnetti";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Sei sicuro?";
 "settings_sign_out_e2e_warn" = "Perderai le tue chiavi crittografiche E2E. Questo significa che non potrai più leggere i vecchi messaggi nelle stanze cifrate su questo dispositivo.";
 "settings_profile_picture" = "Immagine profilo";

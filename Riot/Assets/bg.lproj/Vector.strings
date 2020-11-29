@@ -288,6 +288,8 @@
 "settings_devices" = "СЕСИИ";
 "settings_cryptography" = "КРИПТОГРАФИЯ";
 "settings_sign_out" = "Изход";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Сигурни ли сте?";
 "settings_sign_out_e2e_warn" = "Ще изгубите ключовете си за шифроване от край до край. Това означава, че на това устройство повече няма да можете да четете стари съобщения в шифровани стаи.";
 "settings_profile_picture" = "Профилна снимка";

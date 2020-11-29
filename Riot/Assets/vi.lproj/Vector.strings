@@ -287,6 +287,8 @@
 "settings_devices" = "THIẾT BỊ";
 "settings_cryptography" = "MÃ HOÁ";
 "settings_sign_out" = "Đăng xuất";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Bạn có chắc chắn?";
 "settings_sign_out_e2e_warn" = "Bạn sẽ mất end-to-end khoá bảo mật. Điều đó có nghĩa rằng bạn sẽ không thể đọc các tin nhắn trước đó đã được mã hoá trong phòng bởi thiết bị này.";
 "settings_profile_picture" = "Hình ảnh hồ sơ";

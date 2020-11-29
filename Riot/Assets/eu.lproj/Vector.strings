@@ -335,6 +335,8 @@
 "settings_labs" = "LABORATEGIA";
 "settings_cryptography" = "KRIPTOGRAFIA";
 "settings_sign_out" = "Amaitu saioa";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ziur zaude?";
 "settings_first_name" = "Izena";
 "settings_surname" = "Abizena";

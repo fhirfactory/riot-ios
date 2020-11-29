@@ -90,9 +90,9 @@ class ProfileViewController: MXKViewController {
         roles.append(Role(name: "Business Analyst", active: false))
         roles.append(Role(name: "UI Designer", active: false))
         
-        iconItems.append(IconItem(image: UIImage(named: "settings_icon") ?? UIImage(), text: "Settings"))
-        iconItems.append(IconItem(image: UIImage(named: "role_outline") ?? UIImage(), text: "Roles"))
-        iconItems.append(IconItem(image: UIImage(named: "exit") ?? UIImage(), text: "Sign out"))
+        iconItems.append(IconItem(image: UIImage(named: "settings_icon") ?? UIImage(), text: NSLocalizedString("settings_settings", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))
+        iconItems.append(IconItem(image: UIImage(named: "role_outline") ?? UIImage(), text: NSLocalizedString("settings_roles", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))
+        iconItems.append(IconItem(image: UIImage(named: "exit") ?? UIImage(), text: NSLocalizedString("settings_sign_out", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))
         
         textItems.append(TextItem(text: NSLocalizedString("settings_term_conditions", tableName: "Vector", bundle: Bundle.main, value: "", comment: ""), url: ""))
         textItems.append(TextItem(text: NSLocalizedString("settings_privacy_policy", tableName: "Vector", bundle: Bundle.main, value: "", comment: ""), url: ""))
@@ -162,12 +162,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             //case SectionType.ROLE_CELL.rawValue:
             
         case SectionType.ICON_ITEM_CELL.rawValue:
-            if iconItems[indexPath.row].text == "Settings" {
+            if iconItems[indexPath.row].text == NSLocalizedString("settings_settings", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {
                 self.performSegue(withIdentifier: "showSettingSegue", sender: self.tableView)
-            } else if iconItems[indexPath.row].text == "Sign out" {
+            } else if iconItems[indexPath.row].text == NSLocalizedString("settings_sign_out", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {
                 onSignout(tableView.cellForRow(at: indexPath))
             }
-            break
         case SectionType.ONLY_TEXT_CELL.rawValue:
             if textItems[indexPath.row].text == NSLocalizedString("settings_term_conditions", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {
                 let webViewViewController: WebViewViewController = WebViewViewController(url: BuildSettings.applicationTermsConditionsUrlString)

@@ -364,6 +364,8 @@
 "settings_key_backup" = "ALLWEDDI WRTH GEFN";
 "settings_deactivate_account" = "DAD-ACTIFADU CYFRIF";
 "settings_sign_out" = "All-gofnodi";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ydych chi'n siwr?";
 "settings_sign_out_e2e_warn" = "Byddwch chi'n colli'ch allweddi amgryptio o'r dechrau i'r diwedd. Mae hynny'n golygu na fyddwch yn gallu darllen hen negeseuon mewn ystafelloedd wedi'u hamgryptio ar y ddyfais hon mwyach.";
 "settings_profile_picture" = "Llun Proffil";

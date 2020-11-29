@@ -301,6 +301,8 @@
 "settings_cryptography" = "TITKOSÍTÁS";
 "settings_deactivate_account" = "FELFÜGGESZTETT FIÓK";
 "settings_sign_out" = "Kijelentkezés";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Biztos vagy benne?";
 "settings_sign_out_e2e_warn" = "Elveszted a végponttól végpontig használt titkosító kulcsaidat. Ez azt jelenti, hogy nem fogod tudni elolvasni a titkosított szobákban a régi üzeneteket ezzel az eszközzel.";
 "settings_profile_picture" = "Felhasználói kép";

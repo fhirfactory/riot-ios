@@ -344,6 +344,8 @@
 "settings_cryptography" = "加密";
 "settings_deactivate_account" = "註銷帳戶";
 "settings_sign_out" = "登出";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_e2e_warn" = "您將失去所有點對點加密密鑰。這會使您在這台設備上無法讀取過去已加密的訊息。";
 "settings_profile_picture" = "個人檔案圖片";
 "settings_display_name" = "顯示名稱";

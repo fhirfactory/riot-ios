@@ -255,6 +255,8 @@
 "settings_devices" = "СЕАНСЫ";
 "settings_cryptography" = "КРИПТОГРАФИЯ";
 "settings_sign_out" = "Выход";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Уверены?";
 "settings_profile_picture" = "Изображение профиля";
 "settings_display_name" = "Отображаемое имя";

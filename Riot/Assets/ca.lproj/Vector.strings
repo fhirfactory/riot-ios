@@ -292,6 +292,8 @@
 "settings_devices" = "Dispositius";
 "settings_cryptography" = "Criptografia";
 "settings_sign_out" = "Tancar sessió";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Estàs segur?";
 "settings_sign_out_e2e_warn" = "Perdràs les teves claus de xifratge punt a punt. Això significa que ja no podràs llegir missatges antics en sales codificades d'aquest dispositiu.";
 "settings_profile_picture" = "Imatge del perfil";

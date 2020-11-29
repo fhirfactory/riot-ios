@@ -179,6 +179,8 @@
 "settings_devices" = "TÆKI";
 "settings_cryptography" = "DULRITUN";
 "settings_sign_out" = "Skrá út";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ertu viss?";
 "settings_profile_picture" = "Notandamynd";
 "settings_display_name" = "Birtingarnafn";

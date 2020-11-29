@@ -110,9 +110,9 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SectionType.ROLE_DIVIDER_CELL.rawValue, SectionType.ICON_ITEM_DIVIDER_CELL.rawValue:
-            return 1
+            return 1  // Return a single row which will be used for the cell divider
         case SectionType.PROFILE_CELL.rawValue:
-            return 1
+            return 1  // Return a single row which will be used for the user's profile cell
         case SectionType.ROLE_CELL.rawValue:
             return roles.count
         case SectionType.ICON_ITEM_CELL.rawValue:

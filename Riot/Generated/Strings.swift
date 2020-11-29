@@ -4058,6 +4058,10 @@ internal enum VectorL10n {
   internal static var settingsReportBug: String { 
     return VectorL10n.tr("Vector", "settings_report_bug") 
   }
+  /// Roles
+  internal static var settingsRoles: String { 
+    return VectorL10n.tr("Vector", "settings_roles") 
+  }
   /// SECURITY
   internal static var settingsSecurity: String { 
     return VectorL10n.tr("Vector", "settings_security") 
@@ -4065,6 +4069,10 @@ internal enum VectorL10n {
   /// Send anon crash & usage data
   internal static var settingsSendCrashReport: String { 
     return VectorL10n.tr("Vector", "settings_send_crash_report") 
+  }
+  /// Settings
+  internal static var settingsSettings: String { 
+    return VectorL10n.tr("Vector", "settings_settings") 
   }
   /// Show decrypted content
   internal static var settingsShowDecryptedContent: String { 

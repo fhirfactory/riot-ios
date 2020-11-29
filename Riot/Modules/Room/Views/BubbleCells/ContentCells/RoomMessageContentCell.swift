@@ -13,16 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
+ 
 import Foundation
 
-class RoomMessageContentCell: UITableViewCell, MXKCellRendering {
+class RoomMessageContentCell: MXKRoomBubbleTableViewCell {
     @IBOutlet weak var Sender: UILabel!
     @IBOutlet weak var SenderAvatar: MXKImageView!
     @IBOutlet weak var MessageContentView: UIStackView!
-    weak var delegate: MXKCellRenderingDelegate!
-    @objc var bubbleData: MXKRoomBubbleCellData!
-    static func nib() -> UINib! {
+    
+    var cellData: MXKRoomBubbleCellData!
+    @objc override var bubbleData: MXKRoomBubbleCellData! {
+        return cellData
+    }
+    @objc override var mxkCellData: MXKCellData! {
+        return bubbleData
+    }
+    override static func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }
     
@@ -37,23 +43,50 @@ class RoomMessageContentCell: UITableViewCell, MXKCellRendering {
         }
     }
     
-    func render(_ cellData: MXKCellData!) {
+    override func render(_ cellData: MXKCellData!) {
         guard let roomBubbleData = cellData as? MXKRoomBubbleCellData else { return }
-        bubbleData = roomBubbleData
+        self.cellData = roomBubbleData
         guard !roomBubbleData.hasNoDisplay else { return }
         let theme = ThemeService.shared().theme
         applyTheme(TheTheme: theme)
-        guard let contentView = getMessageContentView(forBubbleData: roomBubbleData) else { return }
-        contentView.delegate = self
-        contentView.render(roomBubbleData)
-        contentView.applyStyle(theme)
-        MessageContentView.backgroundColor = .none
-        MessageContentView.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        MessageContentView.addConstraints([
-            NSLayoutConstraint(item: contentView, attribute: .left, relatedBy: .equal, toItem: MessageContentView, attribute: .left, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: contentView, attribute: .right, relatedBy: .lessThanOrEqual, toItem: MessageContentView, attribute: .right, multiplier: 1.0, constant: 0.0)
-        ])
+        
+        var successfullyCreatedBubbles = false
+        if roomBubbleData.bubbleComponents.count > 1 {
+            for component in roomBubbleData.bubbleComponents {
+                guard let contentView = getMessageContentView(forBubbleData: roomBubbleData) else { successfullyCreatedBubbles = false; break }
+                guard let renderer = contentView as? RendersBubbleComponent else { successfullyCreatedBubbles = false; break }
+                contentView.delegate = self
+                renderer.render(component: component)
+                contentView.applyStyle(theme)
+                MessageContentView.backgroundColor = .none
+                MessageContentView.addSubview(contentView)
+                contentView.translatesAutoresizingMaskIntoConstraints = false
+                MessageContentView.addConstraints([
+                    NSLayoutConstraint(item: contentView, attribute: .left, relatedBy: .equal, toItem: MessageContentView, attribute: .left, multiplier: 1.0, constant: 0.0),
+                    NSLayoutConstraint(item: contentView, attribute: .right, relatedBy: .lessThanOrEqual, toItem: MessageContentView, attribute: .right, multiplier: 1.0, constant: 0.0)
+                ])
+            }
+            successfullyCreatedBubbles = true
+        }
+        
+        //for component in bubbleData.bubbleComponents {
+        if !successfullyCreatedBubbles {
+            guard let contentView = getMessageContentView(forBubbleData: roomBubbleData) else { return }
+            contentView.delegate = self
+            contentView.render(roomBubbleData)
+            contentView.applyStyle(theme)
+            MessageContentView.backgroundColor = .none
+            MessageContentView.addSubview(contentView)
+            contentView.translatesAutoresizingMaskIntoConstraints = false
+            MessageContentView.addConstraints([
+                NSLayoutConstraint(item: contentView, attribute: .left, relatedBy: .equal, toItem: MessageContentView, attribute: .left, multiplier: 1.0, constant: 0.0),
+                NSLayoutConstraint(item: contentView, attribute: .right, relatedBy: .lessThanOrEqual, toItem: MessageContentView, attribute: .right, multiplier: 1.0, constant: 0.0)
+            ])
+        }
+        //}
+        
+        self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(onLongPressEvent)))
+        
         Sender.text = roomBubbleData.senderDisplayName
         SenderAvatar.enableInMemoryCache = true
         SenderAvatar.setImageURI(roomBubbleData.senderAvatarUrl,
@@ -69,6 +102,13 @@ class RoomMessageContentCell: UITableViewCell, MXKCellRendering {
             SenderAvatar.addConstraint(SenderAvatar.heightAnchor.constraint(equalToConstant: 0))
             Sender.addConstraint(Sender.heightAnchor.constraint(equalToConstant: 0))
         }
+    }
+    
+    func getComponentContentView(forBubbleComponent data: MXKRoomBubbleComponent) -> MessageContentView! {
+        if data.attributedTextMessage != nil {
+            return MessageTextView()
+        }
+        return nil
     }
     
     func getMessageContentView(forBubbleData data: MXKRoomBubbleCellData) -> MessageContentView! { //implicitly unwrapped because it's messy to put everything in guard/if lets
@@ -91,7 +131,11 @@ class RoomMessageContentCell: UITableViewCell, MXKCellRendering {
         Sender.textColor = theme.textPrimaryColor
     }
     
-    static func height(for cellData: MXKCellData!, withMaximumWidth maxWidth: CGFloat) -> CGFloat {
+    @IBAction private func onLongPressEvent() {
+        delegate.cell(self, didRecognizeAction: kMXKRoomBubbleCellLongPressOnEvent, userInfo: nil)
+    }
+    
+    override static func height(for cellData: MXKCellData!, withMaximumWidth maxWidth: CGFloat) -> CGFloat {
         guard let realData = cellData as? MXKRoomBubbleCellData else { return 0 }
         guard !realData.hasNoDisplay else { return 0 }
         if realData.attachment != nil {

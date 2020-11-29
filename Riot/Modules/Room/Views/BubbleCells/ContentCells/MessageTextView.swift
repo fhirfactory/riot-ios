@@ -16,13 +16,23 @@
 
 import Foundation
 
-class MessageTextView: MessageContentView {
+class MessageTextView: MessageContentView, RendersBubbleComponent {
+    func render(component bubbleComponent: MXKRoomBubbleComponent) {
+        //TextContent.attributedTextMessage = bubbleComponent.attributedTextMessage
+        TextContent.attributedText = bubbleComponent.attributedTextMessage
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return TextContent.intrinsicContentSize
+    }
+    
     @IBOutlet weak var TextContent: UILabel!
+    
     override class func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }
     override internal func renderData(_ celldata: MXKRoomBubbleCellData) {
-        TextContent.text = celldata.attributedTextMessage.string
+        TextContent.attributedText = celldata.attributedTextMessage
     }
     override func applyTheStyle(_ theme: Theme) {
         TextContent.textColor = theme.textPrimaryColor

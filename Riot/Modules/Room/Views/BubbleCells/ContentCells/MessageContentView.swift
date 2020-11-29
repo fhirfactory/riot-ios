@@ -19,16 +19,24 @@ import Foundation
 class MessageContentView: UIView {
     private var queuedRender: MXKRoomBubbleCellData? //obviously not an actual queue
     private var viewHasLoaded: Bool = false
+    var delegate: RoomMessageContentCell!
     class func nib() -> UINib! {
         preconditionFailure("nib method must be overridden")
     }
+    
     final func render(_ celldata: MXKRoomBubbleCellData) {
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onLongPress)))
         if viewHasLoaded {
             renderData(celldata)
         } else {
             queuedRender = celldata
         }
     }
+    
+    @IBAction private func onLongPress(){
+        
+    }
+    
     internal func renderData(_ celldata: MXKRoomBubbleCellData) {
         preconditionFailure("Override in inherriting class")
     }
@@ -43,7 +51,7 @@ class MessageContentView: UIView {
     internal func applyTheStyle(_ theme: Theme) {
         preconditionFailure("Override in inherriting class")
     }
-    var delegate: RoomMessageContentCell!
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

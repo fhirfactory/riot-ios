@@ -25,7 +25,7 @@
                             <constraint firstAttribute="height" priority="998" constant="33" id="3Rf-jm-Yqg"/>
                         </constraints>
                     </view>
-                    <stackView contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dUP-jZ-rlA">
+                    <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dUP-jZ-rlA">
                         <rect key="frame" x="51" y="24" width="362" height="9"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                     </stackView>

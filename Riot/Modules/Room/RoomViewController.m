@@ -1891,7 +1891,9 @@
 
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
-    return RoomMessageContentCell.class;
+    if (debugEnableNewRoomRendering){
+        return RoomMessageContentCell.class;
+    }
     Class cellViewClass = nil;
     BOOL showEncryptionBadge = NO;
     
@@ -5547,9 +5549,14 @@
     }];
 }
 
+
+BOOL debugEnableNewRoomRendering = TRUE;
+
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
-    
-    return @"RoomMessageContentCell";//[super cellReuseIdentifierForCellData:cellData];
+    if (debugEnableNewRoomRendering){
+        return @"RoomMessageContentCell";
+    }
+    return [super cellReuseIdentifierForCellData:cellData];
 }
 
 - (void)reactionsMenuViewModelDidTapMoreReactions:(ReactionsMenuViewModel *)viewModel forEventId:(NSString *)eventId

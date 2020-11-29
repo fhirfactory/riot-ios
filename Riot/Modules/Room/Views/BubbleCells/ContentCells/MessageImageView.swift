@@ -30,7 +30,14 @@ class MessageImageView: MessageContentView {
         backgroundColor = .cyan
     }
     @IBAction func imageClicked() {
-        delegate.delegate.cell(delegate, didRecognizeAction: kMXKRoomBubbleCellTapOnAttachmentView, userInfo: nil)
+        let d = delegate
+        let dd = d?.delegate
+        if let ddd = dd as? MXKRoomDataSource {
+            if let dddd = ddd.delegate as? MXKRoomViewController {
+                dddd.showAttachment(in: d)
+            }
+        }
+        //delegate.delegate.cell(delegate, didRecognizeAction: kMXKRoomBubbleCellTapOnAttachmentView, userInfo: nil)
     }
     override func applyTheStyle(_ theme: Theme) {
         self.backgroundColor = .none

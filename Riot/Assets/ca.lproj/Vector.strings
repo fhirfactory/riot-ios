@@ -126,6 +126,7 @@
 "room_recents_chats_section" = "CHATS";
 "room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
 "room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 // Pull down menu items
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
@@ -228,6 +229,9 @@
 "room_resend_unsent_messages" = "Reenviar missatges no enviats";
 "room_delete_unsent_messages" = "Esborrar missatges no enviats";
 "room_event_action_copy" = "Copiar";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_quote" = "Cita";
 "room_event_action_redact" = "Eliminar";
 "room_event_action_more" = "Més";
@@ -288,6 +292,8 @@
 "settings_devices" = "Dispositius";
 "settings_cryptography" = "Criptografia";
 "settings_sign_out" = "Tancar sessió";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Estàs segur?";
 "settings_sign_out_e2e_warn" = "Perdràs les teves claus de xifratge punt a punt. Això significa que ja no podràs llegir missatges antics en sales codificades d'aquest dispositiu.";
 "settings_profile_picture" = "Imatge del perfil";

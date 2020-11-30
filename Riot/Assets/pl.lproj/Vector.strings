@@ -231,6 +231,8 @@
 "settings_cryptography" = "KRYPTOGRAFIA";
 "settings_deactivate_account" = "DEZAKTYWUJ KONTO";
 "settings_sign_out" = "Wyloguj się";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_profile_picture" = "Obraz profilowy";
 "settings_display_name" = "Wyświetlana nazwa";
 "settings_remove_prompt_title" = "Potwierdzenie";
@@ -507,9 +509,13 @@
 "room_unsent_messages_unknown_devices_notification" = "Wiadomość nie została wysłana z powodu obecności nieznanych urządzeń. %@ lub %@@ teraz?";
 "room_event_action_ban_prompt_reason" = "Powód, dla którego zbanowano tego użytkownika";
 "room_event_action_reply" = "Odpowiedz";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Edytuj";
 "room_action_reply" = "Odpowiedz";
 "room_preview_try_join_an_unknown_room" = "Próbujesz uzyskać dostęp do %@. Czy chciałbyś się przyłączyć, aby wziąć udział w dyskusji?";
+"room_photo_changed" = "%@ changed the room photo.";
 "account_logout_all" = "Wyloguj wszystkie konta";
 "settings_flair" = "Pokazuj wyznacznik społeczności gdzie jest to zezwolone";
 "settings_key_backup" = "KOPIA ZAPASOWA KLUCZY";

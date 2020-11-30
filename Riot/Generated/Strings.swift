@@ -1110,7 +1110,7 @@ internal enum VectorL10n {
   internal static var e2eKeyBackupWrongVersionTitle: String { 
     return VectorL10n.tr("Vector", "e2e_key_backup_wrong_version_title") 
   }
-  /// You need to log back in to generate end-to-end encryption keys for this session and submit the public key to your homeserver.\nThis is a once off; sorry for the inconvenience.
+  /// An error has occured, which meant you needed to be logged out.\nThis is a once off; sorry for the inconvenience.
   internal static var e2eNeedLogInAgain: String { 
     return VectorL10n.tr("Vector", "e2e_need_log_in_again") 
   }
@@ -2586,6 +2586,18 @@ internal enum VectorL10n {
   internal static var roomEventActionEdit: String { 
     return VectorL10n.tr("Vector", "room_event_action_edit") 
   }
+  /// Forward
+  internal static var roomEventActionForward: String { 
+    return VectorL10n.tr("Vector", "room_event_action_forward") 
+  }
+  /// Cannot forward a message to the room that sent it
+  internal static var roomEventActionForwardSameRoomErrorDescription: String { 
+    return VectorL10n.tr("Vector", "room_event_action_forward_same_room_error_description") 
+  }
+  /// Error
+  internal static var roomEventActionForwardSameRoomErrorTitle: String { 
+    return VectorL10n.tr("Vector", "room_event_action_forward_same_room_error_title") 
+  }
   /// Reason for kicking this user
   internal static var roomEventActionKickPromptReason: String { 
     return VectorL10n.tr("Vector", "room_event_action_kick_prompt_reason") 
@@ -2969,6 +2981,10 @@ internal enum VectorL10n {
   /// Unknown
   internal static var roomParticipantsUnknown: String { 
     return VectorL10n.tr("Vector", "room_participants_unknown") 
+  }
+  /// %@ changed the room photo.
+  internal static func roomPhotoChanged(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "room_photo_changed", p1)
   }
   /// %@ has changed Room Rights of %@ from %@ to %@
   internal static func roomPowerLevelChangedDown(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
@@ -4042,6 +4058,10 @@ internal enum VectorL10n {
   internal static var settingsReportBug: String { 
     return VectorL10n.tr("Vector", "settings_report_bug") 
   }
+  /// Roles
+  internal static var settingsRoles: String { 
+    return VectorL10n.tr("Vector", "settings_roles") 
+  }
   /// SECURITY
   internal static var settingsSecurity: String { 
     return VectorL10n.tr("Vector", "settings_security") 
@@ -4049,6 +4069,10 @@ internal enum VectorL10n {
   /// Send anon crash & usage data
   internal static var settingsSendCrashReport: String { 
     return VectorL10n.tr("Vector", "settings_send_crash_report") 
+  }
+  /// Settings
+  internal static var settingsSettings: String { 
+    return VectorL10n.tr("Vector", "settings_settings") 
   }
   /// Show decrypted content
   internal static var settingsShowDecryptedContent: String { 

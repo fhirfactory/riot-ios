@@ -41,6 +41,8 @@ class LingoTheme: NSObject, Theme {
 
     var textPrimaryColor: UIColor = UIColor(rgbHex: 0x171910)
     var textSecondaryColor: UIColor = UIColor(rgbHex: 0x8F97A3)
+    
+    var sideMenuProfileBackground: UIColor = UIColor(rgbHex: 0xe9f0ff)
 
     var tintColor: UIColor = UIColor(rgbHex: 0x022677)
     var tintBackgroundColor: UIColor = UIColor(rgbHex: 0xe9f0ff)

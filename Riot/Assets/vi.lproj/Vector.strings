@@ -224,6 +224,9 @@
 "room_resend_unsent_messages" = "Gửi lại các tin nhắn chưa được gửi";
 "room_delete_unsent_messages" = "Xoá các tin nhắn chưa được gửi";
 "room_event_action_copy" = "Sao chép";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_quote" = "Trích dẫn";
 "room_event_action_redact" = "Biên tập lại";
 "room_event_action_more" = "Thêm";
@@ -241,6 +244,7 @@
 "room_event_action_view_encryption" = "Thông tin mã hoá";
 "room_warning_about_encryption" = "Mã hoá đầu-cuối đang trong giai đoạn thử nghiệm và có thể không đáng tin cậy.\n\nBạn có thể không nên tin tưởng hoàn toàn vào sự bảo mật dữ liệu này.\n\nCác thiết bị có thể không giải mã lịch sử từ trước khi họ tham gia vào phòng.\n\nCác tin nhắn được mã hoá sẽ không hiển thị trên các máy khách chưa tích hợp mã hoá.";
 "room_event_failed_to_send" = "Gửi thất bại";
+"room_photo_changed" = "%@ changed the room photo.";
 // Unknown devices
 "unknown_devices_alert_title" = "Phòng chứa các thiết bị không xác định";
 "unknown_devices_alert" = "Phòng này có các thiết bị không xác định chưa được xác minh.\nĐiều này có nghĩa là không có đảm bảo rằng thiết bị thuộc về người dùng mà họ yêu cầu.\nChúng tôi khuyên bạn nên đi qua quá trình xác minh cho từng thiết bị trước khi tiếp tục, nhưng bạn có thể gửi lại tin nhắn mà không cần xác nhận nếu bạn muốn.";
@@ -283,6 +287,8 @@
 "settings_devices" = "THIẾT BỊ";
 "settings_cryptography" = "MÃ HOÁ";
 "settings_sign_out" = "Đăng xuất";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Bạn có chắc chắn?";
 "settings_sign_out_e2e_warn" = "Bạn sẽ mất end-to-end khoá bảo mật. Điều đó có nghĩa rằng bạn sẽ không thể đọc các tin nhắn trước đó đã được mã hoá trong phòng bởi thiết bị này.";
 "settings_profile_picture" = "Hình ảnh hồ sơ";

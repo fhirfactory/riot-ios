@@ -242,6 +242,9 @@
 "room_delete_unsent_messages" = "Eliminar mensajes no enviados";
 "room_event_action_copy" = "Copiar";
 "room_event_action_quote" = "Citar";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_redact" = "Quitar";
 "room_event_action_more" = "Más";
 "room_event_action_share" = "Compartir";
@@ -259,6 +262,7 @@
 "room_event_action_cancel_send" = "Cancelar Envío";
 "room_event_action_cancel_download" = "Cancelar Descarga";
 "room_event_action_view_encryption" = "Información de Cifrado";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_warning_about_encryption" = "El cifrado de extremo a extremo está en beta y puede no ser confiable.\n\nAún no deberías confiar en él para proteger tus datos.\n\nLos dispositivos todavía no podrán descifrar el historial desde antes de unirse a la sala.\n\nLos mensajes cifrados no serán visibles en clientes que aún no implementen el cifrado.";
 "room_event_failed_to_send" = "Falló el envío";
 "room_action_send_photo_or_video" = "Enviar fotografía o vídeo";
@@ -314,6 +318,8 @@
 "settings_cryptography" = "CRIPTOGRAFÍA";
 "settings_deactivate_account" = "DESACTIVAR CUENTA";
 "settings_sign_out" = "Cerrar Sesión";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "¿Estás seguro?";
 "settings_sign_out_e2e_warn" = "Perderás tus claves de cifrado de extremo a extremo. Esto significa que no podrás leer mensajes antiguos en salas cifradas desde este dispositivo.";
 "settings_profile_picture" = "Imagen de Perfil";

@@ -278,6 +278,9 @@
 "room_event_action_cancel_download" = "Canslo lawrlwytho";
 "room_event_action_view_encryption" = "Gwybodaeth Amgryptio";
 "room_event_action_reply" = "Ateb";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Golygu";
 "room_event_action_reaction_show_all" = "Dangos popeth";
 "room_event_action_reaction_show_less" = "Dangos llai";
@@ -306,6 +309,7 @@
 "room_accessibility_upload" = "Uwchlwytho";
 "room_accessibility_call" = "Galw";
 "room_accessibility_hangup" = "Dod i ben";
+"room_photo_changed" = "%@ changed the room photo.";
 "media_type_accessibility_image" = "Delwedd";
 "media_type_accessibility_audio" = "Sain";
 "media_type_accessibility_video" = "Fideo";
@@ -360,6 +364,8 @@
 "settings_key_backup" = "ALLWEDDI WRTH GEFN";
 "settings_deactivate_account" = "DAD-ACTIFADU CYFRIF";
 "settings_sign_out" = "All-gofnodi";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ydych chi'n siwr?";
 "settings_sign_out_e2e_warn" = "Byddwch chi'n colli'ch allweddi amgryptio o'r dechrau i'r diwedd. Mae hynny'n golygu na fyddwch yn gallu darllen hen negeseuon mewn ystafelloedd wedi'u hamgryptio ar y ddyfais hon mwyach.";
 "settings_profile_picture" = "Llun Proffil";

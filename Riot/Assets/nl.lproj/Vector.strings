@@ -279,6 +279,8 @@
 "settings_devices" = "APPARATEN";
 "settings_cryptography" = "CRYPTOGRAFIE";
 "settings_sign_out" = "Afmelden";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Weet u het zeker?";
 "settings_sign_out_e2e_warn" = "U zult uw sleutels voor eind-tot-eind-versleuteling kwijtraken. Dat betekent dat u op dit apparaat geen oude berichten in versleutelde gesprekken meer zult kunnen lezen.";
 "settings_profile_picture" = "Profielfoto";
@@ -695,11 +697,15 @@
 "sign_out_key_backup_in_progress_alert_discard_key_backup_action" = "Ik wil mijn versleutelde berichten niet";
 "sign_out_key_backup_in_progress_alert_cancel_action" = "Ik wacht wel";
 "room_event_action_reply" = "Beantwoorden";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Bewerken";
 "room_event_action_reaction_agree" = "Akkoord met %@";
 "room_event_action_reaction_disagree" = "Niet akkoord met %@";
 "room_event_action_reaction_like" = "Duim omhoog voor %@";
 "room_event_action_reaction_dislike" = "Duim omlaag voor %@";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_action_reply" = "Beantwoorden";
 "settings_labs_message_reaction" = "Beantwoord berichten met emoticons";
 "settings_key_backup_button_connect" = "Dit apparaat verbinden met sleutelback-up";

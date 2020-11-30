@@ -255,6 +255,8 @@
 "settings_devices" = "СЕАНСЫ";
 "settings_cryptography" = "КРИПТОГРАФИЯ";
 "settings_sign_out" = "Выход";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Уверены?";
 "settings_profile_picture" = "Изображение профиля";
 "settings_display_name" = "Отображаемое имя";
@@ -686,11 +688,15 @@
 "room_message_unable_open_link_error_message" = "Невозможно открыть ссылку.";
 "auth_autodiscover_invalid_response" = "Неверный ответ обнаружения сервера";
 "room_event_action_reply" = "Ответ";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Редактировать";
 "room_event_action_reaction_agree" = "%@ согласен";
 "room_event_action_reaction_disagree" = "%@ несогласен";
 "room_event_action_reaction_like" = "%@ согласен";
 "room_event_action_reaction_dislike" = "%@ не согласны";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_action_reply" = "Ответ";
 "settings_labs_message_reaction" = "Реагировать на сообщения с Emoji";
 "settings_key_backup_button_connect" = "Подключите этот сеанс к резервному копированию ключей";

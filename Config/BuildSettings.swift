@@ -77,7 +77,7 @@ final class BuildSettings: NSObject {
     // MARK: - Server configuration
     
     // Default servers proposed on the authentication screen
-    static let serverConfigDefaultHomeserverUrlString = "https://matrix.org"
+    static let serverConfigDefaultHomeserverUrlString = "http://110.33.26.21:8008"
     static let serverConfigDefaultIdentityServerUrlString = "https://vector.im"
     
     static let serverConfigSygnalAPIUrlString = "https://matrix.org/_matrix/push/v1/notify"
@@ -213,6 +213,7 @@ final class BuildSettings: NSObject {
     // MARK: - General Settings Defaults Overrides
     /// Override values that are used to control the value of settings that are hidden from users
     static let sharingFeaturesEnabled: Bool = false
+    static let sharingFeaturesAllowGalleryAvatars: Bool = true
     
     /// Leave this as an empty string value to allow user theme selection
     static let settingsScreenOverrideDefaultThemeSelection : NSString = "lingo"

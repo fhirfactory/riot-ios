@@ -288,6 +288,8 @@
 "settings_devices" = "СЕСИИ";
 "settings_cryptography" = "КРИПТОГРАФИЯ";
 "settings_sign_out" = "Изход";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Сигурни ли сте?";
 "settings_sign_out_e2e_warn" = "Ще изгубите ключовете си за шифроване от край до край. Това означава, че на това устройство повече няма да можете да четете стари съобщения в шифровани стаи.";
 "settings_profile_picture" = "Профилна снимка";
@@ -683,6 +685,9 @@
 "auth_autodiscover_invalid_response" = "Невалиден отговор при опит за откриване на адреса на сървъра";
 "room_message_unable_open_link_error_message" = "Неуспешно отваряне на връзката.";
 "room_event_action_reply" = "Отговори";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Редактирай";
 "auth_login_single_sign_on" = "Влез със SSO";
 "room_event_action_reaction_agree" = "Съгласи се с %@";
@@ -690,6 +695,7 @@
 "room_event_action_reaction_like" = "Харесай %@";
 "room_event_action_reaction_dislike" = "Не харесай %@";
 "room_action_reply" = "Отговори";
+"room_photo_changed" = "%@ changed the room photo.";
 "settings_labs_message_reaction" = "Реагирай на съобщения с емоджи";
 "settings_key_backup_button_connect" = "Свържи сесията към резервно копие на ключове";
 "key_backup_setup_intro_setup_connect_action_with_existing_backup" = "Свържи устройството към резервно копие на ключове";

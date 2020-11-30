@@ -335,6 +335,8 @@
 "settings_labs" = "LABORATEGIA";
 "settings_cryptography" = "KRIPTOGRAFIA";
 "settings_sign_out" = "Amaitu saioa";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ziur zaude?";
 "settings_first_name" = "Izena";
 "settings_surname" = "Abizena";
@@ -672,6 +674,9 @@
 "auth_autodiscover_invalid_response" = "Erantzun baliogabea hasiera-zerbitzarien bilaketari";
 "room_message_unable_open_link_error_message" = "Ezin izan da esteka ireki.";
 "room_event_action_reply" = "Erantzun";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_edit" = "Editatu";
 "room_event_action_reaction_agree" = "Ados  %@";
 "room_event_action_reaction_disagree" = "Ez ados %@";
@@ -1031,9 +1036,9 @@
 "room_member_power_level_short_moderator" = "Moderatzailea";
 "room_member_power_level_short_custom" = "Pertsonalizatua";
 "room_member_power_level_short_user" = "User";
-
 "room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
 "room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 // Recover from private key
 "key_backup_recover_from_private_key_info" = "Babes-kopia berrezartzen…";
 "device_verification_self_verify_wait_title" = "Segurtasun osoa";

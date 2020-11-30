@@ -9,3 +9,7 @@
 "role_title" = "Role";
 "people_title" = "People";
 "directory_title" = "Directory";
+
+"designation_title" = "Designation";
+"photographer_name" = "Photographer Name";
+"designation_select" = "Select a Designation";

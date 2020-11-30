@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PhotographerDetails" rowHeight="136" id="h4B-KK-BAD" customClass="PhotographerDetails" customModule="Riot" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="136"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="h4B-KK-BAD" id="HC0-2X-rcP">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="136"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photographer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIR-br-HrD">
+                        <rect key="frame" x="20" y="9" width="113" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some Photographer Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTr-L7-RH9">
+                        <rect key="frame" x="20" y="38" width="202" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ard-Fi-AMi">
+                        <rect key="frame" x="20" y="102" width="374" height="22"/>
+                        <state key="normal" title="Select Designation" image="chevron.down" catalog="system">
+                            <color key="titleColor" systemColor="linkColor"/>
+                        </state>
+                        <connections>
+                            <action selector="DesignationSelectorClicked:" destination="h4B-KK-BAD" eventType="touchUpInside" id="SNF-Pc-jWS"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Designation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9p3-8V-ebW">
+                        <rect key="frame" x="20" y="67" width="98" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ard-Fi-AMi" secondAttribute="trailing" constant="20" symbolic="YES" id="7YK-rG-mrA"/>
+                    <constraint firstAttribute="bottom" secondItem="ard-Fi-AMi" secondAttribute="bottom" constant="12" id="8MZ-3b-f1b"/>
+                    <constraint firstItem="dIR-br-HrD" firstAttribute="leading" secondItem="HC0-2X-rcP" secondAttribute="leading" constant="20" symbolic="YES" id="DUe-yC-oBt"/>
+                    <constraint firstItem="ard-Fi-AMi" firstAttribute="leading" secondItem="9p3-8V-ebW" secondAttribute="leading" id="Kw2-wq-URF"/>
+                    <constraint firstItem="dIR-br-HrD" firstAttribute="top" secondItem="HC0-2X-rcP" secondAttribute="top" constant="9" id="N8N-Ef-ZCi"/>
+                    <constraint firstItem="9p3-8V-ebW" firstAttribute="leading" secondItem="mTr-L7-RH9" secondAttribute="leading" id="UgE-Ex-xZA"/>
+                    <constraint firstItem="ard-Fi-AMi" firstAttribute="top" secondItem="9p3-8V-ebW" secondAttribute="bottom" constant="14" id="p4e-qT-uyj"/>
+                    <constraint firstItem="mTr-L7-RH9" firstAttribute="top" secondItem="dIR-br-HrD" secondAttribute="bottom" constant="8" symbolic="YES" id="pMn-f7-jo3"/>
+                    <constraint firstItem="mTr-L7-RH9" firstAttribute="leading" secondItem="dIR-br-HrD" secondAttribute="leading" id="qwD-m8-ZsO"/>
+                    <constraint firstItem="9p3-8V-ebW" firstAttribute="top" secondItem="mTr-L7-RH9" secondAttribute="bottom" constant="8" symbolic="YES" id="zPO-Pl-Ikb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <accessibility key="accessibilityConfiguration" identifier="PhotographerDetails"/>
+            <connections>
+                <outlet property="DesignationSelector" destination="ard-Fi-AMi" id="viN-GI-KaW"/>
+                <outlet property="DesignationTitle" destination="9p3-8V-ebW" id="FwA-IP-9Ee"/>
+                <outlet property="PhotographerName" destination="mTr-L7-RH9" id="Nyy-L0-ujz"/>
+                <outlet property="PhotographerTitle" destination="dIR-br-HrD" id="C2R-8J-TvE"/>
+            </connections>
+            <point key="canvasLocation" x="105.79710144927537" y="103.125"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

@@ -212,7 +212,7 @@ final class BuildSettings: NSObject {
     
     // MARK: - General Settings Defaults Overrides
     /// Override values that are used to control the value of settings that are hidden from users
-    static let sharingFeaturesEnabled: Bool = false
+    static let sharingFeaturesEnabled: Bool = true
     static let sharingFeaturesAllowGalleryAvatars: Bool = true
     
     /// Leave this as an empty string value to allow user theme selection

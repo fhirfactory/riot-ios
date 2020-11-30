@@ -658,6 +658,10 @@ internal enum VectorL10n {
   internal static var decline: String { 
     return VectorL10n.tr("Vector", "decline") 
   }
+  /// Select a Designation
+  internal static var designationSelect: String { 
+    return VectorL10n.tr("Vector", "designation_select") 
+  }
   /// The other party cancelled the verification.
   internal static var deviceVerificationCancelled: String { 
     return VectorL10n.tr("Vector", "device_verification_cancelled") 
@@ -1446,6 +1450,14 @@ internal enum VectorL10n {
   internal static var identityServerSettingsTitle: String { 
     return VectorL10n.tr("Vector", "identity_server_settings_title") 
   }
+  /// Description
+  internal static var imageDescriptionName: String { 
+    return VectorL10n.tr("Vector", "image_description_name") 
+  }
+  /// Provide an image description
+  internal static var imageDescriptionPlaceholder: String { 
+    return VectorL10n.tr("Vector", "image_description_placeholder") 
+  }
   /// Take photo
   internal static var imagePickerActionCamera: String { 
     return VectorL10n.tr("Vector", "image_picker_action_camera") 
@@ -1966,25 +1978,25 @@ internal enum VectorL10n {
   internal static var mediaPickerTitle: String { 
     return VectorL10n.tr("Vector", "media_picker_title") 
   }
-  /// Consent must be obtained before capturing patient photos and videos
-  internal static var mediaTagConsentWarning: String { 
-    return VectorL10n.tr("Vector", "media_tag_consent_warning") 
+  /// Please ensure CHS policy is followed when documenting patient consent
+  internal static var mediaTagPolicy: String { 
+    return VectorL10n.tr("Vector", "media_tag_policy") 
   }
-  /// Save Non-Patient Media
+  /// Save
   internal static var mediaTagSaveNonPatientMedia: String { 
     return VectorL10n.tr("Vector", "media_tag_save_non_patient_media") 
   }
-  /// Save Patient Media
+  /// Save
   internal static var mediaTagSavePatientMedia: String { 
     return VectorL10n.tr("Vector", "media_tag_save_patient_media") 
-  }
-  /// Tag Patient Media Immediately
-  internal static var mediaTagSubheading: String { 
-    return VectorL10n.tr("Vector", "media_tag_subheading") 
   }
   /// Tag Patient
   internal static var mediaTagTitle: String { 
     return VectorL10n.tr("Vector", "media_tag_title") 
+  }
+  /// Are you sure you want to save without tagging a patient?
+  internal static var mediaTagUntaggedAlertDescription: String { 
+    return VectorL10n.tr("Vector", "media_tag_untagged_alert_description") 
   }
   /// Audio
   internal static var mediaTypeAccessibilityAudio: String { 
@@ -2021,6 +2033,10 @@ internal enum VectorL10n {
   /// Next
   internal static var next: String { 
     return VectorL10n.tr("Vector", "next") 
+  }
+  /// No
+  internal static var no: String { 
+    return VectorL10n.tr("Vector", "no") 
   }
   /// %@ is calling you but %@ does not support calls yet.\nYou can ignore this notification and answer the call from another device or you can reject it.
   internal static func noVoip(_ p1: String, _ p2: String) -> String {
@@ -4489,6 +4505,10 @@ internal enum VectorL10n {
   /// Add some now?
   internal static var widgetStickerPickerNoStickerpacksAlertAddNow: String { 
     return VectorL10n.tr("Vector", "widget_sticker_picker_no_stickerpacks_alert_add_now") 
+  }
+  /// Yes
+  internal static var yes: String { 
+    return VectorL10n.tr("Vector", "yes") 
   }
   /// Yesterday
   internal static var yesterday: String { 

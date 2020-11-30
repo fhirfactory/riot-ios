@@ -787,10 +787,7 @@
 		EB2D1F2F2545754700FB80E0 /* AlternateCreationHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */; };
 		EB4280B1255FE9A700B9BBBF /* PatientTaggingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4280B0255FE9A700B9BBBF /* PatientTaggingViewController.xib */; };
 		EB4280B9255FE9B900B9BBBF /* PatientTaggingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280B8255FE9B900B9BBBF /* PatientTaggingViewController.swift */; };
-		EB4280C1256010C100B9BBBF /* PatientSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280C0256010C100B9BBBF /* PatientSearchViewController.swift */; };
 		EB4280C92560110E00B9BBBF /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280C82560110E00B9BBBF /* PatientModel.swift */; };
-		EB4280D12560129A00B9BBBF /* PatientSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4280D02560129A00B9BBBF /* PatientSelectionViewController.xib */; };
-		EB4280D9256012AD00B9BBBF /* PatientSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280D8256012AD00B9BBBF /* PatientSelectionViewController.swift */; };
 		EB4280E1256015CF00B9BBBF /* PatientViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */; };
 		EB4280E92560C5DD00B9BBBF /* PatientViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */; };
 		EB4A116F252D7F1E00E98120 /* AlternateInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */; };
@@ -809,6 +806,7 @@
 		EB76BE452574DFE40013EABE /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE442574DFE40013EABE /* TagData.swift */; };
 		EB982B82256D2453004723C9 /* MessageImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB982B81256D2453004723C9 /* MessageImageView.swift */; };
 		EB982B8A256D246A004723C9 /* MessageImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB982B89256D246A004723C9 /* MessageImageView.xib */; };
+		EB98299A256B820F004723C9 /* PatientTaggingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */; };
 		EBA8AB1F25515D5F00FA8383 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */; };
 		EBA8AB2725515DDA00FA8383 /* HomeTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */; };
 		EBAAF566256249AC0080A268 /* AsyncQueryableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */; };
@@ -823,6 +821,20 @@
 		EBAC79BE2543FA5700A0B1BF /* SelectableFilteredSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */; };
 		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
+		EBE274B82569E681003BC7C1 /* PhotographerDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE274B72569E681003BC7C1 /* PhotographerDetails.xib */; };
+		EBE274C02569E880003BC7C1 /* PhotographerDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274BF2569E880003BC7C1 /* PhotographerDetails.swift */; };
+		EBE274C82569ED4F003BC7C1 /* ImageDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE274C72569ED4F003BC7C1 /* ImageDescriptionCell.xib */; };
+		EBE274D02569ED5D003BC7C1 /* ImageDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274CF2569ED5D003BC7C1 /* ImageDescriptionCell.swift */; };
+		EBE274D82569EE2B003BC7C1 /* ThemeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274D72569EE2B003BC7C1 /* ThemeHelpers.swift */; };
+		EBE274E02569FFFD003BC7C1 /* RoleQueryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274DF2569FFFD003BC7C1 /* RoleQueryService.swift */; };
+		EBE274E8256A00A4003BC7C1 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274E7256A00A4003BC7C1 /* Role.swift */; };
+		EBE274F0256A4309003BC7C1 /* FilteredSearchPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE274EF256A4309003BC7C1 /* FilteredSearchPopoverViewController.xib */; };
+		EBE274F8256A4317003BC7C1 /* FilteredSearchPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274F7256A4317003BC7C1 /* FilteredSearchPopoverViewController.swift */; };
+		EBE27500256A4506003BC7C1 /* FilteredSearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274FF256A4506003BC7C1 /* FilteredSearchResultsController.swift */; };
+		EBE27508256A4582003BC7C1 /* RendersWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE27507256A4582003BC7C1 /* RendersWith.swift */; };
+		EBE27510256A4850003BC7C1 /* QueryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE2750F256A4850003BC7C1 /* QueryTableViewCell.swift */; };
+		EBE2752A256A5089003BC7C1 /* DesignationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */; };
+		EBE27532256A50A3003BC7C1 /* DesignationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */; };
 		EBECB045255165ED0024EB47 /* TabbedHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */; };
 		EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
@@ -2073,10 +2085,7 @@
 		EB2D1F362545755D00FB80E0 /* AlternateCreationHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateCreationHelpers.h; sourceTree = "<group>"; };
 		EB4280B0255FE9A700B9BBBF /* PatientTaggingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatientTaggingViewController.xib; sourceTree = "<group>"; };
 		EB4280B8255FE9B900B9BBBF /* PatientTaggingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTaggingViewController.swift; sourceTree = "<group>"; };
-		EB4280C0256010C100B9BBBF /* PatientSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientSearchViewController.swift; sourceTree = "<group>"; };
 		EB4280C82560110E00B9BBBF /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
-		EB4280D02560129A00B9BBBF /* PatientSelectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatientSelectionViewController.xib; sourceTree = "<group>"; };
-		EB4280D8256012AD00B9BBBF /* PatientSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientSelectionViewController.swift; sourceTree = "<group>"; };
 		EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatientViewCell.xib; sourceTree = "<group>"; };
 		EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewCell.swift; sourceTree = "<group>"; };
 		EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateInviteViewController.swift; sourceTree = "<group>"; };
@@ -2096,6 +2105,7 @@
 		EB76BE442574DFE40013EABE /* TagData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagData.swift; sourceTree = "<group>"; };
 		EB982B81256D2453004723C9 /* MessageImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageImageView.swift; sourceTree = "<group>"; };
 		EB982B89256D246A004723C9 /* MessageImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageImageView.xib; sourceTree = "<group>"; };
+		EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTaggingViewModel.swift; sourceTree = "<group>"; };
 		EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeTabViewController.xib; sourceTree = "<group>"; };
 		EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncQueryableService.swift; sourceTree = "<group>"; };
@@ -2111,6 +2121,20 @@
 		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewDataSource.swift; sourceTree = "<group>"; };
+		EBE274B72569E681003BC7C1 /* PhotographerDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotographerDetails.xib; sourceTree = "<group>"; };
+		EBE274BF2569E880003BC7C1 /* PhotographerDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotographerDetails.swift; sourceTree = "<group>"; };
+		EBE274C72569ED4F003BC7C1 /* ImageDescriptionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDescriptionCell.xib; sourceTree = "<group>"; };
+		EBE274CF2569ED5D003BC7C1 /* ImageDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDescriptionCell.swift; sourceTree = "<group>"; };
+		EBE274D72569EE2B003BC7C1 /* ThemeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHelpers.swift; sourceTree = "<group>"; };
+		EBE274DF2569FFFD003BC7C1 /* RoleQueryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleQueryService.swift; sourceTree = "<group>"; };
+		EBE274E7256A00A4003BC7C1 /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
+		EBE274EF256A4309003BC7C1 /* FilteredSearchPopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilteredSearchPopoverViewController.xib; sourceTree = "<group>"; };
+		EBE274F7256A4317003BC7C1 /* FilteredSearchPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredSearchPopoverViewController.swift; sourceTree = "<group>"; };
+		EBE274FF256A4506003BC7C1 /* FilteredSearchResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredSearchResultsController.swift; sourceTree = "<group>"; };
+		EBE27507256A4582003BC7C1 /* RendersWith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendersWith.swift; sourceTree = "<group>"; };
+		EBE2750F256A4850003BC7C1 /* QueryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryTableViewCell.swift; sourceTree = "<group>"; };
+		EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DesignationViewCell.xib; sourceTree = "<group>"; };
+		EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignationViewCell.swift; sourceTree = "<group>"; };
 		EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedHomeViewController.swift; sourceTree = "<group>"; };
 		EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabbedHomeViewController.xib; sourceTree = "<group>"; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
@@ -2455,6 +2479,7 @@
 				32242F1121E8FBA900725742 /* ThemeService.h */,
 				32242F0E21E8FBA900725742 /* Themes */,
 				3232ABC1225B996100AD6A5C /* Themable.swift */,
+				EBE274D72569EE2B003BC7C1 /* ThemeHelpers.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -4903,12 +4928,21 @@
 				B183226523F55D6B0035B2E8 /* CameraAccessManager.swift */,
 				EB4280B0255FE9A700B9BBBF /* PatientTaggingViewController.xib */,
 				EB4280B8255FE9B900B9BBBF /* PatientTaggingViewController.swift */,
-				EB4280C0256010C100B9BBBF /* PatientSearchViewController.swift */,
 				EB4280C82560110E00B9BBBF /* PatientModel.swift */,
-				EB4280D02560129A00B9BBBF /* PatientSelectionViewController.xib */,
-				EB4280D8256012AD00B9BBBF /* PatientSelectionViewController.swift */,
 				EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */,
 				EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */,
+				EBE274B72569E681003BC7C1 /* PhotographerDetails.xib */,
+				EBE274BF2569E880003BC7C1 /* PhotographerDetails.swift */,
+				EBE274C72569ED4F003BC7C1 /* ImageDescriptionCell.xib */,
+				EBE274CF2569ED5D003BC7C1 /* ImageDescriptionCell.swift */,
+				EBE274EF256A4309003BC7C1 /* FilteredSearchPopoverViewController.xib */,
+				EBE274F7256A4317003BC7C1 /* FilteredSearchPopoverViewController.swift */,
+				EBE274FF256A4506003BC7C1 /* FilteredSearchResultsController.swift */,
+				EBE27507256A4582003BC7C1 /* RendersWith.swift */,
+				EBE2750F256A4850003BC7C1 /* QueryTableViewCell.swift */,
+				EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */,
+				EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */,
+				EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -5132,6 +5166,8 @@
 				EB76BE342573B5330013EABE /* ImageTagService.swift */,
 				EB76BE3C2573B5810013EABE /* BaseService.swift */,
 				EB76BE442574DFE40013EABE /* TagData.swift */,
+				EBE274DF2569FFFD003BC7C1 /* RoleQueryService.swift */,
+				EBE274E7256A00A4003BC7C1 /* Role.swift */,
 			);
 			path = HealthServices;
 			sourceTree = "<group>";
@@ -6171,6 +6207,7 @@
 				B1B5593720EF7BAC00210D55 /* TableViewCellWithCheckBoxAndLabel.xib in Resources */,
 				B190F55B22CE35FD00AEB493 /* EditHistoryHeaderView.xib in Resources */,
 				EC31F016251B53BC00D407DA /* RoomInfoBasicView.xib in Resources */,
+				EBE2752A256A5089003BC7C1 /* DesignationViewCell.xib in Resources */,
 				EC1CA86524C1DEC400DE9EBF /* EnterPinCodeViewController.storyboard in Resources */,
 				B1B5579020EF568D00210D55 /* GroupTableViewCell.xib in Resources */,
 				B142317B22CCFA2000FFA96A /* EditHistoryCell.xib in Resources */,
@@ -6180,6 +6217,7 @@
 				B1B558F620EF768F00210D55 /* RoomOutgoingTextMsgBubbleCell.xib in Resources */,
 				B1B5574D20EE6C4D00210D55 /* MediaPickerViewController.xib in Resources */,
 				B1B5575020EE6C4D00210D55 /* AuthenticationViewController.xib in Resources */,
+				EBE274C82569ED4F003BC7C1 /* ImageDescriptionCell.xib in Resources */,
 				EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */,
 				43AFC0B824DA5EF600D0EF19 /* PeopleDetailViewController.xib in Resources */,
 				B1C45A85232A8C2600165425 /* SettingsIdentityServerViewController.storyboard in Resources */,
@@ -6206,12 +6244,12 @@
 				B1107ECA2200B09F0038014B /* KeyBackupRecoverSuccessViewController.storyboard in Resources */,
 				B1B9DEF522EB426D0065E677 /* ReactionHistoryViewCell.xib in Resources */,
 				43367F1424D680E100DB17CB /* RoleFilterTableViewCell.xib in Resources */,
-				EB4280D12560129A00B9BBBF /* PatientSelectionViewController.xib in Resources */,
 				B1550FCA2420E8F500CE097B /* QRCodeReaderViewController.storyboard in Resources */,
 				B1B5579C20EF575B00210D55 /* ForgotPasswordInputsView.xib in Resources */,
 				EB16B9FA254562670096C90F /* RoomCreationCollectionViewCell.xib in Resources */,
 				F083BE011E7009ED00A9B29C /* third_party_licenses.html in Resources */,
 				EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */,
+				EBE274B82569E681003BC7C1 /* PhotographerDetails.xib in Resources */,
 				ECFBD5EA250F97FC00DD5F5A /* RoomCreationCollapsedBubbleCell.xib in Resources */,
 				ECF57A89250A687B004BBF9D /* TextViewTableViewCell.xib in Resources */,
 				EB5AE9BB2563CD8000C635CD /* MessageTextView.xib in Resources */,
@@ -6273,6 +6311,7 @@
 				B1B5596520EF9E9B00210D55 /* RoomTableViewCell.xib in Resources */,
 				ECFBD5CD250A7AAF00DD5F5A /* DirectoryRoomTableViewCell.xib in Resources */,
 				B1B557C020EF5B4500210D55 /* RoomInputToolbarView.xib in Resources */,
+				EBE274F0256A4309003BC7C1 /* FilteredSearchPopoverViewController.xib in Resources */,
 				B1B5583D20EF6E7F00210D55 /* GroupRoomTableViewCell.xib in Resources */,
 				ECFBD5F7250FA59B00DD5F5A /* RoomCreationEventsModalViewController.storyboard in Resources */,
 				B1B5572D20EE6C4D00210D55 /* RoomParticipantsViewController.xib in Resources */,
@@ -6672,6 +6711,7 @@
 				ECFBD5FD250FA59B00DD5F5A /* RoomCreationEventsModalViewController.swift in Sources */,
 				B16932A520F3A21C00746532 /* empty.mm in Sources */,
 				3232AB4A2256558300AD6A5C /* FlowTemplateCoordinator.swift in Sources */,
+				EBE27532256A50A3003BC7C1 /* DesignationViewCell.swift in Sources */,
 				ECF57A4825090C23004BBF9D /* EnterNewRoomDetailsCoordinatorType.swift in Sources */,
 				ECFBD5D7250A7AAF00DD5F5A /* RoomsDirectoryCoordinatorBridgePresenter.swift in Sources */,
 				B19EFA3B21F8BB4100FC070E /* KeyBackupRecoverCoordinator.swift in Sources */,
@@ -6922,6 +6962,7 @@
 				EB6B16202534167A00BBDCC6 /* EmailTableViewCell.swift in Sources */,
 				B125FE21231D5E1D00B72806 /* SettingsDiscoveryViewAction.swift in Sources */,
 				B108932323AB908A00802670 /* KeyVerificationRequestStatusViewData.swift in Sources */,
+				EBE274E02569FFFD003BC7C1 /* RoleQueryService.swift in Sources */,
 				B142317A22CCFA2000FFA96A /* EditHistoryCell.swift in Sources */,
 				ECF57A50250913E4004BBF9D /* MXKTableViewCellWithLabelAndSwitch.swift in Sources */,
 				B1DCC62622E60CC600625807 /* EmojiItem.swift in Sources */,
@@ -6944,7 +6985,6 @@
 				B12D7A0123E2462200FACEDC /* UserVerificationStartViewModel.swift in Sources */,
 				B12C56EF2396CB5E00FAC6DE /* RoomMessageURLParser.swift in Sources */,
 				EC711B9924A63B37008F830C /* SecretsRecoveryCoordinator.swift in Sources */,
-				EB4280D9256012AD00B9BBBF /* PatientSelectionViewController.swift in Sources */,
 				B1BEE73623DF44A60003A4CB /* UserVerificationSessionsStatusCoordinatorType.swift in Sources */,
 				B1C45A86232A8C2600165425 /* SettingsIdentityServerViewModelType.swift in Sources */,
 				F083BE031E7009ED00A9B29C /* EventFormatter.m in Sources */,
@@ -7024,6 +7064,7 @@
 				ECF57A4C25090C23004BBF9D /* EnterNewRoomDetailsViewAction.swift in Sources */,
 				EC711BAE24A63B58008F830C /* SecureBackupSetupCoordinator.swift in Sources */,
 				EBAC79B62543F9EE00A0B1BF /* SelectableFilteredSearchController.swift in Sources */,
+				EBE274D82569EE2B003BC7C1 /* ThemeHelpers.swift in Sources */,
 				B1B5599320EFC5E400210D55 /* DecryptionFailure.m in Sources */,
 				ECFBD5D5250A7AAF00DD5F5A /* ShowDirectoryViewModelType.swift in Sources */,
 				438067BC24D7D039002675E1 /* RoleTitleTableViewCell.swift in Sources */,
@@ -7118,6 +7159,7 @@
 				EC1CA89A24C9C9A200DE9EBF /* SetupBiometricsCoordinatorType.swift in Sources */,
 				32A6001722C661100042C1D9 /* EditHistoryViewController.swift in Sources */,
 				B1098BFA21ECFE65000DDA48 /* KeyBackupSetupPassphraseViewModel.swift in Sources */,
+				EBE274F8256A4317003BC7C1 /* FilteredSearchPopoverViewController.swift in Sources */,
 				EC51E7A62514D2E100AAE7DB /* RoomInfoCoordinatorBridgePresenter.swift in Sources */,
 				EC1CA87524C8259700DE9EBF /* KeychainStore.swift in Sources */,
 				B1B5575220EE6C4D00210D55 /* RoomKeyRequestViewController.m in Sources */,
@@ -7127,6 +7169,7 @@
 				B1B558E620EF768F00210D55 /* RoomIncomingAttachmentWithoutSenderInfoBubbleCell.m in Sources */,
 				B1B4E9BD24D4701F004D5C33 /* BubbleCellReactionsDisplayable.swift in Sources */,
 				329E746722CD02EA006F9797 /* BubbleReactionActionViewCell.swift in Sources */,
+				EB98299A256B820F004723C9 /* PatientTaggingViewModel.swift in Sources */,
 				B1098BFB21ECFE65000DDA48 /* KeyBackupSetupCoordinatorType.swift in Sources */,
 				B1098BF721ECFE65000DDA48 /* PasswordStrength.swift in Sources */,
 				EC711B8424A63B37008F830C /* SecretsSetupRecoveryPassphraseInputMode.swift in Sources */,
@@ -7158,6 +7201,7 @@
 				B183226C23F59F810035B2E8 /* CloseButton.swift in Sources */,
 				ECF57A5A250925AC004BBF9D /* TextFieldTableViewCell.swift in Sources */,
 				EC711B7F24A63B37008F830C /* SecretsSetupRecoveryPassphraseViewController.swift in Sources */,
+				EBE27500256A4506003BC7C1 /* FilteredSearchResultsController.swift in Sources */,
 				B1B5575120EE6C4D00210D55 /* AuthenticationViewController.m in Sources */,
 				B1CE83BA2422815C00D07506 /* KeyVerificationService.swift in Sources */,
 				B1B5571820EE6C4D00210D55 /* CountryPickerViewController.m in Sources */,
@@ -7165,6 +7209,7 @@
 				ECF57A4925090C23004BBF9D /* EnterNewRoomDetailsViewState.swift in Sources */,
 				B17982FF2119FED2001FD722 /* GDPRConsentViewController.swift in Sources */,
 				B1098BE121ECE09F000DDA48 /* Images.swift in Sources */,
+				EBE274C02569E880003BC7C1 /* PhotographerDetails.swift in Sources */,
 				ECF57A85250A64F0004BBF9D /* PlaceholderedTextView.swift in Sources */,
 				B1B4E9C424D47207004D5C33 /* BubbleReactionsViewModelBuilder.swift in Sources */,
 				EC85D72A2477DCF2002C44C9 /* KeyVerificationManuallyVerifyViewModel.swift in Sources */,
@@ -7191,6 +7236,7 @@
 				B1B558F020EF768F00210D55 /* RoomOutgoingAttachmentWithPaginationTitleBubbleCell.m in Sources */,
 				926FA53F1F4C132000F826C2 /* MXSession+Riot.m in Sources */,
 				EC711B8324A63B37008F830C /* SecretsSetupRecoveryPassphraseCoordinator.swift in Sources */,
+				EBE274D02569ED5D003BC7C1 /* ImageDescriptionCell.swift in Sources */,
 				B125FE23231D5E4300B72806 /* SettingsDiscoveryViewState.swift in Sources */,
 				B1B5593820EF7BAC00210D55 /* TableViewCellWithLabelAndLargeTextView.m in Sources */,
 				B1DCC62222E60BE000625807 /* EmojiPickerItemViewData.swift in Sources */,
@@ -7252,6 +7298,7 @@
 				B1CE83E02422817200D07506 /* KeyVerificationVerifyBySASViewController.swift in Sources */,
 				B19EFA3921F8BB2C00FC070E /* KeyBackupRecoverCoordinatorType.swift in Sources */,
 				B1C3360322F1ED600021BA8D /* MediaPickerCoordinator.swift in Sources */,
+				EBE274E8256A00A4003BC7C1 /* Role.swift in Sources */,
 				B1E5368D21FB7245001F3AFF /* KeyBackupRecoverFromPassphraseViewController.swift in Sources */,
 				EC711B8924A63B37008F830C /* SecretsRecoveryWithPassphraseViewModel.swift in Sources */,
 				B1963B3822933BC800CBA17F /* AutosizedCollectionView.swift in Sources */,
@@ -7286,7 +7333,6 @@
 				B190F55922CE356800AEB493 /* EditHistoryHeaderView.swift in Sources */,
 				32F6B96A2270623100BBA352 /* KeyVerificationDataLoadingViewState.swift in Sources */,
 				32BF995321FA2A1300698084 /* SettingsKeyBackupViewState.swift in Sources */,
-				EB4280C1256010C100B9BBBF /* PatientSearchViewController.swift in Sources */,
 				ECFBD5FB250FA59B00DD5F5A /* RoomCreationEventsModalViewAction.swift in Sources */,
 				B18DEDDB243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewAction.swift in Sources */,
 				32B94DF9228EC26400716A26 /* ReactionsMenuViewAction.swift in Sources */,
@@ -7365,6 +7411,8 @@
 				B1B9DEEC22EB34EF0065E677 /* ReactionHistoryViewModelType.swift in Sources */,
 				B157FAA523264AE900EBFBD4 /* SettingsDiscoveryThreePidDetailsViewModel.swift in Sources */,
 				EC711B8624A63B37008F830C /* SecretsRecoveryWithPassphraseCoordinatorType.swift in Sources */,
+				EBE27508256A4582003BC7C1 /* RendersWith.swift in Sources */,
+				EBE27510256A4850003BC7C1 /* QueryTableViewCell.swift in Sources */,
 				B1C562E8228C7CF20037F12A /* ContextualMenuItemView.swift in Sources */,
 				B14F143022144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyCoordinatorType.swift in Sources */,
 				43AFC0B224DA408900D0EF19 /* PeopleTableViewCell.swift in Sources */,

@@ -804,6 +804,9 @@
 		EB5AE9C92563CDDB00C635CD /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5AE9C82563CDDB00C635CD /* MessageContentView.swift */; };
 		EB6B1619253415E400BBDCC6 /* EmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */; };
 		EB6B16202534167A00BBDCC6 /* EmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */; };
+		EB76BE352573B5330013EABE /* ImageTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE342573B5330013EABE /* ImageTagService.swift */; };
+		EB76BE3D2573B5810013EABE /* BaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE3C2573B5810013EABE /* BaseService.swift */; };
+		EB76BE452574DFE40013EABE /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE442574DFE40013EABE /* TagData.swift */; };
 		EB982B82256D2453004723C9 /* MessageImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB982B81256D2453004723C9 /* MessageImageView.swift */; };
 		EB982B8A256D246A004723C9 /* MessageImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB982B89256D246A004723C9 /* MessageImageView.xib */; };
 		EBA8AB1F25515D5F00FA8383 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */; };
@@ -2088,6 +2091,9 @@
 		EB5AE9C82563CDDB00C635CD /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
 		EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmailTableViewCell.xib; sourceTree = "<group>"; };
 		EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTableViewCell.swift; sourceTree = "<group>"; };
+		EB76BE342573B5330013EABE /* ImageTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTagService.swift; sourceTree = "<group>"; };
+		EB76BE3C2573B5810013EABE /* BaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseService.swift; sourceTree = "<group>"; };
+		EB76BE442574DFE40013EABE /* TagData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagData.swift; sourceTree = "<group>"; };
 		EB982B81256D2453004723C9 /* MessageImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageImageView.swift; sourceTree = "<group>"; };
 		EB982B89256D246A004723C9 /* MessageImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageImageView.xib; sourceTree = "<group>"; };
 		EBA8AB1E25515D5F00FA8383 /* HomeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
@@ -5123,6 +5129,9 @@
 				EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */,
 				EBAAF56D25624A1F0080A268 /* PatientQueryService.swift */,
 				EBAAF58425624E310080A268 /* Services.swift */,
+				EB76BE342573B5330013EABE /* ImageTagService.swift */,
+				EB76BE3C2573B5810013EABE /* BaseService.swift */,
+				EB76BE442574DFE40013EABE /* TagData.swift */,
 			);
 			path = HealthServices;
 			sourceTree = "<group>";
@@ -6728,6 +6737,7 @@
 				B1B557BD20EF5B4500210D55 /* KeyboardGrowingTextView.m in Sources */,
 				EC711B9524A63B37008F830C /* SecretsRecoveryWithKeyViewModelType.swift in Sources */,
 				B1A68593229E807A00D6C09A /* RoomBubbleCellLayout.swift in Sources */,
+				EB76BE3D2573B5810013EABE /* BaseService.swift in Sources */,
 				ECFBD603250FA98200DD5F5A /* RoomCreationModalCoordinatorBridgePresenter.swift in Sources */,
 				B1B558F420EF768F00210D55 /* RoomOutgoingTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.m in Sources */,
 				B1B5572320EE6C4D00210D55 /* AttachmentsViewController.m in Sources */,
@@ -7099,6 +7109,7 @@
 				EC711B9024A63B37008F830C /* SecretsRecoveryWithKeyCoordinator.swift in Sources */,
 				B1A6C10723881EF2002882FD /* SlidingModalPresenter.swift in Sources */,
 				B1B5573520EE6C4D00210D55 /* GroupDetailsViewController.m in Sources */,
+				EB76BE452574DFE40013EABE /* TagData.swift in Sources */,
 				B12D7A0223E2462200FACEDC /* UserVerificationStartViewAction.swift in Sources */,
 				EC85D7372477DD97002C44C9 /* LocalContactsSectionHeaderContainerView.m in Sources */,
 				B1DCC61A22E5E17100625807 /* EmojiPickerViewController.swift in Sources */,
@@ -7111,6 +7122,7 @@
 				EC1CA87524C8259700DE9EBF /* KeychainStore.swift in Sources */,
 				B1B5575220EE6C4D00210D55 /* RoomKeyRequestViewController.m in Sources */,
 				32A6001A22C661100042C1D9 /* EditHistoryCoordinator.swift in Sources */,
+				EB76BE352573B5330013EABE /* ImageTagService.swift in Sources */,
 				F083BD1E1E7009ED00A9B29C /* LegacyAppDelegate.m in Sources */,
 				B1B558E620EF768F00210D55 /* RoomIncomingAttachmentWithoutSenderInfoBubbleCell.m in Sources */,
 				B1B4E9BD24D4701F004D5C33 /* BubbleCellReactionsDisplayable.swift in Sources */,

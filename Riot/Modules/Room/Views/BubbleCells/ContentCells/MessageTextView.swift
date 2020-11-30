@@ -31,6 +31,9 @@ class MessageTextView: MessageContentView, RendersBubbleComponent {
     override class func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }
+    override class func reuseIdentifier() -> String {
+        return "MessageTextView"
+    }
     override internal func renderData(_ celldata: MXKRoomBubbleCellData) {
         TextContent.attributedText = celldata.attributedTextMessage
     }

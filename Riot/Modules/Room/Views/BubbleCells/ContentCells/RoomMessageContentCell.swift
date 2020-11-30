@@ -16,10 +16,19 @@
  
 import Foundation
 
-class RoomMessageContentCell: MXKRoomBubbleTableViewCell {
+class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var Sender: UILabel!
     @IBOutlet weak var SenderAvatar: MXKImageView!
-    @IBOutlet weak var MessageContentView: UIStackView!
+    @IBOutlet weak var MessageContentView: UITableView!
+    private var componentCount: Int {
+        if cellData == nil {
+            return 0
+        }
+        return cellData.bubbleComponents.count == 0 ? (cellData.hasNoDisplay ? 0 : 1) : cellData.bubbleComponents.count
+    }
+    private var theme: Theme {
+        ThemeService.shared().theme
+    }
     
     var cellData: MXKRoomBubbleCellData!
     @objc override var bubbleData: MXKRoomBubbleCellData! {
@@ -35,6 +44,7 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        registerReuseIdentifiers()
     }
     
     override func prepareForReuse() {
@@ -43,46 +53,54 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell {
         }
     }
     
+    override func updateConstraints() {
+        super.updateConstraints()
+    }
+    
+    func registerReuseIdentifiers() {
+        MessageContentView.register(MessageTextView.nib(), forCellReuseIdentifier: MessageTextView.reuseIdentifier())
+        MessageContentView.register(MessageImageView.nib(), forCellReuseIdentifier: MessageImageView.reuseIdentifier())
+    }
+    
     override func render(_ cellData: MXKCellData!) {
         guard let roomBubbleData = cellData as? MXKRoomBubbleCellData else { return }
         self.cellData = roomBubbleData
         guard !roomBubbleData.hasNoDisplay else { return }
-        let theme = ThemeService.shared().theme
         applyTheme(TheTheme: theme)
         
-        var successfullyCreatedBubbles = false
-        if roomBubbleData.bubbleComponents.count > 1 {
-            for component in roomBubbleData.bubbleComponents {
-                guard let contentView = getMessageContentView(forBubbleData: roomBubbleData) else { successfullyCreatedBubbles = false; break }
-                guard let renderer = contentView as? RendersBubbleComponent else { successfullyCreatedBubbles = false; break }
-                contentView.delegate = self
-                renderer.render(component: component)
-                contentView.applyStyle(theme)
-                MessageContentView.backgroundColor = .none
-                MessageContentView.addSubview(contentView)
-                contentView.translatesAutoresizingMaskIntoConstraints = false
-                MessageContentView.addConstraints([
-                    NSLayoutConstraint(item: contentView, attribute: .left, relatedBy: .equal, toItem: MessageContentView, attribute: .left, multiplier: 1.0, constant: 0.0),
-                    NSLayoutConstraint(item: contentView, attribute: .right, relatedBy: .lessThanOrEqual, toItem: MessageContentView, attribute: .right, multiplier: 1.0, constant: 0.0)
-                ])
-            }
-            successfullyCreatedBubbles = true
-        }
-        
-        //for component in bubbleData.bubbleComponents {
-        if !successfullyCreatedBubbles {
-            guard let contentView = getMessageContentView(forBubbleData: roomBubbleData) else { return }
-            contentView.delegate = self
-            contentView.render(roomBubbleData)
-            contentView.applyStyle(theme)
-            MessageContentView.backgroundColor = .none
-            MessageContentView.addSubview(contentView)
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            MessageContentView.addConstraints([
-                NSLayoutConstraint(item: contentView, attribute: .left, relatedBy: .equal, toItem: MessageContentView, attribute: .left, multiplier: 1.0, constant: 0.0),
-                NSLayoutConstraint(item: contentView, attribute: .right, relatedBy: .lessThanOrEqual, toItem: MessageContentView, attribute: .right, multiplier: 1.0, constant: 0.0)
-            ])
-        }
+//        var successfullyCreatedBubbles = false
+//        if roomBubbleData.bubbleComponents.count > 1 {
+//            for component in roomBubbleData.bubbleComponents {
+//                guard let contentView = getMessageContentView(forBubbleData: roomBubbleData) else { successfullyCreatedBubbles = false; break }
+//                guard let renderer = contentView as? RendersBubbleComponent else { successfullyCreatedBubbles = false; break }
+//                contentView.delegate = self
+//                renderer.render(component: component)
+//                contentView.applyStyle(theme)
+//                MessageContentView.backgroundColor = .none
+//                MessageContentView.addSubview(contentView)
+//                contentView.translatesAutoresizingMaskIntoConstraints = false
+//                MessageContentView.addConstraints([
+//                    NSLayoutConstraint(item: contentView, attribute: .left, relatedBy: .equal, toItem: MessageContentView, attribute: .left, multiplier: 1.0, constant: 0.0),
+//                    NSLayoutConstraint(item: contentView, attribute: .right, relatedBy: .lessThanOrEqual, toItem: MessageContentView, attribute: .right, multiplier: 1.0, constant: 0.0)
+//                ])
+//            }
+//            successfullyCreatedBubbles = true
+//        }
+//
+//        //for component in bubbleData.bubbleComponents {
+//        if !successfullyCreatedBubbles {
+//            guard let contentView = getMessageContentView(forBubbleData: roomBubbleData) else { return }
+//            contentView.delegate = self
+//            contentView.render(roomBubbleData)
+//            contentView.applyStyle(theme)
+//            MessageContentView.backgroundColor = .none
+//            MessageContentView.addSubview(contentView)
+//            contentView.translatesAutoresizingMaskIntoConstraints = false
+//            MessageContentView.addConstraints([
+//                NSLayoutConstraint(item: contentView, attribute: .left, relatedBy: .equal, toItem: MessageContentView, attribute: .left, multiplier: 1.0, constant: 0.0),
+//                NSLayoutConstraint(item: contentView, attribute: .right, relatedBy: .lessThanOrEqual, toItem: MessageContentView, attribute: .right, multiplier: 1.0, constant: 0.0)
+//            ])
+//        }
         //}
         
         self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(onLongPressEvent)))
@@ -102,27 +120,59 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell {
             SenderAvatar.addConstraint(SenderAvatar.heightAnchor.constraint(equalToConstant: 0))
             Sender.addConstraint(Sender.heightAnchor.constraint(equalToConstant: 0))
         }
+        
+        MessageContentView.rowHeight = UITableView.automaticDimension
+        MessageContentView.estimatedRowHeight = 44.0
+        MessageContentView.reloadData()
     }
     
-    func getComponentContentView(forBubbleComponent data: MXKRoomBubbleComponent) -> MessageContentView! {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return componentCount
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if componentCount > 1 {
+            let component = cellData.bubbleComponents[indexPath.row]
+            if let componentIdentifier = getComponentContentIdentifier(forBubbleComponent: component) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: componentIdentifier, for: indexPath)
+                if let concrete = cell as? RendersBubbleComponent {
+                    concrete.render(component: component)
+                    if let concreteContentView = cell as? MessageContentView {
+                        concreteContentView.delegate = self
+                        concreteContentView.hasLoadedView()
+                        concreteContentView.applyStyle(theme)
+                    }
+                    return cell
+                }
+            }
+        } else {
+            if let renderer = getMessageContentViewIdentifier(forBubbleData: cellData) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: renderer, for: indexPath)
+                if let concrete = cell as? MessageContentView {
+                    concrete.render(cellData)
+                    concrete.delegate = self
+                    concrete.hasLoadedView()
+                    concrete.applyStyle(theme)
+                    return cell
+                }
+            }
+        }
+        return UITableViewCell()
+    }
+    
+    func getComponentContentIdentifier(forBubbleComponent data: MXKRoomBubbleComponent) -> String? {
         if data.attributedTextMessage != nil {
-            return MessageTextView()
+            return MessageTextView.reuseIdentifier()
         }
         return nil
     }
     
-    func getMessageContentView(forBubbleData data: MXKRoomBubbleCellData) -> MessageContentView! { //implicitly unwrapped because it's messy to put everything in guard/if lets
+    func getMessageContentViewIdentifier(forBubbleData data: MXKRoomBubbleCellData) -> String? { //implicitly unwrapped because it's messy to put everything in guard/if lets
         if data.attachment != nil {
             //image
-            let image = MessageImageView()
-            image.backgroundColor = .cyan
-            image.addConstraints([
-                NSLayoutConstraint(item: image, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: data.contentSize.width),
-                NSLayoutConstraint(item: image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: data.contentSize.height)
-            ])
-            return image
+            return MessageImageView.reuseIdentifier()
         } else {
-            return MessageTextView()
+            return MessageTextView.reuseIdentifier()
         }
         return nil
     }
@@ -138,6 +188,15 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell {
     override static func height(for cellData: MXKCellData!, withMaximumWidth maxWidth: CGFloat) -> CGFloat {
         guard let realData = cellData as? MXKRoomBubbleCellData else { return 0 }
         guard !realData.hasNoDisplay else { return 0 }
+        if realData.bubbleComponents.count > 1 {
+            var returnHeight: CGFloat = 0.0
+            for item in realData.bubbleComponents {
+                if item.attributedTextMessage != nil {
+                    returnHeight += height(forText: item.attributedTextMessage, withMaxWidth: maxWidth)
+                }
+            }
+            return returnHeight + (realData.shouldHideSenderInformation ? 0 : 32)
+        }
         if realData.attachment != nil {
             return realData.contentSize.height + (realData.shouldHideSenderInformation ? 0 : 32)
         } else {

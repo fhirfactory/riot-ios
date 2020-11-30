@@ -25,10 +25,14 @@
                             <constraint firstAttribute="height" priority="998" constant="33" id="3Rf-jm-Yqg"/>
                         </constraints>
                     </view>
-                    <stackView contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="dUP-jZ-rlA">
+                    <tableView contentMode="scaleToFill" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dUP-jZ-rlA">
                         <rect key="frame" x="51" y="24" width="362" height="9"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                    </stackView>
+                        <connections>
+                            <outlet property="dataSource" destination="rGJ-zU-4s9" id="sQu-2A-66Y"/>
+                            <outlet property="delegate" destination="rGJ-zU-4s9" id="Rkh-bU-qkR"/>
+                        </connections>
+                    </tableView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cg1-Kn-uag">
                         <rect key="frame" x="51" y="0.0" width="43.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>

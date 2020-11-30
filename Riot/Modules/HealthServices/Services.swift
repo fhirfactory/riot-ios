@@ -18,7 +18,7 @@ import Foundation
 
 class Services{
     private static var instancePatientQueryService: PatientQueryService!
-    static func PatientService()->PatientQueryService{
+    static func PatientService() -> PatientQueryService{
         if instancePatientQueryService == nil {
             instancePatientQueryService = PatientQueryService()
         }

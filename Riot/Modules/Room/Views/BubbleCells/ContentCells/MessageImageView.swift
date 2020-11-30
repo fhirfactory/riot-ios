@@ -28,8 +28,14 @@ class MessageImageView: MessageContentView {
         ImageContent.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageClicked)))
         frame.size = celldata.contentSize
         backgroundColor = .cyan
+        self.removeConstraints(self.constraints)
+        ImageContent.removeConstraints(ImageContent.constraints)
+        ImageContent.addConstraint(ImageContent.heightAnchor.constraint(equalToConstant: celldata.contentSize.height))
+        ImageContent.addConstraint(ImageContent.widthAnchor.constraint(equalToConstant: celldata.contentSize.width))
+        self.addConstraint(ImageContent.leadingAnchor.constraint(equalTo: self.leadingAnchor))
+        self.addConstraint(ImageContent.topAnchor.constraint(equalTo: self.topAnchor))
     }
-    @IBAction func imageClicked() {
+    @IBAction private func imageClicked() {
         let d = delegate
         let dd = d?.delegate
         if let ddd = dd as? MXKRoomDataSource {
@@ -41,5 +47,8 @@ class MessageImageView: MessageContentView {
     }
     override func applyTheStyle(_ theme: Theme) {
         self.backgroundColor = .none
+    }
+    override class func reuseIdentifier() -> String {
+        return "MessageImageView"
     }
 }

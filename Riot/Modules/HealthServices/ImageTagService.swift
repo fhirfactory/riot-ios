@@ -16,11 +16,9 @@
 
 import Foundation
 
-class PatientQueryService: AsyncQueryableService<PatientModel> {
-    let patientList = [PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), PatientModel(Name: "John The Nobody", URN: "987654321", DoB: Date()), PatientModel(Name: "Jill Bejonassie", URN: "234987234", DoB: Date())]
-    override func Query(queryDetails: String, success: ([PatientModel]) -> Void, failure: () -> Void) {
-        success(patientList.filter({ (patient) -> Bool in
-            queryDetails == "" || patient.URN.contains(queryDetails) || patient.Name.contains(queryDetails)
-        }))
+class ImageTagService {
+    var tagData: [[]]
+    func LookupTagInfoFor(URL: String) {
+        
     }
 }

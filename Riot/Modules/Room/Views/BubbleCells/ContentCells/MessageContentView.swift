@@ -16,12 +16,15 @@
 
 import Foundation
 
-class MessageContentView: UIView {
+class MessageContentView: UITableViewCell {
     private var queuedRender: MXKRoomBubbleCellData? //obviously not an actual queue
     private var viewHasLoaded: Bool = false
-    var delegate: RoomMessageContentCell!
+    weak var delegate: RoomMessageContentCell!
     class func nib() -> UINib! {
         preconditionFailure("nib method must be overridden")
+    }
+    class func reuseIdentifier() -> String {
+        preconditionFailure("reuseIdentifier should be overridden")
     }
     
     final func render(_ celldata: MXKRoomBubbleCellData) {
@@ -33,7 +36,7 @@ class MessageContentView: UIView {
         }
     }
     
-    @IBAction private func onLongPress(){
+    @IBAction private func onLongPress() {
         
     }
     
@@ -52,16 +55,18 @@ class MessageContentView: UIView {
         preconditionFailure("Override in inherriting class")
     }
     
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        finalizeInitialization()
+    func hasLoadedView() {
+        if let dequeuedRender = queuedRender { //obviously not actually dequeueing
+            renderData(dequeuedRender)
+            queuedRender = nil
+        }
+        if let dequeuedTheme = queuedTheme {
+            applyTheStyle(dequeuedTheme)
+            queuedTheme = nil
+        }
+        viewHasLoaded = true
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        finalizeInitialization()
-    }
     private func finalizeInitialization() {
         guard let nib = type(of: self).nib() else { return }
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else { return }
@@ -75,14 +80,6 @@ class MessageContentView: UIView {
             NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0),
             NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0)
         ])
-        if let dequeuedRender = queuedRender { //obviously not actually dequeueing
-            renderData(dequeuedRender)
-            queuedRender = nil
-        }
-        if let dequeuedTheme = queuedTheme {
-            applyTheStyle(dequeuedTheme)
-            queuedTheme = nil
-        }
-        viewHasLoaded = true
+        hasLoadedView()
     }
 }

@@ -16,7 +16,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="73"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OaM-rI-r0I">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OaM-rI-r0I">
                         <rect key="frame" x="20" y="9" width="134.5" height="21"/>
                         <attributedString key="attributedText">
                             <fragment content="Burjonassie, Ryan">
@@ -28,13 +28,13 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="987654321" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g8e-i2-ZVN">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="987654321" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="g8e-i2-ZVN">
                         <rect key="frame" x="20" y="41" width="88.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30-Mar-1980" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-Ww-sBq">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30-Mar-1980" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-Ww-sBq">
                         <rect key="frame" x="291" y="41" width="103" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -44,11 +44,13 @@
                 <constraints>
                     <constraint firstItem="g8e-i2-ZVN" firstAttribute="leading" secondItem="2nY-Ag-1wm" secondAttribute="leading" constant="20" symbolic="YES" id="5Q4-lY-RHH"/>
                     <constraint firstItem="Mpp-Ww-sBq" firstAttribute="bottom" secondItem="g8e-i2-ZVN" secondAttribute="bottom" id="Gaq-RB-71X"/>
+                    <constraint firstItem="OaM-rI-r0I" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="2nY-Ag-1wm" secondAttribute="trailing" id="HJt-Ze-caq"/>
                     <constraint firstAttribute="trailing" secondItem="Mpp-Ww-sBq" secondAttribute="trailing" constant="20" id="J0y-xy-GlY"/>
                     <constraint firstItem="OaM-rI-r0I" firstAttribute="leading" secondItem="g8e-i2-ZVN" secondAttribute="leading" id="JFj-99-gh0"/>
+                    <constraint firstItem="Mpp-Ww-sBq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="g8e-i2-ZVN" secondAttribute="trailing" id="JwE-0x-p2i"/>
                     <constraint firstAttribute="bottom" secondItem="g8e-i2-ZVN" secondAttribute="bottom" constant="11" id="ZD2-jW-7QT"/>
                     <constraint firstItem="OaM-rI-r0I" firstAttribute="top" secondItem="2nY-Ag-1wm" secondAttribute="top" constant="9" id="cDG-eF-JIo"/>
-                    <constraint firstItem="g8e-i2-ZVN" firstAttribute="top" secondItem="OaM-rI-r0I" secondAttribute="bottom" constant="11" id="zgs-E7-RB5"/>
+                    <constraint firstItem="g8e-i2-ZVN" firstAttribute="top" relation="greaterThanOrEqual" secondItem="OaM-rI-r0I" secondAttribute="bottom" constant="11" id="zgs-E7-RB5"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

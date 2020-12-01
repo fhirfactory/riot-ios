@@ -18,6 +18,7 @@ import Foundation
 
 class MessageContentView: UITableViewCell {
     private var queuedRender: MXKRoomBubbleCellData? //obviously not an actual queue
+    private var width: CGFloat = 0
     private var viewHasLoaded: Bool = false
     weak var delegate: RoomMessageContentCell!
     class func nib() -> UINib! {
@@ -27,10 +28,11 @@ class MessageContentView: UITableViewCell {
         preconditionFailure("reuseIdentifier should be overridden")
     }
     
-    final func render(_ celldata: MXKRoomBubbleCellData) {
+    final func render(celldata: MXKRoomBubbleCellData, width: CGFloat = 0) {
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onLongPress)))
+        self.width = width
         if viewHasLoaded {
-            renderData(celldata)
+            renderData(celldata, width)
         } else {
             queuedRender = celldata
         }
@@ -40,7 +42,7 @@ class MessageContentView: UITableViewCell {
         
     }
     
-    internal func renderData(_ celldata: MXKRoomBubbleCellData) {
+    internal func renderData(_ celldata: MXKRoomBubbleCellData, _ width: CGFloat = 0) {
         preconditionFailure("Override in inherriting class")
     }
     private var queuedTheme: Theme?
@@ -57,7 +59,7 @@ class MessageContentView: UITableViewCell {
     
     func hasLoadedView() {
         if let dequeuedRender = queuedRender { //obviously not actually dequeueing
-            renderData(dequeuedRender)
+            renderData(dequeuedRender, width)
             queuedRender = nil
         }
         if let dequeuedTheme = queuedTheme {

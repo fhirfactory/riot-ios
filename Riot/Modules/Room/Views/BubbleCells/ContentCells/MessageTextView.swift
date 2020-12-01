@@ -34,7 +34,7 @@ class MessageTextView: MessageContentView, RendersBubbleComponent {
     override class func reuseIdentifier() -> String {
         return "MessageTextView"
     }
-    override internal func renderData(_ celldata: MXKRoomBubbleCellData) {
+    override internal func renderData(_ celldata: MXKRoomBubbleCellData, _ width: CGFloat) {
         TextContent.attributedText = celldata.attributedTextMessage
     }
     override func applyTheStyle(_ theme: Theme) {

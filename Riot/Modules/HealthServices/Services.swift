@@ -16,19 +16,26 @@
 
 import Foundation
 
-class Services{
+class Services {
     private static var instancePatientQueryService: PatientQueryService!
-    static func PatientService() -> PatientQueryService{
+    static func PatientService() -> PatientQueryService {
         if instancePatientQueryService == nil {
             instancePatientQueryService = PatientQueryService()
         }
         return instancePatientQueryService
     }
     private static var instanceRoleQueryService: RoleQueryService!
-    static func RoleService() -> RoleQueryService{
+    static func RoleService() -> RoleQueryService {
         if instanceRoleQueryService == nil {
             instanceRoleQueryService = RoleQueryService()
         }
         return instanceRoleQueryService
+    }
+    private static var instanceImageTagService: ImageTagService!
+    static func ImageTagDataService() -> ImageTagService {
+        if instanceImageTagService == nil {
+            instanceImageTagService = ImageTagService()
+        }
+        return instanceImageTagService
     }
 }

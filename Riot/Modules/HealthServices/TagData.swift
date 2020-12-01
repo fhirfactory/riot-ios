@@ -17,6 +17,14 @@
 import Foundation
 
 class TagData {
-    let Patient: PatientModel! = nil
-    let Description: String? = nil
+    let Patient: PatientModel?
+    let Description: String!
+    let PhotographerDetails: PhotographerTagDetails?
+    let FileContainsPatient: Bool
+    init(withPatient: PatientModel, Description: String?, andPhotographer: PhotographerTagDetails?) {
+        Patient = withPatient
+        self.Description = Description
+        self.PhotographerDetails = andPhotographer
+        FileContainsPatient = true
+    }
 }

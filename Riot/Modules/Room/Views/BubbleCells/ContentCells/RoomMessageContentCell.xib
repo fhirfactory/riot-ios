@@ -26,15 +26,15 @@
                         </constraints>
                     </view>
                     <tableView contentMode="scaleToFill" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="-1" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dUP-jZ-rlA">
-                        <rect key="frame" x="51" y="24" width="362" height="9"/>
-                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <rect key="frame" x="53" y="24" width="360" height="9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="rGJ-zU-4s9" id="sQu-2A-66Y"/>
                             <outlet property="delegate" destination="rGJ-zU-4s9" id="Rkh-bU-qkR"/>
                         </connections>
                     </tableView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cg1-Kn-uag">
-                        <rect key="frame" x="51" y="0.0" width="43.5" height="21"/>
+                        <rect key="frame" x="53" y="0.0" width="43.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                     <constraint firstAttribute="trailing" secondItem="dUP-jZ-rlA" secondAttribute="trailing" id="JaZ-if-R8r"/>
                     <constraint firstItem="1nR-0t-xE6" firstAttribute="leading" secondItem="Vzf-It-BMC" secondAttribute="leading" constant="10" id="U1t-R7-Ycs"/>
                     <constraint firstItem="dUP-jZ-rlA" firstAttribute="top" secondItem="Cg1-Kn-uag" secondAttribute="bottom" constant="3" id="dEH-1O-yva"/>
-                    <constraint firstItem="dUP-jZ-rlA" firstAttribute="leading" secondItem="1nR-0t-xE6" secondAttribute="trailing" constant="8" symbolic="YES" id="dvw-fs-4Ph"/>
+                    <constraint firstItem="dUP-jZ-rlA" firstAttribute="leading" secondItem="1nR-0t-xE6" secondAttribute="trailing" constant="10" id="dvw-fs-4Ph"/>
                     <constraint firstAttribute="bottom" secondItem="dUP-jZ-rlA" secondAttribute="bottom" id="fnj-Bh-X3J"/>
                     <constraint firstItem="Cg1-Kn-uag" firstAttribute="leading" secondItem="dUP-jZ-rlA" secondAttribute="leading" id="gmG-ZH-33A"/>
                     <constraint firstItem="1nR-0t-xE6" firstAttribute="top" secondItem="Vzf-It-BMC" secondAttribute="top" id="lY2-mu-3Qq"/>
@@ -53,6 +53,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="AvatarImageHeightConstraint" destination="3Rf-jm-Yqg" id="Y5m-g9-OE4"/>
                 <outlet property="MessageContentView" destination="dUP-jZ-rlA" id="Fiz-2f-JaW"/>
                 <outlet property="Sender" destination="Cg1-Kn-uag" id="6ZU-jp-OXc"/>
                 <outlet property="SenderAvatar" destination="1nR-0t-xE6" id="o8r-2a-796"/>
@@ -64,8 +65,8 @@
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

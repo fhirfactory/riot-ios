@@ -26,6 +26,18 @@ class PatientViewCell: QueryTableViewCell<PatientModel> {
         // Initialization code
     }
     
+    func disableViews() {
+        NameLabel.isHidden = true
+        URNLabel.isHidden = true
+        DateOfBirthLabel.isHidden = true
+    }
+    
+    func enableViews() {
+        NameLabel.isHidden = false
+        URNLabel.isHidden = false
+        DateOfBirthLabel.isHidden = false
+    }
+    
     func ReorderNameString(Name namestring: String) -> (String, String) {
         let splitName = namestring.split(separator: " ")
         guard let lastname = splitName.last else {return ("", "")}

@@ -20,6 +20,7 @@ class TabbedHomeViewController: RecentsViewController {
     
     var sections = SegmentedViewController()
     var homeDataSource: AlternateHomeDataSource!
+    var initialDrawComplete = false
     var favouritesWasVisible = false
     var lowPriorityWasVisible = false
     var SelectedRoomHandler: ((MXRoom) -> Void)!
@@ -44,8 +45,9 @@ class TabbedHomeViewController: RecentsViewController {
             sections.visible[1] = favourites as NSNumber
             let lowPriority = homeDataSource.lowPrioritySection > -1
             sections.visible[2] = lowPriority as NSNumber
-            if !(favouritesWasVisible == favourites && lowPriorityWasVisible == lowPriority) {
+            if !(favouritesWasVisible == favourites && lowPriorityWasVisible == lowPriority) || !initialDrawComplete {
                 sections.createSegmentedViews()
+                initialDrawComplete = true
             }
             favouritesWasVisible = favourites
             lowPriorityWasVisible = lowPriority
@@ -76,8 +78,8 @@ class TabbedHomeViewController: RecentsViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        guard let session = AppDelegate.theDelegate().mxSessions.last as? MXSession else { return }
-        
+        guard let session = AppDelegate.theDelegate().mxSessions.first as? MXSession else { return }
+        initialDrawComplete = false
         if homeDataSource == nil {
             homeDataSource = AlternateHomeDataSource(matrixSession: session)
             homeDataSource.countsUpdated = {

@@ -376,7 +376,7 @@
     // set extra area
     [self setRoomActivitiesViewClass:RoomActivitiesView.class];
     
-    // Custom the attachmnet viewer
+    // Custom the attachment viewer
     [self setAttachmentsViewerClass:AttachmentsViewController.class];
     
     // Custom the event details view
@@ -5721,8 +5721,8 @@ BOOL debugEnableNewRoomRendering = TRUE;
         
         [cameraPresenter dismissWithAnimated:YES completion:^{
             PatientTaggingViewController *PatientTaggingController = [PatientTaggingViewController new];
-            [PatientTaggingController setImageTo: imageData WithHandler:^(NSArray<PatientModel*> *patientData) {
-                if (patientData.count > 0){
+            [PatientTaggingController setImageTo: imageData WithHandler:^(TagData *tagData) {
+                if (tagData.Patients.count > 0){
                     //A patient was tagged
                 } else {
                     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
@@ -5775,8 +5775,8 @@ BOOL debugEnableNewRoomRendering = TRUE;
     if (BuildSettings.sendMessageRequirePatientTagging){
         [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
             PatientTaggingViewController *PatientTaggingController = [PatientTaggingViewController new];
-            [PatientTaggingController setImageTo: imageData WithHandler:^(NSArray<PatientModel*> *patientData) {
-                if (patientData.count > 0){
+            [PatientTaggingController setImageTo: imageData WithHandler:^(TagData *tagData) {
+                if (tagData.Patients.count > 0){
                     //A patient was tagged
                 } else {
                     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];

@@ -24,19 +24,21 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var PolicyReminder: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var TagPatientButton: UIButton!
-    var taggedPatients: [PatientModel] = []
-    var PhotoSavedEventHandler: (([PatientModel]) -> Void)?
+    var PhotoSavedEventHandler: ((TagData) -> Void)?
+    var patientTaggingViewModel: PatientTaggingViewModel = PatientTaggingViewModel()
+    
     @IBAction private func SaveAction(_ sender: Any) {
         if let completion = PhotoSavedEventHandler {
-            if taggedPatients.count > 0 {
+            guard let tagData = PatientTaggingViewController.produceTagData(fromViewModel: patientTaggingViewModel) else { return }
+            if patientTaggingViewModel.patients.count > 0 {
                 navigationController?.popViewController(animated: true)
-                completion(taggedPatients)
+                completion(tagData)
             } else {
                 let alert = UIAlertController(title: AlternateHomeTools.getNSLocalized("media_tag_save_non_patient_media", in: "Vector"), message: AlternateHomeTools.getNSLocalized("media_tag_untagged_alert_description", in: "Vector"), preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("no", in: "Vector"), style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("yes", in: "Vector"), style: .default, handler: { (a) in
                     self.navigationController?.popViewController(animated: true)
-                    completion(self.taggedPatients)
+                    completion(tagData)
                 }))
                 present(alert, animated: true, completion: nil)
             }
@@ -49,23 +51,48 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     @IBAction private func TagButtonClicked(_ sender: Any) {
         let patientTaggingVC = FilteredSearchPopoverViewController<PatientModel>(withScrollHandler: nil, andViewCellReuseID: "PatientViewCell", andService: Services.PatientService())
         patientTaggingVC.onSelectedCallback = {(patient) in
-            self.taggedPatients.append(patient)
+            self.patientTaggingViewModel.patients.append(patient)
             self.tableView.reloadData()
             self.updateSelections()
         }
         self.present(patientTaggingVC, animated: true, completion: nil)
     }
     
-    var patientTaggingViewModel: PatientTaggingViewModel = PatientTaggingViewModel()
+    func loadExistingTagData(_ tagData: TagData?) {
+        patientTaggingViewModel = PatientTaggingViewController.produceViewModel(fromTagData: tagData)
+        if tableView != nil {
+            tableView.reloadData()
+        }
+    }
+    
+    static func produceViewModel(fromTagData tagData: TagData?) -> PatientTaggingViewModel {
+        let vm = PatientTaggingViewModel()
+        guard let td = tagData else { return vm }
+        if tagData?.FileContainsPatient ?? false {
+            vm.patients = td.Patients
+            vm.name = td.PhotographerDetails?.Name
+            vm.role = td.PhotographerDetails?.Role
+        }
+        
+        vm.description = td.Description
+        return vm
+    }
+    
+    static func produceTagData(fromViewModel patientTaggingViewModel: PatientTaggingViewModel) -> TagData? {
+        if patientTaggingViewModel.patients.count > 0 {
+            guard let role = patientTaggingViewModel.role else { return nil }
+            let photographer = PhotographerTagDetails(withName: patientTaggingViewModel.name, andRole: role)
+            return TagData(withPatients: patientTaggingViewModel.patients, Description: patientTaggingViewModel.description, andPhotographer: photographer)
+        }
+        return TagData(withDescription: patientTaggingViewModel.description)
+    }
     
     func updateSelections() {
         self.tableView.isHidden = false
-        if taggedPatients.count > 0 {
-            //self.tableView.isHidden = false
+        if patientTaggingViewModel.patients.count > 0 {
             self.TagPatientButton.isHidden = true
             self.SaveButton.setTitle(AlternateHomeTools.getNSLocalized("media_tag_save_patient_media", in: "Vector"), for: .normal)
         } else {
-            //self.tableView.isHidden = true
             self.TagPatientButton.isHidden = false
             self.SaveButton.setTitle(AlternateHomeTools.getNSLocalized("media_tag_save_non_patient_media", in: "Vector"), for: .normal)
         }
@@ -76,7 +103,7 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     static func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
     }
-    @objc public func setImage(To imageData: NSData, WithHandler eventHandler: (([PatientModel]) -> Void)?) {
+    @objc public func setImage(To imageData: NSData, WithHandler eventHandler: ((TagData) -> Void)?) {
         image = UIImage(data: imageData as Data, scale: 1.0)
         PhotoSavedEventHandler = eventHandler
     }
@@ -100,7 +127,7 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         updateSelections()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taggedPatients.count > 0 ? taggedPatients.count + 2 : 1
+        return patientTaggingViewModel.patients.count > 0 ? patientTaggingViewModel.patients.count + 2 : 1
     }
     
     var resignDescriptionCellResponder: (() -> Void)?
@@ -109,23 +136,27 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row > taggedPatients.count {
+        if indexPath.row > patientTaggingViewModel.patients.count {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotographerDetails", for: indexPath) as? PhotographerDetails else {return UITableViewCell()}
             cell.applyTheme()
             cell.nearestViewController = self
             cell.setRole(to: patientTaggingViewModel.role)
             cell.setChangeHandler { (r) in
                 self.patientTaggingViewModel.role = r
+                if self.patientTaggingViewModel.name == nil {
+                    guard let session = AppDelegate.theDelegate().mxSessions.first as? MXSession else { return }
+                    self.patientTaggingViewModel.name = session.myUser.displayname
+                }
             }
             return cell
-        } else if indexPath.row == taggedPatients.count {
+        } else if indexPath.row == patientTaggingViewModel.patients.count {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageDescriptionCell", for: indexPath) as? ImageDescriptionCell else {return UITableViewCell()}
             cell.render(viewModel: patientTaggingViewModel)
             resignDescriptionCellResponder = cell.forceResignFirstResponder
             return cell
         }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PatientViewCell", for: indexPath) as? PatientViewCell else {return UITableViewCell()}
-        cell.RenderWith(Object: taggedPatients[indexPath.row])
+        cell.RenderWith(Object: patientTaggingViewModel.patients[indexPath.row])
         
         //add the checkmark to indicate the selection
         cell.accessoryType = .checkmark
@@ -137,9 +168,9 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row < taggedPatients.count else { return }
-        let data = taggedPatients[indexPath.row]
-        taggedPatients.removeAll(where: {(x) in x.URN == data.URN})
+        guard indexPath.row < patientTaggingViewModel.patients.count else { return }
+        let data = patientTaggingViewModel.patients[indexPath.row]
+        patientTaggingViewModel.patients.removeAll(where: {(x) in x.URN == data.URN})
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         updateSelections()
     }

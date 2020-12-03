@@ -19,4 +19,6 @@ import Foundation
 class PatientTaggingViewModel {
     var description: String?
     var role: Role?
+    var name: String!
+    var patients: [PatientModel] = []
 }

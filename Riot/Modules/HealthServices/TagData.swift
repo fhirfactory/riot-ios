@@ -16,15 +16,27 @@
 
 import Foundation
 
-class TagData {
-    let Patient: PatientModel?
+@objcMembers class TagData: NSObject {
+    let Patients: [PatientModel]
     let Description: String!
     let PhotographerDetails: PhotographerTagDetails?
     let FileContainsPatient: Bool
     init(withPatient: PatientModel, Description: String?, andPhotographer: PhotographerTagDetails?) {
-        Patient = withPatient
+        Patients = [withPatient]
         self.Description = Description
         self.PhotographerDetails = andPhotographer
         FileContainsPatient = true
+    }
+    init(withPatients: [PatientModel], Description: String?, andPhotographer: PhotographerTagDetails?) {
+        Patients = withPatients
+        self.Description = Description
+        self.PhotographerDetails = andPhotographer
+        FileContainsPatient = true
+    }
+    init(withDescription: String?) {
+        self.Description = withDescription
+        Patients = []
+        FileContainsPatient = false
+        PhotographerDetails = nil
     }
 }

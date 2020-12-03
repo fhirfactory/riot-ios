@@ -100,9 +100,17 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
             Sender.addConstraint(Sender.heightAnchor.constraint(equalToConstant: 0))
         }
         
+        let avatarViewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarViewTapped))
+        SenderAvatar.addGestureRecognizer(avatarViewTapGestureRecognizer)
+        
         MessageContentView.rowHeight = UITableView.automaticDimension
         MessageContentView.estimatedRowHeight = 44.0
         MessageContentView.reloadData()
+    }
+    
+    @objc func avatarViewTapped() {
+        guard let datasource = delegate as? MXKRoomDataSource else { return }
+        datasource.cell(self, didRecognizeAction: kMXKRoomBubbleCellTapOnAvatarView, userInfo: [kMXKRoomBubbleCellUserIdKey: bubbleData.senderId])
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -163,8 +171,10 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     
     func getMessageContentViewIdentifier(forBubbleData data: MXKRoomBubbleCellData) -> String? { //implicitly unwrapped because it's messy to put everything in guard/if lets
         if data.attachment != nil {
-            //image
-            return MessageImageView.reuseIdentifier()
+            //image or video
+            if data.isAttachmentWithThumbnail {
+                return MessageImageView.reuseIdentifier()
+            }
         } else {
             return MessageTextView.reuseIdentifier()
         }

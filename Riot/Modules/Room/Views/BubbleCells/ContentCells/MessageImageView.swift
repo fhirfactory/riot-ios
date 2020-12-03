@@ -47,7 +47,7 @@ class MessageImageView: MessageContentView {
         
         Services.ImageTagDataService().LookupTagInfoFor(URL: URL) { (tagInfo) in
             guard let tag = tagInfo.last else { return }
-            guard let patient = tag?.Patient else { return }
+            guard let patient = tag?.Patients.first else { return }
             
             guard let patientTagView = Bundle(for: type(of: self)).loadNibNamed("PatientViewCell", owner: PatientViewCell(), options: nil)?.first as? PatientViewCell else { return }
             patientTagView.RenderWith(Object: patient)
@@ -55,39 +55,47 @@ class MessageImageView: MessageContentView {
             patientTagViewContent.translatesAutoresizingMaskIntoConstraints = false
             
             patientTagViewContent.layoutIfNeeded()
-            //patientTagViewContent.addConstraint(patientTagViewContent.heightAnchor.constraint(equalToConstant: 60))
-            //patientTagView.frame = CGRect(x: 0, y: celldata.contentSize.height, width: celldata.contentSize.width, height: 30)
             self.addSubview(patientTagViewContent)
             
             self.addConstraint(self.trailingAnchor.constraint(equalTo: patientTagViewContent.trailingAnchor))
             patientTagViewContent.addConstraint(patientTagViewContent.heightAnchor.constraint(equalToConstant: 80))
             self.addConstraint(self.leadingAnchor.constraint(equalTo: patientTagViewContent.leadingAnchor))
             self.addConstraint(patientTagViewContent.bottomAnchor.constraint(equalTo: ImageContent.bottomAnchor))
-            //self.addConstraint(patientTagViewContent.topAnchor.constraint(equalTo: ImageContent.topAnchor))
+            
             patientTagViewContent.alpha = 0.7
             patientTagViewContent.sizeToFit()
-            //frame.size = CGSize(width: patientTagViewContent.frame.width, height: celldata.contentSize.height + patientTagView.frame.height)
-            //self.addConstraint(heightAnchor.constraint(equalToConstant: 1000))
+            
+            tagData = tag
+            
+            let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(tagTapped))
+            patientTagViewContent.addGestureRecognizer(taprecognizer)
+            
             self.layoutIfNeeded()
-            /*let patientTableView = UITableView()
-            let manager = SingleItemTableViewManager<PatientViewCell, PatientModel>(reuseIdentifier: "PatientViewCell", tableView: patientTableView)
-            manager.items = [patient]
-            patientTableView.translatesAutoresizingMaskIntoConstraints = false
-            patientTableView.addConstraint(patientTableView.heightAnchor.constraint(equalToConstant: 200))
-            patientTableView.addConstraint(patientTableView.widthAnchor.constraint(equalToConstant: 400))
-            contentView.addSubview(patientTableView)
-            patientTableView.reloadData()*/
         }
          
     }
-    @IBAction private func imageClicked() {
-        let d = delegate
-        let dd = d?.delegate
-        if let ddd = dd as? MXKRoomDataSource {
-            if let dddd = ddd.delegate as? MXKRoomViewController {
-                dddd.showAttachment(in: d)
-            }
+    
+    var tagData: TagData!
+    @objc func tagTapped() {
+        let patientTaggingController = PatientTaggingViewController()
+        guard let imagedata = ImageContent.image.pngData() as NSData? else { return }
+        patientTaggingController.setImage(To: imagedata) { (tagdata) in
+            
         }
+        guard let datasource = delegate.delegate as? MXKRoomDataSource else { return }
+        guard let viewcontroller = datasource.delegate as? MXKRoomViewController else { return }
+        patientTaggingController.loadExistingTagData(tagData)
+        
+        viewcontroller.show(patientTaggingController, sender: viewcontroller)
+    }
+    @IBAction private func imageClicked() {
+//        let d = delegate
+//        let dd = d?.delegate
+//        if let ddd = dd as? MXKRoomDataSource {
+//            if let dddd = ddd.delegate as? MXKRoomViewController {
+//                dddd.showAttachment(in: d)
+//            }
+//        }
         //delegate.delegate.cell(delegate, didRecognizeAction: kMXKRoomBubbleCellTapOnAttachmentView, userInfo: nil)
     }
     override func applyTheStyle(_ theme: Theme) {

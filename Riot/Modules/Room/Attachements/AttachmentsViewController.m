@@ -18,6 +18,7 @@
 #import "AttachmentsViewController.h"
 
 #import "Riot-Swift.h"
+#import <Messages/Messages.h>
 
 @interface AttachmentsViewController ()
 {
@@ -40,11 +41,15 @@
     self.rageShakeManager = [RageShakeManager sharedManager];
 }
 
+UIView *TagViewContainer;
+PatientViewCellData *TagViewDetails;
+NSLayoutConstraint *bottomConstraint;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
+    viewHasAppeared = false;
     self.attachmentsCollection.accessibilityIdentifier =@"AttachmentsVC";
     
     // Observe user interface theme change.
@@ -54,6 +59,296 @@
         
     }];
     [self userInterfaceThemeDidChange];
+}
+
+bool viewHasAppeared = false;
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (animated && TagViewContainer){
+        [self animateInTagViewContainer];
+    }
+    viewHasAppeared = true;
+}
+
+- (void)displayAttachments:(NSArray *)attachmentArray focusOn:(NSString *)eventId {
+    [super displayAttachments:attachmentArray focusOn:eventId];
+    [self loadTagInfo];
+}
+
+- (void)refreshCurrentVisibleCell
+{
+    struct objc_super superInfo = {
+        self,
+        [self superclass]
+    };
+    ((void (*)(struct objc_super *, SEL))objc_msgSendSuper)(&superInfo,@selector(refreshCurrentVisibleCell));
+    [self loadTagInfo];
+}
+
+UIButton *ShowMoreButton;
+UIButton *ShowLessButton;
+
+- (void)addTagViewContainer
+{
+    if (!TagViewContainer) {
+        TagViewContainer = [UIView new];
+    
+        [self.view addSubview:TagViewContainer];
+        UILayoutGuide *guide;
+        if (@available(iOS 11, *)) {
+            guide = self.view.safeAreaLayoutGuide;
+        } else {
+            guide = self.view.layoutMarginsGuide;
+        }
+        
+        [self.view addConstraint:[TagViewContainer.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor]];
+        [TagViewContainer addConstraint:[TagViewContainer.heightAnchor constraintEqualToConstant:100]];
+        [self.view addConstraint:[TagViewContainer.leftAnchor constraintEqualToAnchor:self.view.leftAnchor]];
+        [self.view addConstraint:[TagViewContainer.rightAnchor constraintEqualToAnchor:self.view.rightAnchor]];
+        TagViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
+        [TagViewContainer setAlpha:0.0];
+    }
+}
+
+UITapGestureRecognizer *TagGestureRecognizer;
+UILongPressGestureRecognizer *TagLongPressRecognizer;
+
+- (void)loadTagInfo
+{
+    
+    NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
+    if (currentIdx != NSNotFound && !TagViewContainer) {
+        MXKAttachment *attachment = self.attachments[currentIdx];
+        NSString *contentURL = attachment.contentURL;
+        
+        [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
+            
+            TagData *Tag = [tagData lastObject];
+            isShowingDetail = false;
+            
+            TagViewDetails = [PatientViewCellObjectiveC getPatientViewCellForTagData:Tag];
+            [self tryDisplayTag];
+        }];
+    } else {
+        NSLog(@"");
+    }
+    
+}
+
+- (void)tryDisplayTag{
+    if (TagViewDetails && !(TagViewContainer)){
+        [self addTagViewContainer];
+        
+        UIView *TagView = TagViewDetails.returnView;
+        [TagView sizeToFit];
+        
+        for (UIView *view in TagViewContainer.subviews) {
+            [view removeFromSuperview];
+        }
+        [TagViewContainer addSubview:TagView];
+        
+        if (TagViewDetails.includesPatientDetails){
+    //                ShowMoreButton = [UIButton new];
+    //
+    //                if (@available(iOS 13.0, *)) {
+    //                    [ShowMoreButton setImage:[UIImage systemImageNamed:@"chevron.up"] forState:UIControlStateNormal];
+    //                } else {
+    //                    [ShowMoreButton setImage:[UIImage imageNamed:@"chevron.up"] forState:UIControlStateNormal];
+    //                }
+    //                [ShowMoreButton setTitle: NSLocalizedStringFromTable(@"show_more", @"Vector", NULL) forState:UIControlStateNormal];
+    //                [ShowMoreButton sizeToFit];
+    //                [TagViewContainer addSubview:ShowMoreButton];
+    //                [ShowMoreButton addTarget:self action:@selector(tagShowMoreButton) forControlEvents:UIControlEventTouchUpInside];
+    //                [ThemeService.shared.theme applyStyleOnButton:ShowMoreButton];
+    //                ShowMoreButton.translatesAutoresizingMaskIntoConstraints = false;
+    //
+    //                ShowLessButton = [UIButton new];
+    //                if (@available(iOS 13.0, *)) {
+    //                    [ShowLessButton setImage:[UIImage systemImageNamed:@"chevron.down"] forState:UIControlStateNormal];
+    //                } else {
+    //                    [ShowLessButton setImage:[UIImage imageNamed:@"chevron.down"] forState:UIControlStateNormal];
+    //                }
+    //                [ShowLessButton setTitle: NSLocalizedStringFromTable(@"show_less", @"Vector", NULL) forState:UIControlStateNormal];
+    //                [ShowLessButton sizeToFit];
+    //                [TagViewContainer addSubview:ShowLessButton];
+    //                [ShowLessButton addTarget:self action:@selector(tagShowLessButton) forControlEvents:UIControlEventTouchUpInside];
+    //                [ThemeService.shared.theme applyStyleOnButton:ShowLessButton];
+    //                [ShowLessButton setAlpha:0];
+    //                ShowLessButton.translatesAutoresizingMaskIntoConstraints = false;
+            
+            bottomConstraint = [TagView.bottomAnchor constraintEqualToAnchor:TagViewContainer.bottomAnchor constant:TagViewDetails.photographerDetailsView.frame.size.height];
+            [TagViewContainer addConstraint:bottomConstraint];
+            [TagViewContainer addConstraint:[TagView.leftAnchor constraintEqualToAnchor:TagViewContainer.leftAnchor]];
+            [TagViewContainer addConstraint:[TagView.rightAnchor constraintEqualToAnchor:TagViewContainer.rightAnchor]];
+            TagView.translatesAutoresizingMaskIntoConstraints = NO;
+            [TagView sizeToFit];
+            [TagView layoutIfNeeded];
+            [TagView setClipsToBounds:YES];
+            
+            [TagViewDetails.descriptionView setAlpha:0];
+            [TagViewDetails.photographerDetailsView setAlpha:0];
+            
+            [TagViewContainer setContentMode:UIViewContentModeCenter];
+            [TagViewContainer setAutoresizesSubviews:NO];
+            
+    //                [TagViewContainer addConstraint:[ShowMoreButton.topAnchor constraintEqualToAnchor:TagViewDetails.patientDetailsView.topAnchor]];
+    //                [TagViewContainer addConstraint:[ShowMoreButton.rightAnchor constraintEqualToAnchor:TagViewDetails.patientDetailsView.rightAnchor]];
+    //
+    //                [TagViewContainer addConstraint:[ShowLessButton.topAnchor constraintEqualToAnchor:TagViewDetails.descriptionView.topAnchor]];
+    //                [TagViewContainer addConstraint:[ShowLessButton.rightAnchor constraintEqualToAnchor:TagViewDetails.descriptionView.rightAnchor]];
+            
+            if (TagGestureRecognizer) {
+                [[self view] removeGestureRecognizer:TagGestureRecognizer];
+                TagGestureRecognizer = NULL;
+            }
+            
+            if (TagLongPressRecognizer) {
+                [[self view] removeGestureRecognizer:TagLongPressRecognizer];
+                TagLongPressRecognizer = NULL;
+            }
+            
+            TagGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleGestureRecognition:)];
+            
+            TagLongPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGestureRecognition:)];
+            
+            [TagLongPressRecognizer setCancelsTouchesInView:NO];
+            [[self view] addGestureRecognizer:TagLongPressRecognizer];
+            [[self view] addGestureRecognizer:TagGestureRecognizer];
+            
+            
+            
+        }
+        [self.view layoutSubviews];
+        [TagViewContainer setAlpha:0.0];
+        if (viewHasAppeared){
+            [self animateInTagViewContainer];
+        }
+    }
+}
+
+- (void)animateInTagViewContainer{
+    [UIView animateWithDuration:0.4 animations:^{
+        [TagViewContainer setAlpha:1];
+    }];
+}
+
+NSMutableDictionary *cellGestureRecognizers;
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!cellGestureRecognizers) {
+        cellGestureRecognizers = [NSMutableDictionary new];
+    }
+    UICollectionViewCell *returnCell = [super collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    
+    for (UIGestureRecognizer *rec in returnCell.gestureRecognizers){
+        [rec setEnabled:NO];
+        if ([rec isKindOfClass:UITapGestureRecognizer.class]) {
+            [cellGestureRecognizers setObject:rec forKey:[NSNumber numberWithLong:indexPath.row]];
+        }
+    }
+    return returnCell;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self hideTag];
+}
+
+- (void)hideTag
+{
+    if (TagViewDetails && TagViewContainer) {
+        [UIView animateWithDuration:0.4 animations:^{
+            [TagViewContainer setAlpha:0.0];
+            TagViewDetails = NULL;
+        } completion:^(BOOL finished) {
+            [TagViewContainer removeFromSuperview];
+            TagViewContainer = NULL;
+            [self loadTagInfo];
+        }];
+    }
+}
+
+- (void)tagShowMoreButton
+{
+    isShowingDetail = true;
+    if (TagViewDetails && TagViewDetails.includesPatientDetails) {
+        [bottomConstraint setConstant:0];
+        [UIView animateWithDuration:0.2 animations:^{
+            [TagViewDetails.descriptionView setAlpha:1.0];
+            [TagViewDetails.photographerDetailsView setAlpha:1.0];
+            [ShowMoreButton setAlpha:0];
+            [TagViewContainer layoutIfNeeded];
+            [TagViewContainer setNeedsDisplay];
+            [ShowLessButton setAlpha:1.0];
+            [TagViewContainer setAlpha:0.9];
+        } completion:^(BOOL finished) {
+            [TagViewContainer layoutIfNeeded];
+            [TagViewContainer setNeedsDisplay];
+            [TagViewContainer layoutSubviews];
+            [ShowLessButton setUserInteractionEnabled:YES];
+        }];
+    }
+}
+
+- (void)tagShowLessButton
+{
+    isShowingDetail = false;
+    if (TagViewDetails && TagViewDetails.includesPatientDetails) {
+        [bottomConstraint setConstant:TagViewDetails.photographerDetailsView.frame.size.height];
+        [UIView animateWithDuration:0.2 animations:^{
+            [TagViewDetails.descriptionView setAlpha:0.0];
+            [TagViewDetails.photographerDetailsView setAlpha:0.0];
+            [ShowMoreButton setAlpha:1.0];
+            [ShowLessButton setAlpha:0.0];
+            [ShowMoreButton setUserInteractionEnabled:YES];
+            [TagViewContainer setAlpha:1.0];
+            [TagViewContainer layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            [TagViewContainer layoutIfNeeded];
+            [TagViewContainer setNeedsDisplay];
+            [TagViewContainer layoutSubviews];
+        }];
+    }
+}
+
+bool isShowingDetail = false;
+//MARK:- Pass gestures to the underlying MXKAttachmentViewController
+//It's not unlikely that at some point in the future this function will begin to cause issues.
+- (void)handleGestureRecognition:(UIGestureRecognizer*) GestureRecognizer
+{
+    NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
+    UIGestureRecognizer *cellGestureRecognizer = [cellGestureRecognizers objectForKey:[NSNumber numberWithLong:currentIdx]];
+    CGPoint location = (isShowingDetail ? [GestureRecognizer locationInView:[TagViewContainer.subviews firstObject]] : [GestureRecognizer locationInView:TagViewContainer]);
+    if ((isShowingDetail && [self point:location IsInRectangle:[TagViewContainer.subviews firstObject].bounds]) || (!isShowingDetail && [self point:location IsInRectangle:TagViewContainer.bounds])){
+        if ([GestureRecognizer isKindOfClass:UITapGestureRecognizer.class]){
+            if (isShowingDetail) {
+                [self tagShowLessButton];
+            } else {
+                [self tagShowMoreButton];
+            }
+        }
+    } else {
+        CGPoint LocationInCell = [GestureRecognizer locationInView:cellGestureRecognizer.view];
+        if ([self point:LocationInCell IsInRectangle:cellGestureRecognizer.view.bounds]){
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+            if ([GestureRecognizer isKindOfClass:UITapGestureRecognizer.class]){
+                [super performSelector:@selector(onCollectionViewCellTap:) withObject:cellGestureRecognizer]; //this selector does exist, as does the selector below.
+                ///It's a little dangerous to directly performselector, as the name of the selector may change in MatrixKit, and this would lead to an annoying-to-diagnose crash.
+                ///A solution to this, would be getting the selector on the base gesture recognizers in MatrixKit. This could be done by getValueForKey'ing targets (or it might be actions) on the gesture recognizer, which would return a NSObject with an attached target (NSObject) and selector (SEL), from which we could then extract the target and selector (with get_IVar for the selector (as otherwise you've got to convert an ARC managed pointer to a selector, which isn't allowed), and a normal getValueForKey for the target), which would ensure that no matter what changes are made to MatrixKit, this code continutes to work as expected; HOWEVER, doing this requires simply moving the reliance to one on Apple's private implementation of UIGestureRecognizers, and again, as private APIs are used doing this, the app could be banned from the app store as a result.
+                ///So, putting this reliance on the MatrixKit Private APIs remaining the same was chosen over utilizing Apple's private APIs -- but it's reasonably likely that this will eventually become a problem.
+            } else if ([GestureRecognizer isKindOfClass:UILongPressGestureRecognizer.class]) {
+                
+                [super performSelector:@selector(onCollectionViewCellLongPress:) withObject:GestureRecognizer];
+            }
+#pragma clang diagnostic pop
+        }
+    }
+}
+
+- (bool)point:(CGPoint) point IsInRectangle:(CGRect)rect {
+    CGFloat x1 = rect.origin.x;
+    CGFloat y1 = rect.origin.y;
+    return point.x >= x1 && point.y >= y1 && point.x <= x1 + rect.size.width && point.y <= y1 + rect.size.height;
 }
 
 - (void)userInterfaceThemeDidChange

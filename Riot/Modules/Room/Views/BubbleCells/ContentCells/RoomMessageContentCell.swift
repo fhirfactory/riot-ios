@@ -106,6 +106,7 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
         MessageContentView.rowHeight = UITableView.automaticDimension
         MessageContentView.estimatedRowHeight = 44.0
         MessageContentView.reloadData()
+        MessageContentView.backgroundColor = ThemeService.shared().theme.backgroundColor
     }
     
     @objc func avatarViewTapped() {

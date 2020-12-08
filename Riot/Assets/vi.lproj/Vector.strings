@@ -217,6 +217,9 @@
 "room_resend_unsent_messages" = "Gửi lại các tin nhắn chưa được gửi";
 "room_delete_unsent_messages" = "Xoá các tin nhắn chưa được gửi";
 "room_event_action_copy" = "Sao chép";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_quote" = "Trích dẫn";
 "room_event_action_redact" = "Biên tập lại";
 "room_event_action_more" = "Thêm";

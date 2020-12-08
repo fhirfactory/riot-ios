@@ -16,7 +16,7 @@
 
 import Foundation
 
-class Services {
+@objc class Services: NSObject {
     private static var instancePatientQueryService: PatientQueryService!
     static func PatientService() -> PatientQueryService {
         if instancePatientQueryService == nil {
@@ -32,7 +32,7 @@ class Services {
         return instanceRoleQueryService
     }
     private static var instanceImageTagService: ImageTagService!
-    static func ImageTagDataService() -> ImageTagService {
+    @objc static func ImageTagDataService() -> ImageTagService {
         if instanceImageTagService == nil {
             instanceImageTagService = ImageTagService()
         }

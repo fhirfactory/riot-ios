@@ -18,6 +18,7 @@ import Foundation
 
 class ImageDescriptionCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var DescriptionTitle: UILabel!
+    @IBOutlet weak var DescriptionLabel: UILabel!
     @IBOutlet weak private var DescriptionTextView: UITextView!
     var displayingPlaceholder: Bool = true
     var placeholderText: String {
@@ -57,12 +58,19 @@ class ImageDescriptionCell: UITableViewCell, UITextViewDelegate {
         self.viewModel = viewModel
         if viewModel.description != nil {
             DescriptionTextView.text = viewModel.description
+            DescriptionLabel.text = viewModel.description
+            DescriptionLabel.isHidden = true
             displayingPlaceholder = false
         }
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
         drawPlaceholderText(placeholder: AlternateHomeTools.getNSLocalized("image_description_placeholder", in: "Vector"), textView: DescriptionTextView)
         DescriptionTitle.text = AlternateHomeTools.getNSLocalized("image_description_name", in: "Vector")
         
+    }
+    
+    func setAsReadOnly() {
+        DescriptionTextView.isHidden = true
+        DescriptionLabel.isHidden = false
     }
     
     func forceResignFirstResponder() {

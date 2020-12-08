@@ -89,14 +89,14 @@ class MessageImageView: MessageContentView {
         viewcontroller.show(patientTaggingController, sender: viewcontroller)
     }
     @IBAction private func imageClicked() {
-//        let d = delegate
-//        let dd = d?.delegate
-//        if let ddd = dd as? MXKRoomDataSource {
-//            if let dddd = ddd.delegate as? MXKRoomViewController {
-//                dddd.showAttachment(in: d)
-//            }
-//        }
-        //delegate.delegate.cell(delegate, didRecognizeAction: kMXKRoomBubbleCellTapOnAttachmentView, userInfo: nil)
+        let d = delegate
+        let dd = d?.delegate
+        if let ddd = dd as? MXKRoomDataSource {
+            if let dddd = ddd.delegate as? MXKRoomViewController {
+                dddd.showAttachment(in: d)
+            }
+        }
+        delegate.delegate.cell(delegate, didRecognizeAction: kMXKRoomBubbleCellTapOnAttachmentView, userInfo: nil)
     }
     override func applyTheStyle(_ theme: Theme) {
         self.backgroundColor = .none

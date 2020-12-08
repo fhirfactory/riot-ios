@@ -21,6 +21,7 @@ class PhotographerDetails: UITableViewCell {
     @IBOutlet weak var PhotographerName: UILabel!
     @IBOutlet weak var DesignationTitle: UILabel!
     @IBOutlet weak var DesignationSelector: UIButton!
+    @IBOutlet weak var DesignationLabel: UILabel!
     var selectedDesignation: Role?
     private var roleSelectionChanged: ((Role) -> Void)?
     @IBAction private func DesignationSelectorClicked(_ sender: Any) {
@@ -41,16 +42,25 @@ class PhotographerDetails: UITableViewCell {
     func applyTheme() {
         ThemeService.shared().theme.recursiveApply(on: contentView)
         drawText()
-        guard let session = AppDelegate.theDelegate().mxSessions.first as? MXSession else { return }
-        PhotographerName.text = session.myUser.displayname
     }
     
-    func setRole(to role: Role?){
+    func setRole(to role: Role?) {
         selectedDesignation = role
         drawText()
+        guard let session = AppDelegate.theDelegate().mxSessions.first as? MXSession else { return }
+        PhotographerName.text = session.myUser.displayname
+        DesignationLabel.isHidden = true
     }
     
-    func setChangeHandler(to handler: ((Role) -> Void)?){
+    func setChangeHandler(to handler: ((Role) -> Void)?) {
         roleSelectionChanged = handler
+    }
+    
+    func displayDetails(photographerTagDetails: PhotographerTagDetails) {
+        DesignationLabel.isHidden = false
+        DesignationSelector.isHidden = true
+        applyTheme()
+        PhotographerName.text = photographerTagDetails.Name
+        DesignationLabel.text = photographerTagDetails.Role.Designation
     }
 }

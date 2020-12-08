@@ -38,6 +38,12 @@
                             <action selector="DesignationSelectorClicked:" destination="h4B-KK-BAD" eventType="touchUpInside" id="SNF-Pc-jWS"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nk8-mf-EOv">
+                        <rect key="frame" x="20" y="102" width="374" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Designation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9p3-8V-ebW">
                         <rect key="frame" x="20" y="67" width="98" height="21"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -51,15 +57,21 @@
                     <constraint firstItem="dIR-br-HrD" firstAttribute="leading" secondItem="HC0-2X-rcP" secondAttribute="leading" constant="20" symbolic="YES" id="DUe-yC-oBt"/>
                     <constraint firstItem="ard-Fi-AMi" firstAttribute="leading" secondItem="9p3-8V-ebW" secondAttribute="leading" id="Kw2-wq-URF"/>
                     <constraint firstItem="dIR-br-HrD" firstAttribute="top" secondItem="HC0-2X-rcP" secondAttribute="top" constant="9" id="N8N-Ef-ZCi"/>
+                    <constraint firstItem="Nk8-mf-EOv" firstAttribute="top" secondItem="ard-Fi-AMi" secondAttribute="top" id="OAo-6n-d0B"/>
                     <constraint firstItem="9p3-8V-ebW" firstAttribute="leading" secondItem="mTr-L7-RH9" secondAttribute="leading" id="UgE-Ex-xZA"/>
+                    <constraint firstItem="Nk8-mf-EOv" firstAttribute="leading" secondItem="ard-Fi-AMi" secondAttribute="leading" id="awO-Yq-7CX"/>
+                    <constraint firstItem="Nk8-mf-EOv" firstAttribute="trailing" secondItem="ard-Fi-AMi" secondAttribute="trailing" id="lTf-Kl-9U7"/>
+                    <constraint firstItem="Nk8-mf-EOv" firstAttribute="centerY" secondItem="ard-Fi-AMi" secondAttribute="centerY" id="oPN-y3-qhu"/>
                     <constraint firstItem="ard-Fi-AMi" firstAttribute="top" secondItem="9p3-8V-ebW" secondAttribute="bottom" constant="14" id="p4e-qT-uyj"/>
                     <constraint firstItem="mTr-L7-RH9" firstAttribute="top" secondItem="dIR-br-HrD" secondAttribute="bottom" constant="8" symbolic="YES" id="pMn-f7-jo3"/>
                     <constraint firstItem="mTr-L7-RH9" firstAttribute="leading" secondItem="dIR-br-HrD" secondAttribute="leading" id="qwD-m8-ZsO"/>
+                    <constraint firstItem="Nk8-mf-EOv" firstAttribute="bottom" secondItem="ard-Fi-AMi" secondAttribute="bottom" id="tcJ-8r-Jyk"/>
                     <constraint firstItem="9p3-8V-ebW" firstAttribute="top" secondItem="mTr-L7-RH9" secondAttribute="bottom" constant="8" symbolic="YES" id="zPO-Pl-Ikb"/>
                 </constraints>
             </tableViewCellContentView>
             <accessibility key="accessibilityConfiguration" identifier="PhotographerDetails"/>
             <connections>
+                <outlet property="DesignationLabel" destination="Nk8-mf-EOv" id="ZUC-3X-Om8"/>
                 <outlet property="DesignationSelector" destination="ard-Fi-AMi" id="viN-GI-KaW"/>
                 <outlet property="DesignationTitle" destination="9p3-8V-ebW" id="FwA-IP-9Ee"/>
                 <outlet property="PhotographerName" destination="mTr-L7-RH9" id="Nyy-L0-ujz"/>

@@ -40,7 +40,7 @@ class PatientViewCell: QueryTableViewCell<PatientModel> {
     
     func ReorderNameString(Name namestring: String) -> (String, String) {
         let splitName = namestring.split(separator: " ")
-        guard let lastname = splitName.last else {return ("", "")}
+        guard let lastname = splitName.last?.uppercased() else {return ("", "")}
         let lastNamePosition = splitName.last?.startIndex ?? namestring.startIndex
         let firstNamesSubstring = namestring[..<lastNamePosition]
         return (firstNamesSubstring.trimmingCharacters(in: CharacterSet(charactersIn: " ")), String(lastname))

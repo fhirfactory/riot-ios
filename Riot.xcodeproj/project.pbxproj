@@ -821,7 +821,9 @@
 		EBAC79AE2543CDB800A0B1BF /* SearchViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */; };
 		EBAC79B62543F9EE00A0B1BF /* SelectableFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */; };
 		EBAC79BE2543FA5700A0B1BF /* SelectableFilteredSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */; };
+		EBB6C3092579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */; };
 		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
+		EBD3490125596AFA0008F5C3 /* RoomSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD3490025596AFA0008F5C3 /* RoomSelector.swift */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
 		EBE274B82569E681003BC7C1 /* PhotographerDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE274B72569E681003BC7C1 /* PhotographerDetails.xib */; };
 		EBE274C02569E880003BC7C1 /* PhotographerDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE274BF2569E880003BC7C1 /* PhotographerDetails.swift */; };
@@ -2122,8 +2124,10 @@
 		EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewSection.swift; sourceTree = "<group>"; };
 		EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableFilteredSearchController.swift; sourceTree = "<group>"; };
 		EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectableFilteredSearchController.xib; sourceTree = "<group>"; };
+		EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewCellObjectiveCBridge.swift; sourceTree = "<group>"; };
 		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
+		EBD3490025596AFA0008F5C3 /* RoomSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelector.swift; sourceTree = "<group>"; };
 		EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateHomeViewDataSource.swift; sourceTree = "<group>"; };
 		EBE274B72569E681003BC7C1 /* PhotographerDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotographerDetails.xib; sourceTree = "<group>"; };
 		EBE274BF2569E880003BC7C1 /* PhotographerDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotographerDetails.swift; sourceTree = "<group>"; };
@@ -4947,6 +4951,7 @@
 				EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */,
 				EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */,
 				EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */,
+				EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -5157,6 +5162,7 @@
 				EBA8AB2625515DDA00FA8383 /* HomeTabViewController.xib */,
 				EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */,
 				EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */,
+				EBD3490025596AFA0008F5C3 /* RoomSelector.swift */,
 			);
 			path = Alternate;
 			sourceTree = "<group>";
@@ -6750,6 +6756,7 @@
 				B1C3360122F1ED600021BA8D /* MediaPickerCoordinatorType.swift in Sources */,
 				32F6B96D2270623100BBA352 /* KeyVerificationDataLoadingViewModel.swift in Sources */,
 				B16932B120F3AC9200746532 /* RoomSearchDataSource.m in Sources */,
+				EBD3490125596AFA0008F5C3 /* RoomSelector.swift in Sources */,
 				B1B5574520EE6C4D00210D55 /* StartChatViewController.m in Sources */,
 				3232AB4C2256558300AD6A5C /* TemplateScreenCoordinator.swift in Sources */,
 				B1B5575920EE6C4D00210D55 /* HomeMessagesSearchViewController.m in Sources */,
@@ -6784,6 +6791,7 @@
 				EC711B9524A63B37008F830C /* SecretsRecoveryWithKeyViewModelType.swift in Sources */,
 				B1A68593229E807A00D6C09A /* RoomBubbleCellLayout.swift in Sources */,
 				EB76BE3D2573B5810013EABE /* BaseService.swift in Sources */,
+				EBB6C3092579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift in Sources */,
 				ECFBD603250FA98200DD5F5A /* RoomCreationModalCoordinatorBridgePresenter.swift in Sources */,
 				B1B558F420EF768F00210D55 /* RoomOutgoingTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.m in Sources */,
 				B1B5572320EE6C4D00210D55 /* AttachmentsViewController.m in Sources */,

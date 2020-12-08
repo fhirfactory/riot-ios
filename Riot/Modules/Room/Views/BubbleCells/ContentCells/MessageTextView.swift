@@ -20,6 +20,7 @@ class MessageTextView: MessageContentView, RendersBubbleComponent {
     func render(component bubbleComponent: MXKRoomBubbleComponent) {
         //TextContent.attributedTextMessage = bubbleComponent.attributedTextMessage
         TextContent.attributedText = bubbleComponent.attributedTextMessage
+        ThemeService.shared().theme.recursiveApply(on: self.contentView)
     }
     
     override var intrinsicContentSize: CGSize {
@@ -36,6 +37,7 @@ class MessageTextView: MessageContentView, RendersBubbleComponent {
     }
     override internal func renderData(_ celldata: MXKRoomBubbleCellData, _ width: CGFloat) {
         TextContent.attributedText = celldata.attributedTextMessage
+        ThemeService.shared().theme.recursiveApply(on: self.contentView)
     }
     override func applyTheStyle(_ theme: Theme) {
         TextContent.textColor = theme.textPrimaryColor

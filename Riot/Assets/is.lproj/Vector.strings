@@ -135,6 +135,9 @@
 "room_prompt_resend" = "Endursenda allt";
 "room_prompt_cancel" = "hætta við allt";
 "room_event_action_copy" = "Afrita";
+"room_event_action_forward" = "Forward";
+"room_event_action_forward_same_room_error_title" = "Error";
+"room_event_action_forward_same_room_error_description" = "Cannot forward a message to the room that sent it";
 "room_event_action_quote" = "Tilvitnun";
 "room_event_action_redact" = "Ritstýra";
 "room_event_action_more" = "Meira";

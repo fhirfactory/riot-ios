@@ -17,7 +17,7 @@
 import Foundation
 
 @objc class ImageTagService: NSObject {
-    var tagData: [String: [TagData?]] = ["mxc://matrix.org/EzgHluUEbwnEGDZHpcwaJTNy":[TagData(withPatient: PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), Description: "A photo", andPhotographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")))]]
+    var tagData: [String: [TagData?]] = ["mxc://matrix.org/EzgHluUEbwnEGDZHpcwaJTNy":[TagData(withPatient: PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), Description: "A photo", andPhotographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno"))),TagData(withPatient: PatientModel(Name: "John Nobody", URN: "123456788", DoB: Date()), Description: "A photo", andPhotographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")))]]
     func LookupTagInfoFor(URL: String, andHandler handler: ([TagData?]) -> Void) {
         if tagData.keys.contains(URL) {
             if let tags = tagData[URL] {

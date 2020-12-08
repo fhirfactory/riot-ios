@@ -123,10 +123,9 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
         
         [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
             
-            TagData *Tag = [tagData lastObject];
             isShowingDetail = false;
             
-            TagViewDetails = [PatientViewCellObjectiveC getPatientViewCellForTagData:Tag];
+            TagViewDetails = [PatientViewCellObjectiveC getPatientViewCellForTagData:tagData];
             [self tryDisplayTag];
         }];
     } else {
@@ -176,7 +175,8 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
     //                [ShowLessButton setAlpha:0];
     //                ShowLessButton.translatesAutoresizingMaskIntoConstraints = false;
             
-            bottomConstraint = [TagView.bottomAnchor constraintEqualToAnchor:TagViewContainer.bottomAnchor constant:TagViewDetails.photographerDetailsView.frame.size.height];
+            //bottomConstraint = [TagView.bottomAnchor constraintEqualToAnchor:TagViewContainer.bottomAnchor constant:TagViewDetails.otherViews.frame.size.height];
+            bottomConstraint = [TagViewDetails.patientDetailsView.bottomAnchor constraintEqualToAnchor:TagViewContainer.bottomAnchor constant:0.0];
             [TagViewContainer addConstraint:bottomConstraint];
             [TagViewContainer addConstraint:[TagView.leftAnchor constraintEqualToAnchor:TagViewContainer.leftAnchor]];
             [TagViewContainer addConstraint:[TagView.rightAnchor constraintEqualToAnchor:TagViewContainer.rightAnchor]];
@@ -185,8 +185,7 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
             [TagView layoutIfNeeded];
             [TagView setClipsToBounds:YES];
             
-            [TagViewDetails.descriptionView setAlpha:0];
-            [TagViewDetails.photographerDetailsView setAlpha:0];
+            [TagViewDetails.otherViews setAlpha:0];
             
             [TagViewContainer setContentMode:UIViewContentModeCenter];
             [TagViewContainer setAutoresizesSubviews:NO];
@@ -271,10 +270,9 @@ NSMutableDictionary *cellGestureRecognizers;
 {
     isShowingDetail = true;
     if (TagViewDetails && TagViewDetails.includesPatientDetails) {
-        [bottomConstraint setConstant:0];
+        [bottomConstraint setConstant:-TagViewDetails.otherViews.frame.size.height];
         [UIView animateWithDuration:0.2 animations:^{
-            [TagViewDetails.descriptionView setAlpha:1.0];
-            [TagViewDetails.photographerDetailsView setAlpha:1.0];
+            [TagViewDetails.otherViews setAlpha:1.0];
             [ShowMoreButton setAlpha:0];
             [TagViewContainer layoutIfNeeded];
             [TagViewContainer setNeedsDisplay];
@@ -293,10 +291,9 @@ NSMutableDictionary *cellGestureRecognizers;
 {
     isShowingDetail = false;
     if (TagViewDetails && TagViewDetails.includesPatientDetails) {
-        [bottomConstraint setConstant:TagViewDetails.photographerDetailsView.frame.size.height];
+        [bottomConstraint setConstant:0];
         [UIView animateWithDuration:0.2 animations:^{
-            [TagViewDetails.descriptionView setAlpha:0.0];
-            [TagViewDetails.photographerDetailsView setAlpha:0.0];
+            [TagViewDetails.otherViews setAlpha:0.0];
             [ShowMoreButton setAlpha:1.0];
             [ShowLessButton setAlpha:0.0];
             [ShowMoreButton setUserInteractionEnabled:YES];

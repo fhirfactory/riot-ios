@@ -199,6 +199,8 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
 // Reopen an existing direct room with this userId or creates a new one (if it doesn't exist)
 - (void)startDirectChatWithUserId:(NSString*)userId completion:(void (^)(void))completion;
 
+- (void)forwardAttachment:(MXKAttachment*)attachment;
+
 /**
  Process the fragment part of a vector.im link.
 

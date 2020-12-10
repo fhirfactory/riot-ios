@@ -68,6 +68,11 @@ class ImageDescriptionCell: UITableViewCell, UITextViewDelegate {
         
     }
     
+    func setAsEditable() {
+        //add a constraint so the cell is a more reasonable size
+        self.contentView.addConstraint(self.contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 150))
+    }
+    
     func setAsReadOnly() {
         DescriptionTextView.isHidden = true
         DescriptionLabel.isHidden = false

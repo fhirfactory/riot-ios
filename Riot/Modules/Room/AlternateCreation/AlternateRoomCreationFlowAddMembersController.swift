@@ -85,6 +85,7 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
             filteredSearchViewControllers = [RoleFilteredSearchController(), PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:), andScrollHandler: dismissKeyboard)]
             
             self.navigationItem.title = AlternateHomeTools.getNSLocalized("room_creation_add_members", in: "Vector")
+            
             let search = SearchViewSection()
             search.initWithTitles(["Roles", "People"], viewControllers: filteredSearchViewControllers, defaultSelected: 0)
             search.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: search.view.frame.height)

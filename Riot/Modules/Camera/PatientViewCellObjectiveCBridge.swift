@@ -23,6 +23,7 @@ import Foundation
     var descriptionView: UIView?
     var photographerDetailsView: UIView?
     var otherViews: UIView?
+    var displayTagHistory: Bool = false
 }
 
 @objc class PatientViewCellObjectiveC: NSObject {
@@ -45,6 +46,18 @@ import Foundation
         otherViews.addConstraints([
                                     descriptionView.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
                                     descriptionView.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor)
+        ])
+        
+        guard let timeCell = Bundle(for: DateTakenViewCell.self).loadNibNamed("DateTakenViewCell", owner: DateTakenViewCell(), options: nil)?.first as? DateTakenViewCell else { return nil}
+        timeCell.RenderWith(Object: tag.TakenDate)
+        let timeView = timeCell.contentView
+        otherViews.addSubview(timeView)
+        timeView.translatesAutoresizingMaskIntoConstraints = false
+        timeView.sizeToFit()
+        otherViews.addConstraints([
+            timeView.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
+            timeView.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor),
+            timeView.topAnchor.constraint(equalTo: descriptionView.bottomAnchor)
         ])
         
         if tag.FileContainsPatient {
@@ -108,6 +121,10 @@ import Foundation
         returnView.sizeToFit()
         
         if tags.count > 1 {
+            returnData.displayTagHistory = true
+        }
+        
+        if tags.count > 1 {
             //only worry about one previous tag.
             if let previousTag = tags.reversed().last { (t) -> Bool in
                 t.Patients != tag.Patients && t.Patients.count > 0
@@ -117,7 +134,7 @@ import Foundation
                 paginator.backgroundColor = .white
                 otherViews.addSubview(paginator)
                 otherViews.addConstraints([
-                    paginator.topAnchor.constraint(equalTo: descriptionView.bottomAnchor),
+                    paginator.topAnchor.constraint(equalTo: timeView.bottomAnchor),
                     paginator.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
                     paginator.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor)
                 ])
@@ -127,7 +144,7 @@ import Foundation
                 paginator.addSubview(separator)
                 
                 let paginatorLabel = UILabel()
-                paginatorLabel.textColor = .red
+                paginatorLabel.textColor = ThemeService.shared().theme.headerTextPrimaryColor
                 paginatorLabel.text = "Previously Tagged"
                 paginatorLabel.textAlignment = .center
                 paginatorLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -161,7 +178,7 @@ import Foundation
                 
             }
         } else {
-            otherViews.addConstraint(descriptionView.bottomAnchor.constraint(equalTo: otherViews.bottomAnchor))
+            otherViews.addConstraint(timeView.bottomAnchor.constraint(equalTo: otherViews.bottomAnchor))
         }
         
         returnView.addConstraint(otherViews.bottomAnchor.constraint(equalTo: returnView.bottomAnchor))

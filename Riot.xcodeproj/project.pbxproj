@@ -785,6 +785,9 @@
 		EB16BA0A2545668E0096C90F /* RoomCreationCollectionViewPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB16BA092545668E0096C90F /* RoomCreationCollectionViewPeopleCell.swift */; };
 		EB18F1352572422C002A9676 /* RendersBubbleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18F1342572422C002A9676 /* RendersBubbleComponent.swift */; };
 		EB2D1F2F2545754700FB80E0 /* AlternateCreationHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */; };
+		EB3B39232581DBFC003D6BD0 /* DateTakenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3B39222581DBFC003D6BD0 /* DateTakenViewCell.xib */; };
+		EB3B392B2581DC1B003D6BD0 /* DateTakenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */; };
+		EB3B39392581E861003D6BD0 /* Stackview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3B39382581E861003D6BD0 /* Stackview.swift */; };
 		EB4280B1255FE9A700B9BBBF /* PatientTaggingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4280B0255FE9A700B9BBBF /* PatientTaggingViewController.xib */; };
 		EB4280B9255FE9B900B9BBBF /* PatientTaggingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280B8255FE9B900B9BBBF /* PatientTaggingViewController.swift */; };
 		EB4280C92560110E00B9BBBF /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280C82560110E00B9BBBF /* PatientModel.swift */; };
@@ -2087,6 +2090,9 @@
 		EB18F1342572422C002A9676 /* RendersBubbleComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RendersBubbleComponent.swift; sourceTree = "<group>"; };
 		EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateCreationHelpers.m; sourceTree = "<group>"; };
 		EB2D1F362545755D00FB80E0 /* AlternateCreationHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateCreationHelpers.h; sourceTree = "<group>"; };
+		EB3B39222581DBFC003D6BD0 /* DateTakenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateTakenViewCell.xib; sourceTree = "<group>"; };
+		EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTakenViewCell.swift; sourceTree = "<group>"; };
+		EB3B39382581E861003D6BD0 /* Stackview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stackview.swift; sourceTree = "<group>"; };
 		EB4280B0255FE9A700B9BBBF /* PatientTaggingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatientTaggingViewController.xib; sourceTree = "<group>"; };
 		EB4280B8255FE9B900B9BBBF /* PatientTaggingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTaggingViewController.swift; sourceTree = "<group>"; };
 		EB4280C82560110E00B9BBBF /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
@@ -4951,6 +4957,8 @@
 				EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */,
 				EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */,
 				EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */,
+				EB3B39222581DBFC003D6BD0 /* DateTakenViewCell.xib */,
+				EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */,
 				EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */,
 			);
 			path = Camera;
@@ -5179,6 +5187,7 @@
 				EBE274DF2569FFFD003BC7C1 /* RoleQueryService.swift */,
 				EBE274E7256A00A4003BC7C1 /* Role.swift */,
 				EB674D572574E1C900A8D65C /* PhotographerTagDetails.swift */,
+				EB3B39382581E861003D6BD0 /* Stackview.swift */,
 			);
 			path = HealthServices;
 			sourceTree = "<group>";
@@ -6287,6 +6296,7 @@
 				438067A724D7983E002675E1 /* RoleDetailViewController.xib in Resources */,
 				EC711BB324A63B58008F830C /* SecureBackupBannerCell.xib in Resources */,
 				B1B5574C20EE6C4D00210D55 /* MediaAlbumContentViewController.xib in Resources */,
+				EB3B39232581DBFC003D6BD0 /* DateTakenViewCell.xib in Resources */,
 				32607D6F243E0A55006674CC /* KeyBackupRecoverFromPrivateKeyViewController.storyboard in Resources */,
 				EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */,
 				B1B557E820EF60F500210D55 /* MessagesSearchResultTextMsgBubbleCell.xib in Resources */,
@@ -6734,6 +6744,7 @@
 				3232ABA9225730E100AD6A5C /* DeviceVerificationStartViewModel.swift in Sources */,
 				ECF57A4425090C23004BBF9D /* CreateRoomCoordinatorBridgePresenter.swift in Sources */,
 				B1B4E9BB24D46EB4004D5C33 /* SizingViewHeightStore.swift in Sources */,
+				EB3B39392581E861003D6BD0 /* Stackview.swift in Sources */,
 				32DB557C22FDADE50016329E /* ServiceTermsModalScreenViewModelType.swift in Sources */,
 				B16932FA20F3C51A00746532 /* RecentCellData.m in Sources */,
 				EC85D72B2477DCF2002C44C9 /* KeyVerificationManuallyVerifyCoordinatorType.swift in Sources */,
@@ -7306,6 +7317,7 @@
 				B1098C0D21ED07E4000DDA48 /* NavigationRouter.swift in Sources */,
 				EC711B8E24A63B37008F830C /* SecretsRecoveryMode.swift in Sources */,
 				B110872321F098F0003554A5 /* ActivityIndicatorPresenterType.swift in Sources */,
+				EB3B392B2581DC1B003D6BD0 /* DateTakenViewCell.swift in Sources */,
 				B139C22321FF01B200BB68EC /* KeyBackupRecoverFromPassphraseCoordinatorType.swift in Sources */,
 				B14084CE23BFA0990010F692 /* KeyVerificationIncomingRequestApprovalWithPaginationTitleBubbleCell.swift in Sources */,
 				B14F143222144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyCoordinator.swift in Sources */,

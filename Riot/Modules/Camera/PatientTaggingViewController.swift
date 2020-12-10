@@ -82,9 +82,9 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         if patientTaggingViewModel.patients.count > 0 {
             guard let role = patientTaggingViewModel.role else { return nil }
             let photographer = PhotographerTagDetails(withName: patientTaggingViewModel.name, andRole: role)
-            return TagData(withPatients: patientTaggingViewModel.patients, Description: patientTaggingViewModel.description, andPhotographer: photographer)
+            return TagData(withPatients: patientTaggingViewModel.patients, Description: patientTaggingViewModel.description, Photographer: photographer, andDate: patientTaggingViewModel.photoDate)
         }
-        return TagData(withDescription: patientTaggingViewModel.description)
+        return TagData(withDescription: patientTaggingViewModel.description, andDate: patientTaggingViewModel.photoDate)
     }
     
     func updateSelections() {
@@ -121,13 +121,14 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         tableView.register(UINib(nibName: "PatientViewCell", bundle: nil), forCellReuseIdentifier: "PatientViewCell")
         tableView.register(UINib(nibName: "PhotographerDetails", bundle: nil), forCellReuseIdentifier: "PhotographerDetails")
         tableView.register(UINib(nibName: "ImageDescriptionCell", bundle: nil), forCellReuseIdentifier: "ImageDescriptionCell")
+        tableView.register(UINib(nibName: "DateTakenViewCell", bundle: nil), forCellReuseIdentifier: "DateTakenViewCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 73.0
         
         updateSelections()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return patientTaggingViewModel.patients.count > 0 ? patientTaggingViewModel.patients.count + 2 : 1
+        return (patientTaggingViewModel.patients.count > 0 ? patientTaggingViewModel.patients.count + 2 : 1) + 1
     }
     
     var resignDescriptionCellResponder: (() -> Void)?
@@ -136,7 +137,7 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row > patientTaggingViewModel.patients.count {
+        if indexPath.row == patientTaggingViewModel.patients.count + 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotographerDetails", for: indexPath) as? PhotographerDetails else {return UITableViewCell()}
             cell.applyTheme()
             cell.nearestViewController = self
@@ -152,7 +153,12 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         } else if indexPath.row == patientTaggingViewModel.patients.count {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageDescriptionCell", for: indexPath) as? ImageDescriptionCell else {return UITableViewCell()}
             cell.render(viewModel: patientTaggingViewModel)
+            cell.setAsEditable()
             resignDescriptionCellResponder = cell.forceResignFirstResponder
+            return cell
+        } else if indexPath.row == patientTaggingViewModel.patients.count + 2 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "DateTakenViewCell", for: indexPath) as? DateTakenViewCell else {return UITableViewCell()}
+            cell.RenderWith(Object: patientTaggingViewModel.photoDate)
             return cell
         }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PatientViewCell", for: indexPath) as? PatientViewCell else {return UITableViewCell()}

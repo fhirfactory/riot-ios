@@ -44,12 +44,13 @@
 UIView *TagViewContainer;
 PatientViewCellData *TagViewDetails;
 NSLayoutConstraint *bottomConstraint;
+bool viewHasAppeared = false;
 
 - (void)viewDidLoad
 {
+    viewHasAppeared = false;
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    viewHasAppeared = false;
     self.attachmentsCollection.accessibilityIdentifier =@"AttachmentsVC";
     
     // Observe user interface theme change.
@@ -61,13 +62,18 @@ NSLayoutConstraint *bottomConstraint;
     [self userInterfaceThemeDidChange];
 }
 
-bool viewHasAppeared = false;
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (animated && TagViewContainer){
         [self animateInTagViewContainer];
     }
     viewHasAppeared = true;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [TagViewContainer removeFromSuperview];
+    TagViewContainer = NULL;
 }
 
 - (void)displayAttachments:(NSArray *)attachmentArray focusOn:(NSString *)eventId {
@@ -92,6 +98,7 @@ UIButton *ShowLessButton;
 {
     if (!TagViewContainer) {
         TagViewContainer = [UIView new];
+        [TagViewContainer setAlpha:0.0];
     
         [self.view addSubview:TagViewContainer];
         UILayoutGuide *guide;
@@ -106,6 +113,7 @@ UIButton *ShowLessButton;
         [self.view addConstraint:[TagViewContainer.leftAnchor constraintEqualToAnchor:self.view.leftAnchor]];
         [self.view addConstraint:[TagViewContainer.rightAnchor constraintEqualToAnchor:self.view.rightAnchor]];
         TagViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    } else {
         [TagViewContainer setAlpha:0.0];
     }
 }
@@ -121,6 +129,8 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
         MXKAttachment *attachment = self.attachments[currentIdx];
         NSString *contentURL = attachment.contentURL;
         
+        [self hideTag];
+        
         [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
             
             isShowingDetail = false;
@@ -128,8 +138,6 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
             TagViewDetails = [PatientViewCellObjectiveC getPatientViewCellForTagData:tagData];
             [self tryDisplayTag];
         }];
-    } else {
-        NSLog(@"");
     }
     
 }
@@ -145,6 +153,8 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
             [view removeFromSuperview];
         }
         [TagViewContainer addSubview:TagView];
+        [TagViewContainer setAlpha:0.0];
+        [TagViewContainer setOpaque:NO];
         
         if (TagViewDetails.includesPatientDetails){
     //                ShowMoreButton = [UIButton new];
@@ -182,7 +192,6 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
             [TagViewContainer addConstraint:[TagView.rightAnchor constraintEqualToAnchor:TagViewContainer.rightAnchor]];
             TagView.translatesAutoresizingMaskIntoConstraints = NO;
             [TagView sizeToFit];
-            [TagView layoutIfNeeded];
             [TagView setClipsToBounds:YES];
             
             [TagViewDetails.otherViews setAlpha:0];
@@ -218,7 +227,7 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
             
         }
         [self.view layoutSubviews];
-        [TagViewContainer setAlpha:0.0];
+        
         if (viewHasAppeared){
             [self animateInTagViewContainer];
         }
@@ -226,8 +235,15 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
 }
 
 - (void)animateInTagViewContainer{
-    [UIView animateWithDuration:0.4 animations:^{
-        [TagViewContainer setAlpha:1];
+    /// this is all a little weird. In essense, if iOS the layout of a view is not calculated, iOS won't bother properly performing an animation (because for all the phone knows, the view may be off-screen, or behind something). Hence, we need to call layoutIfNeeded before trying to animate our TagViewContainer.
+    /// However, it seems (I don't know this for sure) like layoutIfNeeded (or at least some aspect of the drawing stack) is actually asynchronous / on a different thread. Resultantly, if we just call layoutIfNeeded, then go on to perform our animation, we find that the animation is ignored, as the correct layout / frame for the TagViewContainer has not yet been calculated.
+    
+    [UIView animateWithDuration:0.05 animations:^{
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.4 animations:^{
+            [TagViewContainer setAlpha:1];
+        }];
     }];
 }
 
@@ -254,6 +270,7 @@ NSMutableDictionary *cellGestureRecognizers;
 
 - (void)hideTag
 {
+    NSInteger tempIndex = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
     if (TagViewDetails && TagViewContainer) {
         [UIView animateWithDuration:0.4 animations:^{
             [TagViewContainer setAlpha:0.0];
@@ -261,7 +278,11 @@ NSMutableDictionary *cellGestureRecognizers;
         } completion:^(BOOL finished) {
             [TagViewContainer removeFromSuperview];
             TagViewContainer = NULL;
-            [self loadTagInfo];
+            NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
+            //display the tag if we've switched attachments
+            if (tempIndex != currentIdx) {
+                [self loadTagInfo];
+            }
         }];
     }
 }

@@ -1527,3 +1527,8 @@
 "designation_select" = "Select a Designation";
 "image_description_placeholder" = "Provide an image description";
 "image_description_name" = "Description";
+"date" = "Date";
+"time" = "Time";
+"taken" = "Taken";
+"previous_tag" = "Previous Tag";
+"view_tag_history" = "Tag History";

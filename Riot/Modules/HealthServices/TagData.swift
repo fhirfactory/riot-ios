@@ -21,22 +21,26 @@ import Foundation
     let Description: String!
     let PhotographerDetails: PhotographerTagDetails?
     let FileContainsPatient: Bool
-    init(withPatient: PatientModel, Description: String?, andPhotographer: PhotographerTagDetails?) {
+    let TakenDate: Date
+    init(withPatient: PatientModel, Description: String?, Photographer: PhotographerTagDetails?, andDate date: Date) {
         Patients = [withPatient]
         self.Description = Description
-        self.PhotographerDetails = andPhotographer
+        self.PhotographerDetails = Photographer
         FileContainsPatient = true
+        TakenDate = date
     }
-    init(withPatients: [PatientModel], Description: String?, andPhotographer: PhotographerTagDetails?) {
+    init(withPatients: [PatientModel], Description: String?, Photographer: PhotographerTagDetails?, andDate date: Date) {
         Patients = withPatients
         self.Description = Description
-        self.PhotographerDetails = andPhotographer
+        self.PhotographerDetails = Photographer
         FileContainsPatient = true
+        TakenDate = date
     }
-    init(withDescription: String?) {
+    init(withDescription: String?, andDate date: Date) {
         self.Description = withDescription
         Patients = []
         FileContainsPatient = false
         PhotographerDetails = nil
+        TakenDate = date
     }
 }

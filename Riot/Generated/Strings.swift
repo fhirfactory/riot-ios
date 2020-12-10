@@ -606,6 +606,10 @@ internal enum VectorL10n {
   internal static var crossSigningSetupBannerTitle: String { 
     return VectorL10n.tr("Vector", "cross_signing_setup_banner_title") 
   }
+  /// Date
+  internal static var date: String { 
+    return VectorL10n.tr("Vector", "date") 
+  }
   /// Please forget all messages I have sent when my account is deactivated (
   internal static var deactivateAccountForgetMessagesInformationPart1: String { 
     return VectorL10n.tr("Vector", "deactivate_account_forget_messages_information_part1") 
@@ -2161,6 +2165,10 @@ internal enum VectorL10n {
   /// Preview
   internal static var preview: String { 
     return VectorL10n.tr("Vector", "preview") 
+  }
+  /// Previous Tag
+  internal static var previousTag: String { 
+    return VectorL10n.tr("Vector", "previous_tag") 
   }
   /// Public Rooms (at %@):
   internal static func publicRoomSectionTitle(_ p1: String) -> String {
@@ -4270,6 +4278,14 @@ internal enum VectorL10n {
   internal static var `switch`: String { 
     return VectorL10n.tr("Vector", "switch") 
   }
+  /// Taken
+  internal static var taken: String { 
+    return VectorL10n.tr("Vector", "taken") 
+  }
+  /// Time
+  internal static var time: String { 
+    return VectorL10n.tr("Vector", "time") 
+  }
   /// Favourites
   internal static var titleFavourites: String { 
     return VectorL10n.tr("Vector", "title_favourites") 
@@ -4425,6 +4441,10 @@ internal enum VectorL10n {
   /// View
   internal static var view: String { 
     return VectorL10n.tr("Vector", "view") 
+  }
+  /// Tag History
+  internal static var viewTagHistory: String { 
+    return VectorL10n.tr("Vector", "view_tag_history") 
   }
   /// Voice
   internal static var voice: String { 

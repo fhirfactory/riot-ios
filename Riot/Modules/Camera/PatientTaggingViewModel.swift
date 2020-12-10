@@ -21,4 +21,5 @@ class PatientTaggingViewModel {
     var role: Role?
     var name: String!
     var patients: [PatientModel] = []
+    var photoDate: Date = Date()
 }

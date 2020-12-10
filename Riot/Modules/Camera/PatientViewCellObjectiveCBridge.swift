@@ -29,9 +29,13 @@ import Foundation
 @objc class PatientViewCellObjectiveC: NSObject {
     @objc static func getPatientViewCell(ForTagData tags: [TagData]) -> PatientViewCellData? {
         let returnData = PatientViewCellData()
-        let returnView = UIView()
-        let otherViews = UIView()
-        otherViews.translatesAutoresizingMaskIntoConstraints = false
+        let returnView = Stackview()
+        let childStackView = Stackview()
+        childStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var topLevelViews: [UIView] = []
+        var subviews: [UIView] = []
+        
         guard let tag = tags.last else { return nil }
         guard let descriptionCell = Bundle(for: ImageDescriptionCell.self).loadNibNamed("ImageDescriptionCell", owner: ImageDescriptionCell(), options: nil)?.first as? ImageDescriptionCell else { return nil}
         let viewModel = PatientTaggingViewController.produceViewModel(fromTagData: tag)
@@ -39,26 +43,16 @@ import Foundation
         descriptionCell.setAsReadOnly()
         descriptionCell.sizeToFit()
         let descriptionView = descriptionCell.contentView
-        otherViews.addSubview(descriptionView)
+        subviews.append(descriptionView)
         descriptionView.translatesAutoresizingMaskIntoConstraints = false
-        descriptionView.sizeToFit()
         returnData.descriptionView = descriptionView
-        otherViews.addConstraints([
-                                    descriptionView.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
-                                    descriptionView.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor)
-        ])
         
         guard let timeCell = Bundle(for: DateTakenViewCell.self).loadNibNamed("DateTakenViewCell", owner: DateTakenViewCell(), options: nil)?.first as? DateTakenViewCell else { return nil}
         timeCell.RenderWith(Object: tag.TakenDate)
         let timeView = timeCell.contentView
-        otherViews.addSubview(timeView)
+        subviews.append(timeView)
         timeView.translatesAutoresizingMaskIntoConstraints = false
         timeView.sizeToFit()
-        otherViews.addConstraints([
-            timeView.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
-            timeView.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor),
-            timeView.topAnchor.constraint(equalTo: descriptionView.bottomAnchor)
-        ])
         
         if tag.FileContainsPatient {
             returnData.includesPatientDetails = true
@@ -77,45 +71,17 @@ import Foundation
             let photographerView = photographerInfoView.contentView
             
             patientTagView.translatesAutoresizingMaskIntoConstraints = false
-            returnView.addSubview(patientTagView)
-            returnView.addConstraints([
-                                       patientTagView.topAnchor.constraint(equalTo: returnView.topAnchor),
-                                       patientTagView.leadingAnchor.constraint(equalTo: returnView.leadingAnchor),
-                                       patientTagView.trailingAnchor.constraint(equalTo: returnView.trailingAnchor)
-            ])
+            topLevelViews.append(patientTagView)
             
             photographerView.translatesAutoresizingMaskIntoConstraints = false
             photographerView.sizeToFit()
             returnData.photographerDetailsView = photographerView
-            otherViews.addSubview(photographerView)
-            otherViews.addConstraints([
-                photographerView.topAnchor.constraint(equalTo: otherViews.topAnchor),
-                photographerView.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
-                photographerView.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor),
-                descriptionView.topAnchor.constraint(equalTo: photographerView.bottomAnchor)
-                
-            ])
+            subviews.append(photographerView)
             
             photographerView.layoutSubviews()
             descriptionView.layoutSubviews()
             photographerView.sizeToFit()
             descriptionView.sizeToFit()
-            
-            returnView.addSubview(otherViews)
-            returnView.addConstraints([
-                otherViews.topAnchor.constraint(equalTo: patientTagView.bottomAnchor),
-                otherViews.leadingAnchor.constraint(equalTo: returnView.leadingAnchor),
-                otherViews.trailingAnchor.constraint(equalTo: returnView.trailingAnchor)
-            ])
-            
-        } else {
-            returnView.addSubview(otherViews)
-            otherViews.addConstraint(descriptionView.topAnchor.constraint(equalTo: otherViews.topAnchor))
-            returnView.addConstraints([
-                otherViews.topAnchor.constraint(equalTo: returnView.bottomAnchor),
-                otherViews.leadingAnchor.constraint(equalTo: returnView.leadingAnchor),
-                otherViews.trailingAnchor.constraint(equalTo: returnView.trailingAnchor)
-            ])
         }
         returnView.translatesAutoresizingMaskIntoConstraints = false
         returnView.sizeToFit()
@@ -132,12 +98,8 @@ import Foundation
                 let paginator = UIView()
                 paginator.translatesAutoresizingMaskIntoConstraints = false
                 paginator.backgroundColor = .white
-                otherViews.addSubview(paginator)
-                otherViews.addConstraints([
-                    paginator.topAnchor.constraint(equalTo: timeView.bottomAnchor),
-                    paginator.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
-                    paginator.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor)
-                ])
+                subviews.append(paginator)
+                
                 let separator = UIView()
                 separator.translatesAutoresizingMaskIntoConstraints = false
                 separator.backgroundColor = ThemeService.shared().theme.textPrimaryColor
@@ -168,25 +130,19 @@ import Foundation
                 patientTagCell.RenderWith(Object: patient)
                 let patientTagView = patientTagCell.contentView
                 patientTagView.translatesAutoresizingMaskIntoConstraints = false
-                otherViews.addSubview(patientTagView)
-                otherViews.addConstraints([
-                    patientTagView.topAnchor.constraint(equalTo: paginator.bottomAnchor),
-                    patientTagView.leadingAnchor.constraint(equalTo: otherViews.leadingAnchor),
-                    patientTagView.trailingAnchor.constraint(equalTo: otherViews.trailingAnchor),
-                    patientTagView.bottomAnchor.constraint(equalTo: otherViews.bottomAnchor)
-                ])
-                
+                subviews.append(patientTagView)
             }
-        } else {
-            otherViews.addConstraint(timeView.bottomAnchor.constraint(equalTo: otherViews.bottomAnchor))
         }
+        childStackView.initWithViews(subviews)
+        topLevelViews.append(childStackView)
         
-        returnView.addConstraint(otherViews.bottomAnchor.constraint(equalTo: returnView.bottomAnchor))
+        returnView.initWithViews(topLevelViews)
+        
         returnData.returnView = returnView
         returnView.layoutSubviews()
-        returnData.otherViews = otherViews
-        otherViews.layoutSubviews()
-        otherViews.sizeToFit()
+        returnData.otherViews = childStackView
+        childStackView.layoutSubviews()
+        childStackView.sizeToFit()
         
         return returnData
     }

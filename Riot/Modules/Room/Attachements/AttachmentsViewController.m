@@ -60,8 +60,30 @@ bool viewHasAppeared = false;
         
     }];
     [self userInterfaceThemeDidChange];
+    RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
+    UIBarButtonItem *forwardItem = [[UIBarButtonItem alloc] initWithImage:menuItem.image style:UIBarButtonItemStylePlain target:self action:@selector(forwardAttachment)];
+    NSArray *rightBarButtonItems = NULL;
+    
+    UINavigationBar *navBar = [super valueForKey:@"navigationBar"];
+    UINavigationItem * navItem = navBar.topItem;
+    
+    if (navItem.rightBarButtonItems){
+        rightBarButtonItems = [[self navigationItem].rightBarButtonItems arrayByAddingObject:forwardItem];
+    } else {
+        rightBarButtonItems = [[NSArray alloc] initWithObjects:forwardItem, nil];
+    }
+    
+    navItem.rightBarButtonItems = rightBarButtonItems;
 }
 
+
+-(void)forwardAttachment {
+    NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
+    if (currentIdx != NSNotFound) {
+        MXKAttachment *attachment = self.attachments[currentIdx];
+        [[AppDelegate theDelegate] forwardAttachment:attachment fromViewController:self];
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -136,7 +158,7 @@ NSArray *TagDataArray;
             TagDataArray = tagData;
             isShowingDetail = false;
             
-            TagViewDetails = [PatientViewCellObjectiveC getPatientViewCellForTagData:tagData];
+            TagViewDetails = [PatientTagHelpers getPatientViewCellForTagData:tagData];
             [self tryDisplayTag];
         }];
     }
@@ -158,35 +180,6 @@ NSArray *TagDataArray;
         [TagViewContainer setOpaque:NO];
         
         if (TagViewDetails.includesPatientDetails){
-    //                ShowMoreButton = [UIButton new];
-    //
-    //                if (@available(iOS 13.0, *)) {
-    //                    [ShowMoreButton setImage:[UIImage systemImageNamed:@"chevron.up"] forState:UIControlStateNormal];
-    //                } else {
-    //                    [ShowMoreButton setImage:[UIImage imageNamed:@"chevron.up"] forState:UIControlStateNormal];
-    //                }
-    //                [ShowMoreButton setTitle: NSLocalizedStringFromTable(@"show_more", @"Vector", NULL) forState:UIControlStateNormal];
-    //                [ShowMoreButton sizeToFit];
-    //                [TagViewContainer addSubview:ShowMoreButton];
-    //                [ShowMoreButton addTarget:self action:@selector(tagShowMoreButton) forControlEvents:UIControlEventTouchUpInside];
-    //                [ThemeService.shared.theme applyStyleOnButton:ShowMoreButton];
-    //                ShowMoreButton.translatesAutoresizingMaskIntoConstraints = false;
-    //
-    //                ShowLessButton = [UIButton new];
-    //                if (@available(iOS 13.0, *)) {
-    //                    [ShowLessButton setImage:[UIImage systemImageNamed:@"chevron.down"] forState:UIControlStateNormal];
-    //                } else {
-    //                    [ShowLessButton setImage:[UIImage imageNamed:@"chevron.down"] forState:UIControlStateNormal];
-    //                }
-    //                [ShowLessButton setTitle: NSLocalizedStringFromTable(@"show_less", @"Vector", NULL) forState:UIControlStateNormal];
-    //                [ShowLessButton sizeToFit];
-    //                [TagViewContainer addSubview:ShowLessButton];
-    //                [ShowLessButton addTarget:self action:@selector(tagShowLessButton) forControlEvents:UIControlEventTouchUpInside];
-    //                [ThemeService.shared.theme applyStyleOnButton:ShowLessButton];
-    //                [ShowLessButton setAlpha:0];
-    //                ShowLessButton.translatesAutoresizingMaskIntoConstraints = false;
-            
-            //bottomConstraint = [TagView.bottomAnchor constraintEqualToAnchor:TagViewContainer.bottomAnchor constant:TagViewDetails.otherViews.frame.size.height];
             bottomConstraint = [TagViewDetails.patientDetailsView.bottomAnchor constraintEqualToAnchor:TagViewContainer.bottomAnchor constant:0.0];
             [TagViewContainer addConstraint:bottomConstraint];
             [TagViewContainer addConstraint:[TagView.leftAnchor constraintEqualToAnchor:TagViewContainer.leftAnchor]];
@@ -199,12 +192,6 @@ NSArray *TagDataArray;
             
             [TagViewContainer setContentMode:UIViewContentModeCenter];
             [TagViewContainer setAutoresizesSubviews:NO];
-            
-    //                [TagViewContainer addConstraint:[ShowMoreButton.topAnchor constraintEqualToAnchor:TagViewDetails.patientDetailsView.topAnchor]];
-    //                [TagViewContainer addConstraint:[ShowMoreButton.rightAnchor constraintEqualToAnchor:TagViewDetails.patientDetailsView.rightAnchor]];
-    //
-    //                [TagViewContainer addConstraint:[ShowLessButton.topAnchor constraintEqualToAnchor:TagViewDetails.descriptionView.topAnchor]];
-    //                [TagViewContainer addConstraint:[ShowLessButton.rightAnchor constraintEqualToAnchor:TagViewDetails.descriptionView.rightAnchor]];
             
             if (TagGestureRecognizer) {
                 [[self view] removeGestureRecognizer:TagGestureRecognizer];

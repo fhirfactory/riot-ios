@@ -200,6 +200,7 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
 - (void)startDirectChatWithUserId:(NSString*)userId completion:(void (^)(void))completion;
 
 - (void)forwardAttachment:(MXKAttachment*)attachment;
+-(void)forwardAttachment:(MXKAttachment *)attachment fromViewController:(UIViewController *)viewController;
 
 /**
  Process the fragment part of a vector.im link.

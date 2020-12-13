@@ -27,7 +27,17 @@ import Foundation
     var displayTagHistoryView: UIView?
 }
 
-@objc class PatientViewCellObjectiveC: NSObject {
+@objc class PatientTagHelpers: NSObject {
+    @objc static func containsTagChanges(ForTagData tags: [TagData], andTag tag: TagData) -> Bool
+    {
+        tags.contains(where: { (t) -> Bool in
+            t.Patients.count != tag.Patients.count || !t.Patients.allSatisfy({ (pm) -> Bool in
+                tag.Patients.contains(pm)
+            }) || !tag.Patients.allSatisfy({ (pm) -> Bool in
+                t.Patients.contains(pm)
+            })
+        })
+    }
     @objc static func getPatientViewCell(ForTagData tags: [TagData]) -> PatientViewCellData? {
         let returnData = PatientViewCellData()
         let returnView = Stackview()
@@ -63,16 +73,27 @@ import Foundation
             let patientTagView = patientTagCell.contentView
             patientTagView.sizeToFit()
             patientTagView.translatesAutoresizingMaskIntoConstraints = false
-            returnData.patientDetailsView = patientTagView
+            
+            let patientViewContainer = Stackview()
+            var patientViewSubviews: [UIView] = []
+            if containsTagChanges(ForTagData: tags, andTag: tag) {
+                guard let tagChangesWarning = Bundle(for: TagChangesWarning.self).loadNibNamed("TagChangesWarning", owner: TagChangesWarning(), options: nil)?.first as? TagChangesWarning else { return nil }
+                tagChangesWarning.renderWarning()
+                tagChangesWarning.contentView.translatesAutoresizingMaskIntoConstraints = false
+                patientViewSubviews.append(tagChangesWarning.contentView)
+            }
+            
+            patientViewSubviews.append(patientTagView)
+            patientViewContainer.initWithViews(patientViewSubviews)
+            patientViewContainer.translatesAutoresizingMaskIntoConstraints = false
+            returnData.patientDetailsView = patientViewContainer
+            topLevelViews.append(patientViewContainer)
             
             guard let photographerInfo = tag.PhotographerDetails else { return nil }
             guard let photographerInfoView = Bundle(for: PhotographerDetails.self).loadNibNamed("PhotographerDetails", owner: PhotographerDetails(), options: nil)?.first as? PhotographerDetails else { return nil }
             photographerInfoView.displayDetails(photographerTagDetails: photographerInfo)
             
             let photographerView = photographerInfoView.contentView
-            
-            patientTagView.translatesAutoresizingMaskIntoConstraints = false
-            topLevelViews.append(patientTagView)
             
             photographerView.translatesAutoresizingMaskIntoConstraints = false
             photographerView.sizeToFit()

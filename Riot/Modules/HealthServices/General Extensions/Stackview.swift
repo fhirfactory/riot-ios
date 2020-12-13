@@ -20,7 +20,7 @@ class Stackview: UIView {
     var stackedViews: [UIView] = []
     
     //Must be in order (top -> bottom)
-    func initWithViews(_ views: [UIView]) {
+    @objc func initWithViews(_ views: [UIView]) {
         for view in stackedViews {
             view.removeFromSuperview()
         }

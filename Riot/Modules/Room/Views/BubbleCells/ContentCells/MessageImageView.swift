@@ -54,21 +54,35 @@ class MessageImageView: MessageContentView {
             let patientTagViewContent = patientTagView.contentView
             patientTagViewContent.translatesAutoresizingMaskIntoConstraints = false
             
-            patientTagViewContent.layoutIfNeeded()
-            self.addSubview(patientTagViewContent)
+            let patientTagViewContainer = Stackview()
+            var tagViewParts: [UIView] = []
+            patientTagViewContainer.translatesAutoresizingMaskIntoConstraints = false
             
-            self.addConstraint(self.trailingAnchor.constraint(equalTo: patientTagViewContent.trailingAnchor))
-            patientTagViewContent.addConstraint(patientTagViewContent.heightAnchor.constraint(equalToConstant: 80))
-            self.addConstraint(self.leadingAnchor.constraint(equalTo: patientTagViewContent.leadingAnchor))
-            self.addConstraint(patientTagViewContent.bottomAnchor.constraint(equalTo: ImageContent.bottomAnchor))
+            if PatientTagHelpers.containsTagChanges(ForTagData: tagInfo, andTag: tag) {
+                guard let tagChangesWarning = Bundle(for: TagChangesWarning.self).loadNibNamed("TagChangesWarning", owner: TagChangesWarning(), options: nil)?.first as? TagChangesWarning else { return }
+                tagChangesWarning.renderWarning()
+                tagChangesWarning.contentView.translatesAutoresizingMaskIntoConstraints = false
+                tagViewParts.append(tagChangesWarning.contentView)
+            }
             
-            patientTagViewContent.alpha = 0.7
-            patientTagViewContent.sizeToFit()
+            tagViewParts.append(patientTagViewContent)
+            patientTagViewContainer.initWithViews(tagViewParts)
+            
+            self.addSubview(patientTagViewContainer)
+            
+            self.addConstraints([
+                patientTagViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+                patientTagViewContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+                patientTagViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor)
+            ])
+            
+            patientTagViewContainer.alpha = 0.9
+            patientTagViewContainer.sizeToFit()
             
             tagData = tagInfo
             
             let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(tagTapped))
-            patientTagViewContent.addGestureRecognizer(taprecognizer)
+            patientTagViewContainer.addGestureRecognizer(taprecognizer)
             
             self.layoutIfNeeded()
         }

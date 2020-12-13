@@ -20,6 +20,9 @@ import Foundation
     static func == (lhs: PatientModel, rhs: PatientModel) -> Bool {
         return lhs.URN == rhs.URN //compare by URNs because this should be specific to the patient (I assume)
     }
+    override var hash: Int {
+        return URN.hash
+    }
     init(Name: String, URN: String, DoB: Date) {
         self.Name = Name
         self.URN = URN

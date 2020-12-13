@@ -27,6 +27,18 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     var PhotoSavedEventHandler: ((TagData) -> Void)?
     var patientTaggingViewModel: PatientTaggingViewModel = PatientTaggingViewModel()
     
+    var patientsList: [PatientModel] {
+        var patientList = patientTaggingViewModel.previousPatients
+        patientList.removeAll { (p) -> Bool in
+            self.patientTaggingViewModel.patients.map { (patient) -> String in
+                patient.URN
+            }.contains(p.URN)
+        }
+        patientList.append(contentsOf: patientTaggingViewModel.patients)
+        
+        return patientList.reversed()
+    }
+    
     @IBAction private func SaveAction(_ sender: Any) {
         if let completion = PhotoSavedEventHandler {
             guard let tagData = PatientTaggingViewController.produceTagData(fromViewModel: patientTaggingViewModel) else { return }
@@ -52,29 +64,48 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         let patientTaggingVC = FilteredSearchPopoverViewController<PatientModel>(withScrollHandler: nil, andViewCellReuseID: "PatientViewCell", andService: Services.PatientService())
         patientTaggingVC.onSelectedCallback = {(patient) in
             self.patientTaggingViewModel.patients.append(patient)
-            self.tableView.reloadData()
+            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             self.updateSelections()
         }
         self.present(patientTaggingVC, animated: true, completion: nil)
     }
     
-    func loadExistingTagData(_ tagData: TagData?) {
+    func loadExistingTagData(_ tagData: [TagData]) {
         patientTaggingViewModel = PatientTaggingViewController.produceViewModel(fromTagData: tagData)
         if tableView != nil {
             tableView.reloadData()
         }
     }
     
-    static func produceViewModel(fromTagData tagData: TagData?) -> PatientTaggingViewModel {
+    static func getPreviousPatients(fromTagDataArray tagDataArray: [TagData]) -> [PatientModel] {
+        //we have a returnArray, because we want to return the patient list in the order of tag history, and a set to check before we add a patient to the history that they're not a duplicate -- that is, the patient wasn't tagged, then untagged, then tagged, then untagged again.
+        //this should be incredibly unlikely, but it's still worth being safe.
+        var returnArray: [PatientModel] = []
+        var patientSet = Set<PatientModel>()
+        for tag in tagDataArray {
+            //realistically, converting to a set is not likely to be necessary, as tags (as of now) *should* only have one associated patient and even if they were to have multiple patients, this array should be considered a set.
+            let tagPatients = Set(tag.Patients)
+            for patient in tagPatients {
+                if !patientSet.contains(patient) {
+                    returnArray.append(patient)
+                    patientSet.update(with: patient)
+                }
+            }
+        }
+        return returnArray
+    }
+    
+    static func produceViewModel(fromTagData tagDataArray: [TagData]) -> PatientTaggingViewModel {
         let vm = PatientTaggingViewModel()
-        guard let td = tagData else { return vm }
-        if tagData?.FileContainsPatient ?? false {
+        guard let td = tagDataArray.last else { return vm }
+        if td.FileContainsPatient {
             vm.patients = td.Patients
             vm.name = td.PhotographerDetails?.Name
             vm.role = td.PhotographerDetails?.Role
         }
         
         vm.description = td.Description
+        vm.previousPatients = getPreviousPatients(fromTagDataArray: tagDataArray)
         return vm
     }
     
@@ -128,7 +159,8 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         updateSelections()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (patientTaggingViewModel.patients.count > 0 ? patientTaggingViewModel.patients.count + 2 : 1) + 1
+        let patientsListCount = patientsList.count
+        return (patientsListCount > 0 ? patientsListCount + 2 : 1) + 1
     }
     
     var resignDescriptionCellResponder: (() -> Void)?
@@ -137,7 +169,8 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == patientTaggingViewModel.patients.count + 1 {
+        let patientsListCopy = patientsList
+        if indexPath.row == patientsListCopy.count + 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "PhotographerDetails", for: indexPath) as? PhotographerDetails else {return UITableViewCell()}
             cell.applyTheme()
             cell.nearestViewController = self
@@ -150,22 +183,28 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
                 }
             }
             return cell
-        } else if indexPath.row == patientTaggingViewModel.patients.count {
+        } else if indexPath.row == patientsListCopy.count {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageDescriptionCell", for: indexPath) as? ImageDescriptionCell else {return UITableViewCell()}
             cell.render(viewModel: patientTaggingViewModel)
             cell.setAsEditable()
             resignDescriptionCellResponder = cell.forceResignFirstResponder
             return cell
-        } else if indexPath.row == patientTaggingViewModel.patients.count + 2 {
+        } else if indexPath.row == patientsListCopy.count + 2 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "DateTakenViewCell", for: indexPath) as? DateTakenViewCell else {return UITableViewCell()}
             cell.RenderWith(Object: patientTaggingViewModel.photoDate)
             return cell
         }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PatientViewCell", for: indexPath) as? PatientViewCell else {return UITableViewCell()}
-        cell.RenderWith(Object: patientTaggingViewModel.patients[indexPath.row])
+        cell.RenderWith(Object: patientsListCopy[indexPath.row])
         
         //add the checkmark to indicate the selection
-        cell.accessoryType = .checkmark
+        if indexPath.row < patientTaggingViewModel.patients.count {
+            cell.accessoryType = .checkmark
+            cell.contentView.alpha = 1
+        } else {
+            cell.accessoryType = .none
+            cell.contentView.alpha = 0.7
+        }
         cell.tintColor = ThemeService.shared().theme.tintColor
         cell.selectedBackgroundView = UIView()
         cell.selectedBackgroundView?.backgroundColor = ThemeService.shared().theme.selectedBackgroundColor

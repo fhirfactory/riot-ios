@@ -1531,4 +1531,7 @@
 "time" = "Time";
 "taken" = "Taken";
 "previous_tag" = "Previous Tag";
-"view_tag_history" = "Tag History";
+"view_tag_history" = "View Tag History";
+"tag_history_title" = "Tag History";
+"message_forwarding_title" = "Forward a message to a Room";
+"warn_tag_changes" = "This media has patient tag changes";

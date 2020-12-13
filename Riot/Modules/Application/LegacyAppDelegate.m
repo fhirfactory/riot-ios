@@ -3088,6 +3088,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
             }];
         }
     }];
+    nextDisplay.titleText = NSLocalizedStringFromTable(@"message_forwarding_title", @"Vector", NULL);
     [self presentViewController:nextDisplay animated:YES completion:nil];
 }
 

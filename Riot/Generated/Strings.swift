@@ -2026,6 +2026,10 @@ internal enum VectorL10n {
   internal static var mediaTypeAccessibilityVideo: String { 
     return VectorL10n.tr("Vector", "media_type_accessibility_video") 
   }
+  /// Forward a message to a Room
+  internal static var messageForwardingTitle: String { 
+    return VectorL10n.tr("Vector", "message_forwarding_title") 
+  }
   /// More
   internal static var more: String { 
     return VectorL10n.tr("Vector", "more") 
@@ -4278,6 +4282,10 @@ internal enum VectorL10n {
   internal static var `switch`: String { 
     return VectorL10n.tr("Vector", "switch") 
   }
+  /// Tag History
+  internal static var tagHistoryTitle: String { 
+    return VectorL10n.tr("Vector", "tag_history_title") 
+  }
   /// Taken
   internal static var taken: String { 
     return VectorL10n.tr("Vector", "taken") 
@@ -4442,13 +4450,17 @@ internal enum VectorL10n {
   internal static var view: String { 
     return VectorL10n.tr("Vector", "view") 
   }
-  /// Tag History
+  /// View Tag History
   internal static var viewTagHistory: String { 
     return VectorL10n.tr("Vector", "view_tag_history") 
   }
   /// Voice
   internal static var voice: String { 
     return VectorL10n.tr("Vector", "voice") 
+  }
+  /// This media has patient tag changes
+  internal static var warnTagChanges: String { 
+    return VectorL10n.tr("Vector", "warn_tag_changes") 
   }
   /// Warning
   internal static var warning: String { 

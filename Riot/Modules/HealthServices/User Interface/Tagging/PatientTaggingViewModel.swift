@@ -22,4 +22,5 @@ class PatientTaggingViewModel {
     var name: String!
     var patients: [PatientModel] = []
     var photoDate: Date = Date()
+    var previousPatients: [PatientModel] = []
 }

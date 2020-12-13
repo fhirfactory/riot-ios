@@ -47,7 +47,7 @@ class MessageImageView: MessageContentView {
         
         Services.ImageTagDataService().LookupTagInfoFor(URL: URL) { (tagInfo) in
             guard let tag = tagInfo.last else { return }
-            guard let patient = tag?.Patients.first else { return }
+            guard let patient = tag.Patients.first else { return }
             
             guard let patientTagView = Bundle(for: type(of: self)).loadNibNamed("PatientViewCell", owner: PatientViewCell(), options: nil)?.first as? PatientViewCell else { return }
             patientTagView.RenderWith(Object: patient)
@@ -65,7 +65,7 @@ class MessageImageView: MessageContentView {
             patientTagViewContent.alpha = 0.7
             patientTagViewContent.sizeToFit()
             
-            tagData = tag
+            tagData = tagInfo
             
             let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(tagTapped))
             patientTagViewContent.addGestureRecognizer(taprecognizer)
@@ -75,7 +75,7 @@ class MessageImageView: MessageContentView {
          
     }
     
-    var tagData: TagData!
+    var tagData: [TagData] = []
     @objc func tagTapped() {
         let patientTaggingController = PatientTaggingViewController()
         guard let imagedata = ImageContent.image.pngData() as NSData? else { return }

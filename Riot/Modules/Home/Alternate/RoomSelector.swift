@@ -21,6 +21,7 @@ class RoomSelector: TabbedHomeViewController {
         UINib(nibName: "TabbedHomeViewController", bundle: Bundle(for: self))
     }
     public var callback: ((MXRoom) -> Void)!
+    @objc public var titleText: String?
     @objc public func SetCallback(_ callback : @escaping ((MXRoom) -> Void)) {
         self.callback = {(room) in
             //dismiss ourselves (to dismiss the popover view)
@@ -29,8 +30,42 @@ class RoomSelector: TabbedHomeViewController {
         }
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         super.enableCreateRoomButton = false
         super.SelectedRoomHandler = callback
-        super.viewWillAppear(animated)
+        if let labelString = titleText {
+            var subviews: [UIView] = []
+            let labelContainer = UIView()
+            labelContainer.translatesAutoresizingMaskIntoConstraints = false
+            
+            let label = UILabel()
+            label.text = labelString
+            label.translatesAutoresizingMaskIntoConstraints = false
+            labelContainer.addSubview(label)
+            labelContainer.addConstraints([
+                label.centerXAnchor.constraint(equalTo: labelContainer.centerXAnchor),
+                label.topAnchor.constraint(equalTo: labelContainer.topAnchor, constant: 10),
+                labelContainer.bottomAnchor.constraint(equalTo: label.bottomAnchor, constant: 10)
+            ])
+            subviews.append(labelContainer)
+            sections.view.translatesAutoresizingMaskIntoConstraints = false
+            subviews.append(sections.view)
+            let stacked = Stackview()
+            stacked.initWithViews(subviews)
+            for subview in view.subviews {
+                subview.removeFromSuperview()
+            }
+            stacked.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(stacked)
+            view.addConstraints([
+                view.leadingAnchor.constraint(equalTo: stacked.leadingAnchor),
+                view.trailingAnchor.constraint(equalTo: stacked.trailingAnchor),
+                view.topAnchor.constraint(equalTo: stacked.topAnchor),
+                view.bottomAnchor.constraint(equalTo: stacked.bottomAnchor)
+            ])
+            
+            
+            view.layoutIfNeeded()
+        }
     }
 }

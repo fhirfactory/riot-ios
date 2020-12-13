@@ -24,6 +24,7 @@ import Foundation
     var photographerDetailsView: UIView?
     var otherViews: UIView?
     var displayTagHistory: Bool = false
+    var displayTagHistoryView: UIView?
 }
 
 @objc class PatientViewCellObjectiveC: NSObject {
@@ -38,7 +39,7 @@ import Foundation
         
         guard let tag = tags.last else { return nil }
         guard let descriptionCell = Bundle(for: ImageDescriptionCell.self).loadNibNamed("ImageDescriptionCell", owner: ImageDescriptionCell(), options: nil)?.first as? ImageDescriptionCell else { return nil}
-        let viewModel = PatientTaggingViewController.produceViewModel(fromTagData: tag)
+        let viewModel = PatientTaggingViewController.produceViewModel(fromTagData: tags)
         descriptionCell.render(viewModel: viewModel)
         descriptionCell.setAsReadOnly()
         descriptionCell.sizeToFit()
@@ -87,10 +88,6 @@ import Foundation
         returnView.sizeToFit()
         
         if tags.count > 1 {
-            returnData.displayTagHistory = true
-        }
-        
-        if tags.count > 1 {
             //only worry about one previous tag.
             if let previousTag = tags.reversed().last { (t) -> Bool in
                 t.Patients != tag.Patients && t.Patients.count > 0
@@ -123,8 +120,6 @@ import Foundation
                     paginator.bottomAnchor.constraint(equalTo: paginatorLabel.bottomAnchor, constant: 5)
                 ])
                 
-                
-                
                 guard let patientTagCell = Bundle(for: PatientViewCell.self).loadNibNamed("PatientViewCell", owner: PatientViewCell(), options: nil)?.first as? PatientViewCell else { return nil }
                 guard let patient = previousTag.Patients.first else { return nil }
                 patientTagCell.RenderWith(Object: patient)
@@ -132,6 +127,27 @@ import Foundation
                 patientTagView.translatesAutoresizingMaskIntoConstraints = false
                 subviews.append(patientTagView)
             }
+            
+            //display a cell saying there's tag history available
+            let historyView = UIView()
+            let historyLabel = UILabel()
+            historyView.translatesAutoresizingMaskIntoConstraints = false
+            
+            historyView.addSubview(historyLabel)
+            historyView.addConstraints([
+                historyLabel.centerXAnchor.constraint(equalTo: historyView.centerXAnchor),
+                historyLabel.centerYAnchor.constraint(equalTo: historyView.centerYAnchor),
+                historyView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            ])
+            historyLabel.textAlignment = .center
+            historyLabel.text = AlternateHomeTools.getNSLocalized("view_tag_history", in: "Vector")
+            ThemeService.shared().theme.recursiveApply(on: historyView)
+            historyLabel.textColor = ThemeService.shared().theme.tintColor
+            historyLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            subviews.append(historyView)
+            returnData.displayTagHistory = true
+            returnData.displayTagHistoryView = historyView
         }
         childStackView.initWithViews(subviews)
         topLevelViews.append(childStackView)

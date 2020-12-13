@@ -842,8 +842,14 @@
 		EBE27510256A4850003BC7C1 /* QueryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE2750F256A4850003BC7C1 /* QueryTableViewCell.swift */; };
 		EBE2752A256A5089003BC7C1 /* DesignationViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */; };
 		EBE27532256A50A3003BC7C1 /* DesignationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */; };
+		EBE34E0B2582DD6500F6FF04 /* TagHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE34E0A2582DD6500F6FF04 /* TagHistoryView.swift */; };
+		EBE34E132582DD7500F6FF04 /* TagHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE34E122582DD7500F6FF04 /* TagHistoryView.xib */; };
+		EBE34E1B2584D02200F6FF04 /* TagHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE34E1A2584D02200F6FF04 /* TagHistoryCell.swift */; };
+		EBE34E232584DD6000F6FF04 /* SetOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE34E222584DD6000F6FF04 /* SetOperations.swift */; };
 		EBECB045255165ED0024EB47 /* TabbedHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */; };
 		EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */; };
+		EBEE3ADC2585BE930011345B /* TagChangesWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */; };
+		EBEE3AE42585BF280011345B /* TagChangesWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE3AE32585BF280011345B /* TagChangesWarning.swift */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
 		EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */; };
 		EC1CA86124C1DEC400DE9EBF /* EnterPinCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */; };
@@ -2149,8 +2155,14 @@
 		EBE2750F256A4850003BC7C1 /* QueryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryTableViewCell.swift; sourceTree = "<group>"; };
 		EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DesignationViewCell.xib; sourceTree = "<group>"; };
 		EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignationViewCell.swift; sourceTree = "<group>"; };
+		EBE34E0A2582DD6500F6FF04 /* TagHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagHistoryView.swift; sourceTree = "<group>"; };
+		EBE34E122582DD7500F6FF04 /* TagHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagHistoryView.xib; sourceTree = "<group>"; };
+		EBE34E1A2584D02200F6FF04 /* TagHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagHistoryCell.swift; sourceTree = "<group>"; };
+		EBE34E222584DD6000F6FF04 /* SetOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetOperations.swift; sourceTree = "<group>"; };
 		EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedHomeViewController.swift; sourceTree = "<group>"; };
 		EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabbedHomeViewController.xib; sourceTree = "<group>"; };
+		EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagChangesWarning.xib; sourceTree = "<group>"; };
+		EBEE3AE32585BF280011345B /* TagChangesWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagChangesWarning.swift; sourceTree = "<group>"; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
 		EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewAction.swift; sourceTree = "<group>"; };
 		EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModel.swift; sourceTree = "<group>"; };
@@ -4940,26 +4952,6 @@
 				B1C335CC22F1C1320021BA8D /* CameraPresenter.swift */,
 				B183226723F561380035B2E8 /* CameraAccessAlertPresenter.swift */,
 				B183226523F55D6B0035B2E8 /* CameraAccessManager.swift */,
-				EB4280B0255FE9A700B9BBBF /* PatientTaggingViewController.xib */,
-				EB4280B8255FE9B900B9BBBF /* PatientTaggingViewController.swift */,
-				EB4280C82560110E00B9BBBF /* PatientModel.swift */,
-				EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */,
-				EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */,
-				EBE274B72569E681003BC7C1 /* PhotographerDetails.xib */,
-				EBE274BF2569E880003BC7C1 /* PhotographerDetails.swift */,
-				EBE274C72569ED4F003BC7C1 /* ImageDescriptionCell.xib */,
-				EBE274CF2569ED5D003BC7C1 /* ImageDescriptionCell.swift */,
-				EBE274EF256A4309003BC7C1 /* FilteredSearchPopoverViewController.xib */,
-				EBE274F7256A4317003BC7C1 /* FilteredSearchPopoverViewController.swift */,
-				EBE274FF256A4506003BC7C1 /* FilteredSearchResultsController.swift */,
-				EBE27507256A4582003BC7C1 /* RendersWith.swift */,
-				EBE2750F256A4850003BC7C1 /* QueryTableViewCell.swift */,
-				EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */,
-				EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */,
-				EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */,
-				EB3B39222581DBFC003D6BD0 /* DateTakenViewCell.xib */,
-				EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */,
-				EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -5178,16 +5170,14 @@
 		EBAAF55E2562494C0080A268 /* HealthServices */ = {
 			isa = PBXGroup;
 			children = (
-				EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */,
+				EBEE3AF12585C1CB0011345B /* User Interface */,
+				EBEE3AF02585C1AA0011345B /* Service Types */,
+				EBEE3AEF2585C1820011345B /* General Extensions */,
+				EBEE3AEE2585C15F0011345B /* Data */,
 				EBAAF56D25624A1F0080A268 /* PatientQueryService.swift */,
 				EBAAF58425624E310080A268 /* Services.swift */,
 				EB76BE342573B5330013EABE /* ImageTagService.swift */,
-				EB76BE3C2573B5810013EABE /* BaseService.swift */,
-				EB76BE442574DFE40013EABE /* TagData.swift */,
 				EBE274DF2569FFFD003BC7C1 /* RoleQueryService.swift */,
-				EBE274E7256A00A4003BC7C1 /* Role.swift */,
-				EB674D572574E1C900A8D65C /* PhotographerTagDetails.swift */,
-				EB3B39382581E861003D6BD0 /* Stackview.swift */,
 			);
 			path = HealthServices;
 			sourceTree = "<group>";
@@ -5212,14 +5202,11 @@
 			isa = PBXGroup;
 			children = (
 				EBAC79892543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib */,
-				EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */,
-				EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */,
 				EBAC79912543B49900A0B1BF /* AlternateRoomCreationFlowAddMembersController.swift */,
 				EB16B9F82545622A0096C90F /* Views */,
 				EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */,
 				EB16B9E8254507AF0096C90F /* PeopleFilteredSearchController.swift */,
 				EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */,
-				EB16B9F0254534820096C90F /* FilteredTableViewSource.swift */,
 				EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */,
 				EB2D1F362545755D00FB80E0 /* AlternateCreationHelpers.h */,
 				EB016D69254844760078F610 /* AlternateRoomCreationFlowDetails.swift */,
@@ -5235,6 +5222,93 @@
 				EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */,
 			);
 			path = Badged;
+			sourceTree = "<group>";
+		};
+		EBEE3AEB2585C0CA0011345B /* Tagging */ = {
+			isa = PBXGroup;
+			children = (
+				EBEE3AEC2585C0F40011345B /* Cells */,
+				EB4280B0255FE9A700B9BBBF /* PatientTaggingViewController.xib */,
+				EB4280B8255FE9B900B9BBBF /* PatientTaggingViewController.swift */,
+				EBE27507256A4582003BC7C1 /* RendersWith.swift */,
+				EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */,
+				EBE34E0A2582DD6500F6FF04 /* TagHistoryView.swift */,
+				EBE34E122582DD7500F6FF04 /* TagHistoryView.xib */,
+				EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */,
+			);
+			path = Tagging;
+			sourceTree = "<group>";
+		};
+		EBEE3AEC2585C0F40011345B /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EBE34E1A2584D02200F6FF04 /* TagHistoryCell.swift */,
+				EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */,
+				EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */,
+				EBE274B72569E681003BC7C1 /* PhotographerDetails.xib */,
+				EBE274BF2569E880003BC7C1 /* PhotographerDetails.swift */,
+				EBE274C72569ED4F003BC7C1 /* ImageDescriptionCell.xib */,
+				EBE274CF2569ED5D003BC7C1 /* ImageDescriptionCell.swift */,
+				EBE27529256A5089003BC7C1 /* DesignationViewCell.xib */,
+				EBE27531256A50A3003BC7C1 /* DesignationViewCell.swift */,
+				EB3B39222581DBFC003D6BD0 /* DateTakenViewCell.xib */,
+				EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */,
+				EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */,
+				EBEE3AE32585BF280011345B /* TagChangesWarning.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		EBEE3AEE2585C15F0011345B /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				EBE274E7256A00A4003BC7C1 /* Role.swift */,
+				EB76BE442574DFE40013EABE /* TagData.swift */,
+				EB674D572574E1C900A8D65C /* PhotographerTagDetails.swift */,
+				EB4280C82560110E00B9BBBF /* PatientModel.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		EBEE3AEF2585C1820011345B /* General Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EB3B39382581E861003D6BD0 /* Stackview.swift */,
+				EBE34E222584DD6000F6FF04 /* SetOperations.swift */,
+			);
+			path = "General Extensions";
+			sourceTree = "<group>";
+		};
+		EBEE3AF02585C1AA0011345B /* Service Types */ = {
+			isa = PBXGroup;
+			children = (
+				EBAAF565256249AC0080A268 /* AsyncQueryableService.swift */,
+				EB76BE3C2573B5810013EABE /* BaseService.swift */,
+			);
+			path = "Service Types";
+			sourceTree = "<group>";
+		};
+		EBEE3AF12585C1CB0011345B /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				EBEE3AF22585C1EF0011345B /* Generic */,
+				EBEE3AEB2585C0CA0011345B /* Tagging */,
+			);
+			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		EBEE3AF22585C1EF0011345B /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				EBE2750F256A4850003BC7C1 /* QueryTableViewCell.swift */,
+				EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */,
+				EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */,
+				EB16B9F0254534820096C90F /* FilteredTableViewSource.swift */,
+				EBE274EF256A4309003BC7C1 /* FilteredSearchPopoverViewController.xib */,
+				EBE274F7256A4317003BC7C1 /* FilteredSearchPopoverViewController.swift */,
+				EBE274FF256A4506003BC7C1 /* FilteredSearchResultsController.swift */,
+			);
+			path = Generic;
 			sourceTree = "<group>";
 		};
 		EC1CA84F24C1DEC400DE9EBF /* SetPinCode */ = {
@@ -6185,6 +6259,7 @@
 				ECFBD5CA250A7AAF00DD5F5A /* ShowDirectoryViewController.storyboard in Resources */,
 				EB016D7A25492E3E0078F610 /* TableViewCellWithPeopleSelector.xib in Resources */,
 				B1B558D520EF768F00210D55 /* RoomIncomingEncryptedTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.xib in Resources */,
+				EBE34E132582DD7500F6FF04 /* TagHistoryView.xib in Resources */,
 				B12D79FC23E2462200FACEDC /* UserVerificationStartViewController.storyboard in Resources */,
 				B1CE83D32422817200D07506 /* KeyVerificationVerifiedViewController.storyboard in Resources */,
 				B1B5590020EF768F00210D55 /* RoomOutgoingTextMsgWithoutSenderNameBubbleCell.xib in Resources */,
@@ -6308,6 +6383,7 @@
 				324A204F225FC571004FE8B0 /* DeviceVerificationIncomingViewController.storyboard in Resources */,
 				EB016D722549271D0078F610 /* AlternateRoomCreationFlowDetails.xib in Resources */,
 				3232AB4B2256558300AD6A5C /* TemplateScreenViewController.storyboard in Resources */,
+				EBEE3ADC2585BE930011345B /* TagChangesWarning.xib in Resources */,
 				B1D1BDA822BBAFC900831367 /* ReactionsMenuView.xib in Resources */,
 				32B1FEDB21A46F2C00637127 /* TermsView.xib in Resources */,
 				B1BD71BF238EA56700BA92E2 /* WidgetPermissionViewController.storyboard in Resources */,
@@ -6843,6 +6919,7 @@
 				B108931F23AB80EF00802670 /* KeyVerificationIncomingRequestApprovalBubbleCell.swift in Sources */,
 				EC51E7922510C0A500AAE7DB /* SpanningSlidingModalContainerView.swift in Sources */,
 				B1CE83D42422817200D07506 /* KeyVerificationVerifiedViewController.swift in Sources */,
+				EBE34E1B2584D02200F6FF04 /* TagHistoryCell.swift in Sources */,
 				B1B5599220EFC5E400210D55 /* Analytics.m in Sources */,
 				B14F143422144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyViewAction.swift in Sources */,
 				B1098BF621ECFE65000DDA48 /* KeyBackupSetupPassphraseCoordinator.swift in Sources */,
@@ -7232,6 +7309,7 @@
 				B1CE83BA2422815C00D07506 /* KeyVerificationService.swift in Sources */,
 				B1B5571820EE6C4D00210D55 /* CountryPickerViewController.m in Sources */,
 				B1D211E622C194A200D939BD /* ReactionsMenuViewState.swift in Sources */,
+				EBE34E232584DD6000F6FF04 /* SetOperations.swift in Sources */,
 				ECF57A4925090C23004BBF9D /* EnterNewRoomDetailsViewState.swift in Sources */,
 				B17982FF2119FED2001FD722 /* GDPRConsentViewController.swift in Sources */,
 				B1098BE121ECE09F000DDA48 /* Images.swift in Sources */,
@@ -7267,6 +7345,7 @@
 				B1B5593820EF7BAC00210D55 /* TableViewCellWithLabelAndLargeTextView.m in Sources */,
 				B1DCC62222E60BE000625807 /* EmojiPickerItemViewData.swift in Sources */,
 				B1BEE74723E093260003A4CB /* UserVerificationSessionStatusViewModelType.swift in Sources */,
+				EBE34E0B2582DD6500F6FF04 /* TagHistoryView.swift in Sources */,
 				EB16BA02254565D30096C90F /* RoomCreationCollectionViewCell.swift in Sources */,
 				ECB101332477CFDB00CF8C11 /* UITableViewCell.swift in Sources */,
 				438067AA24D7AC38002675E1 /* ActPeople.swift in Sources */,
@@ -7392,6 +7471,7 @@
 				B1B5575B20EE6C4D00210D55 /* HomeFilesSearchViewController.m in Sources */,
 				B139C22521FF01C100BB68EC /* KeyBackupRecoverFromPassphraseCoordinator.swift in Sources */,
 				EBECB045255165ED0024EB47 /* TabbedHomeViewController.swift in Sources */,
+				EBEE3AE42585BF280011345B /* TagChangesWarning.swift in Sources */,
 				B1BEE71623DF2ACF0003A4CB /* UserVerificationCoordinatorBridgePresenter.swift in Sources */,
 				B1098BFD21ECFE65000DDA48 /* PasswordStrengthManager.swift in Sources */,
 				B1B558F520EF768F00210D55 /* RoomOutgoingTextMsgWithPaginationTitleBubbleCell.m in Sources */,

@@ -120,6 +120,7 @@ UIButton *ShowLessButton;
 
 UITapGestureRecognizer *TagGestureRecognizer;
 UILongPressGestureRecognizer *TagLongPressRecognizer;
+NSArray *TagDataArray;
 
 - (void)loadTagInfo
 {
@@ -132,7 +133,7 @@ UILongPressGestureRecognizer *TagLongPressRecognizer;
         [self hideTag];
         
         [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
-            
+            TagDataArray = tagData;
             isShowingDetail = false;
             
             TagViewDetails = [PatientViewCellObjectiveC getPatientViewCellForTagData:tagData];
@@ -278,6 +279,7 @@ NSMutableDictionary *cellGestureRecognizers;
         } completion:^(BOOL finished) {
             [TagViewContainer removeFromSuperview];
             TagViewContainer = NULL;
+            TagDataArray = NULL;
             NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
             //display the tag if we've switched attachments
             if (tempIndex != currentIdx) {
@@ -339,6 +341,16 @@ bool isShowingDetail = false;
     if ((isShowingDetail && [self point:location IsInRectangle:[TagViewContainer.subviews firstObject].bounds]) || (!isShowingDetail && [self point:location IsInRectangle:TagViewContainer.bounds])){
         if ([GestureRecognizer isKindOfClass:UITapGestureRecognizer.class]){
             if (isShowingDetail) {
+                if (TagViewDetails.displayTagHistoryView) {
+                    CGPoint pointInHistoryView = [GestureRecognizer locationInView:TagViewDetails.displayTagHistoryView];
+                    if ([self point:pointInHistoryView IsInRectangle:TagViewDetails.displayTagHistoryView.bounds] && TagDataArray){
+                        //display tag history
+                        TagHistoryView *TagHistory = [TagHistoryView new];
+                        TagHistory.tags = TagDataArray;
+                        [self presentViewController:TagHistory animated:YES completion:NULL];
+                        return;
+                    }
+                }
                 [self tagShowLessButton];
             } else {
                 [self tagShowMoreButton];

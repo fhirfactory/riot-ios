@@ -463,8 +463,11 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
             cell.textField.placeholder = placeholder
             cell.textField.text = row.text
             cell.textField.delegate = delegate
-            
             switch tag {
+            case Constants.roomNameTextFieldTag:
+                if row.text == "" || row.text == nil {
+                    cell.textField.becomeFirstResponder()
+                }
             case Constants.roomAddressTextFieldTag:
                 cell.textField.autocapitalizationType = .none
             default: break

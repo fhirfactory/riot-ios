@@ -824,7 +824,7 @@
 		EBAC79AE2543CDB800A0B1BF /* SearchViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */; };
 		EBAC79B62543F9EE00A0B1BF /* SelectableFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */; };
 		EBAC79BE2543FA5700A0B1BF /* SelectableFilteredSearchController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */; };
-		EBB6C3092579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */; };
+		EBB6C3092579E643002EA9AB /* PatientTagHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB6C3082579E643002EA9AB /* PatientTagHelpers.swift */; };
 		EBC6D5472530066F00940365 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */; };
 		EBD3490125596AFA0008F5C3 /* RoomSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD3490025596AFA0008F5C3 /* RoomSelector.swift */; };
 		EBE08299252602FC001DC618 /* AlternateHomeViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE08298252602FC001DC618 /* AlternateHomeViewDataSource.swift */; };
@@ -2136,7 +2136,7 @@
 		EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewSection.swift; sourceTree = "<group>"; };
 		EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableFilteredSearchController.swift; sourceTree = "<group>"; };
 		EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectableFilteredSearchController.xib; sourceTree = "<group>"; };
-		EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewCellObjectiveCBridge.swift; sourceTree = "<group>"; };
+		EBB6C3082579E643002EA9AB /* PatientTagHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTagHelpers.swift; sourceTree = "<group>"; };
 		EBC6D5452530066F00940365 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		EBC6D5462530066F00940365 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		EBD3490025596AFA0008F5C3 /* RoomSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelector.swift; sourceTree = "<group>"; };
@@ -5234,7 +5234,7 @@
 				EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */,
 				EBE34E0A2582DD6500F6FF04 /* TagHistoryView.swift */,
 				EBE34E122582DD7500F6FF04 /* TagHistoryView.xib */,
-				EBB6C3082579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift */,
+				EBB6C3082579E643002EA9AB /* PatientTagHelpers.swift */,
 			);
 			path = Tagging;
 			sourceTree = "<group>";
@@ -6878,7 +6878,7 @@
 				EC711B9524A63B37008F830C /* SecretsRecoveryWithKeyViewModelType.swift in Sources */,
 				B1A68593229E807A00D6C09A /* RoomBubbleCellLayout.swift in Sources */,
 				EB76BE3D2573B5810013EABE /* BaseService.swift in Sources */,
-				EBB6C3092579E643002EA9AB /* PatientViewCellObjectiveCBridge.swift in Sources */,
+				EBB6C3092579E643002EA9AB /* PatientTagHelpers.swift in Sources */,
 				ECFBD603250FA98200DD5F5A /* RoomCreationModalCoordinatorBridgePresenter.swift in Sources */,
 				B1B558F420EF768F00210D55 /* RoomOutgoingTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.m in Sources */,
 				B1B5572320EE6C4D00210D55 /* AttachmentsViewController.m in Sources */,

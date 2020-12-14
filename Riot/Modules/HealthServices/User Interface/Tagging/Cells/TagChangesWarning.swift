@@ -18,7 +18,7 @@ import Foundation
 
 class TagChangesWarning: UITableViewCell {
     @IBOutlet weak var TagChangesWarningLabel: UILabel!
-    func renderWarning(){
+    @objc func renderWarning(){
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
         TagChangesWarningLabel.text = AlternateHomeTools.getNSLocalized("warn_tag_changes", in: "Vector")
     }

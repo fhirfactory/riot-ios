@@ -41,8 +41,14 @@
     return 74;
 }
 
+TagChangesWarning *tagWarning = NULL;
+
 - (void)render:(MXKCellData*)cellData
-{    
+{
+    
+    if (tagWarning) {
+        [tagWarning setHidden:YES];
+    }
     self.attachmentImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     if ([cellData conformsToProtocol:@protocol(MXKSearchCellDataStoring)])
@@ -78,6 +84,39 @@
             {
                 self.attachmentImageView.backgroundColor = ThemeService.shared.theme.backgroundColor;
                 [self.attachmentImageView setAttachmentThumb:bubbleData.attachment];
+            }
+            
+            if (bubbleData.attachment.type == MXKAttachmentTypeImage) {
+                [[Services ImageTagDataService] LookupTagInfoForObjcWithURL: bubbleData.attachment.contentURL andHandler:^(NSArray *tagData) {
+                    
+                    bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:[tagData lastObject]];
+                    if (containsChanges) {
+                        if (tagWarning) {
+                            [tagWarning setHidden:NO];
+                        } else {
+                            Stackview *stackview = [Stackview new];
+                            
+                            tagWarning = (TagChangesWarning *) [[[NSBundle bundleForClass:[TagChangesWarning class]] loadNibNamed:@"TagChangesWarning" owner:[TagChangesWarning new] options:NULL] firstObject];
+                            [tagWarning renderWarning];
+                            tagWarning.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+                            UIView *existingView = [self.contentView.subviews firstObject];
+                            existingView.translatesAutoresizingMaskIntoConstraints = NO;
+                            NSArray *views = [[NSArray alloc] initWithObjects:tagWarning.contentView, existingView, nil];
+                            [stackview initWithViews:views];
+                            for (UIView *view in self.contentView.subviews) {
+                                [view removeFromSuperview];
+                            }
+                            stackview.translatesAutoresizingMaskIntoConstraints = NO;
+                            [self.contentView addSubview:stackview];
+                            [self.contentView addConstraints:@[
+                                [stackview.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+                                [stackview.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+                                [stackview.topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+                                [stackview.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor]
+                            ]];
+                        }
+                    }
+                }];
             }
             
             self.iconImage.image = [self attachmentIcon:bubbleData.attachment.type];

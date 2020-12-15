@@ -850,6 +850,10 @@
 		EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */; };
 		EBEE3ADC2585BE930011345B /* TagChangesWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */; };
 		EBEE3AE42585BF280011345B /* TagChangesWarning.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEE3AE32585BF280011345B /* TagChangesWarning.swift */; };
+		EBFAF4A5258889DA004FF514 /* ImageDescriptionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBFAF4A4258889D9004FF514 /* ImageDescriptionViewCell.xib */; };
+		EBFAF4AD258889EE004FF514 /* ImageDescriptionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAF4AC258889EE004FF514 /* ImageDescriptionViewCell.swift */; };
+		EBFAF4B525888F72004FF514 /* PhotographerInfoViewSmall.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBFAF4B425888F72004FF514 /* PhotographerInfoViewSmall.xib */; };
+		EBFAF4BD25888F81004FF514 /* PhotographerInfoViewSmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBFAF4BC25888F81004FF514 /* PhotographerInfoViewSmall.swift */; };
 		EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */; };
 		EC1CA86024C1DEC400DE9EBF /* EnterPinCodeViewAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */; };
 		EC1CA86124C1DEC400DE9EBF /* EnterPinCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */; };
@@ -2163,6 +2167,10 @@
 		EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabbedHomeViewController.xib; sourceTree = "<group>"; };
 		EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagChangesWarning.xib; sourceTree = "<group>"; };
 		EBEE3AE32585BF280011345B /* TagChangesWarning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagChangesWarning.swift; sourceTree = "<group>"; };
+		EBFAF4A4258889D9004FF514 /* ImageDescriptionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDescriptionViewCell.xib; sourceTree = "<group>"; };
+		EBFAF4AC258889EE004FF514 /* ImageDescriptionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDescriptionViewCell.swift; sourceTree = "<group>"; };
+		EBFAF4B425888F72004FF514 /* PhotographerInfoViewSmall.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotographerInfoViewSmall.xib; sourceTree = "<group>"; };
+		EBFAF4BC25888F81004FF514 /* PhotographerInfoViewSmall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotographerInfoViewSmall.swift; sourceTree = "<group>"; };
 		EC1CA85124C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModelType.swift; sourceTree = "<group>"; };
 		EC1CA85224C1DEC400DE9EBF /* EnterPinCodeViewAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewAction.swift; sourceTree = "<group>"; };
 		EC1CA85324C1DEC400DE9EBF /* EnterPinCodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPinCodeViewModel.swift; sourceTree = "<group>"; };
@@ -5255,6 +5263,10 @@
 				EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */,
 				EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */,
 				EBEE3AE32585BF280011345B /* TagChangesWarning.swift */,
+				EBFAF4A4258889D9004FF514 /* ImageDescriptionViewCell.xib */,
+				EBFAF4AC258889EE004FF514 /* ImageDescriptionViewCell.swift */,
+				EBFAF4B425888F72004FF514 /* PhotographerInfoViewSmall.xib */,
+				EBFAF4BC25888F81004FF514 /* PhotographerInfoViewSmall.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -6371,6 +6383,7 @@
 				438067A724D7983E002675E1 /* RoleDetailViewController.xib in Resources */,
 				EC711BB324A63B58008F830C /* SecureBackupBannerCell.xib in Resources */,
 				B1B5574C20EE6C4D00210D55 /* MediaAlbumContentViewController.xib in Resources */,
+				EBFAF4B525888F72004FF514 /* PhotographerInfoViewSmall.xib in Resources */,
 				EB3B39232581DBFC003D6BD0 /* DateTakenViewCell.xib in Resources */,
 				32607D6F243E0A55006674CC /* KeyBackupRecoverFromPrivateKeyViewController.storyboard in Resources */,
 				EBAC798A2543AFBA00A0B1BF /* AlternateRoomCreationFlowAddMembersController.xib in Resources */,
@@ -6470,6 +6483,7 @@
 				B1B5581820EF625800210D55 /* PreviewRoomTitleView.xib in Resources */,
 				B1B5583020EF66BA00210D55 /* RoomIdOrAliasTableViewCell.xib in Resources */,
 				B1B558BF20EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithoutSenderNameBubbleCell.xib in Resources */,
+				EBFAF4A5258889DA004FF514 /* ImageDescriptionViewCell.xib in Resources */,
 				B1B558FD20EF768F00210D55 /* RoomIncomingAttachmentBubbleCell.xib in Resources */,
 				43DAB8BA24D3E91C00873206 /* ActRoleViewController.xib in Resources */,
 				B1B558DB20EF768F00210D55 /* RoomIncomingEncryptedTextMsgWithoutSenderNameBubbleCell.xib in Resources */,
@@ -6985,11 +6999,13 @@
 				B1B9DEE822EB34EF0065E677 /* ReactionHistoryCoordinatorType.swift in Sources */,
 				EC711B7424A63B37008F830C /* SecretsSetupRecoveryKeyViewModelType.swift in Sources */,
 				B14F143122144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyViewState.swift in Sources */,
+				EBFAF4AD258889EE004FF514 /* ImageDescriptionViewCell.swift in Sources */,
 				32DB557F22FDADE50016329E /* ServiceTermsModalScreenCoordinator.swift in Sources */,
 				EC31F014251B53AD00D407DA /* RoomInfoBasicView.swift in Sources */,
 				EC1CA85F24C1DEC400DE9EBF /* EnterPinCodeViewModelType.swift in Sources */,
 				B1098C1121ED07E4000DDA48 /* NavigationRouterType.swift in Sources */,
 				B1B5573D20EE6C4D00210D55 /* WebViewViewController.m in Sources */,
+				EBFAF4BD25888F81004FF514 /* PhotographerInfoViewSmall.swift in Sources */,
 				3209451221F1C1430088CAA2 /* BlackTheme.swift in Sources */,
 				B1B5572720EE6C4D00210D55 /* RoomSearchViewController.m in Sources */,
 				B14084C623BF76890010F692 /* BubbleCellContentView.swift in Sources */,

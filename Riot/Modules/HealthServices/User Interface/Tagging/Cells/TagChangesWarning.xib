@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,37 +17,50 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="20"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="e2e_warning" translatesAutoresizingMaskIntoConstraints="NO" id="XZN-8R-i3P">
-                        <rect key="frame" x="10" y="0.0" width="20" height="20"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bOo-zC-xcW">
+                        <rect key="frame" x="62" y="0.0" width="290" height="20"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This media has patient tag changes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-vf-KtG">
+                                <rect key="frame" x="20" y="0.0" width="270" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.19999608399999999" green="0.20000135899999999" blue="0.19999986889999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="e2e_warning" translatesAutoresizingMaskIntoConstraints="NO" id="XZN-8R-i3P">
+                                <rect key="frame" x="0.0" y="4" width="20" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="QQ9-FB-kpy"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="QQ9-FB-kpy"/>
+                            <constraint firstItem="hKb-vf-KtG" firstAttribute="centerY" secondItem="XZN-8R-i3P" secondAttribute="centerY" id="LTp-Lz-5xZ"/>
+                            <constraint firstItem="hKb-vf-KtG" firstAttribute="leading" secondItem="XZN-8R-i3P" secondAttribute="trailing" id="VX3-U5-JcD"/>
+                            <constraint firstItem="XZN-8R-i3P" firstAttribute="leading" secondItem="bOo-zC-xcW" secondAttribute="leading" id="lHe-no-Pup"/>
+                            <constraint firstAttribute="trailing" secondItem="hKb-vf-KtG" secondAttribute="trailing" id="q1V-rr-cKT"/>
+                            <constraint firstItem="XZN-8R-i3P" firstAttribute="centerY" secondItem="bOo-zC-xcW" secondAttribute="centerY" id="vTu-8Z-NqY"/>
                         </constraints>
-                    </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This media has patient tag changes" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-vf-KtG">
-                        <rect key="frame" x="38" y="-0.5" width="270" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="hKb-vf-KtG" firstAttribute="centerY" secondItem="XZN-8R-i3P" secondAttribute="centerY" id="8Pp-Ew-2eC"/>
-                    <constraint firstItem="hKb-vf-KtG" firstAttribute="leading" secondItem="XZN-8R-i3P" secondAttribute="trailing" constant="8" symbolic="YES" id="Atr-2R-mxY"/>
-                    <constraint firstAttribute="bottom" secondItem="XZN-8R-i3P" secondAttribute="bottom" id="EK9-T2-sl4"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hKb-vf-KtG" secondAttribute="trailing" id="Qyw-GM-3Gv"/>
-                    <constraint firstItem="hKb-vf-KtG" firstAttribute="top" secondItem="at1-mY-hDK" secondAttribute="top" constant="-0.5" id="bfG-cd-cij"/>
-                    <constraint firstItem="XZN-8R-i3P" firstAttribute="top" secondItem="at1-mY-hDK" secondAttribute="top" id="d6O-PD-k1f"/>
-                    <constraint firstAttribute="bottom" secondItem="hKb-vf-KtG" secondAttribute="bottom" constant="-0.5" id="dOl-fA-ded"/>
-                    <constraint firstItem="XZN-8R-i3P" firstAttribute="leading" secondItem="at1-mY-hDK" secondAttribute="leading" constant="10" id="jRE-by-kwZ"/>
+                    <constraint firstItem="bOo-zC-xcW" firstAttribute="top" secondItem="at1-mY-hDK" secondAttribute="top" id="2j5-EM-fAB"/>
+                    <constraint firstItem="bOo-zC-xcW" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hKb-vf-KtG" secondAttribute="bottom" id="ONv-l2-q77"/>
+                    <constraint firstItem="hKb-vf-KtG" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bOo-zC-xcW" secondAttribute="top" id="TpN-PQ-WCw"/>
+                    <constraint firstAttribute="bottom" secondItem="bOo-zC-xcW" secondAttribute="bottom" id="nFR-tU-MQH"/>
+                    <constraint firstItem="bOo-zC-xcW" firstAttribute="centerX" secondItem="at1-mY-hDK" secondAttribute="centerX" id="zJH-Bn-pBy"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="TagChangesWarningLabel" destination="hKb-vf-KtG" id="MNm-Xn-2lV"/>
             </connections>
-            <point key="canvasLocation" x="-30.434782608695656" y="38.839285714285715"/>
+            <point key="canvasLocation" x="-30.434782608695656" y="24.776785714285712"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="e2e_warning" width="15" height="12"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

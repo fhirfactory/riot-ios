@@ -28,15 +28,16 @@ import Foundation
 }
 
 @objc class PatientTagHelpers: NSObject {
-    @objc static func containsTagChanges(ForTagData tags: [TagData], andTag tag: TagData) -> Bool
-    {
+    @objc static func containsTagChanges(ForTagData tags: [TagData], andTag tag: TagData) -> Bool {
         tags.contains(where: { (t) -> Bool in
             t.Patients.count != tag.Patients.count || !t.Patients.allSatisfy({ (pm) -> Bool in
                 tag.Patients.contains(pm)
             }) || !tag.Patients.allSatisfy({ (pm) -> Bool in
                 t.Patients.contains(pm)
             })
-        })
+        }) || !(tags.allSatisfy({ (t) -> Bool in
+            t.Description == tag.Description
+        }))
     }
     @objc static func getPatientViewCell(ForTagData tags: [TagData]) -> PatientViewCellData? {
         let returnData = PatientViewCellData()
@@ -48,20 +49,21 @@ import Foundation
         var subviews: [UIView] = []
         
         guard let tag = tags.last else { return nil }
-        guard let descriptionCell = Bundle(for: ImageDescriptionCell.self).loadNibNamed("ImageDescriptionCell", owner: ImageDescriptionCell(), options: nil)?.first as? ImageDescriptionCell else { return nil}
+        guard let descriptionCell = Bundle(for: ImageDescriptionViewCell.self).loadNibNamed("ImageDescriptionViewCell", owner: ImageDescriptionViewCell(), options: nil)?.first as? ImageDescriptionViewCell else { return nil}
         let viewModel = PatientTaggingViewController.produceViewModel(fromTagData: tags)
-        descriptionCell.render(viewModel: viewModel)
-        descriptionCell.setAsReadOnly()
+        descriptionCell.render(withString: viewModel.description ?? "")
         descriptionCell.sizeToFit()
         let descriptionView = descriptionCell.contentView
-        subviews.append(descriptionView)
+        descriptionView.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
+    
+        //subviews.append(descriptionView)
         descriptionView.translatesAutoresizingMaskIntoConstraints = false
         returnData.descriptionView = descriptionView
         
         guard let timeCell = Bundle(for: DateTakenViewCell.self).loadNibNamed("DateTakenViewCell", owner: DateTakenViewCell(), options: nil)?.first as? DateTakenViewCell else { return nil}
         timeCell.RenderWith(Object: tag.TakenDate)
         let timeView = timeCell.contentView
-        subviews.append(timeView)
+        
         timeView.translatesAutoresizingMaskIntoConstraints = false
         timeView.sizeToFit()
         
@@ -80,17 +82,19 @@ import Foundation
                 guard let tagChangesWarning = Bundle(for: TagChangesWarning.self).loadNibNamed("TagChangesWarning", owner: TagChangesWarning(), options: nil)?.first as? TagChangesWarning else { return nil }
                 tagChangesWarning.renderWarning()
                 tagChangesWarning.contentView.translatesAutoresizingMaskIntoConstraints = false
+                tagChangesWarning.contentView.addConstraint(tagChangesWarning.contentView.heightAnchor.constraint(equalToConstant: tagChangesWarning.frame.height * 2))
                 patientViewSubviews.append(tagChangesWarning.contentView)
             }
             
             patientViewSubviews.append(patientTagView)
+            patientViewSubviews.append(descriptionView)
             patientViewContainer.initWithViews(patientViewSubviews)
             patientViewContainer.translatesAutoresizingMaskIntoConstraints = false
             returnData.patientDetailsView = patientViewContainer
             topLevelViews.append(patientViewContainer)
             
             guard let photographerInfo = tag.PhotographerDetails else { return nil }
-            guard let photographerInfoView = Bundle(for: PhotographerDetails.self).loadNibNamed("PhotographerDetails", owner: PhotographerDetails(), options: nil)?.first as? PhotographerDetails else { return nil }
+            guard let photographerInfoView = Bundle(for: PhotographerInfoViewSmall.self).loadNibNamed("PhotographerInfoViewSmall", owner: PhotographerInfoViewSmall(), options: nil)?.first as? PhotographerInfoViewSmall else { return nil }
             photographerInfoView.displayDetails(photographerTagDetails: photographerInfo)
             
             let photographerView = photographerInfoView.contentView
@@ -105,6 +109,9 @@ import Foundation
             photographerView.sizeToFit()
             descriptionView.sizeToFit()
         }
+        
+        subviews.append(timeView)
+        
         returnView.translatesAutoresizingMaskIntoConstraints = false
         returnView.sizeToFit()
         

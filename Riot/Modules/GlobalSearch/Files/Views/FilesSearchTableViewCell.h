@@ -15,10 +15,12 @@
  */
 
 #import <MatrixKit/MatrixKit.h>
+#import <Riot-Swift.h>
 
 /**
  Each `FilesSearchTableViewCell` instance displays a files search result.
  */
 @interface FilesSearchTableViewCell : MXKSearchTableViewCell
-
+@property TagChangesWarning *tagWarning;
+@property UIView *originalContentView;
 @end

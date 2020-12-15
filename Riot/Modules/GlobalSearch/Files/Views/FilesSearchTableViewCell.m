@@ -41,13 +41,22 @@
     return 74;
 }
 
-TagChangesWarning *tagWarning = NULL;
-
 - (void)render:(MXKCellData*)cellData
 {
     
-    if (tagWarning) {
-        [tagWarning setHidden:YES];
+    if ([self tagWarning]) {
+        [self setTagWarning:NULL];
+        [[self tagWarning] removeFromSuperview];
+        for (UIView *view in self.contentView.subviews) {
+            [view removeFromSuperview];
+        }
+        [self.contentView addSubview:[self originalContentView]];
+        [self.contentView addConstraints:@[
+            [[self originalContentView].leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+            [[self originalContentView].trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+            [[self originalContentView].topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+            [[self originalContentView].bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor]
+        ]];
     }
     self.attachmentImageView.contentMode = UIViewContentModeScaleAspectFill;
     
@@ -91,17 +100,21 @@ TagChangesWarning *tagWarning = NULL;
                     
                     bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:[tagData lastObject]];
                     if (containsChanges) {
-                        if (tagWarning) {
-                            [tagWarning setHidden:NO];
+                        if ([self tagWarning]) {
+                            [[self tagWarning].contentView setHidden:NO];
+                            [self.contentView layoutIfNeeded];
+                            [self.contentView layoutSubviews];
                         } else {
                             Stackview *stackview = [Stackview new];
                             
-                            tagWarning = (TagChangesWarning *) [[[NSBundle bundleForClass:[TagChangesWarning class]] loadNibNamed:@"TagChangesWarning" owner:[TagChangesWarning new] options:NULL] firstObject];
-                            [tagWarning renderWarning];
-                            tagWarning.contentView.translatesAutoresizingMaskIntoConstraints = NO;
+                            
+                            [self setTagWarning: (TagChangesWarning *) [[[NSBundle bundleForClass:[TagChangesWarning class]] loadNibNamed:@"TagChangesWarning" owner:[TagChangesWarning new] options:NULL] firstObject]];
+                            [[self tagWarning] renderWarning];
+                            [self tagWarning].contentView.translatesAutoresizingMaskIntoConstraints = NO;
                             UIView *existingView = [self.contentView.subviews firstObject];
+                            [self setOriginalContentView: existingView];
                             existingView.translatesAutoresizingMaskIntoConstraints = NO;
-                            NSArray *views = [[NSArray alloc] initWithObjects:tagWarning.contentView, existingView, nil];
+                            NSArray *views = [[NSArray alloc] initWithObjects:[self tagWarning].contentView, existingView, nil];
                             [stackview initWithViews:views];
                             for (UIView *view in self.contentView.subviews) {
                                 [view removeFromSuperview];

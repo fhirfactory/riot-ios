@@ -9,11 +9,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="p1E-ie-Al0" customClass="DateTakenViewCell" customModule="Riot" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="23" id="p1E-ie-Al0" customClass="DateTakenViewCell" customModule="Riot" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="23"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p1E-ie-Al0" id="Bwg-DW-tSk">
-                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="414" height="23"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Taken" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Llt-Mb-5FV">
@@ -22,56 +22,36 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVh-dx-7tQ">
-                        <rect key="frame" x="20" y="21" width="36" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atZ-SA-vbx">
-                        <rect key="frame" x="20" y="42" width="38" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunday August the 16th" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87E-dk-gbe">
+                        <rect key="frame" x="77" y="0.0" width="182" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4:52 PM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AlH-g1-aGZ">
-                        <rect key="frame" x="66" y="42" width="65" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunday August the 16th" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="87E-dk-gbe">
-                        <rect key="frame" x="66" y="21" width="182" height="21"/>
+                        <rect key="frame" x="267" y="0.0" width="65" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Llt-Mb-5FV" firstAttribute="leading" secondItem="Bwg-DW-tSk" secondAttribute="leading" constant="20" symbolic="YES" id="50E-6h-tMT"/>
-                    <constraint firstItem="atZ-SA-vbx" firstAttribute="top" secondItem="bVh-dx-7tQ" secondAttribute="bottom" id="ABK-zV-L7F"/>
-                    <constraint firstItem="87E-dk-gbe" firstAttribute="leading" secondItem="atZ-SA-vbx" secondAttribute="trailing" priority="999" constant="8" symbolic="YES" id="FPj-79-8KZ"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AlH-g1-aGZ" secondAttribute="trailing" constant="10" id="Hly-ee-1NR"/>
-                    <constraint firstItem="87E-dk-gbe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bVh-dx-7tQ" secondAttribute="trailing" constant="10" id="Nvt-ah-UlN"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="87E-dk-gbe" secondAttribute="trailing" constant="10" id="Od8-GJ-eTE"/>
-                    <constraint firstItem="bVh-dx-7tQ" firstAttribute="top" secondItem="Llt-Mb-5FV" secondAttribute="bottom" id="VKW-mM-MYh"/>
-                    <constraint firstAttribute="bottom" secondItem="atZ-SA-vbx" secondAttribute="bottom" constant="17" id="VVX-1t-qia"/>
-                    <constraint firstItem="atZ-SA-vbx" firstAttribute="leading" secondItem="Llt-Mb-5FV" secondAttribute="leading" id="aMK-X8-XO7"/>
-                    <constraint firstItem="87E-dk-gbe" firstAttribute="leading" secondItem="AlH-g1-aGZ" secondAttribute="leading" id="lL7-9D-a6c"/>
-                    <constraint firstItem="Llt-Mb-5FV" firstAttribute="top" secondItem="Bwg-DW-tSk" secondAttribute="top" id="oFc-y8-L2o"/>
-                    <constraint firstItem="87E-dk-gbe" firstAttribute="centerY" secondItem="bVh-dx-7tQ" secondAttribute="centerY" id="xVS-KO-45H"/>
-                    <constraint firstItem="bVh-dx-7tQ" firstAttribute="leading" secondItem="Llt-Mb-5FV" secondAttribute="leading" id="xwU-lS-ZDo"/>
-                    <constraint firstItem="AlH-g1-aGZ" firstAttribute="centerY" secondItem="atZ-SA-vbx" secondAttribute="centerY" id="z7v-1c-8za"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AlH-g1-aGZ" secondAttribute="trailing" constant="10" id="K56-E9-FgB"/>
+                    <constraint firstAttribute="bottom" secondItem="Llt-Mb-5FV" secondAttribute="bottom" constant="2" id="NHT-c3-f70"/>
+                    <constraint firstItem="87E-dk-gbe" firstAttribute="top" secondItem="Bwg-DW-tSk" secondAttribute="top" id="agy-Ba-Yj8"/>
+                    <constraint firstItem="AlH-g1-aGZ" firstAttribute="centerY" secondItem="87E-dk-gbe" secondAttribute="centerY" id="oDd-r6-Lu4"/>
+                    <constraint firstItem="AlH-g1-aGZ" firstAttribute="leading" secondItem="87E-dk-gbe" secondAttribute="trailing" constant="8" symbolic="YES" id="sIs-3s-ndT"/>
+                    <constraint firstItem="Llt-Mb-5FV" firstAttribute="leading" secondItem="Bwg-DW-tSk" secondAttribute="leading" constant="20" symbolic="YES" id="v0Z-3I-NaL"/>
+                    <constraint firstItem="Llt-Mb-5FV" firstAttribute="top" secondItem="Bwg-DW-tSk" secondAttribute="top" id="vlP-SM-mfj"/>
+                    <constraint firstItem="87E-dk-gbe" firstAttribute="leading" secondItem="Llt-Mb-5FV" secondAttribute="trailing" constant="8" symbolic="YES" id="zqw-br-YVa"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="DateLabel" destination="bVh-dx-7tQ" id="FGD-dN-seA"/>
                 <outlet property="DateValueLabel" destination="87E-dk-gbe" id="c66-Wi-iLf"/>
                 <outlet property="TakenTitle" destination="Llt-Mb-5FV" id="NbW-zO-aFO"/>
-                <outlet property="TimeLabel" destination="atZ-SA-vbx" id="gfE-2G-2rW"/>
                 <outlet property="TimeValueLabel" destination="AlH-g1-aGZ" id="H0P-it-bug"/>
             </connections>
-            <point key="canvasLocation" x="-220.28985507246378" y="51.5625"/>
+            <point key="canvasLocation" x="-220.28985507246378" y="32.477678571428569"/>
         </tableViewCell>
     </objects>
 </document>

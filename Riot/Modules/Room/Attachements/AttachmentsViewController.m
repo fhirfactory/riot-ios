@@ -152,7 +152,7 @@ NSArray *TagDataArray;
         MXKAttachment *attachment = self.attachments[currentIdx];
         NSString *contentURL = attachment.contentURL;
         
-        [self hideTag];
+        [self destroyTag];
         
         [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
             TagDataArray = tagData;
@@ -178,6 +178,7 @@ NSArray *TagDataArray;
         [TagViewContainer addSubview:TagView];
         [TagViewContainer setAlpha:0.0];
         [TagViewContainer setOpaque:NO];
+        hidden = NO;
         
         if (TagViewDetails.includesPatientDetails){
             bottomConstraint = [TagViewDetails.patientDetailsView.bottomAnchor constraintEqualToAnchor:TagViewContainer.bottomAnchor constant:0.0];
@@ -253,13 +254,14 @@ NSMutableDictionary *cellGestureRecognizers;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self hideTag];
+    [self destroyTag];
 }
 
-- (void)hideTag
+- (void)destroyTag
 {
     NSInteger tempIndex = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
     if (TagViewDetails && TagViewContainer) {
+        hidden = YES;
         [UIView animateWithDuration:0.4 animations:^{
             [TagViewContainer setAlpha:0.0];
             TagViewDetails = NULL;
@@ -274,6 +276,22 @@ NSMutableDictionary *cellGestureRecognizers;
             }
         }];
     }
+}
+
+bool hidden = NO;
+- (void)hideTag
+{
+    hidden = YES;
+    [UIView animateWithDuration:0.2 animations:^{
+        [TagViewContainer setAlpha:0];
+    }];
+}
+- (void)showTag
+{
+    hidden = NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        [TagViewContainer setAlpha:1];
+    }];
 }
 
 - (void)tagShowMoreButton
@@ -324,8 +342,10 @@ bool isShowingDetail = false;
 {
     NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
     UIGestureRecognizer *cellGestureRecognizer = [cellGestureRecognizers objectForKey:[NSNumber numberWithLong:currentIdx]];
-    CGPoint location = (isShowingDetail ? [GestureRecognizer locationInView:[TagViewContainer.subviews firstObject]] : [GestureRecognizer locationInView:TagViewContainer]);
-    if ((isShowingDetail && [self point:location IsInRectangle:[TagViewContainer.subviews firstObject].bounds]) || (!isShowingDetail && [self point:location IsInRectangle:TagViewContainer.bounds])){
+    NSArray *subviews = TagViewContainer.subviews;
+    UIView *collapsedMenuParts = [[TagViewContainer.subviews firstObject].subviews firstObject];
+    CGPoint location = (isShowingDetail ? [GestureRecognizer locationInView:[TagViewContainer.subviews firstObject]] : [GestureRecognizer locationInView:collapsedMenuParts]);
+    if (!hidden && ((isShowingDetail && [self point:location IsInRectangle:[TagViewContainer.subviews firstObject].bounds]) || (!isShowingDetail && [self point:location IsInRectangle:collapsedMenuParts.bounds]))){
         if ([GestureRecognizer isKindOfClass:UITapGestureRecognizer.class]){
             if (isShowingDetail) {
                 if (TagViewDetails.displayTagHistoryView) {
@@ -348,13 +368,20 @@ bool isShowingDetail = false;
         if ([self point:LocationInCell IsInRectangle:cellGestureRecognizer.view.bounds]){
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-            if ([GestureRecognizer isKindOfClass:UITapGestureRecognizer.class]){
-                [super performSelector:@selector(onCollectionViewCellTap:) withObject:cellGestureRecognizer]; //this selector does exist, as does the selector below.
+            if ([self navigationBar].hidden && !hidden) {
+                [self hideTag];
+            } else if ([GestureRecognizer isKindOfClass:UITapGestureRecognizer.class]){
+                
+                if ([self navigationBar].hidden && hidden) {
+                    [self showTag];
+                }
+                
+                [super performSelector:@selector(onCollectionViewCellTap:) withObject:cellGestureRecognizer];
+                ///this (above) selector does exist, as does the selector below.
                 ///It's a little dangerous to directly performselector, as the name of the selector may change in MatrixKit, and this would lead to an annoying-to-diagnose crash.
                 ///A solution to this, would be getting the selector on the base gesture recognizers in MatrixKit. This could be done by getValueForKey'ing targets (or it might be actions) on the gesture recognizer, which would return a NSObject with an attached target (NSObject) and selector (SEL), from which we could then extract the target and selector (with get_IVar for the selector (as otherwise you've got to convert an ARC managed pointer to a selector, which isn't allowed), and a normal getValueForKey for the target), which would ensure that no matter what changes are made to MatrixKit, this code continutes to work as expected; HOWEVER, doing this requires simply moving the reliance to one on Apple's private implementation of UIGestureRecognizers, and again, as private APIs are used doing this, the app could be banned from the app store as a result.
                 ///So, putting this reliance on the MatrixKit Private APIs remaining the same was chosen over utilizing Apple's private APIs -- but it's reasonably likely that this will eventually become a problem.
             } else if ([GestureRecognizer isKindOfClass:UILongPressGestureRecognizer.class]) {
-                
                 [super performSelector:@selector(onCollectionViewCellLongPress:) withObject:GestureRecognizer];
             }
 #pragma clang diagnostic pop

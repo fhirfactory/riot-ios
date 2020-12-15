@@ -16,20 +16,13 @@
 
 import Foundation
 
-class DateTakenViewCell: QueryTableViewCell<Date> {
-    @IBOutlet weak var TakenTitle: UILabel!
-    @IBOutlet weak var DateValueLabel: UILabel!
-    @IBOutlet weak var TimeValueLabel: UILabel!
-    
-    override func RenderWith(Object value: Date) {
-        super.RenderWith(Object: value)
+class PhotographerInfoViewSmall: UITableViewCell {
+    @IBOutlet weak var PhotographerTitleLabel: UILabel!
+    @IBOutlet weak var PhotographerNameLabel: UILabel!
+    @IBOutlet weak var PhotographerDesignationLabel: UILabel!
+    func displayDetails(photographerTagDetails: PhotographerTagDetails) {
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
-        TakenTitle.text = AlternateHomeTools.getNSLocalized("taken", in: "Vector")
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MMM-yyyy"
-        DateValueLabel.text = dateFormatter.string(from: value)
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "h:mm a"
-        TimeValueLabel.text = timeFormatter.string(from: value)
+        PhotographerNameLabel.text = photographerTagDetails.Name
+        PhotographerDesignationLabel.text = photographerTagDetails.Role.Designation
     }
 }

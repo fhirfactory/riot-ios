@@ -19,7 +19,7 @@ import Foundation
 class ImageDescriptionCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var DescriptionTitle: UILabel!
     @IBOutlet weak var DescriptionLabel: UILabel!
-    @IBOutlet weak private var DescriptionTextView: UITextView!
+    @IBOutlet weak var DescriptionTextView: UITextView!
     var displayingPlaceholder: Bool = true
     var placeholderText: String {
         return AlternateHomeTools.getNSLocalized("", in: "Vector")

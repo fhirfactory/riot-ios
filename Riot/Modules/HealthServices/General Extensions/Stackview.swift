@@ -33,15 +33,17 @@ class Stackview: UIView {
             firstView.topAnchor.constraint(equalTo: topAnchor)
         ])
         stackedViews.append(firstView)
-        for view in views[1..<views.count - 1] {
-            addSubview(view)
-            guard let last = stackedViews.last else { return }
-            addConstraints([
-                view.leadingAnchor.constraint(equalTo: leadingAnchor),
-                view.trailingAnchor.constraint(equalTo: trailingAnchor),
-                view.topAnchor.constraint(equalTo: last.bottomAnchor)
-            ])
-            stackedViews.append(view)
+        if 1 <= views.count - 1 {
+            for view in views[1..<views.count - 1] {
+                addSubview(view)
+                guard let last = stackedViews.last else { return }
+                addConstraints([
+                    view.leadingAnchor.constraint(equalTo: leadingAnchor),
+                    view.trailingAnchor.constraint(equalTo: trailingAnchor),
+                    view.topAnchor.constraint(equalTo: last.bottomAnchor)
+                ])
+                stackedViews.append(view)
+            }
         }
         guard let last = stackedViews.last else { return }
         guard let lastView = views.last else { return }

@@ -1254,4 +1254,15 @@ Are you sure you want to continue?";
 "room_info_list_section_other" = "Other";
 
 
-//TODO: Translate these strings
+// MARK: - Health Specific
+"designation_select" = "Select a Designation";
+"image_description_placeholder" = "Provide an image description";
+"image_description_name" = "Description";
+"date" = "Date";
+"time" = "Time";
+"taken" = "Taken";
+"previous_tag" = "Previous Tag";
+"view_tag_history" = "View Tag History";
+"tag_history_title" = "Tag History";
+"message_forwarding_title" = "Forward a message to a Room";
+"warn_tag_changes" = "This media has patient tag changes";

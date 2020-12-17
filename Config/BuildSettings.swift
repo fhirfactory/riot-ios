@@ -222,7 +222,7 @@ final class BuildSettings: NSObject {
     
     static let roomSettingsScreenShowLowPriorityOption: Bool = true
     static let roomSettingsScreenShowDirectChatOption: Bool = false
-    static let roomSettingsScreenAllowChangingAccessSettings: Bool = false
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
     static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
     static let roomSettingsScreenShowAddressSettings: Bool = false
     static let roomSettingsScreenShowFlairSettings: Bool = false

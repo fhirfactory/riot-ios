@@ -95,7 +95,7 @@ static UILabel* backgroundLabel = nil;
         backgroundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         backgroundLabel.textColor = ThemeService.shared.theme.backgroundColor;
         backgroundLabel.textAlignment = NSTextAlignmentCenter;
-        backgroundLabel.font = [UIFont boldSystemFontOfSize:25];
+        backgroundLabel.font = [UIFont boldSystemFontOfSize:25]; //size 18 if 3 chars needed
     }
     
     backgroundLabel.text = text;
@@ -192,7 +192,8 @@ static UILabel* backgroundLabel = nil;
     if (lastWord && words.count > 1){
         chars = [chars stringByAppendingString:[AvatarGenerator firstChar:lastWord]];
     }
-    return [AvatarGenerator imageFromText:chars withBackgroundColor:colorsList[[AvatarGenerator colorIndexForText:itemId]]];
+    return [AvatarGenerator imageFromText:chars
+                      withBackgroundColor:colorsList[[AvatarGenerator colorIndexForText:itemId]]];
 }
 
 + (UIImage*)generateAvatarForMatrixItem:(NSString*)itemId withDisplayName:(NSString*)displayname size:(CGFloat)size andFontSize:(CGFloat)fontSize

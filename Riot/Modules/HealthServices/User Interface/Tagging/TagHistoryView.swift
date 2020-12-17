@@ -27,6 +27,7 @@ class TagHistoryView: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         tableView.register(TagHistoryCell.self, forCellReuseIdentifier: "TagHistoryCell")
         TitleLabel.text = AlternateHomeTools.getNSLocalized("tag_history_title", in: "Vector")
+        ThemeService.shared().theme.recursiveApply(on: view)
     }
     
     @objc var tags: [TagData] = []

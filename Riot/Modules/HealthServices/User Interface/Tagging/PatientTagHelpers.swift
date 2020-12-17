@@ -116,46 +116,6 @@ import Foundation
         returnView.sizeToFit()
         
         if tags.count > 1 {
-            //only worry about one previous tag.
-            if let previousTag = tags.reversed().last { (t) -> Bool in
-                t.Patients != tag.Patients && t.Patients.count > 0
-            } {
-                let paginator = UIView()
-                paginator.translatesAutoresizingMaskIntoConstraints = false
-                paginator.backgroundColor = .white
-                subviews.append(paginator)
-                
-                let separator = UIView()
-                separator.translatesAutoresizingMaskIntoConstraints = false
-                separator.backgroundColor = ThemeService.shared().theme.textPrimaryColor
-                paginator.addSubview(separator)
-                
-                let paginatorLabel = UILabel()
-                paginatorLabel.textColor = ThemeService.shared().theme.headerTextPrimaryColor
-                paginatorLabel.text = "Previously Tagged"
-                paginatorLabel.textAlignment = .center
-                paginatorLabel.translatesAutoresizingMaskIntoConstraints = false
-                paginator.addSubview(paginatorLabel)
-                
-                paginator.addConstraints([
-                    separator.centerXAnchor.constraint(equalTo: paginator.centerXAnchor),
-                    separator.widthAnchor.constraint(equalTo: paginator.widthAnchor, multiplier: 0.7),
-                    separator.heightAnchor.constraint(equalToConstant: 1),
-                    separator.topAnchor.constraint(equalTo: paginator.topAnchor, constant: 5),
-                    
-                    paginatorLabel.centerXAnchor.constraint(equalTo: separator.centerXAnchor),
-                    paginatorLabel.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 5),
-                    paginator.bottomAnchor.constraint(equalTo: paginatorLabel.bottomAnchor, constant: 5)
-                ])
-                
-                guard let patientTagCell = Bundle(for: PatientViewCell.self).loadNibNamed("PatientViewCell", owner: PatientViewCell(), options: nil)?.first as? PatientViewCell else { return nil }
-                guard let patient = previousTag.Patients.first else { return nil }
-                patientTagCell.RenderWith(Object: patient)
-                let patientTagView = patientTagCell.contentView
-                patientTagView.translatesAutoresizingMaskIntoConstraints = false
-                subviews.append(patientTagView)
-            }
-            
             //display a cell saying there's tag history available
             let historyView = UIView()
             let historyLabel = UILabel()
@@ -165,7 +125,7 @@ import Foundation
             historyView.addConstraints([
                 historyLabel.centerXAnchor.constraint(equalTo: historyView.centerXAnchor),
                 historyLabel.centerYAnchor.constraint(equalTo: historyView.centerYAnchor),
-                historyView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+                historyView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50)
             ])
             historyLabel.textAlignment = .center
             historyLabel.text = AlternateHomeTools.getNSLocalized("view_tag_history", in: "Vector")

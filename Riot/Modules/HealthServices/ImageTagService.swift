@@ -21,11 +21,12 @@ import Foundation
                                             TagData(withPatient: PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), Description: "A photo taken of a patient that has mysteriously become a somewhat monolithic building in Canberra. Shown is the patient's left arm.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date()),
                                             TagData(withPatient: PatientModel(Name: "John Nobody", URN: "123456788", DoB: Date()), Description: "A photo taken of a patient that has mysteriously become a somewhat monolithic building in Canberra. Shown is the patient's *right* arm (a clerical error had this incorrectly described as the patient's left arm).", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date())]]
     func LookupTagInfoFor(URL: String, andHandler handler: ([TagData]) -> Void) {
-        if tagData.keys.contains(URL) {
+        /*if tagData.keys.contains(URL) {
             if let tags = tagData[URL] {
                 handler(tags)
             }
-        }
+        }*/
+        handler(tagData["mxc://matrix.org/EzgHluUEbwnEGDZHpcwaJTNy"] ?? [])
     }
     //first tag in the array is the oldest tag; last in the array is the most recent tag. (tags are in chronological order)
     @objc func LookupTagInfoForObjc(URL: String, andHandler handler: (NSArray) -> Void) {

@@ -198,6 +198,7 @@ extension RoomCreationEventsModalViewController: UITableViewDataSource {
         cell.contentView.backgroundColor = .clear
         cell.tintColor = theme.tintColor
         cell.selectionStyle = .none
+        theme.recursiveApply(on: cell.contentView)
         return cell
     }
     

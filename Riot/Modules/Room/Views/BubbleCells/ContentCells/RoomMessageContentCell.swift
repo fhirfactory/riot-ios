@@ -18,9 +18,11 @@ import Foundation
 
 class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var AvatarImageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var SenderNameHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var Sender: UILabel!
     @IBOutlet weak var SenderAvatar: MXKImageView!
     @IBOutlet weak var MessageContentView: UITableView!
+    @IBOutlet weak var PaginationSpace: UIView!
     
     private var componentCount: Int {
         if cellData == nil {
@@ -46,7 +48,6 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         registerReuseIdentifiers()
     }
     
@@ -75,15 +76,130 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
         return avatarImageWidth + 20
     }
     
+    static var paginationFontSize: CGFloat {
+        return 20
+    }
+    static var paginationPaddingConstant: CGFloat {
+        return 10
+    }
+    
+    static func createPaginator(_ cellData: MXKRoomBubbleCellData) -> UIView {
+        let paginationlabel = UILabel()
+        let dateString = EventFormatter(matrixSession: cellData.mxSession).dateString(fromTimestamp: cellData.events.first?.originServerTs ?? 0, withTime: false)
+        paginationlabel.text = dateString?.uppercased()
+        paginationlabel.translatesAutoresizingMaskIntoConstraints = false
+        paginationlabel.textAlignment = .center
+        paginationlabel.font = UIFont.boldSystemFont(ofSize: paginationFontSize)
+        paginationlabel.textColor = ThemeService.shared().theme.tintColor
+        paginationlabel.sizeToFit()
+        let paginatorStackview = Stackview()
+        paginatorStackview.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        
+        let separatorView = UIView()
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.addConstraint(separatorView.heightAnchor.constraint(equalToConstant: paginationPaddingConstant * 2))
+        
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        separator.backgroundColor = ThemeService.shared().theme.tintColor
+        separator.addConstraint(separator.heightAnchor.constraint(equalToConstant: 1))
+        separatorView.addSubview(separator)
+        let widthAnchor = separator.widthAnchor.constraint(equalToConstant: 0)
+        separatorView.addConstraints(
+            [
+                separator.centerXAnchor.constraint(equalTo: separatorView.centerXAnchor),
+                separator.centerYAnchor.constraint(equalTo: separatorView.centerYAnchor),
+                widthAnchor
+            ])
+        
+        let topPadding = UIView()
+        topPadding.translatesAutoresizingMaskIntoConstraints = false
+        topPadding.addConstraint(topPadding.heightAnchor.constraint(equalToConstant: paginationPaddingConstant))
+        
+        let stackItems: [UIView] = [topPadding, paginationlabel, separatorView]
+        paginatorStackview.initWithViews(stackItems)
+        paginatorStackview.layoutIfNeeded()
+        
+        
+        let labelWidth = paginationlabel.frame.width
+        //animation looks a little silly because every time a cell is tapped the whole tableview reloads, forcing this animation to replay. When that's fixed this should maybe be re-enabled
+//        UIView.animate(withDuration: 0.05) {
+//            paginatorStackview.layoutIfNeeded()
+//        } completion: { (complete) in
+//            widthAnchor.constant = labelWidth * 3
+//            UIView.animate(withDuration: 0.6) {
+//                paginatorStackview.layoutIfNeeded()
+//            }
+//        }
+        
+        widthAnchor.constant = labelWidth * 3
+        paginatorStackview.layoutIfNeeded()
+
+        
+        return paginatorStackview
+    }
+    
+    static func getPaginatorHeight() -> CGFloat {
+        let paginationlabel = UILabel()
+        paginationlabel.frame = CGRect.zero
+        let dateString = "12 dec"
+        paginationlabel.text = dateString.uppercased()
+        paginationlabel.translatesAutoresizingMaskIntoConstraints = false
+        paginationlabel.textAlignment = .center
+        paginationlabel.font = UIFont.boldSystemFont(ofSize: paginationFontSize)
+        paginationlabel.sizeToFit()
+        
+        let labelHeight = paginationlabel.frame.height
+        return paginationPaddingConstant + labelHeight + paginationPaddingConstant * 2 //top padding + label + bottom padding
+    }
+    
+    static func getMXRoomBubbleData(_ cellData: MXKCellData!) -> MXKRoomBubbleCellData? {
+        var roomBubbleData: MXKRoomBubbleCellData?
+        if let bubbleData = cellData as? MXKRoomBubbleCellDataWithAppendingMode {
+            roomBubbleData = bubbleData
+        } else if let bubbleData = cellData as? MXKRoomBubbleCellDataWithIncomingAppendingMode {
+            roomBubbleData = bubbleData
+        } else if let roomBubbleDataTemp = cellData as? MXKRoomBubbleCellData {
+            roomBubbleData = roomBubbleDataTemp
+        }
+        return roomBubbleData
+    }
+    
     override func render(_ cellData: MXKCellData!) {
-        guard let roomBubbleData = cellData as? MXKRoomBubbleCellData else { return }
+        
+        guard let roomBubbleData = type(of:self).getMXRoomBubbleData(cellData) else { return }
+        
         self.cellData = roomBubbleData
-        guard !roomBubbleData.hasNoDisplay else { return }
+        guard !(roomBubbleData.hasNoDisplay && roomBubbleData.attributedTextMessage == nil) else {
+            return
+        }
+        
         applyTheme(TheTheme: theme)
+        
+        for subview in PaginationSpace.subviews {
+            subview.removeFromSuperview()
+        }
+        
+        if roomBubbleData.isPaginationFirstBubble {
+            ThemeService.shared().theme.recursiveApply(on: PaginationSpace)
+            let paginationlabel = type(of: self).createPaginator(roomBubbleData)
+            PaginationSpace.addSubview(paginationlabel)
+            PaginationSpace.addConstraints(
+                [
+                    paginationlabel.leadingAnchor.constraint(equalTo: PaginationSpace.leadingAnchor),
+                    paginationlabel.trailingAnchor.constraint(equalTo: PaginationSpace.trailingAnchor),
+                    paginationlabel.topAnchor.constraint(equalTo: PaginationSpace.topAnchor),
+                    paginationlabel.bottomAnchor.constraint(equalTo: PaginationSpace.bottomAnchor)
+                ]
+            )
+        }
         
         self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(onLongPressEvent)))
         
         Sender.text = roomBubbleData.senderDisplayName
+        Sender.textColor = ThemeService.shared().theme.userNameColors.first
         SenderAvatar.enableInMemoryCache = true
         SenderAvatar.setImageURI(roomBubbleData.senderAvatarUrl,
                                  withType: nil,
@@ -93,11 +209,17 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
                                  previewImage: roomBubbleData.senderAvatarPlaceholder != nil ? roomBubbleData.senderAvatarPlaceholder : AvatarGenerator.generateAvatar(forMatrixItem: roomBubbleData.roomId, withDisplayName: roomBubbleData.senderDisplayName),
                                  mediaManager: roomBubbleData.mxSession.mediaManager)
         AvatarImageHeightConstraint.constant = RoomMessageContentCell.avatarImageWidth
-        SenderAvatar.layer.cornerRadius = SenderAvatar.frame.height / 2
+        SenderAvatar.layer.cornerRadius = RoomMessageContentCell.avatarImageWidth / 2
         SenderAvatar.clipsToBounds = true
         if roomBubbleData.shouldHideSenderInformation {
-            SenderAvatar.addConstraint(SenderAvatar.heightAnchor.constraint(equalToConstant: 0))
-            Sender.addConstraint(Sender.heightAnchor.constraint(equalToConstant: 0))
+            AvatarImageHeightConstraint.constant = 0
+            SenderNameHeightConstraint.constant = 0
+            contentView.layoutIfNeeded()
+            
+        } else {
+            AvatarImageHeightConstraint.constant = RoomMessageContentCell.avatarImageWidth
+            SenderNameHeightConstraint.constant = 21
+            contentView.layoutIfNeeded()
         }
         
         let avatarViewTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarViewTapped))
@@ -115,7 +237,10 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard cellData != nil else { return 0 }
+        guard self.cellData != nil else {
+            return 0
+            
+        }
         return max(componentCount, 1)//(cellData.attachment != nil ? 2 : 1))
     }
     
@@ -146,20 +271,6 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
                 }
             }
         }
-//        if cellData.attachment != nil && indexPath.row > 0 {
-//            if let cell = tableView.dequeueReusableCell(withIdentifier: "PatientViewCell", for: indexPath) as? PatientViewCell {
-//                cell.disableViews()
-//                guard let url = bubbleData.attachment.contentURL else { return UITableViewCell() }
-//                Services.ImageTagDataService().LookupTagInfoFor(URL: url) { (data) in
-//                    guard let tag = data.last else { return }
-//                    guard let patient = tag?.Patient else { return }
-//                    cell.enableViews()
-//                    cell.RenderWith(Object: patient)
-//                }
-//                return cell
-//            }
-//
-//        }
         return UITableViewCell()
     }
     
@@ -191,21 +302,32 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     }
     
     override static func height(for cellData: MXKCellData!, withMaximumWidth maxWidth: CGFloat) -> CGFloat {
-        guard let realData = cellData as? MXKRoomBubbleCellData else { return 0 }
-        guard !realData.hasNoDisplay else { return 0 }
-        if realData.bubbleComponents.count > 1 {
+        guard let realData = getMXRoomBubbleData(cellData) else { return 0 }
+        guard !(realData.hasNoDisplay && realData.attributedTextMessage == nil) else
+        {
+            return 0
+        }
+        
+        var baseHeight: CGFloat = (realData.shouldHideSenderInformation ? 0 : avatarImageWidth)
+        
+        if realData.isPaginationFirstBubble {
+            baseHeight += getPaginatorHeight()
+        }
+        
+        if realData.bubbleComponents.count > 1 || (realData.bubbleComponents.count == 1 && !realData.hasAttributedTextMessage) {
             var returnHeight: CGFloat = 0.0
             for item in realData.bubbleComponents where item.attributedTextMessage != nil {
                 returnHeight += height(forText: item.attributedTextMessage, withMaxWidth: maxWidth - nonUsableWidth)
             }
-            return returnHeight + (realData.shouldHideSenderInformation ? 0 : 32)
+            return returnHeight + baseHeight
         }
+        var returnHeight: CGFloat = 0
         if realData.attachment != nil {
-            return MessageImageView.calculateHeight(forWidth: maxWidth - nonUsableWidth, andCellData: realData) + (realData.shouldHideSenderInformation ? 0 : 32)
+            returnHeight = MessageImageView.calculateHeight(forWidth: maxWidth - nonUsableWidth, andCellData: realData) + baseHeight
         } else {
-            return (realData.shouldHideSenderInformation ? 0 : 32) + height(forText: realData.attributedTextMessage, withMaxWidth: maxWidth - nonUsableWidth)
+            returnHeight = baseHeight + height(forText: realData.attributedTextMessage, withMaxWidth: maxWidth - nonUsableWidth)
         }
-        return 70
+        return returnHeight
     }
     
     static func height(forText text: NSAttributedString, withMaxWidth width: CGFloat) -> CGFloat {
@@ -220,6 +342,6 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
         lbl.layoutIfNeeded()
         let frame = lbl.frame
         let theHeight = frame.height
-        return theHeight
+        return theHeight * 1.05
     }
 }

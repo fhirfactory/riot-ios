@@ -60,6 +60,7 @@ bool viewHasAppeared = false;
         
     }];
     [self userInterfaceThemeDidChange];
+    //bookmark.fill
     RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
     UIBarButtonItem *forwardItem = [[UIBarButtonItem alloc] initWithImage:menuItem.image style:UIBarButtonItemStylePlain target:self action:@selector(forwardAttachment)];
     NSArray *rightBarButtonItems = NULL;
@@ -67,11 +68,7 @@ bool viewHasAppeared = false;
     UINavigationBar *navBar = [super valueForKey:@"navigationBar"];
     UINavigationItem * navItem = navBar.topItem;
     
-    if (navItem.rightBarButtonItems){
-        rightBarButtonItems = [[self navigationItem].rightBarButtonItems arrayByAddingObject:forwardItem];
-    } else {
-        rightBarButtonItems = [[NSArray alloc] initWithObjects:forwardItem, nil];
-    }
+    rightBarButtonItems = [[NSArray alloc] initWithObjects:forwardItem, nil];
     
     navItem.rightBarButtonItems = rightBarButtonItems;
 }
@@ -159,10 +156,46 @@ NSArray *TagDataArray;
             isShowingDetail = false;
             
             TagViewDetails = [PatientTagHelpers getPatientViewCellForTagData:tagData];
+            
+            //bookmark.fill
+            RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
+            UIBarButtonItem *forwardItem = [[UIBarButtonItem alloc] initWithImage:menuItem.image style:UIBarButtonItemStylePlain target:self action:@selector(forwardAttachment)];
+            UIImage *image = [UIImage imageNamed:@"edit_icon"];
+            UIBarButtonItem *tagItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(editTag)];
+            NSArray *rightBarButtonItems = NULL;
+            
+            UINavigationBar *navBar = [super valueForKey:@"navigationBar"];
+            UINavigationItem * navItem = navBar.topItem;
+            
+            rightBarButtonItems = [[NSArray alloc] initWithObjects:forwardItem, tagItem, nil];
+            navItem.rightBarButtonItems = rightBarButtonItems;
+            
             [self tryDisplayTag];
         }];
     }
     
+}
+
+- (void)editTag{
+    NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
+    if (currentIdx != NSNotFound) {
+        MXKAttachment *attachment = self.attachments[currentIdx];
+        NSString *contentURL = attachment.contentURL;
+        
+        [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
+            PatientTaggingViewController *tagVC = [PatientTaggingViewController new];
+            [attachment getImage:^(MXKAttachment *attach, UIImage *image) {
+                [tagVC setImageTo:UIImagePNGRepresentation(image) WithHandler:^(TagData *newtag) {
+                    
+                }];
+                [tagVC loadExistingTagData: tagData];
+                [self showViewController:tagVC sender:self];
+            } failure:^(MXKAttachment *attach, NSError *error) {
+                
+            }];
+            
+        }];
+    }
 }
 
 - (void)tryDisplayTag{

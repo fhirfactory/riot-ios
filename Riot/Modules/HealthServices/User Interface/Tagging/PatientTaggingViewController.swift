@@ -70,7 +70,7 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         self.present(patientTaggingVC, animated: true, completion: nil)
     }
     
-    func loadExistingTagData(_ tagData: [TagData]) {
+    @objc func loadExistingTagData(_ tagData: [TagData]) {
         patientTaggingViewModel = PatientTaggingViewController.produceViewModel(fromTagData: tagData)
         if tableView != nil {
             tableView.reloadData()

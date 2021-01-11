@@ -21,6 +21,7 @@ class MessageContentView: UITableViewCell {
     private var width: CGFloat = 0
     private var viewHasLoaded: Bool = false
     weak var delegate: RoomMessageContentCell!
+    var cellData: MXKRoomBubbleCellData?
     class func nib() -> UINib! {
         preconditionFailure("nib method must be overridden")
     }
@@ -29,8 +30,11 @@ class MessageContentView: UITableViewCell {
     }
     
     final func render(celldata: MXKRoomBubbleCellData, width: CGFloat = 0) {
-        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onLongPress)))
+        let longPressRecognizer = UITapGestureRecognizer(target: self, action: #selector(onLongPress))
+        longPressRecognizer.cancelsTouchesInView = false
+        self.addGestureRecognizer(longPressRecognizer)
         self.width = width
+        self.cellData = celldata
         if viewHasLoaded {
             renderData(celldata, width)
         } else {
@@ -83,5 +87,16 @@ class MessageContentView: UITableViewCell {
             NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1.0, constant: 0.0)
         ])
         hasLoadedView()
+    }
+    
+    func didRecognizeAction(_ action: String?, userInfo: [AnyHashable: Any]?) {
+        let d = delegate
+        let dd = d?.delegate
+        if let ddd = dd as? MXKRoomDataSource {
+            if let dddd = ddd.delegate as? MXKRoomViewController {
+                dddd.showAttachment(in: d)
+            }
+        }
+        return delegate.delegate.cell(delegate, didRecognizeAction: action, userInfo: userInfo)
     }
 }

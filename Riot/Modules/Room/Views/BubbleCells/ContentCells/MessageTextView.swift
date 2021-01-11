@@ -37,10 +37,16 @@ class MessageTextView: MessageContentView, RendersBubbleComponent {
     }
     override internal func renderData(_ celldata: MXKRoomBubbleCellData, _ width: CGFloat) {
         TextContent.attributedText = celldata.attributedTextMessage
+        contentView.gestureRecognizers?.forEach(contentView.removeGestureRecognizer(_:))
+        contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(textTapped)))
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
+        ViewDebuggingTools.traceGestureRecognizersForScreen(fromView: TextContent)
     }
     override func applyTheStyle(_ theme: Theme) {
         TextContent.textColor = theme.textPrimaryColor
         self.backgroundColor = .none
+    }
+    @objc func textTapped() {
+        super.didRecognizeAction(kMXKRoomBubbleCellTapOnMessageTextView, userInfo: [kMXKRoomBubbleCellEventKey: cellData?.events.first])
     }
 }

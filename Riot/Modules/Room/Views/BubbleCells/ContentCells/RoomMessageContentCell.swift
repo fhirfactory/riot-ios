@@ -169,7 +169,7 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     
     override func render(_ cellData: MXKCellData!) {
         
-        guard let roomBubbleData = type(of:self).getMXRoomBubbleData(cellData) else { return }
+        guard let roomBubbleData = type(of: self).getMXRoomBubbleData(cellData) else { return }
         
         self.cellData = roomBubbleData
         guard !(roomBubbleData.hasNoDisplay && roomBubbleData.attributedTextMessage == nil) else {
@@ -195,8 +195,9 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
                 ]
             )
         }
-        
-        self.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(onLongPressEvent)))
+        let longPressHandler = UILongPressGestureRecognizer(target: self, action: #selector(onLongPressEvent))
+        longPressHandler.cancelsTouchesInView = false
+        self.addGestureRecognizer(longPressHandler)
         
         Sender.text = roomBubbleData.senderDisplayName
         Sender.textColor = ThemeService.shared().theme.userNameColors.first
@@ -233,7 +234,7 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     
     @objc func avatarViewTapped() {
         guard let datasource = delegate as? MXKRoomDataSource else { return }
-        datasource.cell(self, didRecognizeAction: kMXKRoomBubbleCellTapOnAvatarView, userInfo: [kMXKRoomBubbleCellUserIdKey: bubbleData.senderId])
+        datasource.cell(self, didRecognizeAction: kMXKRoomBubbleCellTapOnAvatarView, userInfo: [kMXKRoomBubbleCellUserIdKey: bubbleData.senderId as Any])
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -303,8 +304,7 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     
     override static func height(for cellData: MXKCellData!, withMaximumWidth maxWidth: CGFloat) -> CGFloat {
         guard let realData = getMXRoomBubbleData(cellData) else { return 0 }
-        guard !(realData.hasNoDisplay && realData.attributedTextMessage == nil) else
-        {
+        guard !(realData.hasNoDisplay && realData.attributedTextMessage == nil) else {
             return 0
         }
         

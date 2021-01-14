@@ -316,7 +316,7 @@
         [_homeViewController displayList:recentsDataSource];
         [_favouritesViewController displayList:recentsDataSource];
         //[_peopleViewController displayList:recentsDataSource];
-        [_roomsViewController displayList:recentsDataSource];
+        //[_roomsViewController displayList:recentsDataSource];
         
         // Restore the right delegate of the shared recent data source.
         id<MXKDataSourceDelegate> recentsDataSourceDelegate = _homeViewController;
@@ -334,8 +334,8 @@
                 //recentsDataSourceMode = RecentsDataSourceModePeople;
                 break;
             case TABBAR_ROOMS_INDEX:
-                recentsDataSourceDelegate = _roomsViewController;
-                recentsDataSourceMode = RecentsDataSourceModeRooms;
+                //recentsDataSourceDelegate = _roomsViewController;
+                //recentsDataSourceMode = RecentsDataSourceModeRooms;
                 break;
                 
             default:

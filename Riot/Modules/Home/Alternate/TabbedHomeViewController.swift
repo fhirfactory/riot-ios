@@ -105,6 +105,8 @@ class TabbedHomeViewController: RecentsViewController {
         lowPriorityContainer.SelectedHandler = SelectedRoomHandler
         homeDataSource.setDelegate(chatsContainer, andRecentsDataSourceMode: .home)
         
+        favouritesWasVisible = true
+        lowPriorityWasVisible = true
         
         chatsContainer.HomeDataSource = homeDataSource
         chatsContainer.addMatrixSession(session)

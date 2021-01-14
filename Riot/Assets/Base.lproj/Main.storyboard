@@ -470,10 +470,10 @@
             </objects>
             <point key="canvasLocation" x="942" y="-1299"/>
         </scene>
-        <!--Rooms View Controller-->
+        <!--Calls View Controller-->
         <scene sceneID="SDg-Pp-8Uj">
             <objects>
-                <viewController id="HPQ-zg-lZR" customClass="RoomsViewController" sceneMemberID="viewController">
+                <viewController id="HPQ-zg-lZR" customClass="CallsViewController" customModule="Riot" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hkg-kw-ioH"/>
                         <viewControllerLayoutGuide type="bottom" id="UI8-oQ-9M9"/>
@@ -610,7 +610,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="mhb-l9-pM3"/>
+        <segue reference="Tfl-tq-LQp"/>
         <segue reference="fIR-e3-ssz"/>
         <segue reference="f5u-Y1-7nt"/>
         <segue reference="vCz-dl-6xQ"/>

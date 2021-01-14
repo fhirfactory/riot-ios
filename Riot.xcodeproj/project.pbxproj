@@ -786,6 +786,7 @@
 		EB18F1352572422C002A9676 /* RendersBubbleComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18F1342572422C002A9676 /* RendersBubbleComponent.swift */; };
 		EB2BCCD325AC641A00B49D07 /* ViewDebuggingTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BCCD225AC641A00B49D07 /* ViewDebuggingTools.swift */; };
 		EB2D1F2F2545754700FB80E0 /* AlternateCreationHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */; };
+		EB312D8E25ADAD7500594E0C /* DialerButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB312D8D25ADAD7500594E0C /* DialerButton.xib */; };
 		EB3B39232581DBFC003D6BD0 /* DateTakenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB3B39222581DBFC003D6BD0 /* DateTakenViewCell.xib */; };
 		EB3B392B2581DC1B003D6BD0 /* DateTakenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */; };
 		EB3B39392581E861003D6BD0 /* Stackview.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB3B39382581E861003D6BD0 /* Stackview.swift */; };
@@ -800,6 +801,10 @@
 		EB505BF72525A37A009C0A7A /* AlternateHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB505BF62525A37A009C0A7A /* AlternateHomeViewController.swift */; };
 		EB505C182525D49A009C0A7A /* AlternateHomeTools.m in Sources */ = {isa = PBXBuildFile; fileRef = EB505C172525D49A009C0A7A /* AlternateHomeTools.m */; };
 		EB54294125501CA800AFF8FF /* RoleFilteredSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */; };
+		EB5A020625ADB86000C7FA24 /* DialerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5A020525ADB86000C7FA24 /* DialerButton.swift */; };
+		EB5A021425ADBA5D00C7FA24 /* DialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5A021325ADBA5D00C7FA24 /* DialViewController.xib */; };
+		EB5A021C25ADBA6C00C7FA24 /* DialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5A021B25ADBA6C00C7FA24 /* DialViewController.swift */; };
+		EB5A022425ADC28E00C7FA24 /* CallsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5A022325ADC28E00C7FA24 /* CallsViewController.swift */; };
 		EB5AE9A12563CD2400C635CD /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5AE9A02563CD2400C635CD /* MessageTextView.swift */; };
 		EB5AE9BB2563CD8000C635CD /* MessageTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB5AE9BA2563CD8000C635CD /* MessageTextView.xib */; };
 		EB5AE9C92563CDDB00C635CD /* MessageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5AE9C82563CDDB00C635CD /* MessageContentView.swift */; };
@@ -2102,6 +2107,7 @@
 		EB2BCCD225AC641A00B49D07 /* ViewDebuggingTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDebuggingTools.swift; sourceTree = "<group>"; };
 		EB2D1F2E2545754700FB80E0 /* AlternateCreationHelpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateCreationHelpers.m; sourceTree = "<group>"; };
 		EB2D1F362545755D00FB80E0 /* AlternateCreationHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateCreationHelpers.h; sourceTree = "<group>"; };
+		EB312D8D25ADAD7500594E0C /* DialerButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DialerButton.xib; sourceTree = "<group>"; };
 		EB3B39222581DBFC003D6BD0 /* DateTakenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DateTakenViewCell.xib; sourceTree = "<group>"; };
 		EB3B392A2581DC1B003D6BD0 /* DateTakenViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTakenViewCell.swift; sourceTree = "<group>"; };
 		EB3B39382581E861003D6BD0 /* Stackview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stackview.swift; sourceTree = "<group>"; };
@@ -2117,6 +2123,10 @@
 		EB505C172525D49A009C0A7A /* AlternateHomeTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlternateHomeTools.m; sourceTree = "<group>"; };
 		EB505C1E2525D5D0009C0A7A /* AlternateHomeTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlternateHomeTools.h; sourceTree = "<group>"; };
 		EB54294025501CA800AFF8FF /* RoleFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleFilteredSearchController.swift; sourceTree = "<group>"; };
+		EB5A020525ADB86000C7FA24 /* DialerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerButton.swift; sourceTree = "<group>"; };
+		EB5A021325ADBA5D00C7FA24 /* DialViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DialViewController.xib; sourceTree = "<group>"; };
+		EB5A021B25ADBA6C00C7FA24 /* DialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialViewController.swift; sourceTree = "<group>"; };
+		EB5A022325ADC28E00C7FA24 /* CallsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsViewController.swift; sourceTree = "<group>"; };
 		EB5AE9A02563CD2400C635CD /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
 		EB5AE9BA2563CD8000C635CD /* MessageTextView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTextView.xib; sourceTree = "<group>"; };
 		EB5AE9C82563CDDB00C635CD /* MessageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentView.swift; sourceTree = "<group>"; };
@@ -5166,6 +5176,18 @@
 			path = Debugging;
 			sourceTree = "<group>";
 		};
+		EB2BCCE025ADA6FE00B49D07 /* Calls */ = {
+			isa = PBXGroup;
+			children = (
+				EB312D8D25ADAD7500594E0C /* DialerButton.xib */,
+				EB5A020525ADB86000C7FA24 /* DialerButton.swift */,
+				EB5A021325ADBA5D00C7FA24 /* DialViewController.xib */,
+				EB5A021B25ADBA6C00C7FA24 /* DialViewController.swift */,
+				EB5A022325ADC28E00C7FA24 /* CallsViewController.swift */,
+			);
+			path = Calls;
+			sourceTree = "<group>";
+		};
 		EB505BF52525A345009C0A7A /* Alternate */ = {
 			isa = PBXGroup;
 			children = (
@@ -5313,6 +5335,7 @@
 		EBEE3AF12585C1CB0011345B /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				EB2BCCE025ADA6FE00B49D07 /* Calls */,
 				EBEE3AF22585C1EF0011345B /* Generic */,
 				EBEE3AEB2585C0CA0011345B /* Tagging */,
 			);
@@ -6325,6 +6348,7 @@
 				B1B558D620EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.xib in Resources */,
 				B1B5593720EF7BAC00210D55 /* TableViewCellWithCheckBoxAndLabel.xib in Resources */,
 				B190F55B22CE35FD00AEB493 /* EditHistoryHeaderView.xib in Resources */,
+				EB5A021425ADBA5D00C7FA24 /* DialViewController.xib in Resources */,
 				EC31F016251B53BC00D407DA /* RoomInfoBasicView.xib in Resources */,
 				EBE2752A256A5089003BC7C1 /* DesignationViewCell.xib in Resources */,
 				EC1CA86524C1DEC400DE9EBF /* EnterPinCodeViewController.storyboard in Resources */,
@@ -6419,6 +6443,7 @@
 				438067BD24D7D039002675E1 /* RoleTitleTableViewCell.xib in Resources */,
 				B1B558D120EF768F00210D55 /* RoomIncomingEncryptedAttachmentWithoutSenderInfoBubbleCell.xib in Resources */,
 				B1B558FE20EF768F00210D55 /* RoomMembershipExpandedWithPaginationTitleBubbleCell.xib in Resources */,
+				EB312D8E25ADAD7500594E0C /* DialerButton.xib in Resources */,
 				43367F1024D680D100DB17CB /* RoleTableViewCell.xib in Resources */,
 				B1B5581D20EF625800210D55 /* RoomAvatarTitleView.xib in Resources */,
 				B1BEE74923E093260003A4CB /* UserVerificationSessionStatusViewController.storyboard in Resources */,
@@ -6981,6 +7006,7 @@
 				B1C45A88232A8C2600165425 /* SettingsIdentityServerViewState.swift in Sources */,
 				B14F142F22144F6500FA0595 /* KeyBackupRecoverFromRecoveryKeyViewModelType.swift in Sources */,
 				32DB557822FDADE50016329E /* ServiceTermsModalScreenViewState.swift in Sources */,
+				EB5A022425ADC28E00C7FA24 /* CallsViewController.swift in Sources */,
 				B1B558E120EF768F00210D55 /* RoomMembershipCollapsedBubbleCell.m in Sources */,
 				EC51E7AB2514D2E100AAE7DB /* RoomInfoListViewState.swift in Sources */,
 				B1B5571A20EE6C4D00210D55 /* SettingsViewController.m in Sources */,
@@ -7031,6 +7057,7 @@
 				B185145B24B8C98200EE19EA /* MajorUpdateViewController.swift in Sources */,
 				32DB557922FDADE50016329E /* ServiceTermsModalScreenViewModel.swift in Sources */,
 				ECFBD5F8250FA59B00DD5F5A /* RoomCreationEventsModalCoordinator.swift in Sources */,
+				EB5A020625ADB86000C7FA24 /* DialerButton.swift in Sources */,
 				B1B4E9BA24D46EB4004D5C33 /* SizableBubbleCell.swift in Sources */,
 				32891D75226728EE00C82226 /* KeyVerificationDataLoadingViewController.swift in Sources */,
 				F083BDEF1E7009ED00A9B29C /* UINavigationController+Riot.m in Sources */,
@@ -7508,6 +7535,7 @@
 				B1B558F820EF768F00210D55 /* RoomIncomingTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.m in Sources */,
 				EC1CA89B24C9C9A200DE9EBF /* SetupBiometricsViewState.swift in Sources */,
 				B1BD71B5238DCBF700BA92E2 /* SlidingModalEmptyViewController.swift in Sources */,
+				EB5A021C25ADBA6C00C7FA24 /* DialViewController.swift in Sources */,
 				B125FE1B231D5BF200B72806 /* SettingsDiscoveryTableViewSection.swift in Sources */,
 				B18DEDD5243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewModel.swift in Sources */,
 				EC711B8B24A63B37008F830C /* SecretsRecoveryWithPassphraseViewState.swift in Sources */,

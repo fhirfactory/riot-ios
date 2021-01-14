@@ -1535,3 +1535,14 @@
 "tag_history_title" = "Tag History";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
+
+"dialer_1" = "";
+"dialer_2" = "ABC";
+"dialer_3" = "DEF";
+"dialer_4" = "GHI";
+"dialer_5" = "JKL";
+"dialer_6" = "MNO";
+"dialer_7" = "PQRS";
+"dialer_8" = "TUV";
+"dialer_9" = "WXYZ";
+"dialer_0" = "+";

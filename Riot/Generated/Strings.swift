@@ -1042,6 +1042,46 @@ internal enum VectorL10n {
   internal static var deviceVerificationVerifyWaitPartner: String { 
     return VectorL10n.tr("Vector", "device_verification_verify_wait_partner") 
   }
+  /// +
+  internal static var dialer0: String { 
+    return VectorL10n.tr("Vector", "dialer_0") 
+  }
+  /// 
+  internal static var dialer1: String { 
+    return VectorL10n.tr("Vector", "dialer_1") 
+  }
+  /// ABC
+  internal static var dialer2: String { 
+    return VectorL10n.tr("Vector", "dialer_2") 
+  }
+  /// DEF
+  internal static var dialer3: String { 
+    return VectorL10n.tr("Vector", "dialer_3") 
+  }
+  /// GHI
+  internal static var dialer4: String { 
+    return VectorL10n.tr("Vector", "dialer_4") 
+  }
+  /// JKL
+  internal static var dialer5: String { 
+    return VectorL10n.tr("Vector", "dialer_5") 
+  }
+  /// MNO
+  internal static var dialer6: String { 
+    return VectorL10n.tr("Vector", "dialer_6") 
+  }
+  /// PQRS
+  internal static var dialer7: String { 
+    return VectorL10n.tr("Vector", "dialer_7") 
+  }
+  /// TUV
+  internal static var dialer8: String { 
+    return VectorL10n.tr("Vector", "dialer_8") 
+  }
+  /// WXYZ
+  internal static var dialer9: String { 
+    return VectorL10n.tr("Vector", "dialer_9") 
+  }
   /// %tu rooms
   internal static func directoryCellDescription(_ p1: Int) -> String {
     return VectorL10n.tr("Vector", "directory_cell_description", p1)

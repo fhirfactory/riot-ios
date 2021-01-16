@@ -422,6 +422,10 @@ internal enum VectorL10n {
   internal static var callAlreadyDisplayed: String { 
     return VectorL10n.tr("Vector", "call_already_displayed") 
   }
+  /// Call to
+  internal static var callDestination: String { 
+    return VectorL10n.tr("Vector", "call_destination") 
+  }
   /// Incoming video call…
   internal static var callIncomingVideo: String { 
     return VectorL10n.tr("Vector", "call_incoming_video") 
@@ -457,6 +461,10 @@ internal enum VectorL10n {
   /// Try using %@
   internal static func callNoStunServerErrorUseFallbackButton(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "call_no_stun_server_error_use_fallback_button", p1)
+  }
+  /// Picked up by
+  internal static var callPickedUpBy: String { 
+    return VectorL10n.tr("Vector", "call_picked_up_by") 
   }
   /// Camera
   internal static var camera: String { 
@@ -1510,6 +1518,10 @@ internal enum VectorL10n {
   internal static var imagePickerActionLibrary: String { 
     return VectorL10n.tr("Vector", "image_picker_action_library") 
   }
+  /// Incoming Call
+  internal static var incomingCall: String { 
+    return VectorL10n.tr("Vector", "incoming_call") 
+  }
   /// Invite
   internal static var invite: String { 
     return VectorL10n.tr("Vector", "invite") 
@@ -1970,6 +1982,18 @@ internal enum VectorL10n {
   internal static var leave: String { 
     return VectorL10n.tr("Vector", "leave") 
   }
+  /// Lingo Audio
+  internal static var lingoAudio: String { 
+    return VectorL10n.tr("Vector", "lingo_audio") 
+  }
+  /// Lingo Conference
+  internal static var lingoConference: String { 
+    return VectorL10n.tr("Vector", "lingo_conference") 
+  }
+  /// Lingo Video
+  internal static var lingoVideo: String { 
+    return VectorL10n.tr("Vector", "lingo_video") 
+  }
   /// Got it
   internal static var majorUpdateDoneAction: String { 
     return VectorL10n.tr("Vector", "major_update_done_action") 
@@ -2105,6 +2129,10 @@ internal enum VectorL10n {
   /// or
   internal static var or: String { 
     return VectorL10n.tr("Vector", "or") 
+  }
+  /// Outgoing Call
+  internal static var outgoingCall: String { 
+    return VectorL10n.tr("Vector", "outgoing_call") 
   }
   /// CONVERSATIONS
   internal static var peopleConversationSection: String { 

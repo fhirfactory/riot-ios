@@ -1546,3 +1546,12 @@
 "dialer_8" = "TUV";
 "dialer_9" = "WXYZ";
 "dialer_0" = "+";
+
+//Recent calls
+"outgoing_call" = "Outgoing Call";
+"incoming_call" = "Incoming Call";
+"lingo_audio" = "Lingo Audio";
+"lingo_video" = "Lingo Video";
+"lingo_conference" = "Lingo Conference";
+"call_destination" = "Call to";
+"call_picked_up_by" = "Picked up by";

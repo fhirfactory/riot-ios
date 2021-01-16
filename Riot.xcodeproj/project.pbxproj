@@ -795,6 +795,10 @@
 		EB4280C92560110E00B9BBBF /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280C82560110E00B9BBBF /* PatientModel.swift */; };
 		EB4280E1256015CF00B9BBBF /* PatientViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */; };
 		EB4280E92560C5DD00B9BBBF /* PatientViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */; };
+		EB47E68325B021E10025A469 /* RecentCallItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB47E68225B021E10025A469 /* RecentCallItem.xib */; };
+		EB47E68B25B186B90025A469 /* RecentCallItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB47E68A25B186B90025A469 /* RecentCallItem.swift */; };
+		EB47E69325B1878D0025A469 /* RecentCallsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB47E69225B1878D0025A469 /* RecentCallsList.swift */; };
+		EB47E6A125B18B3B0025A469 /* Call.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB47E6A025B18B3B0025A469 /* Call.swift */; };
 		EB4A116F252D7F1E00E98120 /* AlternateInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */; };
 		EB4A117B252D7FA800E98120 /* AlternateHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */; };
 		EB4A1193252DD2BF00E98120 /* AlternateInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */; };
@@ -2116,6 +2120,10 @@
 		EB4280C82560110E00B9BBBF /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
 		EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatientViewCell.xib; sourceTree = "<group>"; };
 		EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewCell.swift; sourceTree = "<group>"; };
+		EB47E68225B021E10025A469 /* RecentCallItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentCallItem.xib; sourceTree = "<group>"; };
+		EB47E68A25B186B90025A469 /* RecentCallItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCallItem.swift; sourceTree = "<group>"; };
+		EB47E69225B1878D0025A469 /* RecentCallsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCallsList.swift; sourceTree = "<group>"; };
+		EB47E6A025B18B3B0025A469 /* Call.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Call.swift; sourceTree = "<group>"; };
 		EB4A116E252D7F1E00E98120 /* AlternateInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateInviteViewController.swift; sourceTree = "<group>"; };
 		EB4A117A252D7FA800E98120 /* AlternateHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateHomeViewController.xib; sourceTree = "<group>"; };
 		EB4A1192252DD2BF00E98120 /* AlternateInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlternateInviteViewController.xib; sourceTree = "<group>"; };
@@ -5188,6 +5196,17 @@
 			path = Calls;
 			sourceTree = "<group>";
 		};
+		EB47E67925B021AE0025A469 /* Recent Calls */ = {
+			isa = PBXGroup;
+			children = (
+				EB47E68225B021E10025A469 /* RecentCallItem.xib */,
+				EB47E68A25B186B90025A469 /* RecentCallItem.swift */,
+				EB47E69225B1878D0025A469 /* RecentCallsList.swift */,
+				EB47E6A025B18B3B0025A469 /* Call.swift */,
+			);
+			path = "Recent Calls";
+			sourceTree = "<group>";
+		};
 		EB505BF52525A345009C0A7A /* Alternate */ = {
 			isa = PBXGroup;
 			children = (
@@ -5335,6 +5354,7 @@
 		EBEE3AF12585C1CB0011345B /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				EB47E67925B021AE0025A469 /* Recent Calls */,
 				EB2BCCE025ADA6FE00B49D07 /* Calls */,
 				EBEE3AF22585C1EF0011345B /* Generic */,
 				EBEE3AEB2585C0CA0011345B /* Tagging */,
@@ -6384,6 +6404,7 @@
 				B1B5590820EF768F00210D55 /* RoomMembershipWithPaginationTitleBubbleCell.xib in Resources */,
 				B18DEDD7243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewController.storyboard in Resources */,
 				F083BDE81E7009ED00A9B29C /* message.caf in Resources */,
+				EB47E68325B021E10025A469 /* RecentCallItem.xib in Resources */,
 				B1107ECA2200B09F0038014B /* KeyBackupRecoverSuccessViewController.storyboard in Resources */,
 				B1B9DEF522EB426D0065E677 /* ReactionHistoryViewCell.xib in Resources */,
 				43367F1424D680E100DB17CB /* RoleFilterTableViewCell.xib in Resources */,
@@ -7164,6 +7185,7 @@
 				ECF57A5E2509265A004BBF9D /* InsettedTextField.swift in Sources */,
 				B1B5593C20EF7BAC00210D55 /* TableViewCellWithCheckBoxes.m in Sources */,
 				32891D6B2264CBA300C82226 /* SimpleScreenTemplateViewController.swift in Sources */,
+				EB47E6A125B18B3B0025A469 /* Call.swift in Sources */,
 				EC711B7924A63B37008F830C /* SecretsSetupRecoveryKeyViewController.swift in Sources */,
 				32FD755024D074C700BA7B37 /* CommonConfiguration.swift in Sources */,
 				B1CA3A2721EF6914000D1D89 /* UIViewController.swift in Sources */,
@@ -7230,6 +7252,7 @@
 				B125FE1F231D5DF700B72806 /* SettingsDiscoveryViewModelType.swift in Sources */,
 				EC85D7162477DCD7002C44C9 /* KeyVerificationScanConfirmationViewAction.swift in Sources */,
 				EB5AE9A12563CD2400C635CD /* MessageTextView.swift in Sources */,
+				EB47E69325B1878D0025A469 /* RecentCallsList.swift in Sources */,
 				EC711BAF24A63B58008F830C /* SecureBackupSetupCoordinatorType.swift in Sources */,
 				ECFBD5D4250A7AAF00DD5F5A /* ShowDirectoryCoordinatorType.swift in Sources */,
 				EC1CA89C24C9C9A200DE9EBF /* SetupBiometricsViewModel.swift in Sources */,
@@ -7299,6 +7322,7 @@
 				B1B5579920EF575B00210D55 /* AuthInputsView.m in Sources */,
 				B1B5597520EFB02A00210D55 /* InviteRecentTableViewCell.m in Sources */,
 				B1B5571E20EE6C4D00210D55 /* ContactDetailsViewController.m in Sources */,
+				EB47E68B25B186B90025A469 /* RecentCallItem.swift in Sources */,
 				B1BB649324FD428A008238AE /* AppDelegate.swift in Sources */,
 				B1D44999243CD73700959523 /* RoomPowerLevel.swift in Sources */,
 				B1798302211B13B3001FD722 /* OnBoardingManager.swift in Sources */,

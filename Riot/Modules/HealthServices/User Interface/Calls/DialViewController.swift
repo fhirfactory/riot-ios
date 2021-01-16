@@ -29,6 +29,9 @@ class DialViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var b0: UIView!
     @IBOutlet weak var engage: UIView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var backspaceContainer: UIView!
+    
+    var backspaceEffectView: UIView!
     
     static func nib() -> UINib! {
         UINib(nibName: String(describing: self), bundle: Bundle(for: self))
@@ -42,6 +45,11 @@ class DialViewController: UIViewController, UITextFieldDelegate {
                 textField.text = t + numberID
             } else {
                 textField.text = numberID
+            }
+            if textField.text?.count == 1 {
+                UIView.animate(withDuration: 0.1) {
+                    self.backspaceContainer.alpha = 1.0
+                }
             }
         }
         print(numberID)
@@ -69,7 +77,12 @@ class DialViewController: UIViewController, UITextFieldDelegate {
         let b = DialerButton()
         b.translatesAutoresizingMaskIntoConstraints = false
         forView.addSubview(b)
-        forView.addConstraints([b.topAnchor.constraint(equalTo: forView.topAnchor), b.bottomAnchor.constraint(equalTo: forView.bottomAnchor), b.leadingAnchor.constraint(equalTo: forView.leadingAnchor), b.trailingAnchor.constraint(equalTo: forView.trailingAnchor)])
+        forView.addConstraints(
+            [b.topAnchor.constraint(equalTo: forView.topAnchor),
+             b.bottomAnchor.constraint(equalTo: forView.bottomAnchor),
+             b.leadingAnchor.constraint(equalTo: forView.leadingAnchor),
+             b.trailingAnchor.constraint(equalTo: forView.trailingAnchor)
+            ])
         
         b.load(withIcon: "voice_call_hangon_icon", andColor: .systemGreen) {
             
@@ -79,8 +92,6 @@ class DialViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidLoad() {
-        let b = DialerButton()
-        
         ThemeService.shared().theme.recursiveApply(on: view)
         setupButton(forView: b1, withNumber: "1")
         setupButton(forView: b2, withNumber: "2")
@@ -93,6 +104,69 @@ class DialViewController: UIViewController, UITextFieldDelegate {
         setupButton(forView: b9, withNumber: "9")
         setupButton(forView: b0, withNumber: "0")
         setupEngageButton(forView: engage)
+        
+        let backspaceRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(backspace))
+        backspaceRecognizer.minimumPressDuration = 0
+        backspaceRecognizer.cancelsTouchesInView = false
+        backspaceContainer.addGestureRecognizer(backspaceRecognizer)
+        
+        backspaceContainer.alpha = 0
+    }
+    
+    var count: Int = 0
+    
+    class BackspaceRequest: NSObject {
+        weak var recognizer: UIGestureRecognizer!
+        var count: Int = 0
+        init(withRecognizer: UIGestureRecognizer, andCount: Int) {
+            recognizer = withRecognizer
+            count = andCount
+        }
+    }
+    
+    @objc func performBackspace(backspaceRequest: BackspaceRequest) {
+        guard let recognizer = backspaceRequest.recognizer else { return }
+        guard backspaceRequest.count == count else { return }
+        if recognizer.state != .cancelled && recognizer.state != .possible {
+            if let text = textField.text {
+                if text.count > 0 {
+                    if text.count == 1 {
+                        self.backspaceContainer.alpha = 0
+                    }
+                    textField.text = String(text.prefix(text.count - 1))
+                }
+            }
+            self.perform(#selector(self.performBackspace(backspaceRequest:)), with: backspaceRequest, afterDelay: 0.05)
+        }
+    }
+    
+    @objc func backspace(recognizer: UIGestureRecognizer) {
+        if recognizer.state == .began {
+            count += 1
+            let touchLocation = recognizer.location(ofTouch: 0, in: backspaceContainer)
+            UIView.animate(withDuration: 0.05) {
+                self.backspaceContainer.alpha = 0.7
+            } completion: { (_) in
+                if touchLocation.x <= self.backspaceContainer.frame.width && touchLocation.x >= 0 && touchLocation.y <= self.backspaceContainer.frame.height && touchLocation.y >= 0 {
+                    if let text = self.textField.text {
+                        if text.count > 0 {
+                            if text.count == 1 {
+                                UIView.animate(withDuration: 0.1) {
+                                    self.backspaceContainer.alpha = 0
+                                }
+                            }
+                            self.textField.text = String(text.prefix(text.count - 1))
+                        }
+                    }
+                }
+                self.perform(#selector(self.performBackspace(backspaceRequest:)), with: BackspaceRequest(withRecognizer: recognizer, andCount: self.count), afterDelay: 1.0)
+            }
+        } else if recognizer.state == .ended && backspaceContainer.alpha != 0 {
+            UIView.animate(withDuration: 0.05) {
+                self.backspaceContainer.alpha = 1.0
+            }
+            count += 1
+        }
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

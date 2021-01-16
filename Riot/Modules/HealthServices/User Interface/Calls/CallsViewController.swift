@@ -28,7 +28,7 @@ class CallsViewController: UIViewController {
             sections = SegmentedViewController()
         }
         
-        sections.initWithTitles(["Recents", "Dialer"], viewControllers: [UIViewController(), DialViewController(nibName: "DialViewController", bundle: Bundle.main)], defaultSelected: 1)
+        sections.initWithTitles(["Recents", "Dialer"], viewControllers: [RecentCallsList(), DialViewController(nibName: "DialViewController", bundle: Bundle.main)], defaultSelected: 1)
         
         sections.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         view.addSubview(sections.view)

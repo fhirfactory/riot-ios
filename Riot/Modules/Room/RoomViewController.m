@@ -5559,7 +5559,7 @@
 }
 
 
-BOOL debugEnableNewRoomRendering = TRUE;
+BOOL debugEnableNewRoomRendering = NO;
 
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
     if (debugEnableNewRoomRendering){

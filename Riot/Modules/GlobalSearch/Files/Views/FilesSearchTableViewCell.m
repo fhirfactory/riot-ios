@@ -148,6 +148,7 @@
             self.iconImage.image = nil;
         }
     }
+    [ObjcThemeHelpers recursiveApplyWithTheme:[ThemeService shared].theme onView:self.contentView];
 }
 
 #pragma mark -

@@ -54,3 +54,9 @@ extension Theme {
         }
     }
 }
+
+class ObjcThemeHelpers: NSObject {
+    @objc static func recursiveApply(theme: Theme, onView view: UIView) {
+        theme.recursiveApply(on: view)
+    }
+}

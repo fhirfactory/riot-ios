@@ -855,7 +855,6 @@
 		EBE34E0B2582DD6500F6FF04 /* TagHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE34E0A2582DD6500F6FF04 /* TagHistoryView.swift */; };
 		EBE34E132582DD7500F6FF04 /* TagHistoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBE34E122582DD7500F6FF04 /* TagHistoryView.xib */; };
 		EBE34E1B2584D02200F6FF04 /* TagHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE34E1A2584D02200F6FF04 /* TagHistoryCell.swift */; };
-		EBE34E232584DD6000F6FF04 /* SetOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE34E222584DD6000F6FF04 /* SetOperations.swift */; };
 		EBECB045255165ED0024EB47 /* TabbedHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */; };
 		EBECB04D255166630024EB47 /* TabbedHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */; };
 		EBEE3ADC2585BE930011345B /* TagChangesWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */; };
@@ -2182,7 +2181,6 @@
 		EBE34E0A2582DD6500F6FF04 /* TagHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagHistoryView.swift; sourceTree = "<group>"; };
 		EBE34E122582DD7500F6FF04 /* TagHistoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagHistoryView.xib; sourceTree = "<group>"; };
 		EBE34E1A2584D02200F6FF04 /* TagHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagHistoryCell.swift; sourceTree = "<group>"; };
-		EBE34E222584DD6000F6FF04 /* SetOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetOperations.swift; sourceTree = "<group>"; };
 		EBECB044255165ED0024EB47 /* TabbedHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbedHomeViewController.swift; sourceTree = "<group>"; };
 		EBECB04C255166630024EB47 /* TabbedHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabbedHomeViewController.xib; sourceTree = "<group>"; };
 		EBEE3ADB2585BE930011345B /* TagChangesWarning.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagChangesWarning.xib; sourceTree = "<group>"; };
@@ -5337,7 +5335,6 @@
 			isa = PBXGroup;
 			children = (
 				EB3B39382581E861003D6BD0 /* Stackview.swift */,
-				EBE34E222584DD6000F6FF04 /* SetOperations.swift */,
 			);
 			path = "General Extensions";
 			sourceTree = "<group>";
@@ -7388,7 +7385,6 @@
 				B1CE83BA2422815C00D07506 /* KeyVerificationService.swift in Sources */,
 				B1B5571820EE6C4D00210D55 /* CountryPickerViewController.m in Sources */,
 				B1D211E622C194A200D939BD /* ReactionsMenuViewState.swift in Sources */,
-				EBE34E232584DD6000F6FF04 /* SetOperations.swift in Sources */,
 				ECF57A4925090C23004BBF9D /* EnterNewRoomDetailsViewState.swift in Sources */,
 				B17982FF2119FED2001FD722 /* GDPRConsentViewController.swift in Sources */,
 				B1098BE121ECE09F000DDA48 /* Images.swift in Sources */,

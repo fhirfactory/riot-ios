@@ -43,7 +43,7 @@
 
 - (void)render:(MXKCellData*)cellData
 {
-    
+    [ObjcThemeHelpers recursiveApplyWithTheme:[ThemeService shared].theme onView:self.contentView];
     if ([self tagWarning]) {
         [self setTagWarning:NULL];
         [[self tagWarning] removeFromSuperview];

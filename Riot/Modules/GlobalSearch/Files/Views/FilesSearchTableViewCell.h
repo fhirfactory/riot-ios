@@ -22,5 +22,6 @@
  */
 @interface FilesSearchTableViewCell : MXKSearchTableViewCell
 @property TagChangesWarning *tagWarning;
+@property (weak, nonatomic) IBOutlet UILabel *URNDOBLabel;
 @property UIView *originalContentView;
 @end

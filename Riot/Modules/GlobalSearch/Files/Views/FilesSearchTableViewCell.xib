@@ -37,13 +37,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lg1-xQ-AGn">
-                                <rect key="frame" x="84" y="16.5" width="414" height="20"/>
+                                <rect key="frame" x="84" y="16.5" width="338.5" height="20"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Title"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dQt-mN-T6b">
-                                <rect key="frame" x="84" y="40.5" width="506" height="20"/>
+                                <rect key="frame" x="84" y="40.5" width="62" height="20"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Message"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="e6p-DU-3ny"/>
@@ -62,6 +62,12 @@
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="URN | DOB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2r1-ed-gNb" userLabel="URN | DOB">
+                                <rect key="frame" x="156" y="42" width="70.5" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -72,13 +78,15 @@
                             <constraint firstItem="tNx-NQ-DRn" firstAttribute="centerY" secondItem="Lg1-xQ-AGn" secondAttribute="bottom" id="62m-sg-Xmz"/>
                             <constraint firstItem="tNx-NQ-DRn" firstAttribute="top" secondItem="4qD-C5-hZd" secondAttribute="top" id="8bq-ki-xZo"/>
                             <constraint firstItem="Lg1-xQ-AGn" firstAttribute="leading" secondItem="4qD-C5-hZd" secondAttribute="leading" constant="84" id="9VM-Pl-fpN"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2r1-ed-gNb" secondAttribute="trailing" constant="10" id="A1g-xN-Y5X"/>
                             <constraint firstItem="3MK-Eq-5gW" firstAttribute="centerX" secondItem="tNx-NQ-DRn" secondAttribute="centerX" id="Ki3-vK-sly"/>
+                            <constraint firstItem="360-Go-RcG" firstAttribute="leading" secondItem="Lg1-xQ-AGn" secondAttribute="trailing" constant="80.5" id="Lsf-xM-iMc"/>
                             <constraint firstItem="Lg1-xQ-AGn" firstAttribute="centerY" secondItem="360-Go-RcG" secondAttribute="centerY" id="MlA-PN-BWE"/>
-                            <constraint firstItem="360-Go-RcG" firstAttribute="leading" secondItem="Lg1-xQ-AGn" secondAttribute="trailing" constant="5" id="Xs8-UN-boC"/>
+                            <constraint firstItem="2r1-ed-gNb" firstAttribute="centerY" secondItem="dQt-mN-T6b" secondAttribute="centerY" id="Xmf-iq-7qw"/>
                             <constraint firstAttribute="trailing" secondItem="360-Go-RcG" secondAttribute="trailing" constant="10" id="YqC-WC-Wqe"/>
                             <constraint firstAttribute="bottom" secondItem="tNx-NQ-DRn" secondAttribute="bottom" constant="1" id="f4Z-75-r4g"/>
-                            <constraint firstAttribute="trailing" secondItem="dQt-mN-T6b" secondAttribute="trailing" constant="10" id="t2m-pb-5zd"/>
                             <constraint firstItem="dQt-mN-T6b" firstAttribute="top" secondItem="Lg1-xQ-AGn" secondAttribute="bottom" constant="4" id="usS-Q4-XUa"/>
+                            <constraint firstItem="2r1-ed-gNb" firstAttribute="leading" secondItem="dQt-mN-T6b" secondAttribute="trailing" constant="10" id="vnB-fQ-voz"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -92,6 +100,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <accessibility key="accessibilityConfiguration" identifier="FilesSearchTableViewCell"/>
             <connections>
+                <outlet property="URNDOBLabel" destination="2r1-ed-gNb" id="urb-yH-wyJ"/>
                 <outlet property="attachmentImageView" destination="tNx-NQ-DRn" id="8cE-eQ-BEC"/>
                 <outlet property="date" destination="360-Go-RcG" id="Y0L-Dj-ZVn"/>
                 <outlet property="iconImage" destination="3MK-Eq-5gW" id="7BD-8Z-4yC"/>

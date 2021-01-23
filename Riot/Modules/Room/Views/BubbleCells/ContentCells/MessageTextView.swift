@@ -40,7 +40,6 @@ class MessageTextView: MessageContentView, RendersBubbleComponent {
         contentView.gestureRecognizers?.forEach(contentView.removeGestureRecognizer(_:))
         contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(textTapped)))
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
-        ViewDebuggingTools.traceGestureRecognizersForScreen(fromView: TextContent)
     }
     override func applyTheStyle(_ theme: Theme) {
         TextContent.textColor = theme.textPrimaryColor

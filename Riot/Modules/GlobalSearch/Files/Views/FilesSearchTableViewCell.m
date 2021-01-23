@@ -96,9 +96,15 @@
             }
             
             if (bubbleData.attachment.type == MXKAttachmentTypeImage) {
+                [_URNDOBLabel setText:@""];
+                NSDateFormatter *dateFormatter = [NSDateFormatter new];
+                //[dateFormatter setDateFormat:<#(NSString * _Nullable)#>];
                 [[Services ImageTagDataService] LookupTagInfoForObjcWithURL: bubbleData.attachment.contentURL andHandler:^(NSArray *tagData) {
-                    
-                    bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:[tagData lastObject]];
+                    TagData *tag = [tagData lastObject];
+                    PatientModel *patient = [tag.Patients firstObject];
+                    bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:tag];
+                    [super title].text = [PatientModel GetReorderedNameStringWithName:[patient Name]];
+                    _URNDOBLabel.text = [NSString stringWithFormat:@"%@|%@", [patient URN], [patient DoB]];
                     if (containsChanges) {
                         if ([self tagWarning]) {
                             [[self tagWarning].contentView setHidden:NO];

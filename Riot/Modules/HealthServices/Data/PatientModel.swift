@@ -16,7 +16,20 @@
 
 import Foundation
 
-@objc class PatientModel: NSObject {
+@objcMembers class PatientModel: NSObject {
+    static func ReorderNameString(Name namestring: String) -> (String, String) {
+        let splitName = namestring.split(separator: " ")
+        guard let lastname = splitName.last?.uppercased() else {return ("", "")}
+        let lastNamePosition = splitName.last?.startIndex ?? namestring.startIndex
+        let firstNamesSubstring = namestring[..<lastNamePosition]
+        return (firstNamesSubstring.trimmingCharacters(in: CharacterSet(charactersIn: " ")), String(lastname))
+    }
+    
+    @objc static func GetReorderedNameString(Name namestring: String) -> String {
+        let nameData = ReorderNameString(Name: namestring)
+        return nameData.1 + " " + nameData.0
+    }
+    
     static func == (lhs: PatientModel, rhs: PatientModel) -> Bool {
         return lhs.URN == rhs.URN //compare by URNs because this should be specific to the patient (I assume)
     }

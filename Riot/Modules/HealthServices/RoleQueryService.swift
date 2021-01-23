@@ -16,7 +16,9 @@
 
 import Foundation
 
+//TODO: Update functionality when backend is completed
 class RoleQueryService: AsyncQueryableService<Role> {
+    //Mock data.
     let rolesList = [Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno"), Role(withName: "After Hours Hospital Manager (AHHM)", andId: "xxx-yyy-zzz", andDescription: "I dunno"), Role(withName: "Doctor", andId: "sss-ddd-fff", andDescription: "Okay")]
     override func Query(queryDetails: String, success: ([Role]) -> Void, failure: () -> Void) {
         success(rolesList.filter({ (r) -> Bool in

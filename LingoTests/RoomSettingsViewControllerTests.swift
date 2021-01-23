@@ -1,4 +1,4 @@
-// 
+//
 // Copyright 2020 New Vector Ltd
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -41,6 +41,57 @@ class RoomSettingsViewControllerTests: XCTestCase {
         /// The remainder of the functionality is OOTB and described in another story.
         
         XCTAssert(BuildSettings.sharingFeaturesEnabled == false)
+        
+    }
+    
+    func test_193085_removeRoomSettings() throws {
+        /// Given I have selected a Chat Room that I am a Room Member
+        /// When I have selected the Chat Room Settings
+        /// Then I cannot see the following OOTB Chat Room settings as they are not required
+        /// . Addresses
+        /// . Flair
+        /// . Advanced
+        /// . Direct Chat
+        /// . Add Matrix Apps
+
+        /// Given I have selected a Chat Room that I am a Room Member
+        ///  When I have selected the Chat Room Settings
+        /// Then I cannot see or select the Room Access setting and it must always be set to "Only people who have been invited".
+
+        /// Given I have selected a Chat Room that I am a Room Member
+        /// AND I have selected the Security & Privacy settings
+        /// AND I have permissions to change these settings (i.e. Chat Room Administrator)
+        /// When I have selected the Who Can Read History setting
+        /// Then I can only select from the following values
+        /// . Members only (since the point in time of selecting this option)
+        /// . Members only (since they were invited)
+        /// . Members only (since they joined)
+        /// Note: The following value must be removed "Anyone".
+        
+        XCTAssert(BuildSettings.roomSettingsScreenShowDirectChatOption == false)
+        XCTAssert(BuildSettings.roomSettingsScreenShowAccessMode == false)
+        XCTAssert(BuildSettings.roomSettingsScreenAllowChangingAccessSettings == false)
+        XCTAssert(BuildSettings.roomSettingsScreenShowAddressSettings == false)
+        XCTAssert(BuildSettings.roomSettingsScreenShowFlairSettings == false)
+        XCTAssert(BuildSettings.roomSettingsScreenShowAdvancedSettings == false)
+        XCTAssert(BuildSettings.roomSettingsScreenShowAnyoneHistoryOption == false)
+        
+    }
+    
+    func test_193085_removeSharingOptions() throws {
+        /// Given I have selected a Chat Room that I am a Room Member
+        
+        XCTAssert(BuildSettings.messageDetailsAllowShare == false)
+        XCTAssert(BuildSettings.messageDetailsAllowPermalink == false)
+        XCTAssert(BuildSettings.messageDetailsAllowViewSource == false)
+        XCTAssert(BuildSettings.messageDetailsAllowSave == false)
+        
+    }
+    
+    func test_193085_patientTaggingOptions() throws {
+        /// Given I have selected a Chat Room that I am a Room Member
+        
+        XCTAssert(BuildSettings.sendMessageRequirePatientTagging == false)
         
     }
 

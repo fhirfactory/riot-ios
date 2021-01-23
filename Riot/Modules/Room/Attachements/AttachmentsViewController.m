@@ -263,7 +263,7 @@ NSArray *TagDataArray;
     [UIView animateWithDuration:0.05 animations:^{
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:[BuildSettings defaultAnimationLength] animations:^{
             [TagViewContainer setAlpha:1];
         }];
     }];
@@ -295,7 +295,7 @@ NSMutableDictionary *cellGestureRecognizers;
     NSInteger tempIndex = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
     if (TagViewDetails && TagViewContainer) {
         hidden = YES;
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:[BuildSettings defaultAnimationLength] animations:^{
             [TagViewContainer setAlpha:0.0];
             TagViewDetails = NULL;
         } completion:^(BOOL finished) {

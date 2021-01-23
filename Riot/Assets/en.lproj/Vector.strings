@@ -1558,3 +1558,8 @@
 
 "tab_gallery" = "Gallery";
 "tab_calls" = "Calls";
+
+//The failure state for not implementing these strings is pretty severe
+"patient_dob_format" = "d-MMM-yyyy";
+"photo_metadata_taken_format" = "dd-MMM-yyyy";
+"photo_metadata_taken_time_format" = "h:mm a";

@@ -46,7 +46,7 @@ class PatientViewCell: QueryTableViewCell<PatientModel> {
         URNLabel.textColor = ThemeService.shared().theme.textPrimaryColor
         DateOfBirthLabel.textColor = ThemeService.shared().theme.textPrimaryColor
         let formatter = DateFormatter()
-        formatter.dateFormat = "d-MMM-yyyy"
+        formatter.dateFormat = AlternateHomeTools.getNSLocalized("patient_dob_format", in: "Vector")
         DateOfBirthLabel.text = formatter.string(from: value.DoB)
         URNLabel.text = value.URN
         let nameStringDetails = PatientModel.ReorderNameString(Name: value.Name)

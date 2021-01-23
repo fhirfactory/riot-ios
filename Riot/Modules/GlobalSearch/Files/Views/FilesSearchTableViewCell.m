@@ -98,13 +98,13 @@
             if (bubbleData.attachment.type == MXKAttachmentTypeImage) {
                 [_URNDOBLabel setText:@""];
                 NSDateFormatter *dateFormatter = [NSDateFormatter new];
-                //[dateFormatter setDateFormat:<#(NSString * _Nullable)#>];
+                [dateFormatter setDateFormat:NSLocalizedStringFromTable(@"patient_dob_format", @"Vector", nil)];
                 [[Services ImageTagDataService] LookupTagInfoForObjcWithURL: bubbleData.attachment.contentURL andHandler:^(NSArray *tagData) {
                     TagData *tag = [tagData lastObject];
                     PatientModel *patient = [tag.Patients firstObject];
                     bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:tag];
                     [super title].text = [PatientModel GetReorderedNameStringWithName:[patient Name]];
-                    _URNDOBLabel.text = [NSString stringWithFormat:@"%@|%@", [patient URN], [patient DoB]];
+                    _URNDOBLabel.text = [NSString stringWithFormat:@"%@ | %@", [patient URN], [dateFormatter stringFromDate:[patient DoB]]];
                     if (containsChanges) {
                         if ([self tagWarning]) {
                             [[self tagWarning].contentView setHidden:NO];

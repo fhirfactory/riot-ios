@@ -279,5 +279,6 @@ final class BuildSettings: NSObject {
     // MARK: - Theme Application Settings
     /// Additional toggles that determine if theme customisations should apply to particular elements of the application
     static let themeAppliesToLoginPageLogo: Bool = false
+    static let defaultAnimationLength: Double = 0.4
     
 }

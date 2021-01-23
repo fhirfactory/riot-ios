@@ -16,7 +16,9 @@
 
 import Foundation
 
+//TODO: Update functionality when backend is in place
 class PatientQueryService: AsyncQueryableService<PatientModel> {
+    //These default patients are here to provide a mock beckend, and will be removed when the backend is implemented
     let patientList = [PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), PatientModel(Name: "John The Nobody", URN: "987654321", DoB: Date()), PatientModel(Name: "Jill Bejonassie", URN: "234987234", DoB: Date())]
     override func Query(queryDetails: String, success: ([PatientModel]) -> Void, failure: () -> Void) {
         success(patientList.filter({ (patient) -> Bool in

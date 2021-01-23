@@ -54,7 +54,7 @@ import Foundation
         descriptionCell.render(withString: viewModel.description ?? "")
         descriptionCell.sizeToFit()
         let descriptionView = descriptionCell.contentView
-        descriptionView.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
+        descriptionView.backgroundColor = ThemeService.shared().theme.backgroundShadedColor
     
         //subviews.append(descriptionView)
         descriptionView.translatesAutoresizingMaskIntoConstraints = false

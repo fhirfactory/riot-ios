@@ -17,23 +17,16 @@
 import Foundation
 
 @objc class ImageTagService: NSObject {
-    var tagData: [String: [TagData]] = ["mxc://matrix.org/EzgHluUEbwnEGDZHpcwaJTNy":[
-                                            TagData(withPatient: PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), Description: "A photo taken of a patient that has mysteriously become a somewhat monolithic building in Canberra. Shown is the patient's left arm.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date()),
-                                            TagData(withPatient: PatientModel(Name: "John Nobody", URN: "123456788", DoB: Date()), Description: "A photo taken of a patient that has mysteriously become a somewhat monolithic building in Canberra. Shown is the patient's *right* arm (a clerical error had this incorrectly described as the patient's left arm).", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date())]]
+    //Effectively a stub function, provides mock tag data on every image
     func LookupTagInfoFor(URL: String, andHandler handler: ([TagData]) -> Void) {
-        /*if tagData.keys.contains(URL) {
-            if let tags = tagData[URL] {
-                handler(tags)
-            }
-        }*/
-        handler(tagData["mxc://matrix.org/EzgHluUEbwnEGDZHpcwaJTNy"] ?? [])
+        handler([TagData(withPatient: PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), Description: "A photo taken of a patient's arm, showing growths developing on their upper forearm.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date()),
+            TagData(withPatient: PatientModel(Name: "John Nobody", URN: "123456788", DoB: Date()), Description: "A photo taken of a patient's arm, showing the development of growths on their upper forearm. A biopsy confirmed the growths to be benign cysts, in need of no further examination.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date())
+        ])
     }
     //first tag in the array is the oldest tag; last in the array is the most recent tag. (tags are in chronological order)
     @objc func LookupTagInfoForObjc(URL: String, andHandler handler: (NSArray) -> Void) {
-        if tagData.keys.contains(URL) {
-            if let tags = tagData[URL] {
-                handler(tags as NSArray)
-            }
-        }
+        LookupTagInfoFor(URL: URL, andHandler: {(data) in
+            handler(data as NSArray)
+        })
     }
 }

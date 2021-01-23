@@ -26,10 +26,10 @@ class DateTakenViewCell: QueryTableViewCell<Date> {
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
         TakenTitle.text = AlternateHomeTools.getNSLocalized("taken", in: "Vector")
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MMM-yyyy"
+        dateFormatter.dateFormat = AlternateHomeTools.getNSLocalized("photo_metadata_taken_format", in: "Vector")
         DateValueLabel.text = dateFormatter.string(from: value)
         let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "h:mm a"
+        timeFormatter.dateFormat = AlternateHomeTools.getNSLocalized("photo_metadata_taken_time_format", in: "Vector")
         TimeValueLabel.text = timeFormatter.string(from: value)
     }
 }

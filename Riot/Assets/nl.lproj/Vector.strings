@@ -1273,3 +1273,7 @@ Use the latest Element on your other devices:";
 "tag_history_title" = "Tag History";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
+//The failure state for not implementing these strings is pretty severe
+"patient_dob_format" = "d-MMM-yyyy";
+"photo_metadata_taken_format" = "dd-MMM-yyyy";
+"photo_metadata_taken_time_format" = "h:mm a";

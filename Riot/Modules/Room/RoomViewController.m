@@ -5223,7 +5223,7 @@
     
     // Copy action
     
-    BOOL isCopyActionEnabled = (!attachment || attachment.type != MXKAttachmentTypeSticker) && (BuildSettings.sharingFeaturesEnabled || !attachment);
+    BOOL isCopyActionEnabled = !attachment || (attachment.type != MXKAttachmentTypeSticker && BuildSettings.sharingFeaturesEnabled);
     
     if (isCopyActionEnabled)
     {

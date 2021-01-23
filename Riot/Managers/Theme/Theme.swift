@@ -23,6 +23,7 @@ import UIKit
     var identifier: String { get }
 
     var backgroundColor: UIColor { get }
+    var backgroundShadedColor: UIColor { get }
     var baseColor: UIColor { get }
 
     var baseIconPrimaryColor: UIColor { get }

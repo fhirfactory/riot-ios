@@ -98,6 +98,7 @@ abstract_target 'RiotPods' do
     end
   end
 
+  #Commented out as Lingo does not use the sharing extension, and Xcode complains if the target is there, but not included in the project
   #target "RiotShareExtension" do
   #  import_MatrixKitAppExtension
   #end

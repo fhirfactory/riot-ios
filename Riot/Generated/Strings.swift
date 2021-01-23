@@ -2066,6 +2066,10 @@ internal enum VectorL10n {
   internal static var or: String { 
     return VectorL10n.tr("Vector", "or") 
   }
+  /// d-MMM-yyyy
+  internal static var patientDobFormat: String { 
+    return VectorL10n.tr("Vector", "patient_dob_format") 
+  }
   /// CONVERSATIONS
   internal static var peopleConversationSection: String { 
     return VectorL10n.tr("Vector", "people_conversation_section") 
@@ -2089,6 +2093,14 @@ internal enum VectorL10n {
   /// %@ doesn't have permission to access photo library, please change privacy settings
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "photo_library_access_not_granted", p1)
+  }
+  /// dd-MMM-yyyy
+  internal static var photoMetadataTakenFormat: String { 
+    return VectorL10n.tr("Vector", "photo_metadata_taken_format") 
+  }
+  /// h:mm a
+  internal static var photoMetadataTakenTimeFormat: String { 
+    return VectorL10n.tr("Vector", "photo_metadata_taken_time_format") 
   }
   /// Create a PIN for security
   internal static var pinProtectionChoosePin: String { 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="H1p-Uh-vWS">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -451,10 +451,10 @@
             </objects>
             <point key="canvasLocation" x="-153" y="-1121"/>
         </scene>
-        <!--Groups View Controller-->
+        <!--Room Files View Controller-->
         <scene sceneID="Rqp-Ti-qpu">
             <objects>
-                <viewController id="SLx-Wj-p7E" customClass="GroupsViewController" sceneMemberID="viewController">
+                <viewController id="SLx-Wj-p7E" customClass="RoomFilesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N1j-ye-uQa"/>
                         <viewControllerLayoutGuide type="bottom" id="FYD-2t-u4k"/>
@@ -464,7 +464,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab_groups" id="5x2-xc-uIB"/>
+                    <tabBarItem key="tabBarItem" tag="5" title="" image="photo" catalog="system" id="5x2-xc-uIB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xpc-LV-krz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -483,7 +483,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="3" image="tab_rooms" id="7eS-Ei-00V">
+                    <tabBarItem key="tabBarItem" tag="6" image="tab_rooms" id="7eS-Ei-00V">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="TabBarItemRooms"/>
                         </userDefinedRuntimeAttributes>
@@ -621,10 +621,10 @@
         <image name="ellipsis.circle.fill" catalog="system" width="128" height="121"/>
         <image name="integrations_icon" width="24" height="24"/>
         <image name="logo" width="120" height="101"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <image name="search_icon" width="24" height="24"/>
         <image name="settings_icon" width="24" height="24"/>
         <image name="tab_favourites" width="24" height="24"/>
-        <image name="tab_groups" width="24" height="24"/>
         <image name="tab_people" width="24" height="24"/>
         <image name="tab_rooms" width="24" height="24"/>
         <systemColor name="groupTableViewBackgroundColor">

@@ -232,4 +232,8 @@
     }
 }
 
+- (void)changeNavigationTitle {
+    [[[[AppDelegate theDelegate] masterTabBarController] navigationItem] setTitle:NSLocalizedStringFromTable(@"tab_gallery", @"Vector", @"")];
+}
+
 @end

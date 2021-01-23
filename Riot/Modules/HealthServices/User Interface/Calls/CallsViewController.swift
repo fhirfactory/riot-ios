@@ -28,6 +28,8 @@ class CallsViewController: UIViewController {
             sections = SegmentedViewController()
         }
         
+        AppDelegate.theDelegate().masterTabBarController.title = AlternateHomeTools.getNSLocalized("tab_calls", in: "Vector")
+        
         sections.initWithTitles(["Recents", "Dialer"], viewControllers: [RecentCallsList(), DialViewController(nibName: "DialViewController", bundle: Bundle.main)], defaultSelected: 1)
         
         sections.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)

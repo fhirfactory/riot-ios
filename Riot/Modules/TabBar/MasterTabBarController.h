@@ -28,6 +28,7 @@
 #import "RoomViewController.h"
 #import "ContactDetailsViewController.h"
 #import "GroupDetailsViewController.h"
+#import "RoomFilesViewController.h"
 
 #import <FFDropDownMenu.h>
 #import <FFDropDownMenuView.h>
@@ -38,7 +39,9 @@
 #define TABBAR_PEOPLE_INDEX       2
 #define TABBAR_ROOMS_INDEX        3
 #define TABBAR_GROUPS_INDEX       4
-#define TABBAR_COUNT              5
+#define TABBAR_GALLERY_INDEX      5
+#define TABBAR_CALLS_INDEX        6
+#define TABBAR_COUNT              7
 
 
 @protocol MasterTabBarControllerDelegate;
@@ -157,7 +160,7 @@
 @property (nonatomic, readonly) FavouritesViewController *favouritesViewController;
 @property (nonatomic, readonly) PeopleViewController *peopleViewController;
 @property (nonatomic, readonly) RoomsViewController *roomsViewController;
-@property (nonatomic, readonly) GroupsViewController *groupsViewController;
+@property (nonatomic, readonly) RoomFilesViewController *fileGalleryViewController;
 
 // References on the currently selected room and its view controller
 @property (nonatomic, readonly) RoomViewController *currentRoomViewController;

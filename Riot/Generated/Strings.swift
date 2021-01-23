@@ -4350,6 +4350,14 @@ internal enum VectorL10n {
   internal static var `switch`: String { 
     return VectorL10n.tr("Vector", "switch") 
   }
+  /// Calls
+  internal static var tabCalls: String { 
+    return VectorL10n.tr("Vector", "tab_calls") 
+  }
+  /// Gallery
+  internal static var tabGallery: String { 
+    return VectorL10n.tr("Vector", "tab_gallery") 
+  }
   /// Tag History
   internal static var tagHistoryTitle: String { 
     return VectorL10n.tr("Vector", "tag_history_title") 

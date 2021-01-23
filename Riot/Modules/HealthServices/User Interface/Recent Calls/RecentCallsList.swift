@@ -26,12 +26,18 @@ class RecentCallsList: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        2
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecentCallItem", for: indexPath) as? RecentCallItem else { return UITableViewCell() }
-        cell.render(phoneCall: Call(asOutgoingToExternalPhoneNumber: "0412345678", withDateTime: Date(), andLength: TimeInterval(200)))
+        if indexPath.row == 0 {
+            cell.render(phoneCall: Call(asIncomingFromExternalPhoneNumber: "0412345678", withDateTime: Date(), andLength: TimeInterval(200)))
+        } else {
+            cell.render(phoneCall: Call(withTime: Date(), Length: 200, Type: .lingoAudio, OtherEntity: "Renal Reg", Known: true, PhoneNumber: nil, ExtraInfo: ExtraCallInfo(withType: .pickedUpBy, andData: "Graham Boulder"), andDirection: .outgoing))
+        }
+        
         return cell
     }
 }

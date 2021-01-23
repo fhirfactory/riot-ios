@@ -87,6 +87,7 @@ class RecentCallItem: UITableViewCell, UIScrollViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM h:mm a"
         DateTimeLabel.text = dateFormatter.string(from: call.time)
+        DetailsScrollView.backgroundColor = ThemeService.shared().theme.backgroundColor
         if let extraInfo = call.extraInfo {
             CallInfoButton.isHidden = false
             DetailsBottomLabel.text = extraInfo.data

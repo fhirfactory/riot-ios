@@ -5224,6 +5224,13 @@
 			path = Alternate;
 			sourceTree = "<group>";
 		};
+		EB97FA7025BAD8AF00D4F1BB /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Gallery;
+			sourceTree = "<group>";
+		};
 		EBAAF55E2562494C0080A268 /* HealthServices */ = {
 			isa = PBXGroup;
 			children = (
@@ -5351,6 +5358,7 @@
 		EBEE3AF12585C1CB0011345B /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				EB97FA7025BAD8AF00D4F1BB /* Gallery */,
 				EB47E67925B021AE0025A469 /* Recent Calls */,
 				EB2BCCE025ADA6FE00B49D07 /* Calls */,
 				EBEE3AF22585C1EF0011345B /* Generic */,

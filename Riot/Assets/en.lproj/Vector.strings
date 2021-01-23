@@ -1555,3 +1555,6 @@
 "lingo_conference" = "Lingo Conference";
 "call_destination" = "Call to";
 "call_picked_up_by" = "Picked up by";
+
+"tab_gallery" = "Gallery";
+"tab_calls" = "Calls";

@@ -193,7 +193,20 @@
 		43DAB8BE24D3E93500873206 /* ActPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB8BC24D3E93500873206 /* ActPeopleViewController.swift */; };
 		43DAB8BF24D3E93500873206 /* ActPeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DAB8BD24D3E93500873206 /* ActPeopleViewController.xib */; };
 		43DAB8C124D3E95700873206 /* RoleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DAB8C024D3E95700873206 /* RoleModel.swift */; };
-		43DAB8D924D40B4F00873206 /* Act.strings in Resources */ = {isa = PBXBuildFile; fileRef = 43DAB8D824D40B4F00873206 /* Act.strings */; };
+		437440A824E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */; };
+		43AF6AF724E4E2E000BFE3EC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6AF624E4E2E000BFE3EC /* ProfileViewController.swift */; };
+		43AF6AFB24E4E3CC00BFE3EC /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6AF924E4E3CC00BFE3EC /* ProfileTableViewCell.swift */; };
+		43AF6AFC24E4E3CC00BFE3EC /* ProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AF6AFA24E4E3CC00BFE3EC /* ProfileTableViewCell.xib */; };
+		43AF6AFF24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6AFD24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.swift */; };
+		43AF6B0024E4E3DE00BFE3EC /* ProfileRoleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AF6AFE24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.xib */; };
+		43AF6B0324E4E3F500BFE3EC /* DrawerItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6B0124E4E3F500BFE3EC /* DrawerItemTableViewCell.swift */; };
+		43AF6B0424E4E3F500BFE3EC /* DrawerItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AF6B0224E4E3F500BFE3EC /* DrawerItemTableViewCell.xib */; };
+		43AF6B0724E4E42E00BFE3EC /* DrawerTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6B0524E4E42E00BFE3EC /* DrawerTextTableViewCell.swift */; };
+		43AF6B0824E4E42E00BFE3EC /* DrawerTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AF6B0624E4E42E00BFE3EC /* DrawerTextTableViewCell.xib */; };
+		43AF6B0B24E4F58C00BFE3EC /* Dot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF6B0A24E4F58C00BFE3EC /* Dot.swift */; };
+		43CE5FFD24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE5FFB24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift */; };
+		43CE5FFE24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43CE5FFC24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib */; };
+		43CE600124E64C2B00D146AC /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CE600024E64C2B00D146AC /* Role.swift */; };
 		670966FEFE120D865FD8A5B6 /* Pods_RiotPods_SiriIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */; };
 		74ED9DE814EFC4AA307E6DA7 /* Pods_LingoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 115F12746BFAB2D2EA00643A /* Pods_LingoTests.framework */; };
 		926FA53F1F4C132000F826C2 /* MXSession+Riot.m in Sources */ = {isa = PBXBuildFile; fileRef = 926FA53E1F4C132000F826C2 /* MXSession+Riot.m */; };
@@ -1308,7 +1321,21 @@
 		43DAB8BC24D3E93500873206 /* ActPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActPeopleViewController.swift; sourceTree = "<group>"; };
 		43DAB8BD24D3E93500873206 /* ActPeopleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActPeopleViewController.xib; sourceTree = "<group>"; };
 		43DAB8C024D3E95700873206 /* RoleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleModel.swift; sourceTree = "<group>"; };
-		43DAB8D824D40B4F00873206 /* Act.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Act.strings; sourceTree = "<group>"; };
+		437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTablBarControllerProfileExtension.swift; sourceTree = "<group>"; };
+		43AF6AF624E4E2E000BFE3EC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		43AF6AF924E4E3CC00BFE3EC /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		43AF6AFA24E4E3CC00BFE3EC /* ProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileTableViewCell.xib; sourceTree = "<group>"; };
+		43AF6AFD24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRoleTableViewCell.swift; sourceTree = "<group>"; };
+		43AF6AFE24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileRoleTableViewCell.xib; sourceTree = "<group>"; };
+		43AF6B0124E4E3F500BFE3EC /* DrawerItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerItemTableViewCell.swift; sourceTree = "<group>"; };
+		43AF6B0224E4E3F500BFE3EC /* DrawerItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawerItemTableViewCell.xib; sourceTree = "<group>"; };
+		43AF6B0524E4E42E00BFE3EC /* DrawerTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTextTableViewCell.swift; sourceTree = "<group>"; };
+		43AF6B0624E4E42E00BFE3EC /* DrawerTextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawerTextTableViewCell.xib; sourceTree = "<group>"; };
+		43AF6B0A24E4F58C00BFE3EC /* Dot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dot.swift; sourceTree = "<group>"; };
+		43C2962BE367F59220F517FA /* Pods-RiotPods-Riot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-Riot.debug.xcconfig"; path = "Target Support Files/Pods-RiotPods-Riot/Pods-RiotPods-Riot.debug.xcconfig"; sourceTree = "<group>"; };
+		43CE5FFB24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionDividerTableViewCell.swift; sourceTree = "<group>"; };
+		43CE5FFC24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSectionDividerTableViewCell.xib; sourceTree = "<group>"; };
+		43CE600024E64C2B00D146AC /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
 		4FC6A5D63FAD1B27C2F57AFA /* Pods-RiotPods-RiotShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RiotPods-RiotShareExtension.release.xcconfig"; path = "Target Support Files/Pods-RiotPods-RiotShareExtension/Pods-RiotPods-RiotShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		51187E952D5CECF6D6F5A28E /* Pods_RiotPods_SiriIntents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RiotPods_SiriIntents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		589D30CE3761902AAED61ABC /* Pods-LingoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LingoTests.release.xcconfig"; path = "Target Support Files/Pods-LingoTests/Pods-LingoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -2941,6 +2968,35 @@
 				43AFC0BF24DA603C00D0EF19 /* PhoneTableViewCell.xib */,
 				EB6B1618253415E400BBDCC6 /* EmailTableViewCell.xib */,
 				EB6B161F2534167A00BBDCC6 /* EmailTableViewCell.swift */,
+				);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		43AF6AF524E4E2C600BFE3EC /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				43CE5FFF24E64C0300D146AC /* model */,
+				43AF6B0924E4F56700BFE3EC /* views */,
+				43AF6AF824E4E3A800BFE3EC /* cells */,
+				43AF6AF624E4E2E000BFE3EC /* ProfileViewController.swift */,
+				437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */,
+			);
+			path = profile;
+			sourceTree = "<group>";
+		};
+		43AF6AF824E4E3A800BFE3EC /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				43AF6AF924E4E3CC00BFE3EC /* ProfileTableViewCell.swift */,
+				43AF6AFA24E4E3CC00BFE3EC /* ProfileTableViewCell.xib */,
+				43AF6AFD24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.swift */,
+				43AF6AFE24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.xib */,
+				43AF6B0124E4E3F500BFE3EC /* DrawerItemTableViewCell.swift */,
+				43AF6B0224E4E3F500BFE3EC /* DrawerItemTableViewCell.xib */,
+				43AF6B0524E4E42E00BFE3EC /* DrawerTextTableViewCell.swift */,
+				43AF6B0624E4E42E00BFE3EC /* DrawerTextTableViewCell.xib */,
+				43CE5FFB24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift */,
+				43CE5FFC24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -2963,6 +3019,22 @@
 				43DAB8BD24D3E93500873206 /* ActPeopleViewController.xib */,
 			);
 			path = people;
+			sourceTree = "<group>";
+		};
+		43AF6B0924E4F56700BFE3EC /* views */ = {
+			isa = PBXGroup;
+			children = (
+				43AF6B0A24E4F58C00BFE3EC /* Dot.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		43CE5FFF24E64C0300D146AC /* model */ = {
+			isa = PBXGroup;
+			children = (
+				43CE600024E64C2B00D146AC /* Role.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 		5FC42FA41F5186AFFB6A2404 /* Frameworks */ = {
@@ -3373,7 +3445,6 @@
 				B1664D5720F4EBEC00808783 /* InfoPlist.strings */,
 				B1664D5920F4EBEC00808783 /* Localizable.strings */,
 				B1664D5520F4EBEC00808783 /* Vector.strings */,
-				43DAB8D824D40B4F00873206 /* Act.strings */,
 			);
 			name = Localizations;
 			sourceTree = "<group>";
@@ -3713,6 +3784,7 @@
 				EBAAF55E2562494C0080A268 /* HealthServices */,
 				ECF57A3725090C23004BBF9D /* CreateRoom */,
 				B1BB648724FD07B3008238AE /* Application */,
+				43AF6AF524E4E2C600BFE3EC /* profile */,
 				EC1CA84F24C1DEC400DE9EBF /* SetPinCode */,
 				4397158F24D1359500D0D582 /* directory */,
 				EC3B066324AC6ADD000DF9BF /* CrossSigning */,
@@ -6375,6 +6447,7 @@
 				B110872421F098F0003554A5 /* ActivityIndicatorView.xib in Resources */,
 				B1B5573320EE6C4D00210D55 /* GroupHomeViewController.xib in Resources */,
 				3232AB2122564D9100AD6A5C /* README.md in Resources */,
+				43CE5FFE24E64A4200D146AC /* ProfileSectionDividerTableViewCell.xib in Resources */,
 				3291DC8A23E0BE820009732F /* Security.storyboard in Resources */,
 				B1B5593920EF7BAC00210D55 /* TableViewCellWithCheckBoxes.xib in Resources */,
 				B1B557C120EF5B4500210D55 /* DisabledRoomInputToolbarView.xib in Resources */,
@@ -6450,9 +6523,9 @@
 				B1B5573920EE6C4D00210D55 /* GroupRoomsViewController.xib in Resources */,
 				B1B5597620EFB02A00210D55 /* InviteRecentTableViewCell.xib in Resources */,
 				B1B558FB20EF768F00210D55 /* RoomIncomingAttachmentWithoutSenderInfoBubbleCell.xib in Resources */,
+				43AF6B0024E4E3DE00BFE3EC /* ProfileRoleTableViewCell.xib in Resources */,
 				EC711B8C24A63B37008F830C /* SecretsRecoveryWithPassphraseViewController.storyboard in Resources */,
 				EC85D7192477DCD7002C44C9 /* KeyVerificationScanConfirmationViewController.storyboard in Resources */,
-				43DAB8D924D40B4F00873206 /* Act.strings in Resources */,
 				B1B558BB20EF768F00210D55 /* RoomOutgoingTextMsgWithoutSenderInfoBubbleCell.xib in Resources */,
 				B1B557A720EF5A1B00210D55 /* DeviceTableViewCell.xib in Resources */,
 				B14084C823BF76CB0010F692 /* BubbleCellContentView.xib in Resources */,
@@ -6474,6 +6547,7 @@
 				EBA8AB2725515DDA00FA8383 /* HomeTabViewController.xib in Resources */,
 				B1B5581E20EF625800210D55 /* RoomTitleView.xib in Resources */,
 				B1B558C020EF768F00210D55 /* RoomIncomingEncryptedTextMsgWithoutSenderInfoBubbleCell.xib in Resources */,
+				43AF6B0824E4E42E00BFE3EC /* DrawerTextTableViewCell.xib in Resources */,
 				B1B5572420EE6C4D00210D55 /* RoomViewController.xib in Resources */,
 				EBAAF58E256275410080A268 /* RoomMessageContentCell.xib in Resources */,
 				B169331520F3CAFC00746532 /* PublicRoomTableViewCell.xib in Resources */,
@@ -6488,6 +6562,8 @@
 				EB4280E1256015CF00B9BBBF /* PatientViewCell.xib in Resources */,
 				B1C543A6239E999700DCA1FA /* KeyVerificationCellInnerContentView.xib in Resources */,
 				32891D76226728EF00C82226 /* KeyVerificationDataLoadingViewController.storyboard in Resources */,
+				43AF6AFC24E4E3CC00BFE3EC /* ProfileTableViewCell.xib in Resources */,
+				43AF6B0424E4E3F500BFE3EC /* DrawerItemTableViewCell.xib in Resources */,
 				B1B5581820EF625800210D55 /* PreviewRoomTitleView.xib in Resources */,
 				B1B5583020EF66BA00210D55 /* RoomIdOrAliasTableViewCell.xib in Resources */,
 				B1B558BF20EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithoutSenderNameBubbleCell.xib in Resources */,
@@ -7075,9 +7151,11 @@
 				EB674D582574E1C900A8D65C /* PhotographerTagDetails.swift in Sources */,
 				EC711B7E24A63B37008F830C /* SecretsSetupRecoveryPassphraseCoordinatorType.swift in Sources */,
 				B1B5592C20EF7A5D00210D55 /* TableViewCellWithButton.m in Sources */,
+				43AF6B0B24E4F58C00BFE3EC /* Dot.swift in Sources */,
 				32242F1421E8FBA900725742 /* DefaultTheme.swift in Sources */,
 				B1963B2D228F1C4900CBA17F /* BubbleReactionsViewModel.swift in Sources */,
 				32242F1321E8FBA900725742 /* Theme.swift in Sources */,
+				43CE5FFD24E64A4200D146AC /* ProfileSectionDividerTableViewCell.swift in Sources */,
 				B108932523AB93A200802670 /* KeyVerificationConclusionViewData.swift in Sources */,
 				B1B5582520EF638A00210D55 /* RoomMemberTitleView.m in Sources */,
 				B1560DA224B65AFA00490F50 /* LaunchLoadingView.swift in Sources */,
@@ -7136,6 +7214,7 @@
 				32891D6B2264CBA300C82226 /* SimpleScreenTemplateViewController.swift in Sources */,
 				EC711B7924A63B37008F830C /* SecretsSetupRecoveryKeyViewController.swift in Sources */,
 				32FD755024D074C700BA7B37 /* CommonConfiguration.swift in Sources */,
+				43AF6B0324E4E3F500BFE3EC /* DrawerItemTableViewCell.swift in Sources */,
 				B1CA3A2721EF6914000D1D89 /* UIViewController.swift in Sources */,
 				322C110822BBC6F80043FEAC /* WidgetManagerConfig.swift in Sources */,
 				EC1CA86624C1DEC400DE9EBF /* EnterPinCodeViewController.swift in Sources */,
@@ -7145,6 +7224,7 @@
 				EC85D7262477DCF2002C44C9 /* KeyVerificationManuallyVerifyCoordinator.swift in Sources */,
 				B1BEE71423DF2ACF0003A4CB /* UserVerificationCoordinatorType.swift in Sources */,
 				438067A624D7983E002675E1 /* RoleDetailViewController.swift in Sources */,
+				43CE600124E64C2B00D146AC /* Role.swift in Sources */,
 				B1B5596F20EFA85D00210D55 /* EncryptionInfoView.m in Sources */,
 				ECFBD5D1250A7AAF00DD5F5A /* ShowDirectoryViewController.swift in Sources */,
 				438067B824D7D01C002675E1 /* RoleProfileTableViewCell.swift in Sources */,
@@ -7158,6 +7238,7 @@
 				B1DCC61E22E5E17100625807 /* EmojiPickerViewModel.swift in Sources */,
 				B1B5574F20EE6C4D00210D55 /* RoomsViewController.m in Sources */,
 				438067C424D7D0B9002675E1 /* PractitionerTableViewCell.swift in Sources */,
+				43AF6B0724E4E42E00BFE3EC /* DrawerTextTableViewCell.swift in Sources */,
 				EC85D73A2477DDB8002C44C9 /* DirectorySectionHeaderContainerView.m in Sources */,
 				ECFBD5E3250B6CAB00DD5F5A /* ChooseAvatarTableViewCellVM.swift in Sources */,
 				EC711B8524A63B37008F830C /* SecretsRecoveryWithPassphraseCoordinator.swift in Sources */,
@@ -7195,6 +7276,8 @@
 				B1B5599320EFC5E400210D55 /* DecryptionFailure.m in Sources */,
 				ECFBD5D5250A7AAF00DD5F5A /* ShowDirectoryViewModelType.swift in Sources */,
 				438067BC24D7D039002675E1 /* RoleTitleTableViewCell.swift in Sources */,
+				39D49C7D24B8D42A00FEDBC8 /* Timeline.swift in Sources */,
+				43AF6AF724E4E2E000BFE3EC /* ProfileViewController.swift in Sources */,
 				B1CE83E12422817200D07506 /* KeyVerificationVerifyBySASCoordinator.swift in Sources */,
 				EC619C1924DAD96000663A80 /* UIScrollView.swift in Sources */,
 				B125FE1F231D5DF700B72806 /* SettingsDiscoveryViewModelType.swift in Sources */,
@@ -7304,6 +7387,7 @@
 				B1B336BE242B933700F95EC4 /* KeyVerificationSelfVerifyStartViewState.swift in Sources */,
 				B1BEE73423DF44A60003A4CB /* UserVerificationSessionsStatusViewModelType.swift in Sources */,
 				B18DEDD9243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewController.swift in Sources */,
+				437440A824E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift in Sources */,
 				EC1CA89524C9C9A200DE9EBF /* SetupBiometricsViewController.swift in Sources */,
 				324A2052225FC571004FE8B0 /* DeviceVerificationIncomingViewAction.swift in Sources */,
 				EC85D72C2477DCF2002C44C9 /* KeyVerificationManuallyVerifyViewState.swift in Sources */,
@@ -7359,6 +7443,7 @@
 				B1DCC62A22E60D1000625807 /* EmojiMartService.swift in Sources */,
 				EC711BA924A63B58008F830C /* SecureBackupSetupCoordinatorBridgePresenter.swift in Sources */,
 				B1B558C720EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithPaginationTitleBubbleCell.m in Sources */,
+				43AF6AFB24E4E3CC00BFE3EC /* ProfileTableViewCell.swift in Sources */,
 				B1B336C5242B933700F95EC4 /* KeyVerificationSelfVerifyStartViewModel.swift in Sources */,
 				EC9A3EC524E1616900A8CFAE /* PushNotificationStore.swift in Sources */,
 				B1B558F020EF768F00210D55 /* RoomOutgoingAttachmentWithPaginationTitleBubbleCell.m in Sources */,
@@ -7535,6 +7620,7 @@
 				B1DB4F06223015080065DBFA /* Character.swift in Sources */,
 				EC1CA87724C82D0E00DE9EBF /* MemoryStore.swift in Sources */,
 				B1B9DEEE22EB34EF0065E677 /* ReactionHistoryViewAction.swift in Sources */,
+				43AF6AFF24E4E3DE00BFE3EC /* ProfileRoleTableViewCell.swift in Sources */,
 				EC711BB624A63C11008F830C /* AuthenticatedSessionViewControllerFactory.swift in Sources */,
 				B1C543A4239E98E400DCA1FA /* KeyVerificationCellInnerContentView.swift in Sources */,
 				B10A3E8E24FE4368007C380F /* ElementView.swift in Sources */,
@@ -7773,7 +7859,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotShareExtension/SupportingFiles/RiotShareExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7817,7 +7903,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7859,7 +7945,7 @@
 				CODE_SIGN_ENTITLEMENTS = SiriIntents/SiriIntents.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7897,7 +7983,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7937,7 +8023,7 @@
 				CODE_SIGN_ENTITLEMENTS = RiotNSE/RiotNSE.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -7975,7 +8061,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
@@ -8126,7 +8212,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -8164,7 +8250,7 @@
 				CODE_SIGN_ENTITLEMENTS = Riot/SupportingFiles/Riot.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20201030155555;
+				CURRENT_PROJECT_VERSION = 20201109145000;
 				DEVELOPMENT_TEAM = 833G2HK8E8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

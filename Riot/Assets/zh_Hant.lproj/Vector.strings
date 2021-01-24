@@ -5,6 +5,10 @@
 "title_rooms" = "聊天室";
 "title_groups" = "社群";
 "warning" = "警告";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "檢視";
 "next" = "下一步";
@@ -183,6 +187,7 @@
 "room_creation_make_private" = "設成私人";
 "room_creation_wait_for_creation" = "聊天室正在建立，請稍後。";
 "room_creation_invite_another_user" = "透過使用者ID、名稱、電子郵件地址來搜尋/邀請";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "聊天室目錄";
 "room_recents_directory_section_network" = "網路";
@@ -197,6 +202,8 @@
 "room_recents_join_room_title" = "加入聊天室";
 "room_recents_join_room_prompt" = "輸入聊天室 ID 或別名";
 "room_recents_chats_section" = "CHATS";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Pull down menu items
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
@@ -274,6 +281,7 @@
 "room_message_short_placeholder" = "傳送訊息…";
 "room_unsent_messages_notification" = "訊息未被傳送。現在 %@ 或 %@ 嗎?";
 "room_unsent_messages_unknown_devices_notification" = "由於存在未知的裝置導致訊息未被傳送。現在 %@ 或 %@ 嗎?";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_conference_call_no_power" = "您需要管理此聊天室群組通話的權限";
 "room_prompt_resend" = "全部重新傳送";
 "room_prompt_cancel" = "全部取消";
@@ -341,6 +349,8 @@
 "settings_cryptography" = "加密";
 "settings_deactivate_account" = "註銷帳戶";
 "settings_sign_out" = "登出";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_e2e_warn" = "您將失去所有點對點加密密鑰。這會使您在這台設備上無法讀取過去已加密的訊息。";
 "settings_profile_picture" = "個人檔案圖片";
 "settings_display_name" = "顯示名稱";
@@ -1247,9 +1257,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

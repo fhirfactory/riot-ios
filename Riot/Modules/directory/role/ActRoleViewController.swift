@@ -26,6 +26,9 @@ private enum SectionType: Int, CaseIterable {
 class ActRoleViewController: UIViewController {
     @IBOutlet weak var recentsTableView: UITableView!
     
+    
+    // TODO:- This needs to be replaced with appropriate code once the backend is available and can provide role information to the app
+    
     var roles = [
         RoleModel(name: "Test1", description: "Emergency Department", isExpanded: false),
         RoleModel(name: "Test2", description: "Emergency Department", isExpanded: false),
@@ -44,7 +47,7 @@ class ActRoleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabItem.title = NSLocalizedString("role_title", tableName: "Act", comment: "")
+        tabItem.title = AlternateHomeTools.getNSLocalized("role_title", in: "Vector")
         self.view.accessibilityIdentifier = "RoleVCView"
         //self.recentsTableView.accessibilityIdentifier = "RoleVCTableView"
         //self.addPlusButton()

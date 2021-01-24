@@ -1118,7 +1118,7 @@ internal enum VectorL10n {
   internal static var e2eKeyBackupWrongVersionTitle: String { 
     return VectorL10n.tr("Vector", "e2e_key_backup_wrong_version_title") 
   }
-  /// You need to log back in to generate end-to-end encryption keys for this session and submit the public key to your homeserver.\nThis is a once off; sorry for the inconvenience.
+  /// An error has occured, which meant you needed to be logged out.\nThis is a once off; sorry for the inconvenience.
   internal static var e2eNeedLogInAgain: String { 
     return VectorL10n.tr("Vector", "e2e_need_log_in_again") 
   }
@@ -2082,6 +2082,10 @@ internal enum VectorL10n {
   internal static var peopleNoConversation: String { 
     return VectorL10n.tr("Vector", "people_no_conversation") 
   }
+  /// People
+  internal static var peopleTitle: String { 
+    return VectorL10n.tr("Vector", "people_title") 
+  }
   /// people
   internal static var personPlural: String { 
     return VectorL10n.tr("Vector", "person_plural") 
@@ -2233,6 +2237,10 @@ internal enum VectorL10n {
   /// Retry
   internal static var retry: String { 
     return VectorL10n.tr("Vector", "retry") 
+  }
+  /// Role
+  internal static var roleTitle: String { 
+    return VectorL10n.tr("Vector", "role_title") 
   }
   /// Call
   internal static var roomAccessibilityCall: String { 
@@ -2910,7 +2918,7 @@ internal enum VectorL10n {
   internal static var roomParticipantsActionSetModerator: String { 
     return VectorL10n.tr("Vector", "room_participants_action_set_moderator") 
   }
-  /// Start new chat
+  /// Start Chat
   internal static var roomParticipantsActionStartNewChat: String { 
     return VectorL10n.tr("Vector", "room_participants_action_start_new_chat") 
   }
@@ -3034,13 +3042,17 @@ internal enum VectorL10n {
   internal static var roomParticipantsUnknown: String { 
     return VectorL10n.tr("Vector", "room_participants_unknown") 
   }
-  /// %@ was demoted to %@
-  internal static func roomPowerLevelChangedDown(_ p1: String, _ p2: String) -> String {
-    return VectorL10n.tr("Vector", "room_power_level_changed_down", p1, p2)
+  /// %@ changed the room photo.
+  internal static func roomPhotoChanged(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "room_photo_changed", p1)
   }
-  /// %@ was promoted to %@
-  internal static func roomPowerLevelChangedUp(_ p1: String, _ p2: String) -> String {
-    return VectorL10n.tr("Vector", "room_power_level_changed_up", p1, p2)
+  /// %@ has changed Room Rights of %@ from %@ to %@
+  internal static func roomPowerLevelChangedDown(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
+    return VectorL10n.tr("Vector", "room_power_level_changed_down", p1, p2, p3, p4)
+  }
+  /// %@ has changed Room Rights of %@ from %@ to %@
+  internal static func roomPowerLevelChangedUp(_ p1: String, _ p2: String, _ p3: String, _ p4: String) -> String {
+    return VectorL10n.tr("Vector", "room_power_level_changed_up", p1, p2, p3, p4)
   }
   /// This room is a continuation of another conversation.
   internal static var roomPredecessorInformation: String { 
@@ -4106,6 +4118,10 @@ internal enum VectorL10n {
   internal static var settingsReportBug: String { 
     return VectorL10n.tr("Vector", "settings_report_bug") 
   }
+  /// Roles
+  internal static var settingsRoles: String { 
+    return VectorL10n.tr("Vector", "settings_roles") 
+  }
   /// SECURITY
   internal static var settingsSecurity: String { 
     return VectorL10n.tr("Vector", "settings_security") 
@@ -4113,6 +4129,10 @@ internal enum VectorL10n {
   /// Send anon crash & usage data
   internal static var settingsSendCrashReport: String { 
     return VectorL10n.tr("Vector", "settings_send_crash_report") 
+  }
+  /// Settings
+  internal static var settingsSettings: String { 
+    return VectorL10n.tr("Vector", "settings_settings") 
   }
   /// Show decrypted content
   internal static var settingsShowDecryptedContent: String { 

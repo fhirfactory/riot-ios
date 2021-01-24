@@ -5,6 +5,10 @@
 "title_rooms" = "Стаи";
 "title_groups" = "Общности";
 "warning" = "Внимание";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Виж";
 "next" = "Напред";
@@ -284,6 +288,8 @@
 "settings_devices" = "СЕСИИ";
 "settings_cryptography" = "КРИПТОГРАФИЯ";
 "settings_sign_out" = "Изход";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Сигурни ли сте?";
 "settings_sign_out_e2e_warn" = "Ще изгубите ключовете си за шифроване от край до край. Това означава, че на това устройство повече няма да можете да четете стари съобщения в шифровани стаи.";
 "settings_profile_picture" = "Профилна снимка";
@@ -694,6 +700,7 @@
 "room_event_action_reaction_like" = "Харесай %@";
 "room_event_action_reaction_dislike" = "Не харесай %@";
 "room_action_reply" = "Отговори";
+"room_photo_changed" = "%@ changed the room photo.";
 "settings_labs_message_reaction" = "Реагирай на съобщения с емоджи";
 "settings_key_backup_button_connect" = "Свържи сесията към резервно копие на ключове";
 "key_backup_setup_intro_setup_connect_action_with_existing_backup" = "Свържи устройството към резервно копие на ключове";
@@ -835,6 +842,7 @@
 "photo_library_access_not_granted" = "%@ няма достъп до библиотеката със снимки. Моля, променете настройките на поверителността";
 "auth_forgot_password_error_no_configured_identity_server" = "Не е конфигуриран сървър за самоличност: добавете такъв за да може да възстановите паролата си.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Не е конфигуриран сървър за самоличност, така че не можете да поканите участник по имейл адрес.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Не е конфигуриран сървър за самоличност, така че не можете да започнете чат с контакт посредством имейл адрес.";
 // Service terms
 "service_terms_modal_title" = "Условия за ползване";
@@ -981,8 +989,8 @@
 "room_member_power_level_short_custom" = "Собствен";
 "room_member_power_level_short_user" = "User";
 
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 "room_participants_action_security_status_complete_security" = "Завършете сигурността";
 "security_settings_crypto_sessions_description" = "Доверете се на сесии за да им дадете достъп до съобщенията шифровани от-край-до-край. Ако не разпознавате дадена сесия, променете паролата си и нулирайте паролата за съобщения използваща се за резервни копия на съобщенията.";
 "security_settings_backup" = "РЕЗЕРВНИ КОПИЯ НА СЪОБЩЕНИЯ";
@@ -1264,9 +1272,16 @@ Are you sure you want to continue?";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

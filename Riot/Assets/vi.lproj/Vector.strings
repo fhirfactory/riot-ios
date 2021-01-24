@@ -3,6 +3,10 @@
 "title_favourites" = "Yêu thích";
 "title_people" = "Danh bạ";
 "title_rooms" = "Phòng chat";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Xem";
 "next" = "Kế tiếp";
@@ -103,6 +107,7 @@
 "room_creation_make_private" = "Riêng tư";
 "room_creation_wait_for_creation" = "Phòng trò chuyện đã được tạo. Vui lòng chờ.";
 "room_creation_invite_another_user" = "Tìm / mời bằng ID người dùng, tên hoặc email";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "DANH MỤC PHÒNG";
 "room_recents_directory_section_network" = "Mạng";
@@ -118,6 +123,8 @@
 "room_recents_join_room_title" = "Tham gia một phòng đã tồn tại";
 "room_recents_join_room_prompt" = "Nhập id phòng hoặc bí danh phòng";
 "room_recents_chats_section" = "CHATS";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Pull down menu items
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
@@ -242,6 +249,7 @@
 "media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_warning_about_encryption" = "Mã hoá đầu-cuối đang trong giai đoạn thử nghiệm và có thể không đáng tin cậy.\n\nBạn có thể không nên tin tưởng hoàn toàn vào sự bảo mật dữ liệu này.\n\nCác thiết bị có thể không giải mã lịch sử từ trước khi họ tham gia vào phòng.\n\nCác tin nhắn được mã hoá sẽ không hiển thị trên các máy khách chưa tích hợp mã hoá.";
 "room_event_failed_to_send" = "Gửi thất bại";
+"room_photo_changed" = "%@ changed the room photo.";
 // Unknown devices
 "unknown_devices_alert_title" = "Phòng chứa các thiết bị không xác định";
 "unknown_devices_alert" = "Phòng này có các thiết bị không xác định chưa được xác minh.\nĐiều này có nghĩa là không có đảm bảo rằng thiết bị thuộc về người dùng mà họ yêu cầu.\nChúng tôi khuyên bạn nên đi qua quá trình xác minh cho từng thiết bị trước khi tiếp tục, nhưng bạn có thể gửi lại tin nhắn mà không cần xác nhận nếu bạn muốn.";
@@ -284,6 +292,8 @@
 "settings_devices" = "THIẾT BỊ";
 "settings_cryptography" = "MÃ HOÁ";
 "settings_sign_out" = "Đăng xuất";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Bạn có chắc chắn?";
 "settings_sign_out_e2e_warn" = "Bạn sẽ mất end-to-end khoá bảo mật. Điều đó có nghĩa rằng bạn sẽ không thể đọc các tin nhắn trước đó đã được mã hoá trong phòng bởi thiết bị này.";
 "settings_profile_picture" = "Hình ảnh hồ sơ";
@@ -1241,9 +1251,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

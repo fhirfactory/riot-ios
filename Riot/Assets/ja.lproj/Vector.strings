@@ -4,6 +4,11 @@
 "title_people" = "対話";
 "title_rooms" = "部屋";
 "warning" = "警告";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
+"room_creation_add_members" = "Add Members";
 // Actions
 "view" = "表示";
 "next" = "次へ";
@@ -237,6 +242,8 @@
 "room_event_action_view_encryption" = "暗号についての情報";
 "room_warning_about_encryption" = "End-to-end 暗号化はベータ版であり、信頼性が低い場合があります。\n\n発言を保護するためにはまだ信用すべきではありません。\n\n端末が参加するより前の発言履歴を復号化することはまだできません。\n\n暗号化された発言は、まだ暗号化を実装していないクライアントでは表示されません。";
 "room_event_failed_to_send" = "送信失敗";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Unknown devices
 "unknown_devices_alert_title" = "部屋に未知のセッションが存在します";
 "unknown_devices_alert" = "この部屋には、確認されていない未知のセッションが含まれています。\nすなわち、セッションがをユーザ本人が所有しているという保証はありません。\n続ける前に各セッションの確認を行うことをおすすめしますが、確認することなく発言を再送信することができます。";
@@ -279,6 +286,8 @@
 "settings_devices" = "セッション";
 "settings_cryptography" = "暗号化";
 "settings_sign_out" = "通信完全切断";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "本当によろしいですか？";
 "settings_sign_out_e2e_warn" = "あなたはend-to-end暗号鍵を紛失してしまったようです。すなわち、この端末で暗号化された部屋の昔の発言を読むことができなくなります。";
 "settings_profile_picture" = "自分のアイコン画像";
@@ -394,6 +403,7 @@
 "room_details_copy_room_id" = "部屋固有IDをコピー";
 "room_details_copy_room_address" = "部屋の住所表記をコピー";
 "room_details_copy_room_url" = "部屋のURLをコピー";
+"room_photo_changed" = "%@ changed the room photo.";
 // Read Receipts
 "read_receipts_list" = "既読一覧を見る";
 "receipt_status_read" = "既読状況: ";
@@ -1256,9 +1266,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

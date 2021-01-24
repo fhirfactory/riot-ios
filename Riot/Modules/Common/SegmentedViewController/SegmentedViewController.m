@@ -27,15 +27,15 @@
 
 @implementation BadgeData
 -(instancetype)init{
-    _BadgeColour = UIColor.redColor;
-    _BadgeNumber = 0;
-    _ShouldDisplay = NO;
+    _badgeColour = UIColor.redColor;
+    _badgeNumber = 0;
+    _shouldDisplay = NO;
     return self;
 }
--(instancetype)initWithColour:(UIColor*)Colour andBadgeNumber:(long)Number andShouldDisplay:(BOOL)ShouldDisplay{
-    _BadgeColour = Colour;
-    _BadgeNumber = Number;
-    _ShouldDisplay = ShouldDisplay;
+-(instancetype)initWithColour:(UIColor*)colour andBadgeNumber:(long)number andShouldDisplay:(BOOL)shouldDisplay{
+    _badgeColour = colour;
+    _badgeNumber = number;
+    _shouldDisplay = shouldDisplay;
     return self;
 }
 @end
@@ -107,7 +107,7 @@
         [visibleMutable addObject:@(YES)];
         [badgeMutable addObject:[BadgeData new]];
     }
-    _Visible = visibleMutable;
+    _visible = visibleMutable;
     badgeDataArray = badgeMutable;
 }
 
@@ -306,14 +306,14 @@
     NSUInteger count = 0;
     
     for (int i = 0; i < viewControllers.count; i++) {
-        if ([_Visible[i] isEqual:@(YES)]){
+        if ([_visible[i] isEqual:@(YES)]){
             count += 1;
         }
     }
     
     for (NSUInteger index = 0; index < viewControllers.count; index++)
     {
-        if ([_Visible[index] isEqual:@(YES)]){
+        if ([_visible[index] isEqual:@(YES)]){
             // create programmatically each label
             UILabel *label = [[UILabel alloc] init];
             
@@ -417,7 +417,7 @@
         }
         
         for (int i = 0; i < viewControllers.count; i++) {
-            if ([_Visible[i] isEqual:@(YES)]){
+            if ([_visible[i] isEqual:@(YES)]){
                 count += 1;
             }
         }
@@ -425,14 +425,14 @@
         long displaying = 0;
         for (long i = 0; i < viewControllers.count; i++){
             BadgeData *bd = badgeDataArray[i];
-            if ([_Visible[i] isEqual:@(YES)]){
+            if ([_visible[i] isEqual:@(YES)]){
                 displaying++;
             }
-            if (bd.ShouldDisplay && [_Visible[i] isEqual:@(YES)]){
+            if (bd.shouldDisplay && [_visible[i] isEqual:@(YES)]){
                 
                 UIView *badge = [UIView new];
                 UILabel *label = [UILabel new];
-                label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.BadgeNumber];
+                label.text = [[NSString alloc] initWithFormat:@"%ld", (long)bd.badgeNumber];
                 label.textAlignment = NSTextAlignmentCenter;
                 [label sizeToFit];
                 NSLayoutConstraint *labelCenterX = [NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:badge attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0];
@@ -443,7 +443,7 @@
                 [NSLayoutConstraint activateConstraints:@[labelCenterX, labelCenterY]];
                 
                 
-                badge.backgroundColor = bd.BadgeColour;
+                badge.backgroundColor = bd.badgeColour;
                 NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:badge
                                                                                    attribute:NSLayoutAttributeCenterX
                                                                                    relatedBy:NSLayoutRelationEqual
@@ -525,13 +525,19 @@
     [NSLayoutConstraint activateConstraints:@[leftMarkerViewConstraint, widthConstraint, bottomConstraint, heightConstraint]];
 }
 
+// MARK: Segmented Control Index Functions
+
+/// These functions are used to determine which segmented controller segment exists at a given index of the control
+/// The real index is based upon the full set of controls, but the fake index is based on the fact that at any given time some of the controsl may be hidden
+/// (for example we don't show the Favourites control if the user has no favourited chats)
+/// This pair of functions allows us to correctly identify the visible and actual index of requried controls without having to hard-code control names and orders
+
 - (long)getRealIndexFor:(long)baseIndex{
     long actualIndex = 0;
-    //if (actualIndex != _selectedIndex)
     {
         long tempIndex = -1;
         for (; actualIndex < viewControllers.count; actualIndex++){
-            if ([_Visible[actualIndex] isEqual:@(YES)]){
+            if ([_visible[actualIndex] isEqual:@(YES)]){
                 tempIndex++;
                 if (tempIndex == _selectedIndex){
                     break;
@@ -545,7 +551,7 @@
 - (long)getFakeIndexFor:(long)realIndex{
     long index = -1;
     for (long i = 0; i <= realIndex; i++){
-        if ([_Visible[i] isEqual:@(YES)]){
+        if ([_visible[i] isEqual:@(YES)]){
             index++;
         }
     }

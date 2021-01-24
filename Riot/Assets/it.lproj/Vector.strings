@@ -60,6 +60,10 @@
 "auth_reset_password_message" = "Per ripristinare la password inserisci l'indirizzo email associato al tuo account:";
 // String for App Store
 "store_short_description" = "Conversazioni sicure e decentralizzate";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Visualizza";
 "back" = "Indietro";
@@ -317,6 +321,8 @@
 "settings_key_backup" = "BACKUP DELLE CHIAVI";
 "settings_deactivate_account" = "DISATTIVA ACCOUNT";
 "settings_sign_out" = "Disconnetti";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Sei sicuro?";
 "settings_sign_out_e2e_warn" = "Perderai le tue chiavi crittografiche E2E. Questo significa che non potrai più leggere i vecchi messaggi nelle stanze cifrate su questo dispositivo.";
 "settings_profile_picture" = "Immagine profilo";
@@ -679,6 +685,7 @@
 "auth_softlogout_clear_data_sign_out_msg" = "Sei sicuro di voler cancellare tutti i dati memorizzati su questo dispositivo? Accedi di nuovo per gestire dati e messaggi del tuo account.";
 "auth_softlogout_clear_data_sign_out" = "Disconnessione";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Non è stato configuato nessun Identity Server e quindi non è possibile aggiungere partecipanti con un'e-mail.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Non è stato configurato alcun Identity Server, quindi non è possibile avviare una chat con qualcuno tramite e-mail.";
 "room_event_action_reply" = "Rispondi";
 "room_event_action_forward" = "Forward";
@@ -695,6 +702,7 @@
 "settings_labs_message_reaction" = "Reagisci ai messaggi con emoji";
 "room_participants_remove_third_party_invite_prompt_msg" = "Sei sicuro di voler revocare l'invito?";
 "settings_key_backup_button_connect" = "Connetti questa sessione al backup delle chiavi";
+"room_photo_changed" = "%@ changed the room photo.";
 // Media picker
 "media_picker_title" = "Media library";
 // Image picker
@@ -1026,8 +1034,8 @@
 "room_member_power_level_short_custom" = "Personal.";
 "room_member_power_level_short_user" = "User";
 
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Recover from private key
 "key_backup_recover_from_private_key_info" = "Recupero del backup…";
 // Scanning
@@ -1247,9 +1255,16 @@
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

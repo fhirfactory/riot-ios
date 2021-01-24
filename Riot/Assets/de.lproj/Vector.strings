@@ -7,6 +7,10 @@
 // Actions
 "view" = "Ansehen";
 "invite" = "Einladen";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Room Details
 "room_details_title" = "Raum Details";
 "title_favourites" = "Favoriten";
@@ -218,6 +222,8 @@
 "settings_devices" = "SITZUNGEN";
 "settings_cryptography" = "VERSCHLÜSSELUNG";
 "settings_sign_out" = "Abmelden";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Bist du sicher?";
 "settings_display_name" = "Anzeigename";
 "settings_profile_picture" = "Profilbild";
@@ -820,6 +826,7 @@
 "photo_library_access_not_granted" = "%@ hat keine Berechtigung zum Zugriff auf die Fotobibliothek. Bitte ändere die Datenschutzeinstellungen";
 "auth_forgot_password_error_no_configured_identity_server" = "Es ist kein Identitätsserver konfiguriert: Füge einen hinzu, um dein Kennwort zurückzusetzen.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Es ist kein Identitätsserver konfiguriert, sodass du keine Teilnehmenden mit einer E-Mail hinzufügen kannst.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Es ist kein Identitätsserver konfiguriert, sodass du keinen Chat mit einem Kontakt über eine E-Mail starten kannst.";
 // Service terms
 "service_terms_modal_title" = "Nutzungsbedingungen";
@@ -1029,9 +1036,9 @@
 "room_member_power_level_short_moderator" = "Mod";
 "room_member_power_level_short_custom" = "Benutzerdefiniert";
 "room_member_power_level_short_user" = "User";
-
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 "security_settings_secure_backup" = "SICHERES BACKUP";
 "security_settings_secure_backup_synchronise" = "Synchronisiere";
 "security_settings_secure_backup_delete" = "Lösche";
@@ -1252,9 +1259,16 @@
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

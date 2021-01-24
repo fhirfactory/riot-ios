@@ -172,8 +172,8 @@
 "room_creation_wait_for_creation" = "A room is already being created. Please wait.";
 "room_creation_invite_another_user" = "Search / invite by User ID, Name or email";
 "room_creation_error_invite_user_by_email_without_identity_server" = "No identity server is configured so you cannot add a participant with an email.";
-
 "room_creation_add_members" = "Add Members";
+
 
 // Room recents
 "room_recents_directory_section" = "ROOM DIRECTORY";
@@ -280,7 +280,7 @@
 "room_participants_action_set_default_power_level" = "Reset to normal user";
 "room_participants_action_set_moderator" = "Make moderator";
 "room_participants_action_set_admin" = "Make admin";
-"room_participants_action_start_new_chat" = "Start new chat";
+"room_participants_action_start_new_chat" = "Start Chat";
 "room_participants_action_start_voice_call" = "Start voice call";
 "room_participants_action_start_video_call" = "Start video call";
 "room_participants_action_mention" = "Mention";
@@ -303,8 +303,9 @@
 "room_member_power_level_short_custom" = "Custom";
 "room_member_power_level_short_user" = "User";
 
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 
 // Chat
 "room_jump_to_first_unread" = "Jump to first unread message";
@@ -456,6 +457,9 @@
 "settings_deactivate_account" = "DEACTIVATE ACCOUNT";
 
 "settings_sign_out" = "Sign Out";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
+
 "settings_sign_out_confirmation" = "Are you sure?";
 "settings_sign_out_e2e_warn" = "You will lose your end-to-end encryption keys. That means you will no longer be able to read old messages in encrypted rooms on this device.";
 "settings_profile_picture" = "Profile Picture";
@@ -848,7 +852,7 @@
 
 // Crypto
 "e2e_enabling_on_app_update" = "Element now supports end-to-end encryption but you need to log in again to enable it.\n\nYou can do it now or later from the application settings.";
-"e2e_need_log_in_again" = "You need to log back in to generate end-to-end encryption keys for this session and submit the public key to your homeserver.\nThis is a once off; sorry for the inconvenience.";
+"e2e_need_log_in_again" = "An error has occured, which meant you needed to be logged out.\nThis is a once off; sorry for the inconvenience.";
 
 // Key backup wrong version
 "e2e_key_backup_wrong_version_title" = "New Key Backup";
@@ -1535,8 +1539,15 @@
 "tag_history_title" = "Tag History";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "d-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

@@ -29,6 +29,7 @@
 #import "SettingsViewController.h"
 #import "SecurityViewController.h"
 
+#import "SideMenu-Swift.h"
 #import "Riot-Swift.h"
 
 #import <FFDropDownMenu.h>
@@ -706,7 +707,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showRoomDetails"] || [[segue identifier] isEqualToString:@"showContactDetails"] || [[segue identifier] isEqualToString:@"showGroupDetails"])
+    if ([[segue identifier] isEqualToString:@"showSideMenu"]){
+        [self prepareSideMenuSequeFor:segue];
+    }
+    else if ([[segue identifier] isEqualToString:@"showRoomDetails"] || [[segue identifier] isEqualToString:@"showContactDetails"] || [[segue identifier] isEqualToString:@"showGroupDetails"])
     {
         UINavigationController *navigationController = [segue destinationViewController];
         

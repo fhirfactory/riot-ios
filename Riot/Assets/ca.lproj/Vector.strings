@@ -4,6 +4,10 @@
 "title_people" = "Gent";
 "title_rooms" = "Sales";
 "warning" = "Avís";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Veure";
 "next" = "Següent";
@@ -88,6 +92,7 @@
 "auth_reset_password_error_not_found" = "La teva adreça de correu electrònic no sembla està associada a una ID de Matrix en aquest servidor.";
 "auth_reset_password_success_message" = "La teva contrasenya ha estat restablerta.\n\nHas tancat la sessió de tots els dispositius i ja no rebràs notificacions. Per tornar a activar les notificacions, torna a iniciar la sessió a cada dispositiu.";
 "auth_add_email_and_phone_warning" = "La inscripció amb el correu electrònic i el número de telèfon alhora no són compatibles fins que no existeixi l'api. Només es tindrà en compte el número de telèfon. Pots afegir el teu correu electrònic al teu perfil a la configuració.";
+"room_creation_add_members" = "Add Members";
 // Chat creation
 "room_creation_title" = "Nou Xat";
 "room_creation_account" = "Compte";
@@ -119,6 +124,9 @@
 "room_recents_join_room_title" = "Unir-se a una sala";
 "room_recents_join_room_prompt" = "Escriu la id de la sala o el seu alias";
 "room_recents_chats_section" = "CHATS";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 // Pull down menu items
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
@@ -284,6 +292,8 @@
 "settings_devices" = "Dispositius";
 "settings_cryptography" = "Criptografia";
 "settings_sign_out" = "Tancar sessió";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Estàs segur?";
 "settings_sign_out_e2e_warn" = "Perdràs les teves claus de xifratge punt a punt. Això significa que ja no podràs llegir missatges antics en sales codificades d'aquest dispositiu.";
 "settings_profile_picture" = "Imatge del perfil";
@@ -1247,9 +1257,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

@@ -8,6 +8,10 @@
 "title_rooms" = "Ystafelloedd";
 "title_groups" = "Cymunedau";
 "warning" = "Rhybudd";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Gweld";
 "next" = "Nesaf";
@@ -128,6 +132,7 @@
 "room_creation_wait_for_creation" = "Mae ystafell eisoes yn cael ei greu. Arhoswch os gwelwch yn dda.";
 "room_creation_invite_another_user" = "Chwilio / gwahodd yn ôl Dynodwr Defnyddiwr, Enw, new e-bost";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Nid oes unrhyw weinydd adnabod wedi'i osod felly ni allwch ychwanegu cyfranogwr gydag e-bost.";
+"room_creation_add_members" = "Add Members";
 // Room recents
 "room_recents_directory_section" = "CYFEIRIADUR YSTAFELLOEDD";
 "room_recents_directory_section_network" = "Rhwydwaith";
@@ -309,6 +314,7 @@
 "room_accessibility_upload" = "Uwchlwytho";
 "room_accessibility_call" = "Galw";
 "room_accessibility_hangup" = "Dod i ben";
+"room_photo_changed" = "%@ changed the room photo.";
 "media_type_accessibility_image" = "Delwedd";
 "media_type_accessibility_audio" = "Sain";
 "media_type_accessibility_video" = "Fideo";
@@ -363,6 +369,8 @@
 "settings_key_backup" = "ALLWEDDI WRTH GEFN";
 "settings_deactivate_account" = "DAD-ACTIFADU CYFRIF";
 "settings_sign_out" = "All-gofnodi";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ydych chi'n siwr?";
 "settings_sign_out_e2e_warn" = "Byddwch chi'n colli'ch allweddi amgryptio o'r dechrau i'r diwedd. Mae hynny'n golygu na fyddwch yn gallu darllen hen negeseuon mewn ystafelloedd wedi'u hamgryptio ar y ddyfais hon mwyach.";
 "settings_profile_picture" = "Llun Proffil";
@@ -1013,8 +1021,8 @@
 "room_member_power_level_short_custom" = "Addasiedig";
 "room_member_power_level_short_user" = "User";
 
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 "security_settings_crosssigning" = "CROES-LOFNODI";
 "security_settings_crosssigning_info_not_bootstrapped" = "Nid yw croes-lofnodi eto wedi ei gyflunio.";
 "security_settings_crosssigning_info_exists" = "Mae gan eich cyfrif hunaniaeth croes-lofnodi, ond nid yw'r sesiwn hon yn ymddiried ynddo eto. Cwblhewch diogelwch y sesiwn hon.";
@@ -1239,9 +1247,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

@@ -21,6 +21,10 @@
 "or" = "edo";
 "invite" = "Gonbidatu";
 "warning" = "Abisua";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Titles
 "title_home" = "Hasiera";
 "title_favourites" = "Gogokoak";
@@ -331,6 +335,8 @@
 "settings_labs" = "LABORATEGIA";
 "settings_cryptography" = "KRIPTOGRAFIA";
 "settings_sign_out" = "Amaitu saioa";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ziur zaude?";
 "settings_first_name" = "Izena";
 "settings_surname" = "Abizena";
@@ -812,6 +818,7 @@
 "emoji_picker_flags_category" = "Banderak";
 "auth_forgot_password_error_no_configured_identity_server" = "Ez da identitate zerbitzaririk konfiguratu: gehitu bat zure pasahitza berrezartzeko.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Ez da identitate zerbitzaririk konfiguratu, beraz ezin duzu parte-hartzaile bat e-mail bidez gehitu.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Ez da identitate zerbitzaririk konfiguratu, beraz ezin duzu kontaktu batekin txat bat hasi e-mail bat erabiliz.";
 "room_event_action_reaction_history" = "Erreakzioen historiala";
 "room_action_camera" = "Atera argazkia edo bideoa";
@@ -1034,9 +1041,9 @@
 "room_member_power_level_short_moderator" = "Moderatzailea";
 "room_member_power_level_short_custom" = "Pertsonalizatua";
 "room_member_power_level_short_user" = "User";
-
-"room_power_level_changed_up" = "%@ was promoted to %@";
-"room_power_level_changed_down" = "%@ was demoted to %@";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_photo_changed" = "%@ changed the room photo.";
 // Recover from private key
 "key_backup_recover_from_private_key_info" = "Babes-kopia berrezartzen…";
 "device_verification_self_verify_wait_title" = "Segurtasun osoa";
@@ -1260,6 +1267,8 @@ You can also set up Secure Backup & manage your keys in Settings.";
 "taken" = "Taken";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "tag_history_title" = "Tag History";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
@@ -1267,3 +1276,8 @@ You can also set up Secure Backup & manage your keys in Settings.";
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

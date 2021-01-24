@@ -1349,7 +1349,7 @@
 
 - (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [[AppDelegate theDelegate] createDirectChatWithUserId:matrixId completion:completion];
+    [[AppDelegate theDelegate] startDirectChatWithUserId:matrixId completion:completion];
 }
 
 - (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController mention:(MXRoomMember*)member

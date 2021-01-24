@@ -5,6 +5,10 @@
 "title_rooms" = "Spjallrásir";
 "title_groups" = "Samfélög";
 "warning" = "Aðvörun";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Skoða";
 "next" = "Næsta";
@@ -79,6 +83,7 @@
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
 
+"room_creation_add_members" = "Add Members";
 // People tab
 "people_invites_section" = "BOÐSGESTIR";
 "people_conversation_section" = "SAMTÖL";
@@ -153,6 +158,7 @@
 "media_tag_title" = "Tag Patient";
 "media_tag_subheading" = "Tag Patient Media Immediately";
 "media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
+"room_photo_changed" = "%@ changed the room photo.";
 "unknown_devices_send_anyway" = "Senda samt";
 "unknown_devices_verify" = "Sannreyna…";
 // Room Title
@@ -178,6 +184,8 @@
 "settings_devices" = "TÆKI";
 "settings_cryptography" = "DULRITUN";
 "settings_sign_out" = "Skrá út";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Ertu viss?";
 "settings_profile_picture" = "Notandamynd";
 "settings_display_name" = "Birtingarnafn";
@@ -235,6 +243,8 @@
 "room_details_flair_invalid_id_prompt_title" = "Ógilt snið";
 "room_details_banned_users_section" = "Bannaðir notendur";
 "room_details_advanced_section" = "Ítarlegt";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Group Details
 "group_details_title" = "Nánar um samfélag";
 "group_details_home" = "Heim";
@@ -1254,9 +1264,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

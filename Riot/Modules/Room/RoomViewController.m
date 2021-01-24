@@ -1891,7 +1891,7 @@
 
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
-    if (debugEnableNewRoomRendering){
+    if (enableNewRoomRendering){
         return RoomMessageContentCell.class;
     }
     Class cellViewClass = nil;
@@ -5558,11 +5558,11 @@
     }];
 }
 
-
-BOOL debugEnableNewRoomRendering = TRUE;
+//Enable the new room rendering pipeline. Currently, this must be set to true for tags and other custom elements to render correctly.
+BOOL enableNewRoomRendering = TRUE;
 
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
-    if (debugEnableNewRoomRendering){
+    if (enableNewRoomRendering){
         return @"RoomMessageContentCell";
     }
     return [super cellReuseIdentifierForCellData:cellData];

@@ -41,7 +41,13 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction private func SaveAction(_ sender: Any) {
         if let completion = PhotoSavedEventHandler {
-            guard let tagData = PatientTaggingViewController.produceTagData(fromViewModel: patientTaggingViewModel) else { return }
+            let tagDataOrError = PatientTaggingViewController.produceTagData(fromViewModel: patientTaggingViewModel)
+            guard let tagData = tagDataOrError.0 else {
+                let alert = UIAlertController(title: AlternateHomeTools.getNSLocalized("error_title", in: "Vector"), message: tagDataOrError.1, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("close", in: "Vector"), style: .default, handler: nil))
+                present(alert, animated: true, completion: nil)
+                return
+            }
             if patientTaggingViewModel.patients.count > 0 {
                 navigationController?.popViewController(animated: true)
                 completion(tagData)
@@ -109,13 +115,13 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
         return vm
     }
     
-    static func produceTagData(fromViewModel patientTaggingViewModel: PatientTaggingViewModel) -> TagData? {
+    static func produceTagData(fromViewModel patientTaggingViewModel: PatientTaggingViewModel) -> (TagData?, String) {
         if patientTaggingViewModel.patients.count > 0 {
-            guard let role = patientTaggingViewModel.role else { return nil }
+            guard let role = patientTaggingViewModel.role else { return (nil, AlternateHomeTools.getNSLocalized("tag_error_no_role_selected", in: "Vector")) }
             let photographer = PhotographerTagDetails(withName: patientTaggingViewModel.name, andRole: role)
-            return TagData(withPatients: patientTaggingViewModel.patients, Description: patientTaggingViewModel.description, Photographer: photographer, andDate: patientTaggingViewModel.photoDate)
+            return (TagData(withPatients: patientTaggingViewModel.patients, Description: patientTaggingViewModel.description, Photographer: photographer, andDate: patientTaggingViewModel.photoDate),"")
         }
-        return TagData(withDescription: patientTaggingViewModel.description, andDate: patientTaggingViewModel.photoDate)
+        return (TagData(withDescription: patientTaggingViewModel.description, andDate: patientTaggingViewModel.photoDate),"")
     }
     
     func updateSelections() {

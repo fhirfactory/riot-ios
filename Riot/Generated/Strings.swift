@@ -1198,6 +1198,10 @@ internal enum VectorL10n {
   internal static func errorNotSupportedOnMobile(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "error_not_supported_on_mobile", p1)
   }
+  /// Error
+  internal static var errorTitle: String { 
+    return VectorL10n.tr("Vector", "error_title") 
+  }
   /// It looks like you’re trying to connect to another homeserver. Do you want to sign out?
   internal static var errorUserAlreadyLoggedIn: String { 
     return VectorL10n.tr("Vector", "error_user_already_logged_in") 
@@ -2098,7 +2102,7 @@ internal enum VectorL10n {
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "photo_library_access_not_granted", p1)
   }
-  /// dd-MMM-yyyy
+  /// d-MMM-yyyy
   internal static var photoMetadataTakenFormat: String { 
     return VectorL10n.tr("Vector", "photo_metadata_taken_format") 
   }
@@ -4313,6 +4317,10 @@ internal enum VectorL10n {
   /// Switch
   internal static var `switch`: String { 
     return VectorL10n.tr("Vector", "switch") 
+  }
+  /// Please select a designation before saving.
+  internal static var tagErrorNoRoleSelected: String { 
+    return VectorL10n.tr("Vector", "tag_error_no_role_selected") 
   }
   /// Tag History
   internal static var tagHistoryTitle: String { 

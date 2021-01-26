@@ -204,4 +204,18 @@ NSString *const kAnalyticsE2eDecryptionFailureAction = @"Decryption failure";
     }
 }
 
+
+// TODO:- Update this code when the latest Riot/Element app code is merged
+// The latest version of MatrixSDK has updated the protocol for MXAnalyticsDelegate
+// When we re-merge the latest Riot code there will be implementations put in place for those changed functions, but for now we just empty stub them as we don't use analytics in Lingo anyway
+
+
+- (void)trackDuration:(NSTimeInterval)seconds category:(nonnull NSString *)category name:(nonnull NSString *)name {
+    NSLog(@"[Analytics.m] This stub is being called here - not sure why...");
+}
+
+- (void)trackValue:(nonnull NSNumber *)value category:(nonnull NSString *)category name:(nonnull NSString *)name {
+    NSLog(@"[Analytics.m] This stub is being called here - not sure why...");
+}
+
 @end

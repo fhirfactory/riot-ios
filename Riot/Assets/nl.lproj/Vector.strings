@@ -20,6 +20,10 @@
 "title_people" = "Personen";
 "title_rooms" = "Gesprekken";
 "warning" = "Waarschuwing";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
 // Actions
 "view" = "Weergeven";
 "next" = "Volgende";
@@ -275,6 +279,8 @@
 "settings_devices" = "APPARATEN";
 "settings_cryptography" = "CRYPTOGRAFIE";
 "settings_sign_out" = "Afmelden";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "Weet u het zeker?";
 "settings_sign_out_e2e_warn" = "U zult uw sleutels voor eind-tot-eind-versleuteling kwijtraken. Dat betekent dat u op dit apparaat geen oude berichten in versleutelde gesprekken meer zult kunnen lezen.";
 "settings_profile_picture" = "Profielfoto";
@@ -388,6 +394,8 @@
 "room_details_copy_room_id" = "Gespreks-ID kopiëren";
 "room_details_copy_room_address" = "Gespreksadres kopiëren";
 "room_details_copy_room_url" = "Gespreks-URL kopiëren";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Media picker
 "media_picker_library" = "Bibliotheek";
 "media_picker_select" = "Selecteren";
@@ -702,6 +710,7 @@
 "room_event_action_reaction_disagree" = "Niet akkoord met %@";
 "room_event_action_reaction_like" = "Duim omhoog voor %@";
 "room_event_action_reaction_dislike" = "Duim omlaag voor %@";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_action_reply" = "Beantwoorden";
 "settings_labs_message_reaction" = "Beantwoord berichten met emoticons";
 "settings_key_backup_button_connect" = "Dit apparaat verbinden met sleutelback-up";
@@ -844,6 +853,7 @@
 "reaction_history_title" = "Reacties";
 "auth_forgot_password_error_no_configured_identity_server" = "Er is geen identiteitsserver geconfigureerd: voeg er een toe om uw wachtwoord opnieuw in te stellen.";
 "room_creation_error_invite_user_by_email_without_identity_server" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen deelnemers toevoegen via e-mail.";
+"room_creation_add_members" = "Add Members";
 "room_participants_start_new_chat_error_using_user_email_without_identity_server" = "Er is geen identiteitsserver geconfigureerd, dus u kunt geen gesprek beginnen met een contact via e-mail.";
 // Service terms
 "service_terms_modal_title" = "Dienstvoorwaarden";
@@ -1271,9 +1281,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

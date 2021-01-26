@@ -13,7 +13,7 @@ class ActPeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabItem.title = NSLocalizedString("people_title", tableName: "Act", comment: "")
+        tabItem.title = AlternateHomeTools.getNSLocalized("people_title", in: "Vector")
         setupTableView()
     }
 }
@@ -47,6 +47,9 @@ extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleTableViewCell") as? PeopleTableViewCell else { return UITableViewCell() }
+        
+        
+        // TODO:- This needs to be replaced with appropriate code once the backend is available and can provide role information to the app
         
         let session = (AppDelegate.theDelegate().mxSessions.first as? MXSession)
         var person = ActPeople(withBaseUser: ((AppDelegate.theDelegate().mxSessions.first as? MXSession)?.user(withUserId: session?.myUserId))!, officialName: "Joseph Fergusson", jobTitle: "App Developer", org: "ACT Health", businessUnit: "I dunno")

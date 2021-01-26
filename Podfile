@@ -11,25 +11,34 @@ use_frameworks!
 # - `{ {kit spec hash} => {sdk spec hash}` to depend on specific pod options (:git => …, :podspec => …) for each repo. Used by Fastfile during CI
 #
 # Warning: our internal tooling depends on the name of this variable name, so be sure not to change it
-$matrixKitVersion = '= 0.12.26'
+$matrixKitVersion = '= 0.13.1'
+$matrixSDKVersion = '= 0.17.3'
+
 # $matrixKitVersion = :local
-# $matrixKitVersion = {'develop' => 'develop'}
+$matrixKitVersion = {'master' => 'develop'}
+
+#this allows the xcode project options on individual pods to be modified.
+#{'podname' => {'xcodesetting' => 'value', 'setting' => 'value'}} etc
+$projectOptions = {'SideMenu' => {'APPLICATION_EXTENSION_API_ONLY' => 'NO'}, 'MatrixKit' => {'IPHONEOS_DEPLOYMENT_TARGET' => '11.0'}}
 
 ########################################
 
 case $matrixKitVersion
-when :local
-$matrixKitVersionSpec = { :path => '../matrix-ios-kit/MatrixKit.podspec' }
-$matrixSDKVersionSpec = { :path => '../matrix-ios-sdk/MatrixSDK.podspec' }
-when Hash # kit branch name => sdk branch name – or {kit spec Hash} => {sdk spec Hash}
-kit_spec, sdk_spec = $matrixKitVersion.first # extract first and only key/value pair; key is kit_spec, value is sdk_spec
-kit_spec = { :git => 'https://github.com/matrix-org/matrix-ios-kit.git', :branch => kit_spec.to_s } unless kit_spec.is_a?(Hash)
-sdk_spec = { :git => 'https://github.com/matrix-org/matrix-ios-sdk.git', :branch => sdk_spec.to_s } unless sdk_spec.is_a?(Hash)
-$matrixKitVersionSpec = kit_spec
-$matrixSDKVersionSpec = sdk_spec
-when String # specific MatrixKit released version
-$matrixKitVersionSpec = $matrixKitVersion
-$matrixSDKVersionSpec = {}
+  when :local
+    $matrixKitVersionSpec = { :path => '../matrix-ios-kit/MatrixKit.podspec' }
+    $matrixSDKVersionSpec = { :path => '../matrix-ios-sdk/MatrixSDK.podspec' }
+  when Hash # kit branch name => sdk branch name – or {kit spec Hash} => {sdk spec Hash}
+    kit_spec, sdk_spec = $matrixKitVersion.first # extract first and only key/value pair; key is kit_spec, value is sdk_spec
+    kit_spec = { :git => 'https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git', :branch => kit_spec.to_s } unless kit_spec.is_a?(Hash)
+    sdk_spec = { :git => 'https://github.com/matrix-org/matrix-ios-sdk.git', :branch => sdk_spec.to_s } unless sdk_spec.is_a?(Hash)
+    if $matrixSDKVersion.is_a?(String) then #even if we have a specific branch selected for matrixKitVersion, if we also have a specific MatrixSDKVersion set, we want to override our branch with that SDK Version
+      sdk_spec = $matrixSDKVersion
+    end
+    $matrixKitVersionSpec = kit_spec
+    $matrixSDKVersionSpec = sdk_spec
+  when String # specific MatrixKit released version
+    $matrixKitVersionSpec = $matrixKitVersion
+    $matrixSDKVersionSpec = $matrixSDKVersion
 end
 
 ######################
@@ -63,6 +72,7 @@ abstract_target 'RiotPods' do
   pod 'GBDeviceInfo', '~> 6.3.0'
   pod 'Reusable', '~> 4.1'
   pod 'KeychainAccess', '~> 4.2'
+  pod 'SideMenu'
  
 
   # Piwik for analytics
@@ -120,8 +130,22 @@ post_install do |installer|
     # Disable bitcode for each pod framework
     # Because the WebRTC pod (included by the JingleCallStack pod) does not support it.
     # Plus the app does not enable it
+    #APPLICATION_EXTENSION_API_ONLY
     target.build_configurations.each do |config|
-      config.build_settings['ENABLE_BITCODE'] = 'NO'      
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+      if $projectOptions.is_a?(Hash) and $projectOptions.has_key?(String(target)) then
+        values = $projectOptions[String(target)]
+        values.each do |key, value|
+          config.build_settings[key] = value
+          print("Set: ")
+          print(key)
+          print(" to: ")
+          print(value)
+          print(" for target: ")
+          print(target)
+          print("\n")
+        end
+      end
     end
   end
 end

@@ -35,6 +35,9 @@ class PeopleProfileTableViewCell: UITableViewCell {
     }
     
     func placeCallWithUser(withVideo video: Bool) {
+        
+        // TODO:- This code block needs to be replaced with appropriate code once the backend is available and can provide role information to the app
+        
         guard let userID = person.baseUser.userId else { return }
         if let theSession = (AppDelegate.theDelegate().mxSessions.first as? MXSession) {
             if let room: MXRoom = theSession.directJoinedRoom(withUserId: userID) {

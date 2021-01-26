@@ -1891,7 +1891,7 @@
 
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
-    if (debugEnableNewRoomRendering){
+    if (enableNewRoomRendering){
         return RoomMessageContentCell.class;
     }
     Class cellViewClass = nil;
@@ -1909,6 +1909,16 @@
             roomBubbleCellData = (MXKRoomBubbleCellData*)bubbleData;
             showEncryptionBadge = roomBubbleCellData.containsBubbleComponentWithEncryptionBadge;
             [self redactAdministrativeEvents:roomBubbleCellData];
+        }
+        
+        switch (bubbleData.events.firstObject.eventType) {
+            case MXEventTypeRoomPowerLevels:
+            case MXEventTypeRoomTopic:
+            case MXEventTypeRoomName:
+            case MXEventTypeRoomAvatar:
+                return bubbleData.isPaginationFirstBubble ? RoomMembershipWithPaginationTitleBubbleCell.class : RoomMembershipBubbleCell.class;
+            default:
+                break;
         }
         
         // Select the suitable table view cell class, by considering first the empty bubble cell.
@@ -3591,7 +3601,7 @@
 
 - (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController startChatWithMemberId:(NSString *)matrixId completion:(void (^)(void))completion
 {
-    [[AppDelegate theDelegate] createDirectChatWithUserId:matrixId completion:completion];
+    [[AppDelegate theDelegate] startDirectChatWithUserId:matrixId completion:completion];
 }
 
 - (void)roomMemberDetailsViewController:(MXKRoomMemberDetailsViewController *)roomMemberDetailsViewController mention:(MXRoomMember*)member
@@ -5558,11 +5568,11 @@
     }];
 }
 
-
-BOOL debugEnableNewRoomRendering = YES;
+//Enable the new room rendering pipeline. Currently, this must be set to true for tags and other custom elements to render correctly.
+BOOL enableNewRoomRendering = YES;
 
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
-    if (debugEnableNewRoomRendering){
+    if (enableNewRoomRendering){
         return @"RoomMessageContentCell";
     }
     return [super cellReuseIdentifierForCellData:cellData];
@@ -5733,9 +5743,21 @@ BOOL debugEnableNewRoomRendering = YES;
             [PatientTaggingController setImageTo: imageData WithHandler:^(TagData *tagData) {
                 if (tagData.Patients.count > 0){
                     //A patient was tagged
+                    //TODO: Replace this debug message with the actual actions necessary to tag the patient and upload to CPF.
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Tagged Photo Uploaded"
+                                                   message:@"The tagged photo of the patient would now be uploaded, with relevant tag data being stored by the CPF. This feature is pending on updates to the backend."
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
                 } else {
                     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
-                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
                 }
             }];
             [self showViewController:PatientTaggingController sender:self];
@@ -5789,7 +5811,7 @@ BOOL debugEnableNewRoomRendering = YES;
                     //A patient was tagged
                 } else {
                     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
-                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
                 }
             }];
             [self showViewController:PatientTaggingController sender:self];
@@ -5807,7 +5829,7 @@ BOOL debugEnableNewRoomRendering = YES;
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
-        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:YES];
+        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
     }
      */
 }
@@ -5832,7 +5854,7 @@ BOOL debugEnableNewRoomRendering = YES;
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
-        [roomInputToolbarView sendSelectedAssets:assets withCompressionMode:MXKRoomInputToolbarCompressionModePrompt];
+        [roomInputToolbarView sendSelectedAssets:assets withCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone)];
     }
 }
 

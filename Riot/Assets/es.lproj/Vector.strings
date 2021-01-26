@@ -4,6 +4,11 @@
 "title_people" = "Personas";
 "title_rooms" = "Salas";
 "warning" = "Advertencia";
+
+// Room Creation
+"person_single" = "person";
+"person_plural" = "people";
+"room_creation_add_members" = "Add Members";
 // Actions
 "view" = "Ver";
 "next" = "Siguiente";
@@ -156,6 +161,8 @@
 "room_recents_join_room_title" = "Unirse a una sala";
 "room_recents_join_room_prompt" = "Escribe una ID o alias de sala";
 "room_recents_chats_section" = "CHATS";
+"room_power_level_changed_up" = "%@ has changed Room Rights of %@ from %@ to %@";
+"room_power_level_changed_down" = "%@ has changed Room Rights of %@ from %@ to %@";
 // Pull down menu items
 "pull_down_one_invite" = "1 invite";
 "pull_down_invites" = "%d invites";
@@ -255,6 +262,7 @@
 "room_event_action_cancel_send" = "Cancelar Envío";
 "room_event_action_cancel_download" = "Cancelar Descarga";
 "room_event_action_view_encryption" = "Información de Cifrado";
+"room_photo_changed" = "%@ changed the room photo.";
 "room_warning_about_encryption" = "El cifrado de extremo a extremo está en beta y puede no ser confiable.\n\nAún no deberías confiar en él para proteger tus datos.\n\nLos dispositivos todavía no podrán descifrar el historial desde antes de unirse a la sala.\n\nLos mensajes cifrados no serán visibles en clientes que aún no implementen el cifrado.";
 "room_event_failed_to_send" = "Falló el envío";
 "room_action_send_photo_or_video" = "Enviar fotografía o vídeo";
@@ -315,6 +323,8 @@
 "settings_cryptography" = "CRIPTOGRAFÍA";
 "settings_deactivate_account" = "DESACTIVAR CUENTA";
 "settings_sign_out" = "Cerrar Sesión";
+"settings_roles" = "Roles";
+"settings_settings" = "Settings";
 "settings_sign_out_confirmation" = "¿Estás seguro?";
 "settings_sign_out_e2e_warn" = "Perderás tus claves de cifrado de extremo a extremo. Esto significa que no podrás leer mensajes antiguos en salas cifradas desde este dispositivo.";
 "settings_profile_picture" = "Imagen de Perfil";
@@ -1248,9 +1258,16 @@ Use the latest Element on your other devices:";
 "previous_tag" = "Previous Tag";
 "view_tag_history" = "View Tag History";
 "tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
 //The failure state for not implementing these strings is pretty severe
 "patient_dob_format" = "d-MMM-yyyy";
 "photo_metadata_taken_format" = "dd-MMM-yyyy";
 "photo_metadata_taken_time_format" = "h:mm a";
+// MARK: - Role-based User Directory
+
+"role_title" = "Role";
+"people_title" = "People";
+"directory_title" = "Directory";

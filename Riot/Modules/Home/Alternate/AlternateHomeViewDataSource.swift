@@ -185,7 +185,11 @@ class AlternateHomeDataSource: RecentsDataSource {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        cellDataForIndexPath(tableView, realIndexPath: getIndexPathInUnderlying(indexPathFor: indexPath), intendedIndexPath: indexPath)
+        let cell = cellDataForIndexPath(tableView, realIndexPath: getIndexPathInUnderlying(indexPathFor: indexPath), intendedIndexPath: indexPath)
+        if let invitecell = cell as? InviteRecentTableViewCell {
+            invitecell.rightButton.isHidden = true
+        }
+        return cell
     }
     
     

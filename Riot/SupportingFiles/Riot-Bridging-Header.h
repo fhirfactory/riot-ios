@@ -25,3 +25,4 @@
 #import "RoomFilesViewController.h"
 #import "RoomSettingsViewController.h"
 #import "AlternateHomeTools.h"
+#import "InviteRecentTableViewCell.h"

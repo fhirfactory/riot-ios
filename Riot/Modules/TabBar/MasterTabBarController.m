@@ -346,7 +346,7 @@
         [recentsDataSource setDelegate:recentsDataSourceDelegate andRecentsDataSourceMode:recentsDataSourceMode];
         
         // Init the recents data source
-        filesDataSource = [[RoomDataSource alloc] initWithRoomId:@"!HdSQgdQYAGKNMuYUPk:matrix.org" andMatrixSession:mainSession];
+        //TODO: Replace with variable actual room
         [RoomDataSource loadRoomDataSourceWithRoomId:@"!HdSQgdQYAGKNMuYUPk:matrix.org" andMatrixSession:mainSession onComplete:^(RoomDataSource *roomDataSource) {
             [roomDataSource setFilterMessagesWithURL:YES];
             [roomDataSource finalizeInitialization];

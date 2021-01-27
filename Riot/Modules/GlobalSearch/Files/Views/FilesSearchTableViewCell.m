@@ -44,6 +44,7 @@
 - (void)render:(MXKCellData*)cellData
 {
     [self setContainsPatientTagData:NO];
+    [[self ViewEdgeConstraint] setActive:NO];
     [ObjcThemeHelpers recursiveApplyWithTheme:[ThemeService shared].theme onView:self.contentView];
     if ([self tagWarning]) {
         [self setTagWarning:NULL];
@@ -106,6 +107,7 @@
                     bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:tag];
                     if ([PatientTagHelpers historyContainsPatientInTagData:tagData]) {
                         [self setContainsPatientTagData:YES];
+                        [[self ViewEdgeConstraint] setActive:YES];
                     }
                     if (patient) {
                         [super title].text = [PatientModel GetReorderedNameStringWithName:[patient Name]];

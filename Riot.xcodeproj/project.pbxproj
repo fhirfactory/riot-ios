@@ -167,7 +167,7 @@
 		43367F1324D680E100DB17CB /* RoleFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43367F1124D680E100DB17CB /* RoleFilterTableViewCell.swift */; };
 		43367F1424D680E100DB17CB /* RoleFilterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43367F1224D680E100DB17CB /* RoleFilterTableViewCell.xib */; };
 		43367F1624D6826D00DB17CB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43367F1524D6826D00DB17CB /* PaddingLabel.swift */; };
-		437440A824E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */; };
+		437440A824E82A300008BB05 /* MasterTabBarControllerProfileExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437440A724E82A300008BB05 /* MasterTabBarControllerProfileExtension.swift */; };
 		438067A624D7983E002675E1 /* RoleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438067A424D7983E002675E1 /* RoleDetailViewController.swift */; };
 		438067A724D7983E002675E1 /* RoleDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438067A524D7983E002675E1 /* RoleDetailViewController.xib */; };
 		438067AA24D7AC38002675E1 /* ActPeople.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438067A924D7AC38002675E1 /* ActPeople.swift */; };
@@ -1299,7 +1299,7 @@
 		43367F1124D680E100DB17CB /* RoleFilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleFilterTableViewCell.swift; sourceTree = "<group>"; };
 		43367F1224D680E100DB17CB /* RoleFilterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleFilterTableViewCell.xib; sourceTree = "<group>"; };
 		43367F1524D6826D00DB17CB /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
-		437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTablBarControllerProfileExtension.swift; sourceTree = "<group>"; };
+		437440A724E82A300008BB05 /* MasterTabBarControllerProfileExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterTabBarControllerProfileExtension.swift; sourceTree = "<group>"; };
 		438067A424D7983E002675E1 /* RoleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleDetailViewController.swift; sourceTree = "<group>"; };
 		438067A524D7983E002675E1 /* RoleDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleDetailViewController.xib; sourceTree = "<group>"; };
 		438067A924D7AC38002675E1 /* ActPeople.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActPeople.swift; sourceTree = "<group>"; };
@@ -2954,7 +2954,7 @@
 				43AF6B0924E4F56700BFE3EC /* views */,
 				43AF6AF824E4E3A800BFE3EC /* cells */,
 				43AF6AF624E4E2E000BFE3EC /* ProfileViewController.swift */,
-				437440A724E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift */,
+				437440A724E82A300008BB05 /* MasterTabBarControllerProfileExtension.swift */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -7432,7 +7432,7 @@
 				B1B336BE242B933700F95EC4 /* KeyVerificationSelfVerifyStartViewState.swift in Sources */,
 				B1BEE73423DF44A60003A4CB /* UserVerificationSessionsStatusViewModelType.swift in Sources */,
 				B18DEDD9243377C10075FEF7 /* KeyVerificationSelfVerifyWaitViewController.swift in Sources */,
-				437440A824E82A300008BB05 /* MasterTablBarControllerProfileExtension.swift in Sources */,
+				437440A824E82A300008BB05 /* MasterTabBarControllerProfileExtension.swift in Sources */,
 				EC1CA89524C9C9A200DE9EBF /* SetupBiometricsViewController.swift in Sources */,
 				324A2052225FC571004FE8B0 /* DeviceVerificationIncomingViewAction.swift in Sources */,
 				EC85D72C2477DCF2002C44C9 /* KeyVerificationManuallyVerifyViewState.swift in Sources */,

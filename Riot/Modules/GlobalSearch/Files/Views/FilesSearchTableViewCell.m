@@ -104,8 +104,10 @@
                     TagData *tag = [tagData lastObject];
                     PatientModel *patient = [tag.Patients firstObject];
                     bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:tag];
-                    if (patient) {
+                    if ([PatientTagHelpers historyContainsPatientInTagData:tagData]) {
                         [self setContainsPatientTagData:YES];
+                    }
+                    if (patient) {
                         [super title].text = [PatientModel GetReorderedNameStringWithName:[patient Name]];
                         _URNDOBLabel.text = [NSString stringWithFormat:@"%@ | %@", [patient URN], [dateFormatter stringFromDate:[patient DoB]]];
                     }

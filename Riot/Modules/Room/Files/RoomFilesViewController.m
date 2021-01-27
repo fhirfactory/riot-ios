@@ -44,7 +44,7 @@
     {
         self.autoJoinInvitedRoom = NO;
     }
-    
+    [self setIsInGalleryContext:NO];
     return self;
 }
 
@@ -55,7 +55,7 @@
     {
         self.autoJoinInvitedRoom = NO;
     }
-    
+    [self setIsInGalleryContext:NO];
     return self;
 }
 
@@ -197,6 +197,43 @@
 }
 
 #pragma mark - UITableView delegate
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //only allow deletions from the user's gallery (rather than every files view in the app).
+    if (!_isInGalleryContext) {
+        return @[];
+    }
+    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedStringFromTable(@"room_event_action_delete", @"Vector", nil) handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        FilesSearchTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        //TODO: Remove this && false to allow this feature to work.
+        if ([cell containsPatientTagData]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"error_title", @"Vector", nil) message:NSLocalizedStringFromTable(@"gallery_no_deleting_tagged_images", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"alert_okay", @"Vector", nil) style:UIAlertActionStyleDefault handler:nil];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+        } else {
+            MXKCellData *cellData = [cell mxkCellData];
+            if ([cellData isKindOfClass:[RoomBubbleCellData self]]) {
+                RoomBubbleCellData *data = (id)cellData; //this makes Objective-C less unhappy about this sketchy cast (that we can be sure is actually safe)
+                if (data) {
+                    NSString *eventId = [[[data events] firstObject] eventId];
+
+                    [self.roomDataSource.room redactEvent:eventId reason:nil success:^{
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    } failure:^(NSError *error) {
+
+                        //Alert user
+                        [[AppDelegate theDelegate] showErrorAsAlert:error];
+
+                    }];
+                }
+            }
+        }
+    }];
+    return @[
+        action,
+    ];
+}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 {

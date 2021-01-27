@@ -43,6 +43,7 @@
 
 - (void)render:(MXKCellData*)cellData
 {
+    [self setContainsPatientTagData:NO];
     [ObjcThemeHelpers recursiveApplyWithTheme:[ThemeService shared].theme onView:self.contentView];
     if ([self tagWarning]) {
         [self setTagWarning:NULL];
@@ -103,8 +104,11 @@
                     TagData *tag = [tagData lastObject];
                     PatientModel *patient = [tag.Patients firstObject];
                     bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:tag];
-                    [super title].text = [PatientModel GetReorderedNameStringWithName:[patient Name]];
-                    _URNDOBLabel.text = [NSString stringWithFormat:@"%@ | %@", [patient URN], [dateFormatter stringFromDate:[patient DoB]]];
+                    if (patient) {
+                        [self setContainsPatientTagData:YES];
+                        [super title].text = [PatientModel GetReorderedNameStringWithName:[patient Name]];
+                        _URNDOBLabel.text = [NSString stringWithFormat:@"%@ | %@", [patient URN], [dateFormatter stringFromDate:[patient DoB]]];
+                    }
                     if (containsChanges) {
                         if ([self tagWarning]) {
                             [[self tagWarning].contentView setHidden:NO];

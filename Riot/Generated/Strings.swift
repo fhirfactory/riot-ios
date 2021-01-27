@@ -30,6 +30,10 @@ internal enum VectorL10n {
   internal static func activeCallDetails(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "active_call_details", p1)
   }
+  /// Okay
+  internal static var alertOkay: String { 
+    return VectorL10n.tr("Vector", "alert_okay") 
+  }
   /// Please review and accept the policies of this homeserver:
   internal static var authAcceptPolicies: String { 
     return VectorL10n.tr("Vector", "auth_accept_policies") 
@@ -1317,6 +1321,10 @@ internal enum VectorL10n {
   /// File type not supported.
   internal static var fileUploadErrorUnsupportedFileTypeMessage: String { 
     return VectorL10n.tr("Vector", "file_upload_error_unsupported_file_type_message") 
+  }
+  /// You can't delete a photo with a patient tag attached to it.
+  internal static var galleryNoDeletingTaggedImages: String { 
+    return VectorL10n.tr("Vector", "gallery_no_deleting_tagged_images") 
   }
   /// To continue using the %@ homeserver you must review and agree to the terms and conditions.
   internal static func gdprConsentNotGivenAlertMessage(_ p1: String) -> String {

@@ -1579,3 +1579,6 @@
 "role_title" = "Role";
 "people_title" = "People";
 "directory_title" = "Directory";
+
+"alert_okay" = "Okay";
+"gallery_no_deleting_tagged_images" = "You can't delete a photo with a patient tag attached to it.";

@@ -24,4 +24,5 @@
 @property TagChangesWarning *tagWarning;
 @property (weak, nonatomic) IBOutlet UILabel *URNDOBLabel;
 @property UIView *originalContentView;
+@property bool containsPatientTagData;
 @end

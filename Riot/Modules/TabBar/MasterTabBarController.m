@@ -350,6 +350,7 @@
         [RoomDataSource loadRoomDataSourceWithRoomId:@"!HdSQgdQYAGKNMuYUPk:matrix.org" andMatrixSession:mainSession onComplete:^(RoomDataSource *roomDataSource) {
             [roomDataSource setFilterMessagesWithURL:YES];
             [roomDataSource finalizeInitialization];
+            [self.fileGalleryViewController setIsInGalleryContext:YES];
             [self.fileGalleryViewController finalizeInit];
             [self.fileGalleryViewController setHasRoomDataSourceOwnership:YES];
             [self.fileGalleryViewController displayRoom:roomDataSource];

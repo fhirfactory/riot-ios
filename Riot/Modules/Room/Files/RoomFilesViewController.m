@@ -205,7 +205,7 @@
     }
     UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedStringFromTable(@"room_event_action_delete", @"Vector", nil) handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         FilesSearchTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        //TODO: Remove this && false to allow this feature to work.
+        
         if ([cell containsPatientTagData]) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"error_title", @"Vector", nil) message:NSLocalizedStringFromTable(@"gallery_no_deleting_tagged_images", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"alert_okay", @"Vector", nil) style:UIAlertActionStyleDefault handler:nil];

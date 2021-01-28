@@ -21,8 +21,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="74"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2bJ-7A-H3d">
-                                <rect key="frame" x="548" y="13.5" width="48" height="47"/>
-                                <color key="tintColor" systemColor="labelColor"/>
+                                <rect key="frame" x="548" y="14" width="48" height="46"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="o58-6Q-ORO"/>
                                     <constraint firstAttribute="height" constant="50" id="sQL-Bd-yI8"/>
@@ -47,8 +47,8 @@
                                             <constraint firstAttribute="width" constant="73" id="Ci0-xg-Kdh"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lg1-xQ-AGn">
-                                        <rect key="frame" x="84" y="16.5" width="282.5" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Lg1-xQ-AGn">
+                                        <rect key="frame" x="84" y="16.5" width="333" height="20"/>
                                         <accessibility key="accessibilityConfiguration" identifier="Title"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="highlightedColor"/>
@@ -91,7 +91,7 @@
                                     <constraint firstItem="Lg1-xQ-AGn" firstAttribute="leading" secondItem="4qD-C5-hZd" secondAttribute="leading" constant="84" id="9VM-Pl-fpN"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2r1-ed-gNb" secondAttribute="trailing" constant="10" id="A1g-xN-Y5X"/>
                                     <constraint firstItem="3MK-Eq-5gW" firstAttribute="centerX" secondItem="tNx-NQ-DRn" secondAttribute="centerX" id="Ki3-vK-sly"/>
-                                    <constraint firstItem="360-Go-RcG" firstAttribute="leading" secondItem="Lg1-xQ-AGn" secondAttribute="trailing" constant="80.5" id="Lsf-xM-iMc"/>
+                                    <constraint firstItem="360-Go-RcG" firstAttribute="leading" secondItem="Lg1-xQ-AGn" secondAttribute="trailing" constant="30" id="Lsf-xM-iMc"/>
                                     <constraint firstItem="Lg1-xQ-AGn" firstAttribute="centerY" secondItem="360-Go-RcG" secondAttribute="centerY" id="MlA-PN-BWE"/>
                                     <constraint firstItem="2r1-ed-gNb" firstAttribute="centerY" secondItem="dQt-mN-T6b" secondAttribute="centerY" id="Xmf-iq-7qw"/>
                                     <constraint firstAttribute="trailing" secondItem="360-Go-RcG" secondAttribute="trailing" constant="10" id="YqC-WC-Wqe"/>
@@ -136,9 +136,6 @@
     </objects>
     <resources>
         <image name="person.fill" catalog="system" width="128" height="120"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

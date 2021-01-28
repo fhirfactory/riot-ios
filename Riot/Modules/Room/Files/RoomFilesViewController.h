@@ -21,5 +21,6 @@ limitations under the License.
  */
 @interface RoomFilesViewController : MXKRoomViewController
 @property bool isInGalleryContext;
+@property UIButton *galleryTakePhotoButton;
 - (void)changeNavigationTitle;
 @end

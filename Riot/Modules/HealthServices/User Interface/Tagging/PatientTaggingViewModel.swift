@@ -1,5 +1,5 @@
 // 
-// Copyright 2020 Vector Creations Ltd
+// Copyright 2020 New Vector Ltd
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,17 +16,11 @@
 
 import Foundation
 
-struct Role {
-    let name:String
-    let active: Bool
-}
-
-struct IconItem {
-    let image:UIImage
-    let text:String
-}
-
-struct TextItem {
-    let text: String
-    let url: String
+class PatientTaggingViewModel {
+    var description: String?
+    var role: Role?
+    var name: String!
+    var patients: [PatientModel] = []
+    var photoDate: Date = Date()
+    var previousPatients: [PatientModel] = []
 }

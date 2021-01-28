@@ -128,9 +128,9 @@ DEPENDENCIES:
   - MatomoTracker (~> 7.2.0)
   - MatrixKit (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `master`)
   - MatrixKit/AppExtension (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `master`)
-  - MatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
-  - MatrixSDK/JingleCallStack (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
-  - MatrixSDK/SwiftSupport (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
+  - MatrixSDK (= 0.17.3)
+  - MatrixSDK/JingleCallStack (= 0.17.3)
+  - MatrixSDK/SwiftSupport (= 0.17.3)
   - OLMKit
   - Reusable (~> 4.1)
   - SideMenu
@@ -159,6 +159,7 @@ SPEC REPOS:
     - libPhoneNumber-iOS
     - Material
     - MatomoTracker
+    - MatrixSDK
     - Motion
     - OLMKit
     - Realm
@@ -173,17 +174,11 @@ EXTERNAL SOURCES:
   MatrixKit:
     :branch: master
     :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
-  MatrixSDK:
-    :branch: develop
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
 
 CHECKOUT OPTIONS:
   MatrixKit:
     :commit: d3416651a8439bffebc8b540eeaa2665e260a33e
     :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
-  MatrixSDK:
-    :commit: 0c11315ecb475750c7d1af0e9bf135ed62b67f4a
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
@@ -216,6 +211,6 @@ SPEC CHECKSUMS:
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 5eff55c7760372b42200a81d299cde2bbdd807e5
+PODFILE CHECKSUM: 17aecc8b77f292e018a2d87930f8bada396594d8
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

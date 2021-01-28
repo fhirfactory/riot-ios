@@ -45,7 +45,7 @@ class ProfileViewController: MXKViewController {
     @IBOutlet weak var tableView: UITableView!
     var theme: Theme = ThemeService.shared().theme
     
-    var roles: [Role] = []
+    var roles: [LocalRole] = []
     var iconItems: [IconItem] = []
     var textItems: [TextItem] = []
     
@@ -86,9 +86,9 @@ class ProfileViewController: MXKViewController {
         tableView.register(UINib(nibName: SectionType.ONLY_TEXT_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ONLY_TEXT_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ROLE_DIVIDER_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_DIVIDER_CELL.cellIdentifier)
         
-        roles.append(Role(name: "Software Developer", active: true))
-        roles.append(Role(name: "Business Analyst", active: false))
-        roles.append(Role(name: "UI Designer", active: false))
+        roles.append(LocalRole(name: "Software Developer", active: true))
+        roles.append(LocalRole(name: "Business Analyst", active: false))
+        roles.append(LocalRole(name: "UI Designer", active: false))
         
         iconItems.append(IconItem(image: UIImage(named: "settings_icon") ?? UIImage(), text: NSLocalizedString("settings_settings", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))
         iconItems.append(IconItem(image: UIImage(named: "role_outline") ?? UIImage(), text: NSLocalizedString("settings_roles", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))

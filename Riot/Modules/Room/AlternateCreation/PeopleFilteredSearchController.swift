@@ -19,7 +19,7 @@ import Foundation
 class PeopleFilteredSearchController: SelectableFilteredSearchController<ActPeople> {
     var currentSearch: MXHTTPOperation?
     var peopleList: [ActPeople] = []
-    override func registerReuseIdentifierForTableView(_ tableView: UITableView){
+    override func registerReuseIdentifierForTableView(_ tableView: UITableView) {
         tableView.register(UINib(nibName: "PeopleTableViewCell", bundle: nil), forCellReuseIdentifier: "PeopleTableViewCell")
     }
     override func applyFilter(_ filter: String) {

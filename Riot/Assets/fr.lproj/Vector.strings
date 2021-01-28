@@ -526,6 +526,11 @@
 "gdpr_consent_not_given_alert_message" = "Pour continuer à utiliser le serveur d'accueil %@, vous devez lire et accepter les conditions générales.";
 "gdpr_consent_not_given_alert_review_now_action" = "Voir maintenant";
 "room_action_send_photo_or_video" = "Envoyer une photo ou une vidéo";
+"media_tag_save_patient_media" = "Save Patient Media";
+"media_tag_save_non_patient_media" = "Save Non-Patient Media";
+"media_tag_title" = "Tag Patient";
+"media_tag_subheading" = "Tag Patient Media Immediately";
+"media_tag_consent_warning" = "Consent must be obtained before capturing patient photos and videos";
 "room_action_send_sticker" = "Envoyer un sticker";
 "settings_deactivate_account" = "DÉSACTIVER LE COMPTE";
 "settings_deactivate_my_account" = "Désactiver mon compte";
@@ -1190,6 +1195,102 @@
 "event_formatter_jitsi_widget_removed_by_you" = "Vous avez supprimé une conférence en VoIP";
 
 
+//TODO: Translate these strings
+"store_promotional_text" = "Privacy-preserving chat and collaboration app, on an open network. Decentralised to put you in control. No datamining, no backdoors and no third party access.";
+"person_single" = "person";
+"person_plural" = "people";
+"joined" = "Joined";
+"switch" = "Switch";
+"more" = "More";
+"yes" = "Yes";
+"no" = "No";
+"room_creation_add_members" = "Add Members";
+"media_tag_untagged_alert_description" = "Are you sure you want to save without tagging a patient?";
+"media_tag_policy" = "Please ensure CHS policy is followed when documenting patient consent";
+"external_link_confirmation_title" = "Double-check this link";
+"external_link_confirmation_message" = "The link %@ is taking you to another site: %@\
+\
+Are you sure you want to continue?";
+"device_verification_self_verify_wait_recover_secrets_checking_availability" = "Checking for other verification capabilities ...";
+"major_update_title" = "Riot is now Element";
+"major_update_information" = "We're excited to announce we've changed name! Your app is up to date and you're signed in to your account.";
+"major_update_learn_more_action" = "Learn more";
+"major_update_done_action" = "Got it";
+"pin_protection_choose_pin_welcome_after_login" = "Welcome back.";
+"pin_protection_choose_pin_welcome_after_register" = "Welcome.";
+"pin_protection_choose_pin" = "Create a PIN for security";
+"pin_protection_confirm_pin" = "Confirm your PIN";
+"pin_protection_confirm_pin_to_disable" = "Confirm PIN to disable PIN";
+"pin_protection_enter_pin" = "Enter your PIN";
+"pin_protection_forgot_pin" = "Forgot PIN";
+"pin_protection_reset_alert_title" = "Reset PIN";
+"pin_protection_reset_alert_message" = "To reset your PIN, you'll need to re-login and create a new one";
+"pin_protection_reset_alert_action_reset" = "Reset";
+"pin_protection_mismatch_error_title" = "PINs don't match";
+"pin_protection_mismatch_error_message" = "Please try again";
+"pin_protection_mismatch_too_many_times_error_message" = "If you can't remember your PIN, tap the forgot PIN button.";
+"pin_protection_settings_section_header_x" = "PIN & %@";
+"pin_protection_settings_section_footer" = "To reset your PIN, you'll need to re-login and create a new one.";
+"pin_protection_settings_enabled_forced" = "PIN enabled";
+"pin_protection_settings_enable_pin" = "Enable PIN";
+"pin_protection_not_allowed_pin" = "For security reasons, this PIN isn’t available. Please try another PIN";
+"pin_protection_explanatory" = "PINs help keep your profile, messages and contacts secure, so only you can access them.";
+"biometrics_mode_touch_id" = "Touch ID";
+"biometrics_mode_face_id" = "Face ID";
+"biometrics_settings_enable_x" = "Enable %@";
+"biometrics_setup_title_x" = "Enable %@";
+"biometrics_setup_enable_button_title_x" = "Enable %@";
+"biometrics_setup_subtitle" = "Save yourself time";
+"biometrics_desetup_title_x" = "Disable %@";
+"biometrics_desetup_subtitle" = "";
+"biometrics_desetup_disable_button_title_x" = "Disable %@";
+"biometrics_usage_reason" = "Authentication is needed to access your app";
+"biometrics_cant_unlocked_alert_title" = "Can't unlock app";
+"biometrics_cant_unlocked_alert_message_x" = "To unlock, use %@ or log back in and enable %@ again";
+"biometrics_cant_unlocked_alert_message_login" = "Log back in";
+"biometrics_cant_unlocked_alert_message_retry" = "Retry";
+"searchable_directory_create_new_room" = "Create a new room";
+"searchable_directory_x_network" = "%@ Network";
+"searchable_directory_search_placeholder" = "Name or ID";
+"create_room_title" = "New Room";
+"create_room_section_header_name" = "Room name";
+"create_room_placeholder_name" = "Name";
+"create_room_section_header_topic" = "Room topic (optional)";
+"create_room_placeholder_topic" = "Topic";
+"create_room_section_header_encryption" = "Room encryption";
+"create_room_enable_encryption" = "Enable Encryption";
+"create_room_section_footer_encryption" = "Encryption can’t be disabled afterwards.";
+"create_room_section_header_type" = "Room type";
+"create_room_type_private" = "Private Room";
+"create_room_type_public" = "Public Room";
+"create_room_section_footer_type" = "Private rooms can only be joined by invitation. Public rooms can be found by anyone.";
+"create_room_show_in_directory" = "Show the room in the directory";
+"create_room_section_header_address" = "Room address";
+"create_room_placeholder_address" = "#testroom:matrix.org";
+"room_info_list_room_encrypted" = "Messages in this room are end to end encrypted";
+"room_info_list_one_member" = "1 member";
+"room_info_list_several_members" = "%@ members";
+"room_info_list_section_other" = "Other";
+
+
+// MARK: - Health Specific
+"designation_select" = "Select a Designation";
+"image_description_placeholder" = "Provide an image description";
+"image_description_name" = "Description";
+"date" = "Date";
+"time" = "Time";
+"taken" = "Taken";
+"previous_tag" = "Previous Tag";
+"view_tag_history" = "View Tag History";
+"tag_history_title" = "Tag History";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
+"message_forwarding_title" = "Forward a message to a Room";
+"warn_tag_changes" = "This media has patient tag changes";
+//The failure state for not implementing these strings is pretty severe
+"patient_dob_format" = "d-MMM-yyyy";
+"photo_metadata_taken_format" = "dd-MMM-yyyy";
+"photo_metadata_taken_time_format" = "h:mm a";
 // MARK: - Role-based User Directory
 
 "role_title" = "Role";

@@ -1,4 +1,4 @@
-// 
+//
 // Copyright 2020 New Vector Ltd
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -69,10 +69,29 @@ class RoomSettingsViewControllerTests: XCTestCase {
         /// Note: The following value must be removed "Anyone".
         
         XCTAssert(BuildSettings.roomSettingsScreenShowDirectChatOption == false)
+        XCTAssert(BuildSettings.roomSettingsScreenShowAccessMode == false)
         XCTAssert(BuildSettings.roomSettingsScreenAllowChangingAccessSettings == false)
         XCTAssert(BuildSettings.roomSettingsScreenShowAddressSettings == false)
         XCTAssert(BuildSettings.roomSettingsScreenShowFlairSettings == false)
         XCTAssert(BuildSettings.roomSettingsScreenShowAdvancedSettings == false)
+        XCTAssert(BuildSettings.roomSettingsScreenShowAnyoneHistoryOption == false)
+        
+    }
+    
+    func test_193085_removeSharingOptions() throws {
+        /// Given I have selected a Chat Room that I am a Room Member
+        
+        XCTAssert(BuildSettings.messageDetailsAllowShare == false)
+        XCTAssert(BuildSettings.messageDetailsAllowPermalink == false)
+        XCTAssert(BuildSettings.messageDetailsAllowViewSource == false)
+        XCTAssert(BuildSettings.messageDetailsAllowSave == false)
+        
+    }
+    
+    func test_193085_patientTaggingOptions() throws {
+        /// Given I have selected a Chat Room that I am a Room Member
+        
+        XCTAssert(BuildSettings.sendMessageRequirePatientTagging == false)
         
     }
 

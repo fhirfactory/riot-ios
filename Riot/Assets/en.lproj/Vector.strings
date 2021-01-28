@@ -66,6 +66,10 @@
 "joined" = "Joined";
 "switch" = "Switch";
 "more" = "More";
+"yes" = "Yes";
+"no" = "No";
+"show_more" = "Show More";
+"show_less" = "Show Less";
 
 // Accessibility
 "accessibility_checkbox_label" = "checkbox";
@@ -362,6 +366,11 @@
 "room_event_failed_to_send" = "Failed to send";
 "room_action_camera" = "Take photo or video";
 "room_action_send_photo_or_video" = "Send photo or video";
+"media_tag_save_patient_media" = "Save";
+"media_tag_save_non_patient_media" = "Save";
+"media_tag_title" = "Tag Patient";
+"media_tag_untagged_alert_description" = "Are you sure you want to save without tagging a patient?";
+"media_tag_policy" = "Please ensure CHS policy is followed when documenting patient consent";
 "room_action_send_sticker" = "Send sticker";
 "room_action_send_file" = "Send file";
 "room_action_reply" = "Reply";
@@ -1518,6 +1527,25 @@
 "room_info_list_several_members" = "%@ members";
 "room_info_list_section_other" = "Other";
 
+// MARK: - Health Specific
+"designation_select" = "Select a Designation";
+"image_description_placeholder" = "Provide an image description";
+"image_description_name" = "Description";
+"date" = "Date";
+"time" = "Time";
+"taken" = "Taken";
+"previous_tag" = "Previous Tag";
+"view_tag_history" = "View Tag History";
+"tag_history_title" = "Tag History";
+"message_forwarding_title" = "Forward a message to a Room";
+"warn_tag_changes" = "This media has patient tag changes";
+"tag_error_no_role_selected" = "Please select a designation before saving.";
+"error_title" = "Error";
+
+//The failure state for not implementing these strings is pretty severe
+"patient_dob_format" = "d-MMM-yyyy";
+"photo_metadata_taken_format" = "d-MMM-yyyy";
+"photo_metadata_taken_time_format" = "h:mm a";
 // MARK: - Role-based User Directory
 
 "role_title" = "Role";

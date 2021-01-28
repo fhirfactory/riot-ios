@@ -45,6 +45,7 @@ final class RoomCreationEventsModalCoordinator: RoomCreationEventsModalCoordinat
         let roomCreationEventsModalViewController = RoomCreationEventsModalViewController.instantiate(with: roomCreationEventsModalViewModel)
         self.roomCreationEventsModalViewModel = roomCreationEventsModalViewModel
         self.roomCreationEventsModalViewController = roomCreationEventsModalViewController
+        ThemeService.shared().theme.recursiveApply(on: roomCreationEventsModalViewController.view)
     }
     
     // MARK: - Public methods

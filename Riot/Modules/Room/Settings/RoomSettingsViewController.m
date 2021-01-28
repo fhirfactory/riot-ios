@@ -536,9 +536,11 @@ NSString *const kRoomSettingsAdvancedE2eEnabledCellViewIdentifier = @"kRoomSetti
     if (BuildSettings.roomSettingsScreenAllowChangingAccessSettings)
     {
         Section *sectionAccess = [Section sectionWithTag:SECTION_TAG_ACCESS];
-        [sectionAccess addRowWithTag:ROOM_SETTINGS_ROOM_ACCESS_SECTION_ROW_INVITED_ONLY];
-        [sectionAccess addRowWithTag:ROOM_SETTINGS_ROOM_ACCESS_SECTION_ROW_ANYONE_APART_FROM_GUEST];
-        [sectionAccess addRowWithTag:ROOM_SETTINGS_ROOM_ACCESS_SECTION_ROW_ANYONE];
+        if (BuildSettings.roomSettingsScreenShowAccessMode) {
+            [sectionAccess addRowWithTag:ROOM_SETTINGS_ROOM_ACCESS_SECTION_ROW_INVITED_ONLY];
+            [sectionAccess addRowWithTag:ROOM_SETTINGS_ROOM_ACCESS_SECTION_ROW_ANYONE_APART_FROM_GUEST];
+            [sectionAccess addRowWithTag:ROOM_SETTINGS_ROOM_ACCESS_SECTION_ROW_ANYONE];
+        }
         
         // Check whether a room address is required for the current join rule
         NSString *joinRule = updatedItemsDict[kRoomSettingsJoinRuleKey];

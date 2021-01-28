@@ -60,7 +60,7 @@ class TabbedHomeViewController: RecentsViewController {
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_start_chat_with", in: "Vector"), style: .default, handler: nil)) //create 1:1 chat
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_create_empty_room", in: "Vector"), style: .default, handler: {_ in
             let newvc = AlternateRoomCreationFlowAddMembersController()
-            self.navigationController?.show(newvc, sender: self)
+            AppDelegate.theDelegate().masterTabBarController.show(newvc, sender: self)
         })) //create group chat
         menu.addAction(UIAlertAction(title: AlternateHomeTools.getNSLocalized("room_recents_join_room", in: "Vector"), style: .default, handler: nil)) //join a chat
         
@@ -78,8 +78,10 @@ class TabbedHomeViewController: RecentsViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        guard let session = AppDelegate.theDelegate().mxSessions.first as? MXSession else { return }
+        guard let session = AppDelegate.theDelegate().mxSessions.last as? MXSession else { return }
+        AppDelegate.theDelegate().masterTabBarController.navigationItem.title = AlternateHomeTools.getNSLocalized("title_home", in: "Vector")
         initialDrawComplete = false
+        
         if homeDataSource == nil {
             homeDataSource = AlternateHomeDataSource(matrixSession: session)
             homeDataSource.countsUpdated = {

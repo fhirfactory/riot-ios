@@ -606,6 +606,10 @@ internal enum VectorL10n {
   internal static var crossSigningSetupBannerTitle: String { 
     return VectorL10n.tr("Vector", "cross_signing_setup_banner_title") 
   }
+  /// Date
+  internal static var date: String { 
+    return VectorL10n.tr("Vector", "date") 
+  }
   /// Please forget all messages I have sent when my account is deactivated (
   internal static var deactivateAccountForgetMessagesInformationPart1: String { 
     return VectorL10n.tr("Vector", "deactivate_account_forget_messages_information_part1") 
@@ -657,6 +661,10 @@ internal enum VectorL10n {
   /// Decline
   internal static var decline: String { 
     return VectorL10n.tr("Vector", "decline") 
+  }
+  /// Select a Designation
+  internal static var designationSelect: String { 
+    return VectorL10n.tr("Vector", "designation_select") 
   }
   /// The other party cancelled the verification.
   internal static var deviceVerificationCancelled: String { 
@@ -1190,6 +1198,10 @@ internal enum VectorL10n {
   internal static func errorNotSupportedOnMobile(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "error_not_supported_on_mobile", p1)
   }
+  /// Error
+  internal static var errorTitle: String { 
+    return VectorL10n.tr("Vector", "error_title") 
+  }
   /// It looks like you’re trying to connect to another homeserver. Do you want to sign out?
   internal static var errorUserAlreadyLoggedIn: String { 
     return VectorL10n.tr("Vector", "error_user_already_logged_in") 
@@ -1445,6 +1457,14 @@ internal enum VectorL10n {
   /// Identity Server
   internal static var identityServerSettingsTitle: String { 
     return VectorL10n.tr("Vector", "identity_server_settings_title") 
+  }
+  /// Description
+  internal static var imageDescriptionName: String { 
+    return VectorL10n.tr("Vector", "image_description_name") 
+  }
+  /// Provide an image description
+  internal static var imageDescriptionPlaceholder: String { 
+    return VectorL10n.tr("Vector", "image_description_placeholder") 
   }
   /// Take photo
   internal static var imagePickerActionCamera: String { 
@@ -1966,6 +1986,26 @@ internal enum VectorL10n {
   internal static var mediaPickerTitle: String { 
     return VectorL10n.tr("Vector", "media_picker_title") 
   }
+  /// Please ensure CHS policy is followed when documenting patient consent
+  internal static var mediaTagPolicy: String { 
+    return VectorL10n.tr("Vector", "media_tag_policy") 
+  }
+  /// Save
+  internal static var mediaTagSaveNonPatientMedia: String { 
+    return VectorL10n.tr("Vector", "media_tag_save_non_patient_media") 
+  }
+  /// Save
+  internal static var mediaTagSavePatientMedia: String { 
+    return VectorL10n.tr("Vector", "media_tag_save_patient_media") 
+  }
+  /// Tag Patient
+  internal static var mediaTagTitle: String { 
+    return VectorL10n.tr("Vector", "media_tag_title") 
+  }
+  /// Are you sure you want to save without tagging a patient?
+  internal static var mediaTagUntaggedAlertDescription: String { 
+    return VectorL10n.tr("Vector", "media_tag_untagged_alert_description") 
+  }
   /// Audio
   internal static var mediaTypeAccessibilityAudio: String { 
     return VectorL10n.tr("Vector", "media_type_accessibility_audio") 
@@ -1990,6 +2030,10 @@ internal enum VectorL10n {
   internal static var mediaTypeAccessibilityVideo: String { 
     return VectorL10n.tr("Vector", "media_type_accessibility_video") 
   }
+  /// Forward a message to a Room
+  internal static var messageForwardingTitle: String { 
+    return VectorL10n.tr("Vector", "message_forwarding_title") 
+  }
   /// More
   internal static var more: String { 
     return VectorL10n.tr("Vector", "more") 
@@ -2001,6 +2045,10 @@ internal enum VectorL10n {
   /// Next
   internal static var next: String { 
     return VectorL10n.tr("Vector", "next") 
+  }
+  /// No
+  internal static var no: String { 
+    return VectorL10n.tr("Vector", "no") 
   }
   /// %@ is calling you but %@ does not support calls yet.\nYou can ignore this notification and answer the call from another device or you can reject it.
   internal static func noVoip(_ p1: String, _ p2: String) -> String {
@@ -2021,6 +2069,10 @@ internal enum VectorL10n {
   /// or
   internal static var or: String { 
     return VectorL10n.tr("Vector", "or") 
+  }
+  /// d-MMM-yyyy
+  internal static var patientDobFormat: String { 
+    return VectorL10n.tr("Vector", "patient_dob_format") 
   }
   /// CONVERSATIONS
   internal static var peopleConversationSection: String { 
@@ -2049,6 +2101,14 @@ internal enum VectorL10n {
   /// %@ doesn't have permission to access photo library, please change privacy settings
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "photo_library_access_not_granted", p1)
+  }
+  /// d-MMM-yyyy
+  internal static var photoMetadataTakenFormat: String { 
+    return VectorL10n.tr("Vector", "photo_metadata_taken_format") 
+  }
+  /// h:mm a
+  internal static var photoMetadataTakenTimeFormat: String { 
+    return VectorL10n.tr("Vector", "photo_metadata_taken_time_format") 
   }
   /// Create a PIN for security
   internal static var pinProtectionChoosePin: String { 
@@ -2129,6 +2189,10 @@ internal enum VectorL10n {
   /// Preview
   internal static var preview: String { 
     return VectorL10n.tr("Vector", "preview") 
+  }
+  /// Previous Tag
+  internal static var previousTag: String { 
+    return VectorL10n.tr("Vector", "previous_tag") 
   }
   /// Public Rooms (at %@):
   internal static func publicRoomSectionTitle(_ p1: String) -> String {
@@ -4174,6 +4238,14 @@ internal enum VectorL10n {
   internal static var shareExtensionFailedToEncrypt: String { 
     return VectorL10n.tr("Vector", "share_extension_failed_to_encrypt") 
   }
+  /// Show Less
+  internal static var showLess: String { 
+    return VectorL10n.tr("Vector", "show_less") 
+  }
+  /// Show More
+  internal static var showMore: String { 
+    return VectorL10n.tr("Vector", "show_more") 
+  }
   /// Sign out
   internal static var signOutExistingKeyBackupAlertSignOutAction: String { 
     return VectorL10n.tr("Vector", "sign_out_existing_key_backup_alert_sign_out_action") 
@@ -4245,6 +4317,22 @@ internal enum VectorL10n {
   /// Switch
   internal static var `switch`: String { 
     return VectorL10n.tr("Vector", "switch") 
+  }
+  /// Please select a designation before saving.
+  internal static var tagErrorNoRoleSelected: String { 
+    return VectorL10n.tr("Vector", "tag_error_no_role_selected") 
+  }
+  /// Tag History
+  internal static var tagHistoryTitle: String { 
+    return VectorL10n.tr("Vector", "tag_history_title") 
+  }
+  /// Taken
+  internal static var taken: String { 
+    return VectorL10n.tr("Vector", "taken") 
+  }
+  /// Time
+  internal static var time: String { 
+    return VectorL10n.tr("Vector", "time") 
   }
   /// Favourites
   internal static var titleFavourites: String { 
@@ -4402,9 +4490,17 @@ internal enum VectorL10n {
   internal static var view: String { 
     return VectorL10n.tr("Vector", "view") 
   }
+  /// View Tag History
+  internal static var viewTagHistory: String { 
+    return VectorL10n.tr("Vector", "view_tag_history") 
+  }
   /// Voice
   internal static var voice: String { 
     return VectorL10n.tr("Vector", "voice") 
+  }
+  /// This media has patient tag changes
+  internal static var warnTagChanges: String { 
+    return VectorL10n.tr("Vector", "warn_tag_changes") 
   }
   /// Warning
   internal static var warning: String { 
@@ -4501,6 +4597,10 @@ internal enum VectorL10n {
   /// Add some now?
   internal static var widgetStickerPickerNoStickerpacksAlertAddNow: String { 
     return VectorL10n.tr("Vector", "widget_sticker_picker_no_stickerpacks_alert_add_now") 
+  }
+  /// Yes
+  internal static var yes: String { 
+    return VectorL10n.tr("Vector", "yes") 
   }
   /// Yesterday
   internal static var yesterday: String { 

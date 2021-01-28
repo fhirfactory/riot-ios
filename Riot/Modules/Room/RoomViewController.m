@@ -16,7 +16,6 @@
  limitations under the License.
  */
 
-#import "Riot-Swift.h"
 #import "RoomViewController.h"
 
 #import "RoomDataSource.h"
@@ -122,7 +121,7 @@
 #import "EventFormatter.h"
 #import <MatrixKit/MXKSlashCommands.h>
 #import <objc/message.h>
-//#import "Riot-Swift.h"
+#import "Riot-Swift.h"
 
 @interface RoomViewController () <UISearchBarDelegate, UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate, RoomTitleViewTapGestureDelegate, RoomParticipantsViewControllerDelegate, MXKRoomMemberDetailsViewControllerDelegate, ContactsTableViewControllerDelegate, MXServerNoticesDelegate, RoomContextualMenuViewControllerDelegate,
     ReactionsMenuViewModelCoordinatorDelegate, EditHistoryCoordinatorBridgePresenterDelegate, MXKDocumentPickerPresenterDelegate, EmojiPickerCoordinatorBridgePresenterDelegate,
@@ -368,6 +367,8 @@
     [self.bubblesTableView registerClass:RoomCreationCollapsedBubbleCell.class forCellReuseIdentifier:RoomCreationCollapsedBubbleCell.defaultReuseIdentifier];
     [self.bubblesTableView registerClass:RoomCreationWithPaginationCollapsedBubbleCell.class forCellReuseIdentifier:RoomCreationWithPaginationCollapsedBubbleCell.defaultReuseIdentifier];
     
+    [self.bubblesTableView registerNib:[RoomMessageContentCell nib] forCellReuseIdentifier:@"RoomMessageContentCell"];
+    
     // Replace the default input toolbar view.
     // Note: this operation will force the layout of subviews. That is why cell view classes must be registered before.
     [self updateRoomInputToolbarViewClassIfNeeded];
@@ -375,7 +376,7 @@
     // set extra area
     [self setRoomActivitiesViewClass:RoomActivitiesView.class];
     
-    // Custom the attachmnet viewer
+    // Custom the attachment viewer
     [self setAttachmentsViewerClass:AttachmentsViewController.class];
     
     // Custom the event details view
@@ -1890,6 +1891,9 @@
 
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
+    if (enableNewRoomRendering){
+        return RoomMessageContentCell.class;
+    }
     Class cellViewClass = nil;
     BOOL showEncryptionBadge = NO;
     
@@ -5229,7 +5233,7 @@
     
     // Copy action
     
-    BOOL isCopyActionEnabled = (!attachment || attachment.type != MXKAttachmentTypeSticker) && (BuildSettings.sharingFeaturesEnabled || !attachment);
+    BOOL isCopyActionEnabled = !attachment || (attachment.type != MXKAttachmentTypeSticker && BuildSettings.sharingFeaturesEnabled);
     
     if (isCopyActionEnabled)
     {
@@ -5400,37 +5404,10 @@
     } else {
         [actionItems addObject:replyMenuItem];
         //only allow forwarding attachments
-        if (attachment){
+        if (attachment && attachment.type == MXKAttachmentTypeImage){
             RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
             menuItem.action = ^{
-                RoomSelector *nextDisplay = [RoomSelector new];
-                [nextDisplay SetCallback: ^(MXRoom* room){
-                    NSString* roomId = self.roomDataSource.roomId;
-                    //disallow a user forwarding an attachment to the same room
-                    if ([room.roomId isEqual:roomId]){
-                        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_forward_same_room_error_title", @"Vector", nil) message:NSLocalizedStringFromTable(@"room_event_action_forward_same_room_error_description", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"close", @"Vector", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                            //we don't need to do anything here, the alert was just to warn of the error
-                        }];
-                        [alert addAction:action];
-                        [self presentViewController:alert animated:YES completion:nil];
-                    }else{
-                        //We actually have to create a room data source in order to send the message if we want the message to be visible to the sender in this matrix session.
-                        //This isn't very efficient, and is an inelegant solution, but I guess at least it works.
-                        [RoomDataSource loadRoomDataSourceWithRoomId:room.roomId initialEventId:nil andMatrixSession:self.mainSession onComplete:^(id roomDataSource) {
-                            MXKRoomDataSource *rds = roomDataSource;
-                            [rds sendMessageWithContent:event.content success:^(NSString *eventId) {
-                                [rds invalidateBubblesCellDataCache]; //this appears to fix an issue whereby if a message was received at the same time that we forwarded a message, a room could end up having duplicate timelines. I don't know why this was a thing that could happen, and I don't really want to know, but this fix seems to mean we can send the message from this current room, rather than having to actually display the room we're forwarding to.
-                                
-                                // TODO:- 201130 - Revist this code after the rendering stack is updated, as this may not be necessary with those MatrixKit changes.
-                                [rds markAllAsRead]; //This is another gross thing we have to do. If we don't the system won't mark the attachment we just sent at having been read by us, so phantom notifications will begin to appear over time. Worse still, since the messages were sent by us, the read receipt counting system won't display the badge unless there's also a notification from someone else, so depending on how many attachments you've sent, you can end up with a situation where, from one message from someone else, the number of missed notifications on a room will jump from 0 (or no badge) to greater than 10.
-                            } failure:^(NSError *error) {
-                                //currently, there's not really much we can probably do if there's an error. This is an incredibly unlikely situation though, as the message will typically be under a kilobyte, and even if it doesn't correctly send due to network issues, can usually be resent when reconnected.
-                            }];
-                        }];
-                    }
-                }];
-                [self presentViewController:nextDisplay animated:YES completion:nil];
+                [[AppDelegate theDelegate] forwardAttachment:attachment];
                 [self hideContextualMenuAnimated:YES];
             };
             [actionItems addObject:menuItem];
@@ -5591,8 +5568,13 @@
     }];
 }
 
+//Enable the new room rendering pipeline. Currently, this must be set to true for tags and other custom elements to render correctly.
+BOOL enableNewRoomRendering = TRUE;
+
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
-    
+    if (enableNewRoomRendering){
+        return @"RoomMessageContentCell";
+    }
     return [super cellReuseIdentifierForCellData:cellData];
 }
 
@@ -5754,13 +5736,48 @@
 
 - (void)cameraPresenter:(CameraPresenter *)cameraPresenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti
 {
-    [cameraPresenter dismissWithAnimated:YES completion:nil];
-    self.cameraPresenter = nil;
-    
-    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
-    if (roomInputToolbarView)
-    {
-        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:NO];
+    if (BuildSettings.sendMessageRequirePatientTagging){
+        
+        [cameraPresenter dismissWithAnimated:YES completion:^{
+            PatientTaggingViewController *PatientTaggingController = [PatientTaggingViewController new];
+            [PatientTaggingController setImageTo: imageData WithHandler:^(TagData *tagData) {
+                if (tagData.Patients.count > 0){
+                    //A patient was tagged
+                    //TODO: Replace this debug message with the actual actions necessary to tag the patient and upload to CPF.
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Tagged Photo Uploaded"
+                                                   message:@"The tagged photo of the patient would now be uploaded, with relevant tag data being stored by the CPF. This feature is pending on updates to the backend."
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
+                } else {
+                    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
+                }
+            }];
+            [self showViewController:PatientTaggingController sender:self];
+        }];
+        self.cameraPresenter = nil;
+        
+        /*RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+        if (roomInputToolbarView)
+        {
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+        }*/
+    }else{
+        [cameraPresenter dismissWithAnimated:YES completion:nil];
+        self.cameraPresenter = nil;
+        
+        RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+        if (roomInputToolbarView)
+        {
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+        }
     }
 }
 
@@ -5786,14 +5803,35 @@
 
 - (void)mediaPickerCoordinatorBridgePresenter:(MediaPickerCoordinatorBridgePresenter *)coordinatorBridgePresenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti
 {
-    [coordinatorBridgePresenter dismissWithAnimated:YES completion:nil];
-    self.mediaPickerPresenter = nil;
-    
+    if (BuildSettings.sendMessageRequirePatientTagging){
+        [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
+            PatientTaggingViewController *PatientTaggingController = [PatientTaggingViewController new];
+            [PatientTaggingController setImageTo: imageData WithHandler:^(TagData *tagData) {
+                if (tagData.Patients.count > 0){
+                    //A patient was tagged
+                } else {
+                    RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
+                }
+            }];
+            [self showViewController:PatientTaggingController sender:self];
+        }];
+        self.mediaPickerPresenter = nil;
+        
+    } else {
+        RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
+        if (roomInputToolbarView)
+        {
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:YES];
+        }
+    }
+    /*
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
         [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
     }
+     */
 }
 
 - (void)mediaPickerCoordinatorBridgePresenter:(MediaPickerCoordinatorBridgePresenter *)coordinatorBridgePresenter didSelectVideoAt:(NSURL *)url

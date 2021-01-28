@@ -222,7 +222,8 @@ final class BuildSettings: NSObject {
     
     static let roomSettingsScreenShowLowPriorityOption: Bool = true
     static let roomSettingsScreenShowDirectChatOption: Bool = false
-    static let roomSettingsScreenAllowChangingAccessSettings: Bool = false
+    static let roomSettingsScreenAllowChangingAccessSettings: Bool = true
+    static let roomSettingsScreenShowAccessMode: Bool = false
     static let roomSettingsScreenAllowChangingHistorySettings: Bool = true
     static let roomSettingsScreenShowAddressSettings: Bool = false
     static let roomSettingsScreenShowFlairSettings: Bool = false
@@ -270,11 +271,15 @@ final class BuildSettings: NSObject {
     /// Value to customise the image logo at the top of the authenticaiton screen
     static let authScreenImageLogoName: String = "lingo_logo_dark"
     
+    // MARK: - Domain Specific Settings
+    static let sendMessageRequirePatientTagging: Bool = true
+    
     // MARK: - Home Screen
     static let homeScreenShowFavourites : Bool = false
     
     // MARK: - Theme Application Settings
     /// Additional toggles that determine if theme customisations should apply to particular elements of the application
     static let themeAppliesToLoginPageLogo: Bool = false
+    static let defaultAnimationLength: Double = 0.4
     
 }

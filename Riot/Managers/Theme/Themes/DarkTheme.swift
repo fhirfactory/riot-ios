@@ -24,6 +24,7 @@ class DarkTheme: NSObject, Theme {
     var identifier: String = "dark"
 
     var backgroundColor: UIColor = UIColor(rgbHex: 0x15191E)
+    var backgroundShadedColor: UIColor = UIColor(rgbHex: 0x8A8C8E)
 
     var baseColor: UIColor = UIColor(rgbHex: 0x21262C)
     var baseIconPrimaryColor: UIColor = UIColor(rgbHex: 0xEDF3FF)

@@ -24,6 +24,7 @@ class DefaultTheme: NSObject, Theme {
     var identifier: String = "default"
     
     var backgroundColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
+    var backgroundShadedColor: UIColor = UIColor(rgbHex: 0xDEDEDE)
 
     var baseColor: UIColor = UIColor(rgbHex: 0xF5F7FA)
     var baseIconPrimaryColor: UIColor = UIColor(rgbHex: 0xFFFFFF)

@@ -159,7 +159,6 @@ class AlternateHomeViewController: RecentsViewController {
             // Fallback on earlier versions
         }
         createSections()
-        
     }
     
     func getIndex(mode: HomeViewMode) -> Int {

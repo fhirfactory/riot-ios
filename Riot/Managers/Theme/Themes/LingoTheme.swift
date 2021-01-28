@@ -25,6 +25,7 @@ class LingoTheme: NSObject, Theme {
     var identifier: String = "lingo"
     
     var backgroundColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
+    var backgroundShadedColor: UIColor = UIColor(rgbHex: 0xDEDEDE)
 
     var baseColor: UIColor = UIColor(rgbHex: 0xF5F7FA)
     var baseIconPrimaryColor: UIColor = UIColor(rgbHex: 0xFFFFFF)

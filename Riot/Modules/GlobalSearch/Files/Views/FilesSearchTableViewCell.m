@@ -42,7 +42,22 @@
 }
 
 - (void)render:(MXKCellData*)cellData
-{    
+{
+    
+    if ([self tagWarning]) {
+        [self setTagWarning:NULL];
+        [[self tagWarning] removeFromSuperview];
+        for (UIView *view in self.contentView.subviews) {
+            [view removeFromSuperview];
+        }
+        [self.contentView addSubview:[self originalContentView]];
+        [self.contentView addConstraints:@[
+            [[self originalContentView].leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+            [[self originalContentView].trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+            [[self originalContentView].topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+            [[self originalContentView].bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor]
+        ]];
+    }
     self.attachmentImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     if ([cellData conformsToProtocol:@protocol(MXKSearchCellDataStoring)])
@@ -78,6 +93,43 @@
             {
                 self.attachmentImageView.backgroundColor = ThemeService.shared.theme.backgroundColor;
                 [self.attachmentImageView setAttachmentThumb:bubbleData.attachment];
+            }
+            
+            if (bubbleData.attachment.type == MXKAttachmentTypeImage) {
+                [[Services ImageTagDataService] LookupTagInfoForObjcWithURL: bubbleData.attachment.contentURL andHandler:^(NSArray *tagData) {
+                    
+                    bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:[tagData lastObject]];
+                    if (containsChanges) {
+                        if ([self tagWarning]) {
+                            [[self tagWarning].contentView setHidden:NO];
+                            [self.contentView layoutIfNeeded];
+                            [self.contentView layoutSubviews];
+                        } else {
+                            Stackview *stackview = [Stackview new];
+                            
+                            
+                            [self setTagWarning: (TagChangesWarning *) [[[NSBundle bundleForClass:[TagChangesWarning class]] loadNibNamed:@"TagChangesWarning" owner:[TagChangesWarning new] options:NULL] firstObject]];
+                            [[self tagWarning] renderWarning];
+                            [self tagWarning].contentView.translatesAutoresizingMaskIntoConstraints = NO;
+                            UIView *existingView = [self.contentView.subviews firstObject];
+                            [self setOriginalContentView: existingView];
+                            existingView.translatesAutoresizingMaskIntoConstraints = NO;
+                            NSArray *views = [[NSArray alloc] initWithObjects:[self tagWarning].contentView, existingView, nil];
+                            [stackview initWithViews:views];
+                            for (UIView *view in self.contentView.subviews) {
+                                [view removeFromSuperview];
+                            }
+                            stackview.translatesAutoresizingMaskIntoConstraints = NO;
+                            [self.contentView addSubview:stackview];
+                            [self.contentView addConstraints:@[
+                                [stackview.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+                                [stackview.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+                                [stackview.topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+                                [stackview.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor]
+                            ]];
+                        }
+                    }
+                }];
             }
             
             self.iconImage.image = [self attachmentIcon:bubbleData.attachment.type];

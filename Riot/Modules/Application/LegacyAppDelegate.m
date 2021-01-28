@@ -3044,6 +3044,53 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     }];
 }
 
+-(void)forwardAttachment:(MXKAttachment*)attachment
+{
+    [self forwardAttachment:attachment fromViewController:NULL];
+}
+
+-(void)forwardAttachment:(MXKAttachment *)attachment fromViewController:(UIViewController *)viewController {
+    RoomSelector *nextDisplay = [RoomSelector new];
+    [nextDisplay SetCallback: ^(MXRoom* room){
+        NSString* roomId = attachment.eventRoomId;
+        //disallow a user forwarding an attachment to the same room
+        if ([room.roomId isEqual:roomId]){
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_forward_same_room_error_title", @"Vector", nil) message:NSLocalizedStringFromTable(@"room_event_action_forward_same_room_error_description", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"close", @"Vector", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                //we don't need to do anything here, the alert was just to warn of the error
+            }];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+        }else{
+            //We actually have to create a room data source in order to send the message if we want the message to be visible to the sender in this matrix session.
+            //This isn't very efficient, and is an inelegant solution, but I guess at least it works.
+            [RoomDataSource loadRoomDataSourceWithRoomId:room.roomId initialEventId:nil andMatrixSession:self->mxSessionArray.firstObject onComplete:^(id roomDataSource) {
+                MXKRoomDataSource *rds = roomDataSource;
+                NSDictionary *contentInfo = attachment.contentInfo;
+                NSString *contentName = attachment.originalFileName;
+                NSString *contentURL = attachment.contentURL;
+                //TODO: Add support for more content types
+                NSString *msgType = @"m.image";
+                NSDictionary *contentDetails = [[NSDictionary alloc] initWithObjects:[[NSArray alloc] initWithObjects:contentInfo, contentName, contentURL, msgType, nil] forKeys:[[NSArray alloc] initWithObjects:@"info", @"body", @"url", @"msgtype", nil]];
+                [rds sendMessageWithContent:contentDetails success:^(NSString *eventId) {
+                    [rds invalidateBubblesCellDataCache]; //this appears to fix an issue whereby if a message was received at the same time that we forwarded a message, a room could end up having duplicate timelines. I don't know why this was a thing that could happen, and I don't really want to know, but this fix seems to mean we can send the message from this current room, rather than having to actually display the room we're forwarding to.
+                    [rds markAllAsRead]; //This is another gross thing we have to do. If we don't the system won't mark the attachment we just sent at having been read by us, so phantom notifications will begin to appear over time. Worse still, since the messages were sent by us, the read receipt counting system won't display the badge unless there's also a notification from someone else, so depending on how many attachments you've sent, you can end up with a situation where, from one message from someone else, the number of missed notifications on a room will jump from 0 (or no badge) to greater than 10.
+                    //[self.masterNavigationController popToRootViewControllerAnimated:YES];
+                    [self showRoom:room.roomId andEventId:nil withMatrixSession:self->mxSessionArray.firstObject];
+                } failure:^(NSError *error) {
+                    //currently, there's not really much we can probably do if there's an error. This is an incredibly unlikely situation though, as the message will typically be under a kilobyte, and even if it doesn't correctly send due to network issues, can usually be resent when reconnected.
+                }];
+            }];
+        }
+    }];
+    nextDisplay.titleText = NSLocalizedStringFromTable(@"message_forwarding_title", @"Vector", NULL);
+    if (viewController){
+        [viewController presentViewController:nextDisplay animated:YES completion:nil];
+    } else {
+        [self presentViewController:nextDisplay animated:YES completion:nil];
+    }
+}
+
 #pragma mark - Contacts handling
 
 - (void)showContact:(MXKContact*)contact

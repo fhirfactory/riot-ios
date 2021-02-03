@@ -8,22 +8,27 @@
 
 import UIKit
 
-
-protocol PeopleCellDelegate {
-    func favoriteButtonClick(actPeople: ActPeople?)
-}
-
 class PeopleTableViewCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var jobTitle: UILabel!
     @IBOutlet weak var businessUnit: PaddingLabel!
     @IBOutlet weak var organisation: PaddingLabel!
-    @IBOutlet weak var FavouritesButton: UIButton!
+    @IBOutlet weak var FavouriteButton: UIButton!
     @IBOutlet weak var AvatarImage: MXKImageView!
     
-    var peopleCellDelegate: PeopleCellDelegate?
-    var actPeople: ActPeople?
+    var peopleCellDelegate: FavouriteActionReceiverDelegate?
+    var actPeopleModel: ActPeopleModel?
+    private var _actPerson: ActPeople? = nil
+    var actPerson: ActPeople? {
+        get {
+            guard let p = _actPerson else { return actPeopleModel }
+            return p
+        }
+        set(value) {
+            _actPerson = value
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,21 +41,26 @@ class PeopleTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func favoriteButtonTap(_ sender: Any) {
-        if let delegate = peopleCellDelegate{
-            delegate.favoriteButtonClick(actPeople: actPeople)
+    @IBAction private func favoriteButtonTap(_ sender: Any) {
+        guard let person = actPeopleModel else { return }
+        person.Favourite = !person.Favourite
+        if #available(iOS 13.0, *) {
+            FavouriteButton.setImage(UIImage(systemName: (person.Favourite ? "star.fill" : "star")), for: .normal)
+        } else {
+            // Fallback on earlier versions
         }
+        peopleCellDelegate?.FavouritesUpdated(favourited: person.Favourite)
     }
     
-    func setValue(actPeople: ActPeople, displayFavourites: Bool = true) {
-        self.actPeople = actPeople
-        name.text = actPeople.officialName
-        jobTitle.text = actPeople.jobTitle
-        businessUnit.text = actPeople.businessUnit
-        organisation.text = actPeople.organisation
-        FavouritesButton.isHidden = !displayFavourites
+    func setValue(withPerson: ActPeople) {
+        self.actPerson = withPerson
+        name.text = withPerson.officialName
+        jobTitle.text = withPerson.jobTitle
+        businessUnit.text = withPerson.businessUnit
+        organisation.text = withPerson.organisation
+        FavouriteButton.isHidden = true
         AvatarImage.enableInMemoryCache = true
-        AvatarImage.setImageURI(actPeople.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: actPeople.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager) //This line is a memory leak
+        AvatarImage.setImageURI(withPerson.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: withPerson.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
         AvatarImage.layer.cornerRadius = AvatarImage.frame.width / 2
         AvatarImage.layer.masksToBounds = true
         var currentTheme = ThemeService.shared().theme
@@ -65,5 +75,36 @@ class PeopleTableViewCell: UITableViewCell {
         businessUnit.textColor = currentTheme.textPrimaryColor
         organisation.textColor = currentTheme.textPrimaryColor
         name.textColor = currentTheme.textPrimaryColor
+    }
+    
+    func setValue(actPeople: ActPeopleModel, displayFavourites: Bool = true) {
+        self.actPeopleModel = actPeople
+        name.text = actPeople.officialName
+        jobTitle.text = actPeople.jobTitle
+        businessUnit.text = actPeople.businessUnit
+        organisation.text = actPeople.organisation
+        FavouriteButton.isHidden = !displayFavourites
+        AvatarImage.enableInMemoryCache = true
+        AvatarImage.setImageURI(actPeople.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: actPeople.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
+        AvatarImage.layer.cornerRadius = AvatarImage.frame.width / 2
+        AvatarImage.layer.masksToBounds = true
+        var currentTheme = ThemeService.shared().theme
+        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
+            currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
+        }
+        backgroundColor = currentTheme.backgroundColor
+        
+        AvatarImage.backgroundColor = currentTheme.backgroundColor
+        
+        jobTitle.textColor = currentTheme.textPrimaryColor
+        businessUnit.textColor = currentTheme.textPrimaryColor
+        organisation.textColor = currentTheme.textPrimaryColor
+        name.textColor = currentTheme.textPrimaryColor
+        
+        if #available(iOS 13.0, *) {
+            FavouriteButton.setImage(UIImage(systemName: (actPeople.Favourite ? "star.fill" : "star")), for: .normal)
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }

@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActServicesViewController" customModule="Riot" customModuleProvider="target">
             <connections>
                 <outlet property="FavouritesButton" destination="Ngc-bJ-PmZ" id="zAa-5S-B1b"/>
+                <outlet property="SearchBar" destination="cdo-Sh-OTv" id="z2g-ge-oBa"/>
                 <outlet property="tableView" destination="UEg-8a-UNf" id="gKQ-IV-qyf"/>
                 <outlet property="view" destination="iN0-l3-epB" id="ysQ-wo-Dyu"/>
             </connections>
@@ -21,9 +22,12 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="cdo-Sh-OTv">
+                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="cdo-Sh-OTv" customClass="MinimalSearchBar" customModule="Riot" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="363" height="56"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="xkr-Rt-l49"/>
+                    </connections>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UEg-8a-UNf">
                     <rect key="frame" x="0.0" y="100" width="414" height="762"/>

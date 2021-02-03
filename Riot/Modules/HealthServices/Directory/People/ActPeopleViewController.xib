@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActPeopleViewController" customModule="Riot" customModuleProvider="target">
             <connections>
+                <outlet property="FavouritesButton" destination="5ES-YK-gR2" id="DAA-le-o7Y"/>
                 <outlet property="attachedSearchBar" destination="uKW-Ei-pi1" id="li1-nb-b4h"/>
                 <outlet property="tableView" destination="rNO-Wo-HJS" id="OzW-L6-mza"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -21,33 +22,58 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="uKW-Ei-pi1">
-                    <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="hOr-Nr-1qu"/>
-                    </constraints>
+                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="uKW-Ei-pi1" customClass="MinimalSearchBar" customModule="Riot" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="363" height="56"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="EBP-Wi-jEu"/>
+                    </connections>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rNO-Wo-HJS">
-                    <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Zi-Cx-Znx">
+                    <rect key="frame" x="363" y="44" width="51" height="56"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ES-YK-gR2">
+                            <rect key="frame" x="5" y="5.5" width="41" height="45"/>
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" image="star" catalog="system"/>
+                            <connections>
+                                <action selector="FavouritesToggled:" destination="-1" eventType="touchUpInside" id="ukA-P6-0GO"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="5ES-YK-gR2" firstAttribute="centerX" secondItem="4Zi-Cx-Znx" secondAttribute="centerX" id="FV8-4g-mJM"/>
+                        <constraint firstItem="5ES-YK-gR2" firstAttribute="width" secondItem="4Zi-Cx-Znx" secondAttribute="width" multiplier="0.8" id="ocS-ZD-rY5"/>
+                        <constraint firstItem="5ES-YK-gR2" firstAttribute="centerY" secondItem="4Zi-Cx-Znx" secondAttribute="centerY" id="vWO-BA-tvo"/>
+                        <constraint firstItem="5ES-YK-gR2" firstAttribute="height" secondItem="4Zi-Cx-Znx" secondAttribute="height" multiplier="0.8" id="wVx-qA-waz"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="uKW-Ei-pi1" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2eE-Fv-cr3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rNO-Wo-HJS" secondAttribute="trailing" id="45u-Bh-Pp8"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4Zi-Cx-Znx" secondAttribute="trailing" id="7Ak-1M-vDn"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="uKW-Ei-pi1" secondAttribute="trailing" constant="51" id="Ffw-4H-Qkb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rNO-Wo-HJS" secondAttribute="bottom" id="HyV-Af-jKh"/>
+                <constraint firstItem="rNO-Wo-HJS" firstAttribute="top" secondItem="4Zi-Cx-Znx" secondAttribute="bottom" id="LC4-Ow-EDt"/>
                 <constraint firstItem="uKW-Ei-pi1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Msb-Yy-Qzq"/>
                 <constraint firstItem="rNO-Wo-HJS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="QXd-Lr-anx"/>
+                <constraint firstItem="4Zi-Cx-Znx" firstAttribute="leading" secondItem="uKW-Ei-pi1" secondAttribute="trailing" id="TGx-G8-1NG"/>
+                <constraint firstItem="4Zi-Cx-Znx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="hs6-3o-qqr"/>
                 <constraint firstItem="uKW-Ei-pi1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tOL-Ga-wHF"/>
                 <constraint firstItem="rNO-Wo-HJS" firstAttribute="top" secondItem="uKW-Ei-pi1" secondAttribute="bottom" id="zUM-Mu-vFE"/>
             </constraints>
-            <point key="canvasLocation" x="133" y="140"/>
+            <point key="canvasLocation" x="131.8840579710145" y="139.95535714285714"/>
         </view>
     </objects>
     <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

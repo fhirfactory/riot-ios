@@ -15,11 +15,17 @@
 //
 
 import Foundation
-///Displays a message like "You haven't marked any Services as favourites." to inform the user of what the favourites filter does.
-class NoFavouritesTableViewCell: UITableViewCell {
-    @IBOutlet weak var TextContent: UILabel!
-    func SetItem(to: String) {
-        TextContent.text = String(format: AlternateHomeTools.getNSLocalized("directory_no_favourites_set", in: "Vector"), to)
-        ThemeService.shared().theme.recursiveApply(on: contentView)
+
+class ServiceModel: Service {
+    private var _favourite: Bool = false
+    var Favourite: Bool {
+        get {
+            //get from a database or something (preferably local storage)
+            return _favourite
+        }
+        set(value) {
+            //send to a database, or something
+            _favourite = value
+        }
     }
 }

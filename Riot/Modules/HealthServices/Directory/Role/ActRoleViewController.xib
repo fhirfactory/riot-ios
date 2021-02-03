@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -9,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActRoleViewController" customModule="Riot" customModuleProvider="target">
             <connections>
+                <outlet property="FavouritesButton" destination="B2c-jh-aY9" id="Hh6-VF-MkS"/>
+                <outlet property="SearchBar" destination="V5b-un-Q1C" id="tuE-lF-A5b"/>
                 <outlet property="rolesTableView" destination="NB8-4x-o5n" id="heM-tM-dMN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,22 +23,59 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NB8-4x-o5n">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="V5b-un-Q1C" customClass="MinimalSearchBar" customModule="Riot" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="363" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="qK2-Ob-ngk"/>
+                    </constraints>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="bK5-kh-X9r"/>
+                    </connections>
+                </searchBar>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HDF-vp-bMI">
+                    <rect key="frame" x="363" y="44" width="51" height="56"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B2c-jh-aY9">
+                            <rect key="frame" x="5" y="5.5" width="41" height="45"/>
+                            <state key="normal" image="star" catalog="system"/>
+                            <connections>
+                                <action selector="FavouritesToggled:" destination="-1" eventType="touchUpInside" id="A7t-0A-1QQ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="B2c-jh-aY9" firstAttribute="centerX" secondItem="HDF-vp-bMI" secondAttribute="centerX" id="K4F-si-isK"/>
+                        <constraint firstItem="B2c-jh-aY9" firstAttribute="width" secondItem="HDF-vp-bMI" secondAttribute="width" multiplier="0.8" id="TqD-5g-nXh"/>
+                        <constraint firstAttribute="width" constant="51" id="W59-Ti-1bA"/>
+                        <constraint firstItem="B2c-jh-aY9" firstAttribute="height" secondItem="HDF-vp-bMI" secondAttribute="height" multiplier="0.8" id="fSa-yC-4AX"/>
+                        <constraint firstItem="B2c-jh-aY9" firstAttribute="centerY" secondItem="HDF-vp-bMI" secondAttribute="centerY" id="sTi-tG-WYP"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="NB8-4x-o5n" firstAttribute="top" secondItem="HDF-vp-bMI" secondAttribute="bottom" id="3CS-tx-aQn"/>
                 <constraint firstItem="NB8-4x-o5n" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9Bx-Lb-piv"/>
+                <constraint firstItem="HDF-vp-bMI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Af1-zC-tjk"/>
+                <constraint firstItem="NB8-4x-o5n" firstAttribute="top" secondItem="V5b-un-Q1C" secondAttribute="bottom" id="BZR-Gs-2kE"/>
                 <constraint firstItem="NB8-4x-o5n" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Cj7-oy-gla"/>
-                <constraint firstItem="NB8-4x-o5n" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="GtD-uS-JzJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NB8-4x-o5n" secondAttribute="bottom" id="PF1-6H-nBe"/>
+                <constraint firstItem="V5b-un-Q1C" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Y9x-3A-SbQ"/>
+                <constraint firstItem="V5b-un-Q1C" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="cvs-0z-zC3"/>
+                <constraint firstItem="HDF-vp-bMI" firstAttribute="leading" secondItem="V5b-un-Q1C" secondAttribute="trailing" id="nV8-0I-yI5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="HDF-vp-bMI" secondAttribute="trailing" id="r2R-Dj-L4o"/>
             </constraints>
             <point key="canvasLocation" x="28.985507246376812" y="67.633928571428569"/>
         </view>
     </objects>
     <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

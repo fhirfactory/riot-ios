@@ -16,8 +16,10 @@
 import Foundation
 class LoadingDataTableViewCell: UITableViewCell {
     @IBOutlet weak var LoadingDataTitle: UILabel!
+    @IBOutlet weak var LoadingIndicator: UIActivityIndicatorView!
     override func awakeFromNib() {
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
         LoadingDataTitle.text = AlternateHomeTools.getNSLocalized("fetching_data", in: "Vector")
+        LoadingIndicator.color = ThemeService.shared().theme.tintColor
     }
 }

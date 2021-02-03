@@ -49,6 +49,9 @@
                         <rect key="frame" x="364" y="2" width="22" height="22"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" image="star" catalog="system"/>
+                        <connections>
+                            <action selector="FavouriteButtonPressed:" destination="Fnb-bg-egU" eventType="touchUpInside" id="8A2-be-i2U"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -69,6 +72,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="FavouriteButton" destination="Gw3-kR-0nl" id="7XQ-R9-qZR"/>
                 <outlet property="LocationFirstLine" destination="yVD-4X-L1D" id="Fnk-pl-Jcs"/>
                 <outlet property="LocationSecondLine" destination="ANI-WD-aXY" id="PdS-1O-6dS"/>
                 <outlet property="LocationTitle" destination="UWM-Fu-Y5D" id="x4T-N5-wGm"/>

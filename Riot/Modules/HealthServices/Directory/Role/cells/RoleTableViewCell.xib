@@ -98,7 +98,10 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUP-nK-TCe">
                                                 <rect key="frame" x="0.0" y="1" width="22.5" height="22"/>
                                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" image="star.fill" catalog="system"/>
+                                                <state key="normal" image="star" catalog="system"/>
+                                                <connections>
+                                                    <action selector="FavouriteToggled:" destination="qc8-gD-Z5G" eventType="touchUpInside" id="VfR-IY-bpm"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1IN-6y-CmD">
                                                 <rect key="frame" x="-2" y="26" width="22.5" height="24"/>
@@ -191,6 +194,7 @@
             <viewLayoutGuide key="safeArea" id="gts-Sh-P2o"/>
             <connections>
                 <outlet property="CategoryLabel" destination="qPu-GJ-eRj" id="kSu-EP-Ubv"/>
+                <outlet property="FavouriteButton" destination="cUP-nK-TCe" id="Lc4-Za-TtQ"/>
                 <outlet property="LocationLabel" destination="bIC-KS-pCD" id="kOM-76-4i4"/>
                 <outlet property="OrgUnitLabel" destination="SjV-DD-jAJ" id="WB2-qq-BeU"/>
                 <outlet property="RoleIcon" destination="SPB-sq-FP5" id="X29-jd-jMx"/>
@@ -205,7 +209,7 @@
     <resources>
         <image name="call_video_mute_off_icon" width="32" height="32"/>
         <image name="shrink_icon" width="12" height="6"/>
-        <image name="star.fill" catalog="system" width="128" height="116"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <image name="voice_call_hangon_icon" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

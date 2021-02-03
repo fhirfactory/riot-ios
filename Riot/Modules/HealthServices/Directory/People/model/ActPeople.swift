@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ActPeople: Equatable {
+class ActPeople: Equatable {
     var baseUser: MXUser
     var officialName: String
     var jobTitle: String
@@ -27,5 +27,19 @@ struct ActPeople: Equatable {
     }
     static func == (lhs: ActPeople, rhs: ActPeople) -> Bool {
         lhs.baseUser.userId == rhs.baseUser.userId
+    }
+}
+
+
+class ActPeopleModel: ActPeople {
+    private var _favourite = false
+    //Update some database or something when this changes
+    var Favourite: Bool {
+        get {
+            return _favourite
+        }
+        set(value) {
+            _favourite = value
+        }
     }
 }

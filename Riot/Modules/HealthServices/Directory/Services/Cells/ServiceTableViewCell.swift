@@ -20,15 +20,34 @@ class ServiceTableViewCell: UITableViewCell {
     @IBOutlet weak var LocationTitle: UILabel!
     @IBOutlet weak var LocationFirstLine: UILabel!
     @IBOutlet weak var LocationSecondLine: UILabel!
-    var Service: Service!
-    func setService(toService: Service) {
+    @IBOutlet weak var FavouriteButton: UIButton!
+    var Service: ServiceModel!
+    var Delegate: FavouriteActionReceiverDelegate!
+    func setService(toService: ServiceModel, withFavouritesDelegate: FavouriteActionReceiverDelegate) {
+        Delegate = withFavouritesDelegate
         Service = toService
         ServiceName.text = toService.Name
         LocationTitle.text = AlternateHomeTools.getNSLocalized("service_detail_location_title", in: "Vector")
         LocationFirstLine.text = toService.LocationFirstLine
         LocationSecondLine.text = toService.LocationSecondLine
+        if #available(iOS 13.0, *) {
+            FavouriteButton.setImage(UIImage(systemName: (toService.Favourite ? "star.fill" : "star")), for: .normal)
+        } else {
+            // Fallback on earlier versions
+        }
     }
     override func awakeFromNib() {
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
+    }
+    @IBAction private func FavouriteButtonPressed(_ sender: Any) {
+        Service.Favourite = !Service.Favourite
+        
+        if #available(iOS 13.0, *) {
+            FavouriteButton.setImage(UIImage(systemName: (Service.Favourite ? "star.fill" : "star")), for: .normal)
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        Delegate.FavouritesUpdated(favourited: Service.Favourite)
     }
 }

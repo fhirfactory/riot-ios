@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol RoleCellDelegate: class {
+protocol RoleCellDelegate: class, FavouriteActionReceiverDelegate {
     func expandButtonClick(cell: RoleTableViewCell, index: Int)
 }
 
@@ -24,6 +24,9 @@ class RoleTableViewCell: UITableViewCell {
     @IBOutlet weak var OrgUnitLabel: UILabel!
     @IBOutlet weak var LocationLabel: UILabel!
     @IBOutlet weak var RoleIcon: MXKImageView!
+    @IBOutlet weak var FavouriteButton: UIButton!
+    
+    var role: RoleModel?
     
     weak var delegate: RoleCellDelegate?
     var index: Int = 0
@@ -46,7 +49,19 @@ class RoleTableViewCell: UITableViewCell {
         }
     }
     
+    @IBAction func FavouriteToggled(_ sender: Any) {
+        guard let theRole = role else { return }
+        theRole.Favourite = !theRole.Favourite
+        if #available(iOS 13.0, *) {
+            FavouriteButton.setImage(UIImage(systemName: (theRole.Favourite ? "star.fill" : "star")), for: .normal)
+        } else {
+            // Fallback on earlier versions
+        }
+        delegate?.FavouritesUpdated(favourited: theRole.Favourite)
+    }
+    
     func bindModel(role: RoleModel, index: Int) {
+        self.role = role
         self.isDisplayed = role.isExpanded
         self.index = index
         contactName.text = role.innerRole.Name
@@ -56,5 +71,10 @@ class RoleTableViewCell: UITableViewCell {
         CategoryLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_category", in: "Vector"), role.innerRole.Category)
         OrgUnitLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_org_unit", in: "Vector"), role.innerRole.OrgUnit)
         LocationLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_location", in: "Vector"), role.innerRole.Location)
+        if #available(iOS 13.0, *) {
+            FavouriteButton.setImage(UIImage(systemName: (role.Favourite ? "star.fill" : "star")), for: .normal)
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }

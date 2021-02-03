@@ -43,7 +43,7 @@ class RolePractitionerQueryService: DebugService {
     //Query for the practitioners in a role, based on a role's ID
     func GetUsersForRole(queryDetails: Role, success: @escaping ([ActPeople]) -> Void, failure: () -> Void) {
         let session = AppDelegate.theDelegate().mxSessions.first as? MXSession
-        var person = ActPeople(withBaseUser: ((AppDelegate.theDelegate().mxSessions.first as? MXSession)?.user(withUserId: session?.myUserId))!, officialName: "Joseph Fergusson", jobTitle: "App Developer", org: "ACT Health", businessUnit: "I dunno")
+        var person = ActPeople(withBaseUser: ((AppDelegate.theDelegate().mxSessions.first as? MXSession)?.user(withUserId: session?.myUserId))!, officialName: "Some Name", jobTitle: "App Developer", org: "ACT Health", businessUnit: "I dunno")
         person.emailAddress = "email@email.com"
         person.phoneNumber = "0412345678"
         self.performCallback {

@@ -170,4 +170,7 @@ extension PeopleDetailViewController: RoleCellDelegate {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
+    func FavouritesUpdated(favourited: Bool) {
+        
+    }
 }

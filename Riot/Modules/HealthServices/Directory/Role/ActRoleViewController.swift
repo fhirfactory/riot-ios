@@ -9,7 +9,7 @@
 import UIKit
 
 
-private enum SectionType: Int, CaseIterable {
+/*private enum SectionType: Int, CaseIterable {
     case FILTER = 0
     case ROLE_CELL = 1
     
@@ -21,10 +21,12 @@ private enum SectionType: Int, CaseIterable {
             return "RoleTableViewCell"
         }
     }
-}
+}*/
 
 class ActRoleViewController: UIViewController {
     @IBOutlet weak var rolesTableView: UITableView!
+    @IBOutlet weak var FavouritesButton: UIButton!
+    @IBOutlet weak var SearchBar: UISearchBar!
     
     
     // TODO:- This needs to be replaced with appropriate code once the backend is available and can provide role information to the app
@@ -34,6 +36,14 @@ class ActRoleViewController: UIViewController {
         RoleModel(innerRole: Role(name: "ED Acute RMO", longname: "Resident Medical Officer", id: "na", description: "Emergency Department Acute Resident Medical Officer", designation: "Resident Medical Officer", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}"), isExpanded: false),
         RoleModel(innerRole: Role(name: "ED Acute Intern", longname: "Intern", id: "na", description: "Emergency Department Acute Intern", designation: "Intern", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}"), isExpanded: false)
     ]
+    
+    var favourites: [RoleModel] {
+        get {
+            return roles.filter { (r) -> Bool in
+                r.Favourite
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +61,30 @@ class ActRoleViewController: UIViewController {
         setupTableView()
     }
     
+    var showingFavourites: Bool = false
+    @IBAction func FavouritesToggled(_ sender: Any) {
+        showingFavourites = !showingFavourites
+        if #available(iOS 13.0, *) {
+            FavouritesButton.setImage(UIImage(systemName: (showingFavourites ? "star.fill" : "star")), for: .normal)
+        } else {
+            // Fallback on earlier versions
+        }
+        rolesTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if SearchBar.isFirstResponder {
+            SearchBar.resignFirstResponder()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if SearchBar.isFirstResponder {
+            SearchBar.resignFirstResponder()
+        }
+    }
+    
 }
 
 // MARK: Private functions
@@ -63,8 +97,9 @@ extension ActRoleViewController {
         rolesTableView.estimatedRowHeight = 500
         rolesTableView.rowHeight = UITableView.automaticDimension
         rolesTableView.tableFooterView = UIView()
-        rolesTableView.register(UINib(nibName: SectionType.FILTER.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.FILTER.cellIdentifier)
-        rolesTableView.register(UINib(nibName: SectionType.ROLE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_CELL.cellIdentifier)
+        //rolesTableView.register(UINib(nibName: SectionType.FILTER.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.FILTER.cellIdentifier)
+        rolesTableView.register(UINib(nibName: "RoleTableViewCell", bundle: nil), forCellReuseIdentifier: "RoleTableViewCell")
+        rolesTableView.register(UINib(nibName: "NoFavouritesTableViewCell", bundle: nil), forCellReuseIdentifier: "NoFavouritesTableViewCell")
     }
 }
 
@@ -72,35 +107,38 @@ extension ActRoleViewController {
 extension ActRoleViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return SectionType.allCases.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == SectionType.FILTER.rawValue {
-            return 1
+        if showingFavourites {
+            return max(1, favourites.count)
         }
         return roles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == SectionType.FILTER.rawValue {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.FILTER.cellIdentifier) as? RoleFilterTableViewCell else { return UITableViewCell() }
-            cell.filterDelegate = self
+        if showingFavourites && favourites.count == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "NoFavouritesTableViewCell") as? NoFavouritesTableViewCell else { return UITableViewCell() }
+            cell.SetItem(to: AlternateHomeTools.getNSLocalized("role_title", in: "Vector"))
             return cell
         }
-        guard let roleCell = tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier, for: indexPath) as? RoleTableViewCell else { return UITableViewCell() }
+        guard let roleCell = tableView.dequeueReusableCell(withIdentifier: "RoleTableViewCell", for: indexPath) as? RoleTableViewCell else { return UITableViewCell() }
         roleCell.delegate = self
-        roleCell.bindModel(role: roles[indexPath.row], index: indexPath.row)
+        roleCell.bindModel(role: showingFavourites ? favourites[indexPath.row] : roles[indexPath.row], index: indexPath.row)
         return roleCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == SectionType.ROLE_CELL.rawValue {
-            rolesTableView.deselectRow(at: indexPath, animated: true)
-            let vc = RoleDetailViewController() //your view controller
+        rolesTableView.deselectRow(at: indexPath, animated: true)
+        let vc = RoleDetailViewController() //your view controller
+        if showingFavourites && favourites.count > 0 {
+            vc.role = favourites[indexPath.row]
+        } else {
             vc.role = roles[indexPath.row]
-            self.navigationController?.pushViewController(vc, animated: true)
         }
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -113,6 +151,14 @@ extension ActRoleViewController: RoleCellDelegate {
         }
         rolesTableView.beginUpdates()
         rolesTableView.endUpdates()
+    }
+}
+
+extension ActRoleViewController: FavouriteActionReceiverDelegate {
+    func FavouritesUpdated(favourited: Bool) {
+        if showingFavourites && !favourited {
+            rolesTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        }
     }
 }
 
@@ -136,5 +182,11 @@ extension ActRoleViewController: FilterCellDelegate {
                           speciality: String?,
                           location: String?) {
         
+    }
+}
+
+extension ActRoleViewController {
+    override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

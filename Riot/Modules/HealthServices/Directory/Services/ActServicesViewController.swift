@@ -16,19 +16,28 @@
 
 import Foundation
 
-class ActServicesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ActServicesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FavouriteActionReceiverDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var FavouritesButton: UIButton!
+    @IBOutlet weak var SearchBar: UISearchBar!
     override func viewDidLoad() {
         tableView.register(UINib(nibName: "ServiceTableViewCell", bundle: nil), forCellReuseIdentifier: "ServiceTableViewCell")
         tableView.register(UINib(nibName: "NoFavouritesTableViewCell", bundle: nil), forCellReuseIdentifier: "NoFavouritesTableViewCell")
+        ThemeService.shared().theme.recursiveApply(on: view)
+        tableView.tableFooterView = UIView()
     }
-    var services: [Service] = [
-        Service(withName: "Opthalmology Clinic", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic"),
-        Service(withName: "Opthalmology Clinic 2", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic"),
-        Service(withName: "Opthalmology Clinic 3", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic")
+    var services: [ServiceModel] = [
+        ServiceModel(withName: "Opthalmology Clinic", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic"),
+        ServiceModel(withName: "Opthalmology Clinic 2", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic"),
+        ServiceModel(withName: "Opthalmology Clinic 3", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic")
     ]
-    var favourites: [Service] = []
+    var favourites: [ServiceModel] {
+        get {
+            services.filter { (sm) -> Bool in
+                sm.Favourite
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if showingFavourites {
@@ -40,12 +49,16 @@ class ActServicesViewController: UIViewController, UITableViewDelegate, UITableV
     //TODO: Update to real data, when possible
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if showingFavourites && favourites.count == 0 {
-            guard let errorCell = tableView.dequeueReusableCell(withIdentifier: "NoFavouritesTableViewCell", for: indexPath) as? NoFavouritesSetTableViewCell else { return UITableViewCell() }
+            guard let errorCell = tableView.dequeueReusableCell(withIdentifier: "NoFavouritesTableViewCell", for: indexPath) as? NoFavouritesTableViewCell else { return UITableViewCell() }
             errorCell.SetItem(to: AlternateHomeTools.getNSLocalized("services_title", in: "Vector"))
             return errorCell
+        } else if showingFavourites {
+            guard let serviceCell = tableView.dequeueReusableCell(withIdentifier: "ServiceTableViewCell", for: indexPath) as? ServiceTableViewCell else { return UITableViewCell() }
+            serviceCell.setService(toService: favourites[indexPath.row], withFavouritesDelegate: self)
+            return serviceCell
         }
         guard let serviceCell = tableView.dequeueReusableCell(withIdentifier: "ServiceTableViewCell", for: indexPath) as? ServiceTableViewCell else { return UITableViewCell() }
-        serviceCell.setService(toService: services[indexPath.row])
+        serviceCell.setService(toService: services[indexPath.row], withFavouritesDelegate: self)
         return serviceCell
     }
     
@@ -66,5 +79,29 @@ class ActServicesViewController: UIViewController, UITableViewDelegate, UITableV
             // Fallback on earlier versions
         }
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
+    
+    func FavouritesUpdated(favourited: Bool) {
+        //we only actually need to update the tableview if we are currently showing the favourites, and one gets unfavourited. Otherwise, we can rely on the cells doing what they need to.
+        if showingFavourites && !favourited {
+            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if SearchBar.isFirstResponder {
+            SearchBar.resignFirstResponder()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if SearchBar.isFirstResponder {
+            SearchBar.resignFirstResponder()
+        }
+    }
+    
+    override func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }

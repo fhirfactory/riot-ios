@@ -19,6 +19,28 @@ import Foundation
 extension Theme {
     func recursiveApply(on view: UIView) {
         switch view {
+        case is MinimalSearchBar:
+            guard let searchBar = view as? MinimalSearchBar else { return }
+            searchBar.searchBarStyle = .minimal
+            searchBar.barTintColor = .none
+            searchBar.isTranslucent = true
+            searchBar.backgroundImage = UIImage() // Remove top and bottom shadow
+            searchBar.tintColor = tintColor
+            
+            if #available(iOS 13.0, *) {
+                searchBar.searchTextField.backgroundColor = .white
+                searchBar.searchTextField.textColor = self.textSecondaryColor
+                if let glassIconView = searchBar.searchTextField.leftView as? UIImageView {
+                    
+                    //Magnifying glass
+                    glassIconView.image = glassIconView.image?.withRenderingMode(.alwaysTemplate)
+                    glassIconView.tintColor = textPrimaryColor
+                }
+            } else {
+                if let searchBarTextField = searchBar.vc_searchTextField {
+                    searchBarTextField.textColor = self.searchPlaceholderColor
+                }
+            }
         case is UIButton:
             guard let v = view as? UIButton else { return } //Literally impossible for this to error, but Apple won't let you force cast here for some reason
             self.applyStyle(onButton: v)

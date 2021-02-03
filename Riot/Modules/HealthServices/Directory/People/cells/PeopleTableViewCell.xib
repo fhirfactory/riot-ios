@@ -47,8 +47,9 @@
                             <constraint firstAttribute="height" constant="36" id="IBu-Hr-Z8f"/>
                             <constraint firstAttribute="width" constant="32" id="LUX-TQ-asu"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <state key="normal" image="room_action_favourite">
+                        <state key="normal" image="star" catalog="system">
                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                         <connections>
@@ -88,7 +89,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="AvatarImage" destination="dre-Xv-Pdp" id="QBV-3J-D2q"/>
-                <outlet property="FavouritesButton" destination="1X1-8k-tfk" id="m2L-do-rM2"/>
+                <outlet property="FavouriteButton" destination="1X1-8k-tfk" id="m2L-do-rM2"/>
                 <outlet property="businessUnit" destination="uRE-T2-Xr0" id="5bQ-vX-Txo"/>
                 <outlet property="jobTitle" destination="F4t-Jq-Y8H" id="hb9-QM-Ihc"/>
                 <outlet property="name" destination="oKr-zt-Q8r" id="lnM-4Z-xpF"/>
@@ -98,7 +99,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="room_action_favourite" width="24" height="24"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

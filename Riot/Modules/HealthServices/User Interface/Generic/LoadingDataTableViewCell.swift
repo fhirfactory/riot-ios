@@ -13,9 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 import Foundation
-
-class BaseService<T>: DebugService {
-    
+class LoadingDataTableViewCell: UITableViewCell {
+    @IBOutlet weak var LoadingDataTitle: UILabel!
+    override func awakeFromNib() {
+        ThemeService.shared().theme.recursiveApply(on: self.contentView)
+        LoadingDataTitle.text = AlternateHomeTools.getNSLocalized("fetching_data", in: "Vector")
+    }
 }

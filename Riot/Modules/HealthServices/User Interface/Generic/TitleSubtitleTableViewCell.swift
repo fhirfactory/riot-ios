@@ -16,6 +16,16 @@
 
 import Foundation
 
-class BaseService<T>: DebugService {
+class TitleSubtitleTableViewCell: UITableViewCell {
+    @IBOutlet weak var TitleLabel: UILabel!
+    @IBOutlet weak var SubtitleLabel: UILabel!
     
+    func DrawCell(withTitle title: String?, andSubtitle subtitle: String?) {
+        TitleLabel.text = title
+        SubtitleLabel.text = subtitle
+    }
+    
+    override func awakeFromNib() {
+        ThemeService.shared().theme.recursiveApply(on: self.contentView)
+    }
 }

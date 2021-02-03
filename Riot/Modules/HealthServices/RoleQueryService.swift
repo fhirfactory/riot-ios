@@ -22,7 +22,32 @@ class RoleQueryService: AsyncQueryableService<Role> {
     let rolesList = [Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno"), Role(withName: "After Hours Hospital Manager (AHHM)", andId: "xxx-yyy-zzz", andDescription: "I dunno"), Role(withName: "Doctor", andId: "sss-ddd-fff", andDescription: "Okay")]
     override func Query(queryDetails: String, success: ([Role]) -> Void, failure: () -> Void) {
         success(rolesList.filter({ (r) -> Bool in
-            queryDetails == "" || r.Description.contains(queryDetails) || r.Designation.contains(queryDetails) || r.Name.contains(queryDetails)
+            queryDetails == "" || r.OfficialName.contains(queryDetails) || r.Designation.contains(queryDetails) || r.Name.contains(queryDetails)
         }))
+    }
+}
+
+class PractitionerRoleQueryService: DebugService {
+    func GetRolesForUser(queryDetails: MXUser, success: @escaping ([Role]) -> Void, failure: () -> Void) {
+        self.performCallback {
+            success([
+                        Role(name: "ED Acute SRMO", longname: "Senior Resident Medical Officer", id: "na", description: "Emergency Department Acute Senior Resident Medical Officer", designation: "Senior Resident Medical Officer", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}"),
+                        Role(name: "ED Acute RMO", longname: "Resident Medical Officer", id: "na", description: "Emergency Department Acute Resident Medical Officer", designation: "Resident Medical Officer", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}"),
+                        Role(name: "ED Acute Intern", longname: "Intern", id: "na", description: "Emergency Department Acute Intern", designation: "Intern", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}")
+            ])
+        }
+    }
+}
+
+class RolePractitionerQueryService: DebugService {
+    //Query for the practitioners in a role, based on a role's ID
+    func GetUsersForRole(queryDetails: Role, success: @escaping ([ActPeople]) -> Void, failure: () -> Void) {
+        let session = AppDelegate.theDelegate().mxSessions.first as? MXSession
+        var person = ActPeople(withBaseUser: ((AppDelegate.theDelegate().mxSessions.first as? MXSession)?.user(withUserId: session?.myUserId))!, officialName: "Joseph Fergusson", jobTitle: "App Developer", org: "ACT Health", businessUnit: "I dunno")
+        person.emailAddress = "email@email.com"
+        person.phoneNumber = "0412345678"
+        self.performCallback {
+            success([person, person, person])
+        }
     }
 }

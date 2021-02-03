@@ -22,22 +22,60 @@ class Role: Equatable {
     }
     
     let Name: String
+    let Title: String
     let Identifier: String
-    let Description: String
+    let OfficialName: String
+    
+    //Category, Org Unit, Location and Designation should in reality not be strings but instead links to other objects
     let Designation: String
+    
+    let Location: String
+    //is "Category" actually "Specialty"?
+    let Category: String
+    let OrgUnit: String
+    
     init(withName n: String, andId id: String, andDescription desc: String) {
         Name = n
+        Title = n
         Identifier = id
-        Description = desc
+        OfficialName = desc
         Designation = n
+        //a location string should come about by looking up the location, and then generating the abbreviated string.
+        Location = "CH {Canberra Hospital}"
+        Category = "Emergency"
+        OrgUnit = "ED {Emergency Department}"
     }
     init(withName n: String, andId id: String, andDescription desc: String, andDesignation des: String) {
         Name = n
+        Title = n
         Identifier = id
-        Description = desc
+        OfficialName = desc
         Designation = des
+        Location = "CH {Canberra Hospital}" //a location string should come about by looking up the location, and then generating the abbreviated string.
+        Category = "Emergency"
+        OrgUnit = "ED {Emergency Department}"
+    }
+    init(withName n: String, andId id: String, andDescription desc: String, andDesignation des: String, andLocation: String) {
+        Name = n
+        Title = n
+        Identifier = id
+        OfficialName = desc
+        Designation = des
+        Location = andLocation
+        Category = "Emergency"
+        OrgUnit = "ED {Emergency Department}"
+    }
+    init(name: String, longname: String, id: String, description: String, designation: String, category: String, location: String, orgunit: String) {
+        Name = name
+        Title = longname
+        Identifier = id
+        OfficialName = description
+        Designation = designation
+        Category = category
+        Location = location
+        OrgUnit = orgunit
     }
     func getRoleModel() -> RoleModel {
-        return RoleModel(name: Name, description: Description, isExpanded: false)
+        return RoleModel(innerRole: self, isExpanded: false)
     }
 }

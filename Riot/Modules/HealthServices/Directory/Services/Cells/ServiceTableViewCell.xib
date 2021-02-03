@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ServiceTableViewCell" rowHeight="91" id="Fnb-bg-egU" customClass="ServiceTableViewCell" customModule="Riot" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="91"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fnb-bg-egU" id="1no-Au-1G6">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="91"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opthalmology Clinic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7l-IY-4zI">
+                        <rect key="frame" x="5" y="5" width="178.5" height="23"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWM-Fu-Y5D">
+                        <rect key="frame" x="5" y="26" width="67" height="21"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01.06.21.17" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yVD-4X-L1D">
+                        <rect key="frame" x="5" y="46" width="84" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Building 1 Level 2 Opthalmology Clinic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANI-WD-aXY">
+                        <rect key="frame" x="5" y="65" width="289" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WhH-Dh-DPS">
+                        <rect key="frame" x="390" y="0.0" width="24" height="24"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <state key="normal" image="voice_call_hangon_icon"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gw3-kR-0nl">
+                        <rect key="frame" x="364" y="2" width="22" height="22"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <state key="normal" image="star" catalog="system"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ANI-WD-aXY" firstAttribute="leading" secondItem="yVD-4X-L1D" secondAttribute="leading" id="06e-ue-igW"/>
+                    <constraint firstAttribute="trailing" secondItem="WhH-Dh-DPS" secondAttribute="trailing" id="29J-3a-7Ud"/>
+                    <constraint firstItem="WhH-Dh-DPS" firstAttribute="top" secondItem="1no-Au-1G6" secondAttribute="top" id="9zH-42-Y2R"/>
+                    <constraint firstItem="Gw3-kR-0nl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="w7l-IY-4zI" secondAttribute="trailing" constant="10" id="M9e-T5-8f1"/>
+                    <constraint firstItem="UWM-Fu-Y5D" firstAttribute="top" secondItem="w7l-IY-4zI" secondAttribute="bottom" constant="-2" id="PS1-eA-oHc"/>
+                    <constraint firstItem="yVD-4X-L1D" firstAttribute="top" secondItem="UWM-Fu-Y5D" secondAttribute="bottom" constant="-1" id="SFR-HY-3yk"/>
+                    <constraint firstItem="Gw3-kR-0nl" firstAttribute="top" secondItem="1no-Au-1G6" secondAttribute="top" constant="2" id="WPl-4Q-yDc"/>
+                    <constraint firstAttribute="bottom" secondItem="ANI-WD-aXY" secondAttribute="bottom" constant="5" id="XW6-rb-UU3"/>
+                    <constraint firstItem="w7l-IY-4zI" firstAttribute="top" secondItem="1no-Au-1G6" secondAttribute="top" constant="5" id="Ywx-aS-4ev"/>
+                    <constraint firstItem="WhH-Dh-DPS" firstAttribute="leading" secondItem="Gw3-kR-0nl" secondAttribute="trailing" constant="4" id="dzD-ea-1Lq"/>
+                    <constraint firstItem="w7l-IY-4zI" firstAttribute="leading" secondItem="1no-Au-1G6" secondAttribute="leading" constant="5" id="eU5-pN-jdz"/>
+                    <constraint firstItem="yVD-4X-L1D" firstAttribute="leading" secondItem="UWM-Fu-Y5D" secondAttribute="leading" id="rCa-PL-sIz"/>
+                    <constraint firstItem="UWM-Fu-Y5D" firstAttribute="leading" secondItem="w7l-IY-4zI" secondAttribute="leading" id="tIk-3r-eSs"/>
+                    <constraint firstItem="ANI-WD-aXY" firstAttribute="top" secondItem="yVD-4X-L1D" secondAttribute="bottom" constant="-2" id="xlp-yC-V8S"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="LocationFirstLine" destination="yVD-4X-L1D" id="Fnk-pl-Jcs"/>
+                <outlet property="LocationSecondLine" destination="ANI-WD-aXY" id="PdS-1O-6dS"/>
+                <outlet property="LocationTitle" destination="UWM-Fu-Y5D" id="x4T-N5-wGm"/>
+                <outlet property="ServiceName" destination="w7l-IY-4zI" id="Hur-qG-Tpv"/>
+            </connections>
+            <point key="canvasLocation" x="-862.31884057971024" y="7.7008928571428568"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="voice_call_hangon_icon" width="24" height="24"/>
+    </resources>
+</document>

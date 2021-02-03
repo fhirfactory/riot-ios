@@ -16,7 +16,7 @@
 
 import Foundation
 
-class AsyncQueryableService<T> {
+class AsyncQueryableService<T>: BaseService<T> {
     func Query(queryDetails: String, success: ([T]) -> Void, failure: () -> Void) {
         
     }

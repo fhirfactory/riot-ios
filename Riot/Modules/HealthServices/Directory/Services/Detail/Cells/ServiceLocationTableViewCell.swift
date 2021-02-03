@@ -16,6 +16,16 @@
 
 import Foundation
 
-class BaseService<T>: DebugService {
-    
+class ServiceLocationTableViewCell: UITableViewCell {
+    @IBOutlet weak var LocationTitle: UILabel!
+    @IBOutlet weak var LocationFirstLine: UILabel!
+    @IBOutlet weak var LocationSecondLine: UILabel!
+    override func awakeFromNib() {
+        ThemeService.shared().theme.recursiveApply(on: contentView)
+        LocationTitle.text = AlternateHomeTools.getNSLocalized("service_detail_location_title", in: "Vector")
+    }
+    func SetService(toService: Service) {
+        LocationFirstLine.text = toService.LocationFirstLine
+        LocationSecondLine.text = toService.LocationSecondLine
+    }
 }

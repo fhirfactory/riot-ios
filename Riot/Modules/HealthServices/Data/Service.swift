@@ -16,6 +16,15 @@
 
 import Foundation
 
-class BaseService<T>: DebugService {
-    
+class Service: NSObject {
+    let Name: String
+    let Phone: String
+    let LocationFirstLine: String
+    let LocationSecondLine: String
+    init(withName: String, Phone: String, LocationFirstLine: String, andLocationSecondLine: String) {
+        Name = withName
+        self.Phone = Phone
+        self.LocationFirstLine = LocationFirstLine
+        LocationSecondLine = andLocationSecondLine
+    }
 }

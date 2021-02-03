@@ -1102,6 +1102,10 @@ internal enum VectorL10n {
   internal static var directoryCellTitle: String { 
     return VectorL10n.tr("Vector", "directory_cell_title") 
   }
+  /// You haven't marked any %@ as favourites
+  internal static func directoryNoFavouritesSet(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "directory_no_favourites_set", p1)
+  }
   /// Failed to fetch data
   internal static var directorySearchFail: String { 
     return VectorL10n.tr("Vector", "directory_search_fail") 
@@ -1313,6 +1317,10 @@ internal enum VectorL10n {
   /// Double-check this link
   internal static var externalLinkConfirmationTitle: String { 
     return VectorL10n.tr("Vector", "external_link_confirmation_title") 
+  }
+  /// Fetching Data
+  internal static var fetchingData: String { 
+    return VectorL10n.tr("Vector", "fetching_data") 
   }
   /// File upload
   internal static var fileUploadErrorTitle: String { 
@@ -2174,6 +2182,10 @@ internal enum VectorL10n {
   internal static var personSingle: String { 
     return VectorL10n.tr("Vector", "person_single") 
   }
+  /// Phone
+  internal static var phone: String { 
+    return VectorL10n.tr("Vector", "phone") 
+  }
   /// %@ doesn't have permission to access photo library, please change privacy settings
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "photo_library_access_not_granted", p1)
@@ -2318,9 +2330,49 @@ internal enum VectorL10n {
   internal static var retry: String { 
     return VectorL10n.tr("Vector", "retry") 
   }
+  /// Category: %@
+  internal static func roleDetailCategory(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_category", p1)
+  }
+  /// Category
+  internal static var roleDetailCategoryTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_category_title") 
+  }
+  /// Location: %@
+  internal static func roleDetailLocation(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_location", p1)
+  }
+  /// Location
+  internal static var roleDetailLocationTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_location_title") 
+  }
+  /// Org Unit: %@
+  internal static func roleDetailOrgUnit(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_org_unit", p1)
+  }
+  /// Organization Unit
+  internal static var roleDetailOrgUnitTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_org_unit_title") 
+  }
+  /// Practitioner in Role
+  internal static var roleDetailPractitionerInRole: String { 
+    return VectorL10n.tr("Vector", "role_detail_practitioner_in_role") 
+  }
+  /// Role: %@
+  internal static func roleDetailRole(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_role", p1)
+  }
+  /// Specialty
+  internal static var roleDetailSpecialtyTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_specialty_title") 
+  }
   /// Role
   internal static var roleTitle: String { 
     return VectorL10n.tr("Vector", "role_title") 
+  }
+  /// Roles
+  internal static var rolesTitle: String { 
+    return VectorL10n.tr("Vector", "roles_title") 
   }
   /// Call
   internal static var roomAccessibilityCall: String { 
@@ -3702,6 +3754,10 @@ internal enum VectorL10n {
   internal static var sending: String { 
     return VectorL10n.tr("Vector", "sending") 
   }
+  /// Location
+  internal static var serviceDetailLocationTitle: String { 
+    return VectorL10n.tr("Vector", "service_detail_location_title") 
+  }
   /// Accept
   internal static var serviceTermsModalAcceptButton: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_accept_button") 
@@ -3741,6 +3797,10 @@ internal enum VectorL10n {
   /// Contact discovery
   internal static var serviceTermsModalTitleIdentityServer: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_title_identity_server") 
+  }
+  /// Services
+  internal static var servicesTitle: String { 
+    return VectorL10n.tr("Vector", "services_title") 
   }
   /// Invalid password
   internal static var settingsAdd3pidInvalidPasswordMessage: String { 

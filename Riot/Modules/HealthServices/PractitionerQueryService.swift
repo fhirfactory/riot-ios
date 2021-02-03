@@ -15,7 +15,3 @@
 //
 
 import Foundation
-
-class BaseService<T>: DebugService {
-    
-}

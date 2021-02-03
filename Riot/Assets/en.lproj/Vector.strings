@@ -1577,8 +1577,26 @@
 // MARK: - Role-based User Directory
 
 "role_title" = "Role";
+"roles_title" = "Roles";
 "people_title" = "People";
+"services_title" = "Services";
 "directory_title" = "Directory";
+
+"role_detail_role" = "Role: %@";
+"role_detail_category" = "Category: %@";
+"role_detail_org_unit" = "Org Unit: %@";
+"role_detail_location" = "Location: %@";
+"role_detail_category_title" = "Category";
+"role_detail_org_unit_title" = "Organization Unit";
+"role_detail_location_title" = "Location";
+"role_detail_specialty_title" = "Specialty";
+"role_detail_practitioner_in_role" = "Practitioner in Role";
+"service_detail_location_title" = "Location";
+"phone" = "Phone";
+
+"directory_no_favourites_set" = "You haven't marked any %@ as favourites";
+
+"fetching_data" = "Fetching Data";
 
 "alert_okay" = "Okay";
 "gallery_no_deleting_tagged_images" = "You can't delete a photo with a patient tag attached to it.";

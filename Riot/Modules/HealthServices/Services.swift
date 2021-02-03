@@ -38,4 +38,18 @@ import Foundation
         }
         return instanceImageTagService
     }
+    private static var instanceRolePractitionerService: RolePractitionerQueryService!
+    static func RolePractitionerService() -> RolePractitionerQueryService {
+        if instanceRolePractitionerService == nil {
+            instanceRolePractitionerService = RolePractitionerQueryService()
+        }
+        return instanceRolePractitionerService
+    }
+    private static var instancePractitionerRoleService: PractitionerRoleQueryService!
+    static func PractitionerRoleService() -> PractitionerRoleQueryService {
+        if instancePractitionerRoleService == nil {
+            instancePractitionerRoleService = PractitionerRoleQueryService()
+        }
+        return instancePractitionerRoleService
+    }
 }

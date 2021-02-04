@@ -19,7 +19,7 @@ import Foundation
 class NoFavouritesTableViewCell: UITableViewCell {
     @IBOutlet weak var TextContent: UILabel!
     func SetItem(to: String) {
-        TextContent.text = String(format: AlternateHomeTools.getNSLocalized("directory_no_favourites_set", in: "Vector"), to)
+        TextContent.text = String(format: AlternateHomeTools.getNSLocalized("directory_no_favourites_set", in: "Vector"), to.lowercased())
         ThemeService.shared().theme.recursiveApply(on: contentView)
     }
 }

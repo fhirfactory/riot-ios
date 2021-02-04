@@ -1318,6 +1318,22 @@ internal enum VectorL10n {
   internal static var externalLinkConfirmationTitle: String { 
     return VectorL10n.tr("Vector", "external_link_confirmation_title") 
   }
+  /// You have marked this %@ as a favourite.
+  internal static func favouriteDetailFavourite(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "favourite_detail_favourite", p1)
+  }
+  /// Mark as favourite
+  internal static var favouriteDetailMark: String { 
+    return VectorL10n.tr("Vector", "favourite_detail_mark") 
+  }
+  /// You haven't marked this %@ as a favourite.
+  internal static func favouriteDetailNotFavourite(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "favourite_detail_not_favourite", p1)
+  }
+  /// Unfavourite
+  internal static var favouriteDetailUnmark: String { 
+    return VectorL10n.tr("Vector", "favourite_detail_unmark") 
+  }
   /// Fetching Data
   internal static var fetchingData: String { 
     return VectorL10n.tr("Vector", "fetching_data") 
@@ -2181,6 +2197,10 @@ internal enum VectorL10n {
   /// person
   internal static var personSingle: String { 
     return VectorL10n.tr("Vector", "person_single") 
+  }
+  /// Person
+  internal static var personTitle: String { 
+    return VectorL10n.tr("Vector", "person_title") 
   }
   /// Phone
   internal static var phone: String { 
@@ -3797,6 +3817,10 @@ internal enum VectorL10n {
   /// Contact discovery
   internal static var serviceTermsModalTitleIdentityServer: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_title_identity_server") 
+  }
+  /// Service
+  internal static var serviceTitle: String { 
+    return VectorL10n.tr("Vector", "service_title") 
   }
   /// Services
   internal static var servicesTitle: String { 

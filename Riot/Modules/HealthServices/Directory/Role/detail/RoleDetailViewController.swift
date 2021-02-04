@@ -10,16 +10,19 @@ import UIKit
 
 private enum SectionType: Int, CaseIterable {
     case ROLE_PROFILE = 0
-    case ROLE_TITLE = 1
-    case SPECIALITY = 2
-    case LOCATION = 3
-    case ORGANISATION_UNIT = 4
-    case PRACTITIONER_ROLE = 5
+    case FAVOURITE = 1
+    case ROLE_TITLE = 2
+    case SPECIALITY = 3
+    case LOCATION = 4
+    case ORGANISATION_UNIT = 5
+    case PRACTITIONER_ROLE = 6
     
     var cellIdentifier: String {
         switch self {
         case .ROLE_PROFILE:
             return "RoleProfileTableViewCell"
+        case .FAVOURITE:
+            return "DetailFavouriteTableViewCell"
         case .ROLE_TITLE:
             return "RoleTitleTableViewCell"
         case .SPECIALITY, .LOCATION, .ORGANISATION_UNIT:
@@ -42,7 +45,9 @@ class RoleDetailViewController: UIViewController {
             self.navigationItem.title = value?.innerRole.Name
             if let role = value?.innerRole {
                 Services.RolePractitionerService().GetUsersForRole(queryDetails: role) { (practitioners) in
-                    self.practitioners = practitioners
+                    self.practitioners = practitioners.map({ (p) in
+                        ActPeopleModel(fromActPerson: p)
+                    })
                 } failure: {
                     self.practitioners = []
                 }
@@ -50,8 +55,8 @@ class RoleDetailViewController: UIViewController {
 
         }
     }
-    private var _practitioners: [ActPeople] = []
-    var practitioners: [ActPeople] {
+    private var _practitioners: [ActPeopleModel] = []
+    var practitioners: [ActPeopleModel] {
         get {
             return _practitioners
         }
@@ -82,6 +87,7 @@ extension RoleDetailViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: SectionType.ROLE_PROFILE.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_PROFILE.cellIdentifier)
+        tableView.register(UINib(nibName: SectionType.FAVOURITE.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.FAVOURITE.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ROLE_TITLE.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_TITLE.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.SPECIALITY.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.SPECIALITY.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.LOCATION.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.LOCATION.cellIdentifier)
@@ -100,6 +106,8 @@ extension RoleDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SectionType.ROLE_PROFILE.rawValue:
+            return 1
+        case SectionType.FAVOURITE.rawValue:
             return 1
         case SectionType.ROLE_TITLE.rawValue:
             return 1
@@ -122,6 +130,12 @@ extension RoleDetailViewController: UITableViewDataSource, UITableViewDelegate {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_PROFILE.cellIdentifier) as? RoleProfileTableViewCell else { return UITableViewCell() }
             cell.setRole(role: role?.innerRole)
             return  cell
+        case SectionType.FAVOURITE.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.FAVOURITE.cellIdentifier) as? DetailFavouriteTableViewCell else { return UITableViewCell() }
+            cell.FavouritesDelegate = self
+            cell.itemTypeString = AlternateHomeTools.getNSLocalized("role_title", in: "Vector")
+            cell.Render()
+            return cell
         case SectionType.ROLE_TITLE.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_TITLE.cellIdentifier) as? RoleTitleTableViewCell else { return UITableViewCell() }
             cell.setRole(role: role?.innerRole)
@@ -174,6 +188,17 @@ extension RoleDetailViewController: UITableViewDataSource, UITableViewDelegate {
             guard let person = cell.user else { return }
             vc.setPerson(person: person)
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+}
+
+extension RoleDetailViewController: DetailFavouriteTableCellDelegate {
+    var IsFavourite: Bool {
+        get {
+            role?.Favourite == true
+        }
+        set (v) {
+            role?.Favourite = v
         }
     }
 }

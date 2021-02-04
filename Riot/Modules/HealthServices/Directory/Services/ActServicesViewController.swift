@@ -26,6 +26,9 @@ class ActServicesViewController: UIViewController, UITableViewDelegate, UITableV
         ThemeService.shared().theme.recursiveApply(on: view)
         tableView.tableFooterView = UIView()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    }
     var services: [ServiceModel] = [
         ServiceModel(withName: "Opthalmology Clinic", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic"),
         ServiceModel(withName: "Opthalmology Clinic 2", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic"),

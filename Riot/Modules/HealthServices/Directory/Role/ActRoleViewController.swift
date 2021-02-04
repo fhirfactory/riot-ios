@@ -54,11 +54,12 @@ class ActRoleViewController: UIViewController {
         //self.recentsTableView.accessibilityIdentifier = "RoleVCTableView"
         //self.addPlusButton()
         //enableSearchBar = false
+        setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupTableView()
+        rolesTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
     var showingFavourites: Bool = false
@@ -120,7 +121,7 @@ extension ActRoleViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if showingFavourites && favourites.count == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "NoFavouritesTableViewCell") as? NoFavouritesTableViewCell else { return UITableViewCell() }
-            cell.SetItem(to: AlternateHomeTools.getNSLocalized("role_title", in: "Vector"))
+            cell.SetItem(to: AlternateHomeTools.getNSLocalized("roles_title", in: "Vector"))
             return cell
         }
         guard let roleCell = tableView.dequeueReusableCell(withIdentifier: "RoleTableViewCell", for: indexPath) as? RoleTableViewCell else { return UITableViewCell() }

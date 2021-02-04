@@ -11,9 +11,10 @@ import UIKit
 
 private enum SectionType: Int, CaseIterable {
     case PEOPLE_PROFILE = 0
-    case PHONE_CELL = 1
-    case EMAIL_CELL = 2
-    case ROLE_CELL = 3
+    case FAVOURITE_CELL = 1
+    case PHONE_CELL = 2
+    case EMAIL_CELL = 3
+    case ROLE_CELL = 4
     
     var cellIdentifier: String {
         switch self {
@@ -21,6 +22,8 @@ private enum SectionType: Int, CaseIterable {
             return "PeopleProfileTableViewCell"
         case .PHONE_CELL:
             return "PhoneTableViewCell"
+        case .FAVOURITE_CELL:
+            return "DetailFavouriteTableViewCell"
         case .EMAIL_CELL:
             return "EmailTableViewCell"
         case .ROLE_CELL:
@@ -31,7 +34,7 @@ private enum SectionType: Int, CaseIterable {
 
 class PeopleDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    var actPeople: ActPeople?
+    var actPeople: ActPeopleModel?
     
     var rolesLoaded: Bool = false
     
@@ -55,7 +58,7 @@ class PeopleDetailViewController: UIViewController {
         setupTableView()
     }
     
-    func setPerson(person: ActPeople) {
+    func setPerson(person: ActPeopleModel) {
         actPeople = person
         self.navigationItem.title = person.officialName
         Services.PractitionerRoleService().GetRolesForUser(queryDetails: person.baseUser) { (roles) in
@@ -85,6 +88,7 @@ extension PeopleDetailViewController {
         tableView.register(UINib(nibName: SectionType.PHONE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.PHONE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.ROLE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.ROLE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: SectionType.EMAIL_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.EMAIL_CELL.cellIdentifier)
+        tableView.register(UINib(nibName: SectionType.FAVOURITE_CELL.cellIdentifier, bundle: nil), forCellReuseIdentifier: SectionType.FAVOURITE_CELL.cellIdentifier)
         tableView.register(UINib(nibName: "LoadingDataTableViewCell", bundle: nil), forCellReuseIdentifier: "LoadingDataTableViewCell")
         tableView.backgroundColor = ThemeService.shared().theme.backgroundColor
     }
@@ -99,6 +103,8 @@ extension PeopleDetailViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SectionType.PEOPLE_PROFILE.rawValue:
+            return 1
+        case SectionType.FAVOURITE_CELL.rawValue:
             return 1
         case SectionType.PHONE_CELL.rawValue:
             return 1
@@ -133,17 +139,23 @@ extension PeopleDetailViewController: UITableViewDataSource, UITableViewDelegate
         case SectionType.PEOPLE_PROFILE.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.PEOPLE_PROFILE.cellIdentifier) as? PeopleProfileTableViewCell else { return UITableViewCell() }
             cell.setPerson(person: person)
-            return  cell
+            return cell
+        case SectionType.FAVOURITE_CELL.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.FAVOURITE_CELL.cellIdentifier) as? DetailFavouriteTableViewCell else { return UITableViewCell() }
+            cell.FavouritesDelegate = self
+            cell.itemTypeString = AlternateHomeTools.getNSLocalized("person_title", in: "Vector")
+            cell.Render()
+            return cell
         case SectionType.PHONE_CELL.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.PHONE_CELL.cellIdentifier) as? PhoneTableViewCell else { return UITableViewCell() }
             if let number = person.phoneNumber {
                 cell.setNumber(number: number)
             }
-            return  cell
+            return cell
         case SectionType.EMAIL_CELL.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.EMAIL_CELL.cellIdentifier) as? EmailTableViewCell else { return UITableViewCell() }
             cell.setUser(person: person)
-            return  cell
+            return cell
         case SectionType.ROLE_CELL.rawValue:
             if rolesLoaded {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier) as? RoleTableViewCell else { return UITableViewCell() }
@@ -172,5 +184,16 @@ extension PeopleDetailViewController: RoleCellDelegate {
     }
     func FavouritesUpdated(favourited: Bool) {
         
+    }
+}
+
+extension PeopleDetailViewController: DetailFavouriteTableCellDelegate {
+    var IsFavourite: Bool {
+        get {
+            actPeople?.Favourite == true
+        }
+        set(val) {
+            actPeople?.Favourite = val
+        }
     }
 }

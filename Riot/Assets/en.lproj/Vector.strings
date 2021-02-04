@@ -1579,6 +1579,8 @@
 "role_title" = "Role";
 "roles_title" = "Roles";
 "people_title" = "People";
+"person_title" = "Person";
+"service_title" = "Service";
 "services_title" = "Services";
 "directory_title" = "Directory";
 
@@ -1600,3 +1602,8 @@
 
 "alert_okay" = "Okay";
 "gallery_no_deleting_tagged_images" = "You can't delete a photo with a patient tag attached to it.";
+
+"favourite_detail_not_favourite" = "You haven't marked this %@ as a favourite.";
+"favourite_detail_favourite" = "You have marked this %@ as a favourite.";
+"favourite_detail_mark" = "Mark as favourite";
+"favourite_detail_unmark" = "Unfavourite";

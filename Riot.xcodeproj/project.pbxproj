@@ -838,6 +838,8 @@
 		EB6E3C6B25CA231300F51015 /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6E3C6A25CA231300F51015 /* ServiceModel.swift */; };
 		EB6E3C7925CA246D00F51015 /* FavouriteActionReceiverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6E3C7825CA246D00F51015 /* FavouriteActionReceiverDelegate.swift */; };
 		EB6E3C8125CA51D900F51015 /* MinimalSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6E3C8025CA51D900F51015 /* MinimalSearchBar.swift */; };
+		EB6E3C8925CB74AE00F51015 /* DetailFavouriteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB6E3C8825CB74AD00F51015 /* DetailFavouriteTableViewCell.xib */; };
+		EB6E3C9725CB767700F51015 /* DetailFavouriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6E3C9625CB767700F51015 /* DetailFavouriteTableViewCell.swift */; };
 		EB76BE352573B5330013EABE /* ImageTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE342573B5330013EABE /* ImageTagService.swift */; };
 		EB76BE3D2573B5810013EABE /* BaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE3C2573B5810013EABE /* BaseService.swift */; };
 		EB76BE452574DFE40013EABE /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE442574DFE40013EABE /* TagData.swift */; };
@@ -2189,6 +2191,8 @@
 		EB6E3C6A25CA231300F51015 /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
 		EB6E3C7825CA246D00F51015 /* FavouriteActionReceiverDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteActionReceiverDelegate.swift; sourceTree = "<group>"; };
 		EB6E3C8025CA51D900F51015 /* MinimalSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalSearchBar.swift; sourceTree = "<group>"; };
+		EB6E3C8825CB74AD00F51015 /* DetailFavouriteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailFavouriteTableViewCell.xib; sourceTree = "<group>"; };
+		EB6E3C9625CB767700F51015 /* DetailFavouriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailFavouriteTableViewCell.swift; sourceTree = "<group>"; };
 		EB76BE342573B5330013EABE /* ImageTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTagService.swift; sourceTree = "<group>"; };
 		EB76BE3C2573B5810013EABE /* BaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseService.swift; sourceTree = "<group>"; };
 		EB76BE442574DFE40013EABE /* TagData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagData.swift; sourceTree = "<group>"; };
@@ -5359,6 +5363,8 @@
 			children = (
 				EB6E3C5925CA1E0D00F51015 /* NoFavouritesTableViewCell.xib */,
 				EB6E3C6125CA1E2300F51015 /* NoFavouritesTableViewCell.swift */,
+				EB6E3C8825CB74AD00F51015 /* DetailFavouriteTableViewCell.xib */,
+				EB6E3C9625CB767700F51015 /* DetailFavouriteTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -6537,6 +6543,7 @@
 				F083BDE71E7009ED00A9B29C /* callend.mp3 in Resources */,
 				43AFC0BD24DA5FFB00D0EF19 /* PeopleProfileTableViewCell.xib in Resources */,
 				B1B558EF20EF768F00210D55 /* RoomMembershipCollapsedWithPaginationTitleBubbleCell.xib in Resources */,
+				EB6E3C8925CB74AE00F51015 /* DetailFavouriteTableViewCell.xib in Resources */,
 				EC711B7C24A63B37008F830C /* SecretsSetupRecoveryPassphraseViewController.storyboard in Resources */,
 				B1B5573420EE6C4D00210D55 /* GroupDetailsViewController.xib in Resources */,
 				B1B557E420EF60B900210D55 /* MessagesSearchResultAttachmentBubbleCell.xib in Resources */,
@@ -7465,6 +7472,7 @@
 				B125FE1F231D5DF700B72806 /* SettingsDiscoveryViewModelType.swift in Sources */,
 				EC85D7162477DCD7002C44C9 /* KeyVerificationScanConfirmationViewAction.swift in Sources */,
 				EB5AE9A12563CD2400C635CD /* MessageTextView.swift in Sources */,
+				EB6E3C9725CB767700F51015 /* DetailFavouriteTableViewCell.swift in Sources */,
 				EB47E69325B1878D0025A469 /* RecentCallsList.swift in Sources */,
 				EC711BAF24A63B58008F830C /* SecureBackupSetupCoordinatorType.swift in Sources */,
 				ECFBD5D4250A7AAF00DD5F5A /* ShowDirectoryCoordinatorType.swift in Sources */,

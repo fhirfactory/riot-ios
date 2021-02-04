@@ -35,7 +35,7 @@ class ActPeopleViewController: UIViewController {
         //TODO: Remove when there's a real data source
         people = []
         let session = (AppDelegate.theDelegate().mxSessions.first as? MXSession)
-        for i in 1...4 {
+        for i in 1...10 {
             
             let person = ActPeopleModel(withBaseUser: ((AppDelegate.theDelegate().mxSessions.first as? MXSession)?.user(withUserId: session?.myUserId))!, officialName: "Person \(i)", jobTitle: "App Developer", org: "ACT Health", businessUnit: "I dunno")
             person.emailAddress = "email@email.com"
@@ -43,6 +43,10 @@ class ActPeopleViewController: UIViewController {
             people.append(person)
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadSections(IndexSet(integer: 0), with: .none)
     }
     
     var showingFavourites: Bool = false

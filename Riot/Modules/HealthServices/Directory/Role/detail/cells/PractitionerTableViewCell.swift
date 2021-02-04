@@ -14,7 +14,7 @@ class PractitionerTableViewCell: UITableViewCell {
     @IBOutlet weak var primaryText: UILabel!
     @IBOutlet weak var secondaryText: UILabel!
     
-    var user: ActPeople!
+    var user: ActPeopleModel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,7 +27,7 @@ class PractitionerTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setUser(_ person: ActPeople) {
+    func setUser(_ person: ActPeopleModel) {
         user = person
         avatarView.setImageURI(person.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: person.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
         avatarView.layer.cornerRadius = avatarView.frame.height / 2

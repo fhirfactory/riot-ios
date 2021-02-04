@@ -15,12 +15,24 @@
 //
 
 import Foundation
-class ServiceDetailViewController: UITableViewController {
+class ServiceDetailViewController: UITableViewController, DetailFavouriteTableCellDelegate {
+    var IsFavourite: Bool {
+        get {
+            service.Favourite
+        }
+        set(v) {
+            service.Favourite = v
+        }
+    }
+    
     enum Rows: Int, CaseIterable {
-        case Phone = 0
-        case Location = 1
+        case Favourite = 0
+        case Phone = 1
+        case Location = 2
         var Identifier: String {
             switch self {
+            case .Favourite:
+                return "DetailFavouriteTableViewCell"
             case .Phone:
                 return "PhoneTableViewCell"
             case .Location:
@@ -28,12 +40,13 @@ class ServiceDetailViewController: UITableViewController {
             }
         }
     }
-    var service: Service!
-    func setService(toService: Service) {
+    var service: ServiceModel!
+    func setService(toService: ServiceModel) {
         service = toService
         navigationItem.title = toService.Name
     }
     override func viewDidLoad() {
+        tableView.register(UINib(nibName: Rows.Favourite.Identifier, bundle: nil), forCellReuseIdentifier: Rows.Favourite.Identifier)
         tableView.register(UINib(nibName: Rows.Phone.Identifier, bundle: nil), forCellReuseIdentifier: Rows.Phone.Identifier)
         tableView.register(UINib(nibName: Rows.Location.Identifier, bundle: nil), forCellReuseIdentifier: Rows.Location.Identifier)
         tableView.separatorStyle = .none
@@ -44,6 +57,12 @@ class ServiceDetailViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
+        case Rows.Favourite.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Rows.Favourite.Identifier) as? DetailFavouriteTableViewCell else { return UITableViewCell() }
+            cell.FavouritesDelegate = self
+            cell.itemTypeString = AlternateHomeTools.getNSLocalized("service_title", in: "Vector")
+            cell.Render()
+            return cell
         case Rows.Phone.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Rows.Phone.Identifier) as? PhoneTableViewCell else { return UITableViewCell() }
             cell.setNumber(number: service.Phone)

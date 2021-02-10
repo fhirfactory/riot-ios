@@ -1309,24 +1309,24 @@ TableViewSectionsDelegate>
                 cell = [self descriptionCellForTableView:tableView
                                                 withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_loading", @"Vector", nil) ];
             }
-            /*else
+            else
             {
                 cell = [self descriptionCellForTableView:tableView
-                                                withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_description", @"Vector", nil) ];
-            }*/
+                                                withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_description_2", @"Vector", nil) ];
+            }
         }
         else
         {
-            if (row <= devicesArray.count)
+            if (row < devicesArray.count)
             {
                 cell = [self deviceCellWithDevice:devicesArray[row] forTableView:tableView];
             }
-            /*else if (row == devicesArray.count)
+            else if (row == devicesArray.count)
             {
                 cell = [self descriptionCellForTableView:tableView
-                                                withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_description", @"Vector", nil) ];
+                                                withText:NSLocalizedStringFromTable(@"security_settings_crypto_sessions_description_2", @"Vector", nil) ];
                 
-            }*/
+            }
         }
     }
     /*else if (section == SECTION_KEYBACKUP)

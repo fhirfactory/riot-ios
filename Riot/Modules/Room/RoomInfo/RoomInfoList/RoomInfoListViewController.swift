@@ -39,6 +39,7 @@ final class RoomInfoListViewController: UIViewController {
     private var theme: Theme!
     private var errorPresenter: MXKErrorPresentation!
     private var activityPresenter: ActivityIndicatorPresenter!
+    private var isRoomDirect: Bool = false
     
     private lazy var closeButton: CloseButton = {
         let button = CloseButton()
@@ -49,13 +50,16 @@ final class RoomInfoListViewController: UIViewController {
     
     private lazy var basicInfoView: RoomInfoBasicView = {
         let view = RoomInfoBasicView.loadFromNib()
-        view.autoresizingMask = .flexibleWidth
-        view.translatesAutoresizingMaskIntoConstraints = true
+        view.onTopicSizeChange = { _ in
+            self.view.setNeedsLayout()
+        }
         return view
     }()
     
     private lazy var leaveAlertController: UIAlertController = {
-        let controller = UIAlertController(title: VectorL10n.roomParticipantsLeavePromptTitle, message: VectorL10n.roomParticipantsLeavePromptMsg, preferredStyle: .alert)
+        let title = self.isRoomDirect ? VectorL10n.roomParticipantsLeavePromptTitleForDm : VectorL10n.roomParticipantsLeavePromptTitle
+        let message = self.isRoomDirect ? VectorL10n.roomParticipantsLeavePromptMsgForDm : VectorL10n.roomParticipantsLeavePromptMsg
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         controller.addAction(UIAlertAction(title: VectorL10n.cancel, style: .cancel, handler: nil))
         controller.addAction(UIAlertAction(title: VectorL10n.leave, style: .default, handler: { [weak self] (action) in
@@ -124,20 +128,24 @@ final class RoomInfoListViewController: UIViewController {
         return self.theme.statusBarStyle
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        mainTableView.vc_relayoutHeaderView()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: {_ in
+            self.basicInfoView.updateTrimmingOnTopic()
+        }, completion: nil)
+    }
+    
     // MARK: - Private
     
     private func updateSections(with viewData: RoomInfoListViewData) {
         basicInfoView.configure(withViewData: viewData.basicInfoViewData)
         
         var tmpSections: [Section] = []
-        
-        if viewData.isEncrypted {
-            let sectionSecurity = Section(header: VectorL10n.securitySettingsTitle,
-                                          rows: [],
-                                          footer: VectorL10n.roomInfoListRoomEncrypted)
-            
-            tmpSections.append(sectionSecurity)
-        }
         
         let rowSettings = Row(type: .default, icon: Asset.Images.settingsIcon.image, text: VectorL10n.roomDetailsSettings, accessoryType: .disclosureIndicator) {
             self.viewModel.process(viewAction: .navigate(target: .settings))
@@ -156,7 +164,10 @@ final class RoomInfoListViewController: UIViewController {
                                              rowUploads],
                                       footer: nil)
         
-        let rowLeave = Row(type: .destructive, icon: Asset.Images.roomActionLeave.image, text: VectorL10n.roomParticipantsLeavePromptTitle, accessoryType: .none) {
+        let leaveTitle = viewData.basicInfoViewData.isDirect ?
+            VectorL10n.roomParticipantsLeavePromptTitleForDm :
+            VectorL10n.roomParticipantsLeavePromptTitle
+        let rowLeave = Row(type: .destructive, icon: Asset.Images.roomActionLeave.image, text: leaveTitle, accessoryType: .none) {
             self.present(self.leaveAlertController, animated: true, completion: nil)
         }
         let sectionLeave = Section(header: nil,

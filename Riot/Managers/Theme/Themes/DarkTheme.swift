@@ -21,7 +21,7 @@ import UIKit
 @objcMembers
 class DarkTheme: NSObject, Theme {
     
-    var identifier: String = "dark"
+    var identifier: String = ThemeIdentifier.dark.rawValue
 
     var backgroundColor: UIColor = UIColor(rgbHex: 0x15191E)
     var backgroundShadedColor: UIColor = UIColor(rgbHex: 0x8A8C8E)
@@ -74,6 +74,11 @@ class DarkTheme: NSObject, Theme {
     var statusBarStyle: UIStatusBarStyle = .lightContent
     var scrollBarStyle: UIScrollView.IndicatorStyle = .white
     var keyboardAppearance: UIKeyboardAppearance = .dark
+    
+    @available(iOS 12.0, *)
+    var userInterfaceStyle: UIUserInterfaceStyle {
+        return .dark
+    }
 
     var placeholderTextColor: UIColor = UIColor(rgbHex: 0xA1B2D1) // Use secondary text color
     var selectedBackgroundColor: UIColor = UIColor(rgbHex: 0x040506)

@@ -47,7 +47,14 @@
 @protocol MasterTabBarControllerDelegate;
 
 
+
+@protocol MasterTabBarControllerDelegate;
+
+
 @interface MasterTabBarController : UITabBarController
+
+// UITabBarController already have a `delegate` property
+@property (weak, nonatomic) id<MasterTabBarControllerDelegate> masterTabBarDelegate;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
@@ -152,6 +159,20 @@
 - (void)refreshTabBarBadges;
 
 @property (nonatomic, weak) id<MasterTabBarControllerDelegate> masterVCDelegate;
+/**
+ Verify the current device if needed.
+ 
+  @param session the matrix session.
+ */
+- (void)presentVerifyCurrentSessionAlertIfNeededWithSession:(MXSession*)session;
+
+/**
+ Verify others device if needed.
+ 
+ @param session the matrix session.
+ */
+- (void)presentReviewUnverifiedSessionsAlertIfNeededWithSession:(MXSession*)session;
+
 
 // Reference to the current auth VC. It is not nil only when the auth screen is displayed.
 @property (nonatomic, readonly) AuthenticationViewController *authViewController;
@@ -188,5 +209,6 @@
 @protocol MasterTabBarControllerDelegate <NSObject>
 
 - (void)masterTabBarControllerDidCompleteAuthentication:(MasterTabBarController *)masterTabBarController;
+- (void)masterTabBarController:(MasterTabBarController*)masterTabBarController wantsToDisplayDetailViewController:(UIViewController*)detailViewController;
 
-@end;
+@end

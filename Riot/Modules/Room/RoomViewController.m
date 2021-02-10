@@ -120,7 +120,10 @@
 
 #import "EventFormatter.h"
 #import <MatrixKit/MXKSlashCommands.h>
-#import <objc/message.h>
+
+#import "SettingsViewController.h"
+#import "SecurityViewController.h"
+
 #import "Riot-Swift.h"
 
 @interface RoomViewController () <UISearchBarDelegate, UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate, RoomTitleViewTapGestureDelegate, RoomParticipantsViewControllerDelegate, MXKRoomMemberDetailsViewControllerDelegate, ContactsTableViewControllerDelegate, MXServerNoticesDelegate, RoomContextualMenuViewControllerDelegate,
@@ -135,9 +138,6 @@
     // The customized room data source for Vector
     RoomDataSource *customizedRoomDataSource;
     
-    // The user taps on a member thumbnail
-    MXRoomMember *selectedRoomMember;
-    
     // The user taps on a user id contained in a message
     MXKContact *selectedContact;
     
@@ -146,14 +146,6 @@
     
     // Typing notifications listener.
     id typingNotifListener;
-    
-    // The first tab is selected by default in room details screen in case of 'showRoomDetails' segue.
-    // Use this flag to select a specific tab (0: people, 1: files, 2: settings).
-    NSUInteger selectedRoomDetailsIndex;
-    
-    // No field is selected by default in room details screen in case of 'showRoomDetails' segue.
-    // Use this value to select a specific field in room settings.
-    RoomSettingsViewControllerField selectedRoomSettingsField;
     
     // The position of the first touch down event stored in case of scrolling when the expanded header is visible.
     CGPoint startScrollingPoint;
@@ -215,6 +207,9 @@
     
     // Formatted body parser for events
     FormattedBodyParser *formattedBodyParser;
+    
+    // Time to display notification content in the timeline
+    MXTaskProfile *notificationTaskProfile;
 }
 
 @property (nonatomic, weak) IBOutlet UIView *overlayContainerView;
@@ -302,6 +297,9 @@
     // Listen to the event sent state changes
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(eventDidChangeSentState:) name:kMXEventDidChangeSentStateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(eventDidChangeIdentifier:) name:kMXEventDidChangeIdentifierNotification object:nil];
+    
+    // Show / hide actions button in document preview according BuildSettings
+    self.allowActionsInDocumentPreview = BuildSettings.messageDetailsAllowShare;
 }
 
 - (void)viewDidLoad
@@ -368,6 +366,7 @@
     [self.bubblesTableView registerClass:RoomCreationWithPaginationCollapsedBubbleCell.class forCellReuseIdentifier:RoomCreationWithPaginationCollapsedBubbleCell.defaultReuseIdentifier];
     
     [self.bubblesTableView registerNib:[RoomMessageContentCell nib] forCellReuseIdentifier:@"RoomMessageContentCell"];
+    [self vc_removeBackTitle];
     
     // Replace the default input toolbar view.
     // Note: this operation will force the layout of subviews. That is why cell view classes must be registered before.
@@ -505,6 +504,16 @@
         
         [self setBubbleTableViewContentOffset:CGPointMake(-self.bubblesTableView.mxk_adjustedContentInset.left, -self.bubblesTableView.mxk_adjustedContentInset.top) animated:YES];
     }];
+    
+    if ([self.roomDataSource.roomId isEqualToString:[LegacyAppDelegate theDelegate].lastNavigatedRoomIdFromPush])
+    {
+        [self startActivityIndicator];
+        [self.roomDataSource reload];
+        [LegacyAppDelegate theDelegate].lastNavigatedRoomIdFromPush = nil;
+        
+        notificationTaskProfile = [MXSDKOptions.sharedInstance.profiler startMeasuringTaskWithName:AnalyticsNoficationsTimeToDisplayContent
+                                                                                          category:AnalyticsNoficationsCategory];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -844,6 +853,18 @@
     // Re-enable the read marker display, and disable its update.
     self.roomDataSource.showReadMarker = YES;
     self.updateRoomReadMarker = NO;
+}
+
+- (void)stopActivityIndicator
+{
+    if (notificationTaskProfile)
+    {
+        // Consider here we have displayed the message corresponding to the notification
+        [MXSDKOptions.sharedInstance.profiler stopMeasuringTaskWithProfile:notificationTaskProfile];
+        notificationTaskProfile = nil;
+    }
+    
+    [super stopActivityIndicator];
 }
 
 - (void)displayRoom:(MXKRoomDataSource *)dataSource
@@ -1618,6 +1639,24 @@
     [self.roomCreationModalCoordinatorBridgePresenter presentFrom:self animated:YES];
 }
 
+- (void)showMemberDetails:(MXRoomMember *)member
+{
+    if (!member)
+    {
+        return;
+    }
+    RoomMemberDetailsViewController *memberViewController = [RoomMemberDetailsViewController roomMemberDetailsViewController];
+    
+    // Set delegate to handle action on member (start chat, mention)
+    memberViewController.delegate = self;
+    memberViewController.enableMention = (self.inputToolbarView != nil);
+    memberViewController.enableVoipCall = NO;
+    
+    [memberViewController displayRoomMember:member withMatrixRoom:self.roomDataSource.room];
+    
+    [self.navigationController pushViewController:memberViewController animated:YES];
+}
+
 #pragma mark - Hide/Show preview header
 
 - (void)showPreviewHeader:(BOOL)isVisible
@@ -2093,11 +2132,8 @@
         
         if ([actionIdentifier isEqualToString:kMXKRoomBubbleCellTapOnAvatarView])
         {
-            selectedRoomMember = [self.roomDataSource.roomState.members memberWithUserId:userInfo[kMXKRoomBubbleCellUserIdKey]];
-            if (selectedRoomMember)
-            {
-                [self performSegueWithIdentifier:@"showMemberDetails" sender:self];
-            }
+            MXRoomMember *member = [self.roomDataSource.roomState.members memberWithUserId:userInfo[kMXKRoomBubbleCellUserIdKey]];
+            [self showMemberDetails:member];
         }
         else if ([actionIdentifier isEqualToString:kMXKRoomBubbleCellLongPressOnAvatarView])
         {
@@ -2654,7 +2690,7 @@
                     
                     if (permalink)
                     {
-                        [[UIPasteboard generalPasteboard] setString:permalink];
+                        MXKPasteboardManager.shared.pasteboard.string = permalink;
                     }
                     else
                     {
@@ -2719,7 +2755,8 @@
             }
         }
         
-        if (BuildSettings.messageDetailsAllowReportContent){
+        if (![selectedEvent.sender isEqualToString:self.mainSession.myUser.userId] && BuildSettings.messageDetailsAllowReportContent)
+        {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_report", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action) {
@@ -2919,8 +2956,7 @@
             if (member)
             {
                 // Use the room member detail VC for room members
-                selectedRoomMember = member;
-                [self performSegueWithIdentifier:@"showMemberDetails" sender:self];
+                [self showMemberDetails:member];
             }
             else
             {
@@ -3171,67 +3207,7 @@
     
     id pushedViewController = [segue destinationViewController];
     
-    if ([[segue identifier] isEqualToString:@"showRoomDetails"])
-    {
-        if ([pushedViewController isKindOfClass:[SegmentedViewController class]])
-        {
-            // Dismiss keyboard
-            [self dismissKeyboard];
-            
-            SegmentedViewController* segmentedViewController = (SegmentedViewController*)pushedViewController;
-            
-            MXSession* session = self.roomDataSource.mxSession;
-            NSString* roomId = self.roomDataSource.roomId;
-            NSMutableArray* viewControllers = [[NSMutableArray alloc] init];
-            NSMutableArray* titles = [[NSMutableArray alloc] init];
-            
-            // members tab
-            [titles addObject: NSLocalizedStringFromTable(@"room_details_people", @"Vector", nil)];
-            RoomParticipantsViewController* participantsViewController = [RoomParticipantsViewController roomParticipantsViewController];
-            participantsViewController.delegate = self;
-            participantsViewController.enableMention = YES;
-            participantsViewController.mxRoom = [session roomWithRoomId:roomId];
-            [viewControllers addObject:participantsViewController];
-            
-            // Files tab
-            [titles addObject: NSLocalizedStringFromTable(@"room_details_files", @"Vector", nil)];
-            RoomFilesViewController *roomFilesViewController = [RoomFilesViewController roomViewController];
-            // @TODO (async-state): This call should be synchronous. Every thing will be fine
-            __block MXKRoomDataSource *roomFilesDataSource;
-            [MXKRoomDataSource loadRoomDataSourceWithRoomId:roomId andMatrixSession:session onComplete:^(id roomDataSource) {
-                roomFilesDataSource = roomDataSource;
-            }];
-            roomFilesDataSource.filterMessagesWithURL = YES;
-            [roomFilesDataSource finalizeInitialization];
-            // Give the data source ownership to the room files view controller.
-            roomFilesViewController.hasRoomDataSourceOwnership = YES;
-            [roomFilesViewController displayRoom:roomFilesDataSource];
-            [viewControllers addObject:roomFilesViewController];
-            
-            // Settings tab
-            [titles addObject: NSLocalizedStringFromTable(@"room_details_settings", @"Vector", nil)];
-            RoomSettingsViewController *settingsViewController = [RoomSettingsViewController roomSettingsViewController];
-            [settingsViewController initWithSession:session andRoomId:roomId];
-            [viewControllers addObject:settingsViewController];
-            
-            // Sanity check
-            if (selectedRoomDetailsIndex > 2)
-            {
-                selectedRoomDetailsIndex = 0;
-            }
-            
-            segmentedViewController.title = NSLocalizedStringFromTable(@"room_details_title", @"Vector", nil);
-            [segmentedViewController initWithTitles:titles viewControllers:viewControllers defaultSelected:selectedRoomDetailsIndex];
-            
-            // Add the current session to be able to observe its state change.
-            [segmentedViewController addMatrixSession:session];
-            
-            // Preselect the tapped field if any
-            settingsViewController.selectedRoomSettingsField = selectedRoomSettingsField;
-            selectedRoomSettingsField = RoomSettingsViewControllerFieldNone;
-        }
-    }
-    else if ([[segue identifier] isEqualToString:@"showRoomSearch"])
+    if ([[segue identifier] isEqualToString:@"showRoomSearch"])
     {
         // Dismiss keyboard
         [self dismissKeyboard];
@@ -3239,22 +3215,6 @@
         RoomSearchViewController* roomSearchViewController = (RoomSearchViewController*)pushedViewController;
         // Add the current data source to be able to search messages.
         roomSearchViewController.roomDataSource = self.roomDataSource;
-    }
-    else if ([[segue identifier] isEqualToString:@"showMemberDetails"])
-    {
-        if (selectedRoomMember)
-        {
-            RoomMemberDetailsViewController *memberViewController = pushedViewController;
-            
-            // Set delegate to handle action on member (start chat, mention)
-            memberViewController.delegate = self;
-            memberViewController.enableMention = (self.inputToolbarView != nil);
-            memberViewController.enableVoipCall = NO;
-            
-            [memberViewController displayRoomMember:selectedRoomMember withMatrixRoom:self.roomDataSource.room];
-            
-            selectedRoomMember = nil;
-        }
     }
     else if ([[segue identifier] isEqualToString:@"showContactDetails"])
     {
@@ -3276,39 +3236,6 @@
             
             unknownDevices = nil;
         }
-    }
-    else if ([[segue identifier] isEqualToString:@"showContactPicker"])
-    {
-        ContactsTableViewController *contactsPickerViewController = (ContactsTableViewController*)pushedViewController;
-        
-        // Set delegate to handle selected contact
-        contactsPickerViewController.contactsTableViewControllerDelegate = self;
-        
-        // Prepare its data source
-        ContactsDataSource *contactsDataSource = [[ContactsDataSource alloc] initWithMatrixSession:self.roomDataSource.mxSession];
-        contactsDataSource.areSectionsShrinkable = YES;
-        contactsDataSource.displaySearchInputInContactsList = YES;
-        contactsDataSource.forceMatrixIdInDisplayName = YES;
-        // Add a plus icon to the contact cell in the contacts picker, in order to make it more understandable for the end user.
-        contactsDataSource.contactCellAccessoryImage = [[UIImage imageNamed:@"plus_icon"] vc_tintedImageUsingColor:ThemeService.shared.theme.textPrimaryColor];
-        
-        // List all the participants matrix user id to ignore them during the contacts search.
-        NSArray *members = [self.roomDataSource.roomState.members membersWithoutConferenceUser];
-        for (MXRoomMember *mxMember in members)
-        {
-            // Check his status
-            if (mxMember.membership == MXMembershipJoin || mxMember.membership == MXMembershipInvite)
-            {
-                // Create the contact related to this member
-                MXKContact *contact = [[MXKContact alloc] initMatrixContactWithDisplayName:mxMember.displayname andMatrixID:mxMember.userId];
-                contactsDataSource.ignoredContactsByMatrixId[mxMember.userId] = contact;
-            }
-        }
-
-        [contactsPickerViewController showSearch:YES];
-        contactsPickerViewController.searchBar.placeholder = NSLocalizedStringFromTable(@"room_participants_invite_another_user", @"Vector", nil);
-        
-        [contactsPickerViewController displayList:contactsDataSource];
     }
     
     // Hide back button title
@@ -5113,6 +5040,13 @@
 {
     MXWeakify(self);
     __block UIAlertController *alert;
+    
+    // Force device verification if session has cross-signing activated and device is not yet verified
+    if (self.mainSession.crypto.crossSigning && self.mainSession.crypto.crossSigning.state == MXCrossSigningStateCrossSigningExists)
+    {
+        [self presentReviewUnverifiedSessionsAlert];
+        return;
+    }
 
     // Make the re-request
     [self.mainSession.crypto reRequestRoomKeyForEvent:event];
@@ -5158,6 +5092,37 @@
 
     [self presentViewController:currentAlert animated:YES completion:nil];
 }
+
+- (void)presentReviewUnverifiedSessionsAlert
+{
+    NSLog(@"[MasterTabBarController] presentReviewUnverifiedSessionsAlertWithSession");
+
+    [currentAlert dismissViewControllerAnimated:NO completion:nil];
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"key_verification_self_verify_unverified_sessions_alert_title", @"Vector", nil)
+                                                                   message:NSLocalizedStringFromTable(@"key_verification_self_verify_unverified_sessions_alert_message", @"Vector", nil)
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"key_verification_self_verify_unverified_sessions_alert_validate_action", @"Vector", nil)
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * action) {
+                                                [self showSettingsSecurityScreen];
+                                            }]];
+
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"later", @"Vector", nil)
+                                              style:UIAlertActionStyleCancel
+                                            handler:nil]];
+
+    [self presentViewController:alert animated:YES completion:nil];
+
+    currentAlert = alert;
+}
+
+- (void)showSettingsSecurityScreen
+{
+    [[AppDelegate theDelegate] presentCompleteSecurityForSession: self.mainSession];
+}
+
 
 #pragma mark Tombstone event
 
@@ -5235,6 +5200,11 @@
     
     BOOL isCopyActionEnabled = !attachment || (attachment.type != MXKAttachmentTypeSticker && BuildSettings.sharingFeaturesEnabled);
     
+    if (attachment && !BuildSettings.messageDetailsAllowCopyMedia)
+    {
+        isCopyActionEnabled = NO;
+    }
+    
     if (isCopyActionEnabled)
     {
         switch (event.eventType) {
@@ -5282,7 +5252,7 @@
             
             if (textMessage)
             {
-                [UIPasteboard generalPasteboard].string = textMessage;
+                MXKPasteboardManager.shared.pasteboard.string = textMessage;
             }
             else
             {
@@ -5754,10 +5724,10 @@ BOOL enableNewRoomRendering = YES;
                     [self presentViewController:alert animated:YES completion:nil];
                     
                     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
-                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:BuildSettings.roomInputToolbarCompressionMode isPhotoLibraryAsset:YES];
                 } else {
                     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
-                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:BuildSettings.roomInputToolbarCompressionMode isPhotoLibraryAsset:YES];
                 }
             }];
             [self showViewController:PatientTaggingController sender:self];
@@ -5767,7 +5737,7 @@ BOOL enableNewRoomRendering = YES;
         /*RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
         if (roomInputToolbarView)
         {
-            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:BuildSettings.roomInputToolbarCompressionMode isPhotoLibraryAsset:NO];
         }*/
     }else{
         [cameraPresenter dismissWithAnimated:YES completion:nil];
@@ -5776,7 +5746,7 @@ BOOL enableNewRoomRendering = YES;
         RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
         if (roomInputToolbarView)
         {
-            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:MXKRoomInputToolbarCompressionModePrompt isPhotoLibraryAsset:NO];
+            [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:BuildSettings.roomInputToolbarCompressionMode isPhotoLibraryAsset:NO];
         }
     }
 }
@@ -5811,7 +5781,7 @@ BOOL enableNewRoomRendering = YES;
                     //A patient was tagged
                 } else {
                     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
-                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
+                    [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:BuildSettings.roomInputToolbarCompressionMode isPhotoLibraryAsset:YES];
                 }
             }];
             [self showViewController:PatientTaggingController sender:self];
@@ -5829,7 +5799,7 @@ BOOL enableNewRoomRendering = YES;
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
-        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone) isPhotoLibraryAsset:YES];
+        [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:BuildSettings.roomInputToolbarCompressionMode isPhotoLibraryAsset:YES];
     }
      */
 }
@@ -5854,7 +5824,7 @@ BOOL enableNewRoomRendering = YES;
     RoomInputToolbarView *roomInputToolbarView = [self inputToolbarViewAsRoomInputToolbarView];
     if (roomInputToolbarView)
     {
-        [roomInputToolbarView sendSelectedAssets:assets withCompressionMode:(BuildSettings.roomPromptForAttachmentSize ? MXKRoomInputToolbarCompressionModePrompt : MXKRoomInputToolbarCompressionModeNone)];
+        [roomInputToolbarView sendSelectedAssets:assets withCompressionMode:BuildSettings.roomInputToolbarCompressionMode];
     }
 }
 

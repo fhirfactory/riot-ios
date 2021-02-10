@@ -21,6 +21,5 @@ import Foundation
 /// View data object to represent view
 struct RoomInfoListViewData {
     let numberOfMembers: Int
-    let isEncrypted: Bool
     let basicInfoViewData: RoomInfoBasicViewData
 }

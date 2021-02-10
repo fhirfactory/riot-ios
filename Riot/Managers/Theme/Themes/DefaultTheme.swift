@@ -21,7 +21,7 @@ import UIKit
 @objcMembers
 class DefaultTheme: NSObject, Theme {
 
-    var identifier: String = "default"
+    var identifier: String = ThemeIdentifier.light.rawValue
     
     var backgroundColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
     var backgroundShadedColor: UIColor = UIColor(rgbHex: 0xDEDEDE)
@@ -80,6 +80,11 @@ class DefaultTheme: NSObject, Theme {
     }
     var scrollBarStyle: UIScrollView.IndicatorStyle = .default
     var keyboardAppearance: UIKeyboardAppearance = .light
+    
+    @available(iOS 12.0, *)
+    var userInterfaceStyle: UIUserInterfaceStyle {
+        return .light
+    }
 
     var placeholderTextColor: UIColor = UIColor(rgbHex: 0x8F97A3) // Use secondary text color
     

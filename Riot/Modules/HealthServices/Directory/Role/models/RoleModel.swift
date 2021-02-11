@@ -15,6 +15,7 @@ class RoleModel: Equatable {
     
     var innerRole: Role
     var isExpanded: Bool
+    var isFilled: Bool = false
     //as with the others, this should be changed to be stored
     var Favourite: Bool = false
     init(innerRole: Role, isExpanded: Bool) {

@@ -54,6 +54,7 @@
 "camera" = "Camera";
 "voice" = "Voice";
 "video" = "Video";
+"chat" = "Chat";
 "active_call" = "Active Call";
 "active_call_details" = "Active Call (%@)";
 "later" = "Later";
@@ -1639,6 +1640,8 @@ Tap the + to start adding people.";
 "role_detail_specialty_title" = "Specialty";
 "role_detail_practitioner_in_role" = "Practitioner in Role";
 "service_detail_location_title" = "Location";
+"filled" = "Filled";
+"unfilled" = "Unfilled";
 "phone" = "Phone";
 
 "directory_no_favourites_set" = "You haven't marked any %@ as favourites";

@@ -486,6 +486,10 @@ internal enum VectorL10n {
   internal static var cancel: String { 
     return VectorL10n.tr("Vector", "cancel") 
   }
+  /// Chat
+  internal static var chat: String { 
+    return VectorL10n.tr("Vector", "chat") 
+  }
   /// Close
   internal static var close: String { 
     return VectorL10n.tr("Vector", "close") 
@@ -1337,6 +1341,10 @@ internal enum VectorL10n {
   /// File type not supported.
   internal static var fileUploadErrorUnsupportedFileTypeMessage: String { 
     return VectorL10n.tr("Vector", "file_upload_error_unsupported_file_type_message") 
+  }
+  /// Filled
+  internal static var filled: String { 
+    return VectorL10n.tr("Vector", "filled") 
   }
   /// You can't delete a photo with a patient tag attached to it.
   internal static var galleryNoDeletingTaggedImages: String { 
@@ -4689,6 +4697,10 @@ internal enum VectorL10n {
   /// Today
   internal static var today: String { 
     return VectorL10n.tr("Vector", "today") 
+  }
+  /// Unfilled
+  internal static var unfilled: String { 
+    return VectorL10n.tr("Vector", "unfilled") 
   }
   /// This room contains unknown sessions which have not been verified.\nThis means there is no guarantee that the sessions belong to the users they claim to.\nWe recommend you go through the verification process for each session before continuing, but you can resend the message without verifying if you prefer.
   internal static var unknownDevicesAlert: String { 

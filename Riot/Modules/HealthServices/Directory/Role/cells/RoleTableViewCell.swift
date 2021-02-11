@@ -25,6 +25,10 @@ class RoleTableViewCell: UITableViewCell {
     @IBOutlet weak var LocationLabel: UILabel!
     @IBOutlet weak var RoleIcon: MXKImageView!
     @IBOutlet weak var FavouriteButton: UIButton!
+    @IBOutlet weak var VideoButton: UIButton!
+    @IBOutlet weak var CallButton: UIButton!
+    @IBOutlet weak var ChatButton: UIButton!
+    @IBOutlet weak var RoleFilledLabel: UILabel!
     
     var role: RoleModel?
     
@@ -41,6 +45,9 @@ class RoleTableViewCell: UITableViewCell {
         RoleIcon.layer.cornerRadius = RoleIcon.bounds.height / 2
         RoleIcon.clipsToBounds = true
         ThemeService.shared().theme.recursiveApply(on: contentView)
+        VideoButton.setTitle(AlternateHomeTools.getNSLocalized("video", in: "Vector"), for: .normal)
+        CallButton.setTitle(AlternateHomeTools.getNSLocalized("voice", in: "Vector"), for: .normal)
+        ChatButton.setTitle(AlternateHomeTools.getNSLocalized("chat", in: "Vector"), for: .normal)
     }
     
     @IBAction private func expandButtonClick(_ sender: Any) {
@@ -71,6 +78,15 @@ class RoleTableViewCell: UITableViewCell {
         CategoryLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_category", in: "Vector"), role.innerRole.Category)
         OrgUnitLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_org_unit", in: "Vector"), role.innerRole.OrgUnit)
         LocationLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_location", in: "Vector"), role.innerRole.Location)
+        
+        if role.isFilled {
+            RoleFilledLabel.text = AlternateHomeTools.getNSLocalized("filled", in: "Vector")
+            RoleFilledLabel.textColor = ThemeService.shared().theme.tintColor
+        } else {
+            RoleFilledLabel.text = AlternateHomeTools.getNSLocalized("unfilled", in: "Vector")
+            RoleFilledLabel.textColor = ThemeService.shared().theme.warningColor
+        }
+        
         if #available(iOS 13.0, *) {
             FavouriteButton.setImage(UIImage(systemName: (role.Favourite ? "star.fill" : "star")), for: .normal)
         } else {

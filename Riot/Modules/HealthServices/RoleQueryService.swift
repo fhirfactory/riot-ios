@@ -19,7 +19,11 @@ import Foundation
 //TODO: Update functionality when backend is completed
 class RoleQueryService: AsyncQueryableService<Role> {
     //Mock data.
-    let rolesList = [Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno"), Role(withName: "After Hours Hospital Manager (AHHM)", andId: "xxx-yyy-zzz", andDescription: "I dunno"), Role(withName: "Doctor", andId: "sss-ddd-fff", andDescription: "Okay")]
+    let rolesList = [
+        Role(name: "ED Acute SRMO", longname: "Senior Resident Medical Officer", id: "na", description: "Emergency Department Acute Senior Resident Medical Officer", designation: "Senior Resident Medical Officer", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}"),
+        Role(name: "ED Acute RMO", longname: "Resident Medical Officer", id: "na", description: "Emergency Department Acute Resident Medical Officer", designation: "Resident Medical Officer", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}"),
+        Role(name: "ED Acute Intern", longname: "Intern", id: "na", description: "Emergency Department Acute Intern", designation: "Intern", category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}")
+    ]
     override func Query(queryDetails: String, success: ([Role]) -> Void, failure: () -> Void) {
         success(rolesList.filter({ (r) -> Bool in
             queryDetails == "" || r.OfficialName.contains(queryDetails) || r.Designation.contains(queryDetails) || r.Name.contains(queryDetails)

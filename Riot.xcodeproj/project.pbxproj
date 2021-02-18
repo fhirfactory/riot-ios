@@ -912,6 +912,9 @@
 		EB76BE352573B5330013EABE /* ImageTagService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE342573B5330013EABE /* ImageTagService.swift */; };
 		EB76BE3D2573B5810013EABE /* BaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE3C2573B5810013EABE /* BaseService.swift */; };
 		EB76BE452574DFE40013EABE /* TagData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB76BE442574DFE40013EABE /* TagData.swift */; };
+		EB80021E25D92950007E76DF /* InitialLaunchRoleSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB80021D25D92950007E76DF /* InitialLaunchRoleSelector.xib */; };
+		EB80022625D92E57007E76DF /* RoleSelectionContainer.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB80022525D92E57007E76DF /* RoleSelectionContainer.xib */; };
+		EB80022E25D931BA007E76DF /* RoleSelectionContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB80022D25D931BA007E76DF /* RoleSelectionContainer.swift */; };
 		EB98299A256B820F004723C9 /* PatientTaggingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */; };
 		EB982B82256D2453004723C9 /* MessageImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB982B81256D2453004723C9 /* MessageImageView.swift */; };
 		EB982B8A256D246A004723C9 /* MessageImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB982B89256D246A004723C9 /* MessageImageView.xib */; };
@@ -2343,6 +2346,9 @@
 		EB76BE342573B5330013EABE /* ImageTagService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTagService.swift; sourceTree = "<group>"; };
 		EB76BE3C2573B5810013EABE /* BaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseService.swift; sourceTree = "<group>"; };
 		EB76BE442574DFE40013EABE /* TagData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagData.swift; sourceTree = "<group>"; };
+		EB80021D25D92950007E76DF /* InitialLaunchRoleSelector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InitialLaunchRoleSelector.xib; sourceTree = "<group>"; };
+		EB80022525D92E57007E76DF /* RoleSelectionContainer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleSelectionContainer.xib; sourceTree = "<group>"; };
+		EB80022D25D931BA007E76DF /* RoleSelectionContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectionContainer.swift; sourceTree = "<group>"; };
 		EB982999256B820F004723C9 /* PatientTaggingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTaggingViewModel.swift; sourceTree = "<group>"; };
 		EB982B81256D2453004723C9 /* MessageImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageImageView.swift; sourceTree = "<group>"; };
 		EB982B89256D246A004723C9 /* MessageImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageImageView.xib; sourceTree = "<group>"; };
@@ -4078,7 +4084,6 @@
 				EBAAF55E2562494C0080A268 /* HealthServices */,
 				ECF57A3725090C23004BBF9D /* CreateRoom */,
 				B1BB648724FD07B3008238AE /* Application */,
-				43AF6AF524E4E2C600BFE3EC /* profile */,
 				B10A3E9524FE86AE007C380F /* SplitView */,
 				EC1CA84F24C1DEC400DE9EBF /* SetPinCode */,
 				EC3B066324AC6ADD000DF9BF /* CrossSigning */,
@@ -5637,6 +5642,16 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		EB80021C25D92913007E76DF /* Role Selection */ = {
+			isa = PBXGroup;
+			children = (
+				EB80021D25D92950007E76DF /* InitialLaunchRoleSelector.xib */,
+				EB80022525D92E57007E76DF /* RoleSelectionContainer.xib */,
+				EB80022D25D931BA007E76DF /* RoleSelectionContainer.swift */,
+			);
+			path = "Role Selection";
+			sourceTree = "<group>";
+		};
 		EB97FA7025BAD8AF00D4F1BB /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
@@ -5656,6 +5671,7 @@
 		EBAAF55E2562494C0080A268 /* HealthServices */ = {
 			isa = PBXGroup;
 			children = (
+				EB80021C25D92913007E76DF /* Role Selection */,
 				4397158F24D1359500D0D582 /* Directory */,
 				EBEE3AF12585C1CB0011345B /* User Interface */,
 				EBEE3AF02585C1AA0011345B /* Service Types */,
@@ -5804,6 +5820,7 @@
 		EBEE3AF12585C1CB0011345B /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				43AF6AF524E4E2C600BFE3EC /* profile */,
 				EB97FA7025BAD8AF00D4F1BB /* Gallery */,
 				EB47E67925B021AE0025A469 /* Recent Calls */,
 				EB2BCCE025ADA6FE00B49D07 /* Calls */,
@@ -6820,6 +6837,7 @@
 				B105778B221304FA00334B1E /* KeyBackupSetupSuccessFromPassphraseViewController.storyboard in Resources */,
 				B1664DA220F4F95800808783 /* Localizable.strings in Resources */,
 				B169328720F3954A00746532 /* SharedImages.xcassets in Resources */,
+				EB80022625D92E57007E76DF /* RoleSelectionContainer.xib in Resources */,
 				B1664DA120F4F94F00808783 /* InfoPlist.strings in Resources */,
 				B1B5579B20EF575B00210D55 /* AuthInputsView.xib in Resources */,
 				B1B5594620EF7BD000210D55 /* RoomCollectionViewCell.xib in Resources */,
@@ -6997,6 +7015,7 @@
 				B1A67947257559D500BB0C69 /* RootTabEmptyView.xib in Resources */,
 				B1B557D220EF5E3500210D55 /* MediaAlbumTableCell.xib in Resources */,
 				B1B558C520EF768F00210D55 /* RoomOutgoingEncryptedTextMsgBubbleCell.xib in Resources */,
+				EB80021E25D92950007E76DF /* InitialLaunchRoleSelector.xib in Resources */,
 				EB6B1619253415E400BBDCC6 /* EmailTableViewCell.xib in Resources */,
 				B1B5582B20EF666100210D55 /* DirectoryRecentTableViewCell.xib in Resources */,
 				B105778F2213052A00334B1E /* KeyBackupSetupSuccessFromRecoveryKeyViewController.storyboard in Resources */,
@@ -7513,6 +7532,7 @@
 				B1098BF621ECFE65000DDA48 /* KeyBackupSetupPassphraseCoordinator.swift in Sources */,
 				B1B558C320EF768F00210D55 /* RoomIncomingEncryptedTextMsgWithoutSenderNameBubbleCell.m in Sources */,
 				B10A3E9D24FE88CB007C380F /* RootRouterType.swift in Sources */,
+				EB80022E25D931BA007E76DF /* RoleSelectionContainer.swift in Sources */,
 				B1B9DEDC22E9B7440065E677 /* SerializationServiceType.swift in Sources */,
 				B16DC23C258A7D13004DAB1A /* ThemeService.swift in Sources */,
 				B110872521F098F0003554A5 /* ActivityIndicatorPresenter.swift in Sources */,

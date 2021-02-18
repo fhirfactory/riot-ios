@@ -21,9 +21,28 @@ struct LocalRole {
     let active: Bool
 }
 
+enum SideMenuOption {
+    case Roles
+    case SignOut
+    case Settings
+    var StringIdentifier: String {
+        switch self {
+        case .Roles:
+            return "settings_roles"
+        case .Settings:
+            return "settings_settings"
+        case .SignOut:
+            return "settings_sign_out"
+        }
+    }
+}
+
 struct IconItem {
-    let image:UIImage
-    let text:String
+    let image: UIImage
+    var text: String {
+        return NSLocalizedString(item.StringIdentifier, tableName: "Vector", bundle: Bundle.main, value: "", comment: "")
+    }
+    let item: SideMenuOption
 }
 
 struct TextItem {

@@ -90,9 +90,9 @@ class ProfileViewController: MXKViewController {
         roles.append(LocalRole(name: "Business Analyst", active: false))
         roles.append(LocalRole(name: "UI Designer", active: false))
         
-        iconItems.append(IconItem(image: UIImage(named: "settings_icon") ?? UIImage(), text: NSLocalizedString("settings_settings", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))
-        iconItems.append(IconItem(image: UIImage(named: "role_outline") ?? UIImage(), text: NSLocalizedString("settings_roles", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))
-        iconItems.append(IconItem(image: UIImage(named: "exit") ?? UIImage(), text: NSLocalizedString("settings_sign_out", tableName: "Vector", bundle: Bundle.main, value: "", comment: "")))
+        iconItems.append(IconItem(image: UIImage(named: "settings_icon") ?? UIImage(), item: .Settings))
+        iconItems.append(IconItem(image: UIImage(named: "role_outline") ?? UIImage(), item: .Roles))
+        iconItems.append(IconItem(image: UIImage(named: "exit") ?? UIImage(), item: .SignOut))
         
         textItems.append(TextItem(text: NSLocalizedString("settings_term_conditions", tableName: "Vector", bundle: Bundle.main, value: "", comment: ""), url: ""))
         textItems.append(TextItem(text: NSLocalizedString("settings_privacy_policy", tableName: "Vector", bundle: Bundle.main, value: "", comment: ""), url: ""))
@@ -159,13 +159,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
             //case SectionType.PROFILE_CELL.rawValue:
             
-            //case SectionType.ROLE_CELL.rawValue:
+        //case SectionType.ROLE_CELL.rawValue:
             
         case SectionType.ICON_ITEM_CELL.rawValue:
-            if iconItems[indexPath.row].text == NSLocalizedString("settings_settings", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {
+            if iconItems[indexPath.row].item == .Settings {
                 self.performSegue(withIdentifier: "showSettingSegue", sender: self.tableView)
-            } else if iconItems[indexPath.row].text == NSLocalizedString("settings_sign_out", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {
+            } else if iconItems[indexPath.row].item == .SignOut {
                 onSignout(tableView.cellForRow(at: indexPath))
+            } else if iconItems[indexPath.row].item == .Roles {
+                //TODO: Link this to the role selection app
             }
         case SectionType.ONLY_TEXT_CELL.rawValue:
             if textItems[indexPath.row].text == NSLocalizedString("settings_term_conditions", tableName: "Vector", bundle: Bundle.main, value: "", comment: "") {

@@ -17,7 +17,7 @@
 import Foundation
 
 extension Theme {
-    func recursiveApply(on view: UIView) {
+    func recursiveApply(on view: UIView, onlyDrawBackgroundOnce: Bool = false, _ ignoreBackground: Bool = false, onlyReplaceSystemBackgroundColors: Bool = false) {
         switch view {
         case is MinimalSearchBar:
             guard let searchBar = view as? MinimalSearchBar else { return }
@@ -68,9 +68,18 @@ extension Theme {
                 isTableViewCellContent = sv is UITableViewCell
             }
             if type(of: view) == UIView.self || view is UIStackView || isTableViewCellContent {
-                view.backgroundColor = self.backgroundColor
+                
+                if #available(iOS 13.0, *), onlyReplaceSystemBackgroundColors && view.backgroundColor != UIColor.systemBackground {
+                    
+                } else {
+                    if !ignoreBackground {
+                        view.backgroundColor = self.backgroundColor
+                    } else if onlyDrawBackgroundOnce {
+                        view.backgroundColor = .none
+                    }
+                }
                 for v in view.subviews {
-                    recursiveApply(on: v)
+                    recursiveApply(on: v, onlyDrawBackgroundOnce: onlyDrawBackgroundOnce, onlyDrawBackgroundOnce)
                 }
             }
         }

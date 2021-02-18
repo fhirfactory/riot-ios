@@ -46,7 +46,7 @@ class PeopleFilteredSearchController: SelectableFilteredSearchController<ActPeop
     }
     override func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> ActPeople? {
         guard let actualCell = tableViewCell as? PeopleTableViewCell else { return nil }
-        return actualCell.actPeopleModel
+        return actualCell.actPerson
     }
     override func getTableviewCell(_ tableView: UITableView, atIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleTableViewCell") as? PeopleTableViewCell else { return UITableViewCell() }

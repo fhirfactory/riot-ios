@@ -17,36 +17,36 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opthalmology Clinic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7l-IY-4zI">
-                        <rect key="frame" x="5" y="5" width="178.5" height="23"/>
+                        <rect key="frame" x="16" y="5" width="178.5" height="23"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWM-Fu-Y5D">
-                        <rect key="frame" x="5" y="26" width="67" height="21"/>
+                        <rect key="frame" x="16" y="26" width="67" height="21"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01.06.21.17" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yVD-4X-L1D">
-                        <rect key="frame" x="5" y="46" width="84" height="21"/>
+                        <rect key="frame" x="16" y="46" width="84" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Building 1 Level 2 Opthalmology Clinic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANI-WD-aXY">
-                        <rect key="frame" x="5" y="65" width="289" height="21"/>
+                        <rect key="frame" x="16" y="65" width="289" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WhH-Dh-DPS">
-                        <rect key="frame" x="390" y="0.0" width="24" height="24"/>
+                        <rect key="frame" x="376" y="45.5" width="24" height="24"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" image="voice_call_hangon_icon"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gw3-kR-0nl">
-                        <rect key="frame" x="364" y="2" width="22" height="22"/>
+                        <rect key="frame" x="378" y="2" width="22" height="22"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" image="star" catalog="system"/>
                         <connections>
@@ -56,16 +56,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="ANI-WD-aXY" firstAttribute="leading" secondItem="yVD-4X-L1D" secondAttribute="leading" id="06e-ue-igW"/>
-                    <constraint firstAttribute="trailing" secondItem="WhH-Dh-DPS" secondAttribute="trailing" id="29J-3a-7Ud"/>
-                    <constraint firstItem="WhH-Dh-DPS" firstAttribute="top" secondItem="1no-Au-1G6" secondAttribute="top" id="9zH-42-Y2R"/>
+                    <constraint firstItem="WhH-Dh-DPS" firstAttribute="trailing" secondItem="Gw3-kR-0nl" secondAttribute="trailing" id="9Le-Q1-PAZ"/>
                     <constraint firstItem="Gw3-kR-0nl" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="w7l-IY-4zI" secondAttribute="trailing" constant="10" id="M9e-T5-8f1"/>
                     <constraint firstItem="UWM-Fu-Y5D" firstAttribute="top" secondItem="w7l-IY-4zI" secondAttribute="bottom" constant="-2" id="PS1-eA-oHc"/>
                     <constraint firstItem="yVD-4X-L1D" firstAttribute="top" secondItem="UWM-Fu-Y5D" secondAttribute="bottom" constant="-1" id="SFR-HY-3yk"/>
                     <constraint firstItem="Gw3-kR-0nl" firstAttribute="top" secondItem="1no-Au-1G6" secondAttribute="top" constant="2" id="WPl-4Q-yDc"/>
                     <constraint firstAttribute="bottom" secondItem="ANI-WD-aXY" secondAttribute="bottom" constant="5" id="XW6-rb-UU3"/>
                     <constraint firstItem="w7l-IY-4zI" firstAttribute="top" secondItem="1no-Au-1G6" secondAttribute="top" constant="5" id="Ywx-aS-4ev"/>
-                    <constraint firstItem="WhH-Dh-DPS" firstAttribute="leading" secondItem="Gw3-kR-0nl" secondAttribute="trailing" constant="4" id="dzD-ea-1Lq"/>
-                    <constraint firstItem="w7l-IY-4zI" firstAttribute="leading" secondItem="1no-Au-1G6" secondAttribute="leading" constant="5" id="eU5-pN-jdz"/>
+                    <constraint firstItem="w7l-IY-4zI" firstAttribute="leading" secondItem="1no-Au-1G6" secondAttribute="leading" constant="16" id="eU5-pN-jdz"/>
+                    <constraint firstItem="WhH-Dh-DPS" firstAttribute="centerY" secondItem="1no-Au-1G6" secondAttribute="centerY" constant="12" id="fFX-ZP-aCe"/>
+                    <constraint firstAttribute="trailing" secondItem="Gw3-kR-0nl" secondAttribute="trailing" constant="14" id="hBi-OJ-avz"/>
                     <constraint firstItem="yVD-4X-L1D" firstAttribute="leading" secondItem="UWM-Fu-Y5D" secondAttribute="leading" id="rCa-PL-sIz"/>
                     <constraint firstItem="UWM-Fu-Y5D" firstAttribute="leading" secondItem="w7l-IY-4zI" secondAttribute="leading" id="tIk-3r-eSs"/>
                     <constraint firstItem="ANI-WD-aXY" firstAttribute="top" secondItem="yVD-4X-L1D" secondAttribute="bottom" constant="-2" id="xlp-yC-V8S"/>

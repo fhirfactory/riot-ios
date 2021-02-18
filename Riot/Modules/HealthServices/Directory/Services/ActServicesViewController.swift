@@ -23,7 +23,9 @@ class ActServicesViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         tableView.register(UINib(nibName: "ServiceTableViewCell", bundle: nil), forCellReuseIdentifier: "ServiceTableViewCell")
         tableView.register(UINib(nibName: "NoFavouritesTableViewCell", bundle: nil), forCellReuseIdentifier: "NoFavouritesTableViewCell")
-        ThemeService.shared().theme.recursiveApply(on: view)
+        ThemeService.shared().theme.recursiveApply(on: view, onlyDrawBackgroundOnce: true)
+        SearchBar.superview?.superview?.backgroundColor = ThemeService.shared().theme.headerBackgroundColor
+        FavouritesButton.superview?.backgroundColor = .none
         tableView.tableFooterView = UIView()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -35,10 +37,8 @@ class ActServicesViewController: UIViewController, UITableViewDelegate, UITableV
         ServiceModel(withName: "Opthalmology Clinic 3", Phone: "0412345678", LocationFirstLine: "01.06.21.27", andLocationSecondLine: "Building 1 Level 2 Opthalmology Clinic")
     ]
     var favourites: [ServiceModel] {
-        get {
-            services.filter { (sm) -> Bool in
-                sm.Favourite
-            }
+        services.filter { (sm) -> Bool in
+            sm.Favourite
         }
     }
     

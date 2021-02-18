@@ -38,10 +38,8 @@ class ActRoleViewController: UIViewController {
     ]
     
     var favourites: [RoleModel] {
-        get {
-            return roles.filter { (r) -> Bool in
-                r.Favourite
-            }
+        return roles.filter { (r) -> Bool in
+            r.Favourite
         }
     }
     
@@ -49,11 +47,12 @@ class ActRoleViewController: UIViewController {
         super.viewDidLoad()
         tabItem.title = AlternateHomeTools.getNSLocalized("role_title", in: "Vector")
         self.view.accessibilityIdentifier = "RoleVCView"
-        ThemeService.shared().theme.recursiveApply(on: self.view)
+        ThemeService.shared().theme.recursiveApply(on: view, onlyDrawBackgroundOnce: true)
         rolesTableView.backgroundColor = ThemeService.shared().theme.backgroundColor
         //self.recentsTableView.accessibilityIdentifier = "RoleVCTableView"
         //self.addPlusButton()
         //enableSearchBar = false
+        SearchBar.superview?.superview?.backgroundColor = ThemeService.shared().theme.headerBackgroundColor
         setupTableView()
     }
     

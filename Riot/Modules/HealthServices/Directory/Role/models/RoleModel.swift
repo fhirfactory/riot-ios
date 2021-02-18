@@ -23,3 +23,20 @@ class RoleModel: Equatable {
         self.isExpanded = isExpanded
     }
 }
+
+class RoleSelectable: Equatable {
+    static func == (lhs: RoleSelectable, rhs: RoleSelectable) -> Bool {
+        lhs.innerRole == rhs.innerRole
+    }
+    
+    var innerRole: Role
+    var isExpanded: Bool
+    var isOnDuty: Bool
+    var isSelected: Bool
+    init(innerRole: Role, isExpanded: Bool) {
+        self.innerRole = innerRole
+        self.isExpanded = isExpanded
+        isOnDuty = false
+        isSelected = false
+    }
+}

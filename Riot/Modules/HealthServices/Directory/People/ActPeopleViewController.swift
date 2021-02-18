@@ -26,12 +26,11 @@ class ActPeopleViewController: UIViewController {
         super.viewDidLoad()
         tabItem.title = AlternateHomeTools.getNSLocalized("people_title", in: "Vector")
         setupTableView()
-        ThemeService.shared().theme.recursiveApply(on: self.view)
+        ThemeService.shared().theme.recursiveApply(on: view, onlyDrawBackgroundOnce: true)
         attachedSearchBar.searchBarStyle = .minimal
-        
         //attachedSearchBar.barTintColor = ThemeService.shared().theme.backgroundColor
         //attachedSearchBar.backgroundColor = ThemeService.shared().theme.tintColor
-        
+        attachedSearchBar.superview?.superview?.backgroundColor = ThemeService.shared().theme.headerBackgroundColor
         //TODO: Remove when there's a real data source
         people = []
         let session = (AppDelegate.theDelegate().mxSessions.first as? MXSession)

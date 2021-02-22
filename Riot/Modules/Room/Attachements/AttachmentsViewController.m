@@ -98,7 +98,6 @@ bool viewHasAppeared = false;
 
 - (void)displayAttachments:(NSArray *)attachmentArray focusOn:(NSString *)eventId {
     [super displayAttachments:attachmentArray focusOn:eventId];
-    //[self refreshCurrentVisibleCell];
 }
 
 - (void)refreshCurrentVisibleCell

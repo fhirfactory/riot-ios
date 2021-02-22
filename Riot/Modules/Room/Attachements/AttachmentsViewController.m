@@ -84,7 +84,8 @@ bool viewHasAppeared = false;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (animated && TagViewContainer){
+    if (animated && !viewHasAppeared){
+        [self loadTagInfo];
         [self animateInTagViewContainer];
     }
     viewHasAppeared = true;
@@ -97,7 +98,7 @@ bool viewHasAppeared = false;
 
 - (void)displayAttachments:(NSArray *)attachmentArray focusOn:(NSString *)eventId {
     [super displayAttachments:attachmentArray focusOn:eventId];
-    [self loadTagInfo];
+    //[self refreshCurrentVisibleCell];
 }
 
 - (void)refreshCurrentVisibleCell

@@ -102,7 +102,8 @@ final class BuildSettings: NSObject {
     // MARK: - Server configuration
     
     // Default servers proposed on the authentication screen
-    static let serverConfigDefaultHomeserverUrlString = "http://110.33.26.21:8008"
+    //    static let serverConfigDefaultHomeserverUrlString = "http://110.33.26.21:8008" // 210128 Temporarily Disabled Marks' Matrix server as it is offline
+        static let serverConfigDefaultHomeserverUrlString = "https://matrix.org"
     static let serverConfigDefaultIdentityServerUrlString = "https://vector.im"
     
     static let serverConfigSygnalAPIUrlString = "https://matrix.org/_matrix/push/v1/notify"

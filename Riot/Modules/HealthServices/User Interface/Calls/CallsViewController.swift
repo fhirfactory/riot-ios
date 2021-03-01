@@ -35,4 +35,8 @@ class CallsViewController: UIViewController {
         sections.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
         view.addSubview(sections.view)
     }
+    
+    @objc func displayList(_ l: RecentsDataSource) {
+        //just to save us from crashing
+    }
 }

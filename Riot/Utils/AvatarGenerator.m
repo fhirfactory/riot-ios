@@ -188,9 +188,11 @@ static UILabel* backgroundLabel = nil;
     NSString* text = displayname ? displayname : itemId;
     NSString* chars = [AvatarGenerator firstChar:text];
     NSArray* words = [text componentsSeparatedByString:@" "];
-    NSString* lastWord = [words lastObject];
-    if (lastWord && words.count > 1){
-        chars = [chars stringByAppendingString:[AvatarGenerator firstChar:lastWord]];
+    long wordIndex = words.count - 1;
+    NSCharacterSet *allowed = [NSCharacterSet alphanumericCharacterSet];
+    while ((![allowed characterIsMember:[[AvatarGenerator firstChar:words[wordIndex]] characterAtIndex:0]]) && wordIndex-- > 0);
+    if (wordIndex > 0) {
+        chars = [chars stringByAppendingString:[AvatarGenerator firstChar:words[wordIndex]]];
     }
     return [AvatarGenerator imageFromText:chars
                       withBackgroundColor:colorsList[[AvatarGenerator colorIndexForText:itemId]]];

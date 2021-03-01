@@ -140,7 +140,7 @@ extension ActPeopleViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension ActPeopleViewController: FavouriteActionReceiverDelegate {
-    func FavouritesUpdated(favourited: Bool) {
+    func favouritesUpdated(favourited: Bool) {
         if showingFavourites && !favourited {
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         }

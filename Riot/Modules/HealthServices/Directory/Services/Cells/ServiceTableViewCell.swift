@@ -48,6 +48,6 @@ class ServiceTableViewCell: UITableViewCell {
             // Fallback on earlier versions
         }
         
-        Delegate.FavouritesUpdated(favourited: Service.Favourite)
+        Delegate.favouritesUpdated(favourited: Service.Favourite)
     }
 }

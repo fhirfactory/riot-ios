@@ -2980,7 +2980,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
                 roomCreationParameters.isDirect = (invite.count != 0);
                 roomCreationParameters.preset = kMXRoomPresetTrustedPrivateChat;
 
-                if (canEnableE2E && BuildSettings.directChatEnforceE2E)
+                if (canEnableE2E && BuildSettings.ifE2EEnabledUseE2EInDirectChats)
                 {
                     roomCreationParameters.initialStateEvents = @[
                                                                   [MXRoomCreationParameters initialStateEventForEncryptionWithAlgorithm:kMXCryptoMegolmAlgorithm

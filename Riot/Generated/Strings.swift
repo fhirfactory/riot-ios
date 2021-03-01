@@ -4494,6 +4494,14 @@ internal enum VectorL10n {
   internal static var tagHistoryTitle: String { 
     return VectorL10n.tr("Vector", "tag_history_title") 
   }
+  /// The tagged photo of the patient would now be uploaded, with relevant tag data being stored by the CPF. This feature is pending on updates to the backend.
+  internal static var taggedMediaConfirmationAlertBody: String { 
+    return VectorL10n.tr("Vector", "tagged_media_confirmation_alert_body") 
+  }
+  /// Tagged Photo Uploaded
+  internal static var taggedMediaConfirmationAlertTitle: String { 
+    return VectorL10n.tr("Vector", "tagged_media_confirmation_alert_title") 
+  }
   /// Taken
   internal static var taken: String { 
     return VectorL10n.tr("Vector", "taken") 

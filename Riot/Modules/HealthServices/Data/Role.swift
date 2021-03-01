@@ -34,36 +34,26 @@ class Role: Equatable {
     let Category: String
     let OrgUnit: String
     
-    init(withName n: String, andId id: String, andDescription desc: String) {
-        Name = n
-        Title = n
-        Identifier = id
-        OfficialName = desc
-        Designation = n
-        //a location string should come about by looking up the location, and then generating the abbreviated string.
-        Location = "CH {Canberra Hospital}"
-        Category = "Emergency"
-        OrgUnit = "ED {Emergency Department}"
+    convenience init(withName name: String, andId id: String, andDescription description: String) {
+        //  a location string should come about by looking up the location, and then generating the abbreviated string.
+        //  Location = "CH {Canberra Hospital}"
+        //  Category = "Emergency"
+        //  OrgUnit = "ED {Emergency Department}"
+        self.init(name: name, longname: name, id: id, description: description, designation: name, category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}")
     }
-    init(withName n: String, andId id: String, andDescription desc: String, andDesignation des: String) {
-        Name = n
-        Title = n
-        Identifier = id
-        OfficialName = desc
-        Designation = des
-        Location = "CH {Canberra Hospital}" //a location string should come about by looking up the location, and then generating the abbreviated string.
-        Category = "Emergency"
-        OrgUnit = "ED {Emergency Department}"
+    convenience init(withName name: String, andId id: String, andDescription description: String, andDesignation designation: String) {
+        //  a location string should come about by looking up the location, and then generating the abbreviated string.
+        //  Location = "CH {Canberra Hospital}"
+        //  Category = "Emergency"
+        //  OrgUnit = "ED {Emergency Department}"
+            self.init(name: name, longname: name, id: id, description: description, designation: designation, category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}")
     }
-    init(withName n: String, andId id: String, andDescription desc: String, andDesignation des: String, andLocation: String) {
-        Name = n
-        Title = n
-        Identifier = id
-        OfficialName = desc
-        Designation = des
-        Location = andLocation
-        Category = "Emergency"
-        OrgUnit = "ED {Emergency Department}"
+    convenience init(withName name: String, andId id: String, andDescription description: String, andDesignation designation: String, andLocation location: String) {
+        //  a location string should come about by looking up the location, and then generating the abbreviated string.
+        //  Location = location
+        //  Category = "Emergency"
+        //  OrgUnit = "ED {Emergency Department}"
+        self.init(name: name, longname: name, id: id, description: description, designation: designation, category: "Emergency", location: location, orgunit: "ED {Emergency Department}")
     }
     init(name: String, longname: String, id: String, description: String, designation: String, category: String, location: String, orgunit: String) {
         Name = name

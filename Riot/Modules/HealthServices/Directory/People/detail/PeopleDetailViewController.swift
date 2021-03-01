@@ -182,8 +182,8 @@ extension PeopleDetailViewController: RoleCellDelegate {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    func FavouritesUpdated(favourited: Bool) {
-        
+    func favouritesUpdated(favourited: Bool) {
+        // TODO:- this function needs to be implemented with back-end data storage
     }
 }
 

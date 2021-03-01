@@ -77,8 +77,8 @@ final class BuildSettings: NSObject {
     // MARK: - Server configuration
     
     // Default servers proposed on the authentication screen
-    static let serverConfigDefaultHomeserverUrlString = "http://110.33.26.21:8008"
-    static let serverConfigDefaultIdentityServerUrlString = "https://vector.im"
+    static let serverConfigDefaultHomeserverUrlString = "https://lingo-server.health.test.act.gov.au"
+    static let serverConfigDefaultIdentityServerUrlString = "https://lingo-server.health.test.act.gov.au"
     
     static let serverConfigSygnalAPIUrlString = "https://matrix.org/_matrix/push/v1/notify"
     
@@ -255,7 +255,8 @@ final class BuildSettings: NSObject {
     //MARK: - Room Actions
     static let roomAllowRemoveAdministrativeMessage = false
     static let roomPromptForAttachmentSize = false
-    static let directChatEnforceE2E = false
+    /// Enable the use of E2E encryption in direct chats (started from the Directory)
+    static let ifE2EEnabledUseE2EInDirectChats = false
     
     //MARK: - Tab Bar Notifications Actions
     static let displayActualFavouritesNotificationCountInTabBar = true

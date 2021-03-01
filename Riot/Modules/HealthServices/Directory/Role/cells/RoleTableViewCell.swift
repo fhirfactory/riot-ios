@@ -57,7 +57,7 @@ class RoleTableViewCell: UITableViewCell {
         } else {
             // Fallback on earlier versions
         }
-        delegate?.FavouritesUpdated(favourited: theRole.Favourite)
+        delegate?.favouritesUpdated(favourited: theRole.Favourite)
     }
     
     func bindModel(role: RoleModel, index: Int) {

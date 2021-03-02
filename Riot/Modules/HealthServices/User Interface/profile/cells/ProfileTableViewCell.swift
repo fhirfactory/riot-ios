@@ -42,7 +42,7 @@ class ProfileTableViewCell: UITableViewCell {
     func setDelegate(delegate: ProfileViewController) {
         self.delegate = delegate
         officialName.text = delegate.mainSession.myUser.displayname
-        contactIcon.setImageURI(delegate.mainSession.myUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: delegate.mainSession.myUser.displayname), mediaManager: delegate.mainSession.mediaManager)
+        contactIcon.setImageURI(delegate.mainSession.myUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forMatrixItem: delegate.mainSession.myUserId, withDisplayName: delegate.mainSession.myUser.displayname), mediaManager: delegate.mainSession.mediaManager)
     }
     
 }

@@ -186,6 +186,14 @@ static UILabel* backgroundLabel = nil;
 + (UIImage*)generateAvatarForMatrixItem:(NSString*)itemId withDisplayName:(NSString*)displayname
 {
     NSString* text = displayname ? displayname : itemId;
+    
+    //if there's a , we assume lastname, firstname name format.
+    //we should split on the comma, then reverse the array.
+    if ([text containsString:@","]) {
+        NSArray* tempText = [text componentsSeparatedByString:@","];
+        text = [[[tempText reverseObjectEnumerator] allObjects] componentsJoinedByString:@" "];
+        text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
     NSString* chars = [AvatarGenerator firstChar:text];
     NSArray* words = [text componentsSeparatedByString:@" "];
     long wordIndex = words.count - 1;

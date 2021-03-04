@@ -3,7 +3,7 @@
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -42,6 +42,7 @@
                 <outlet property="rightBarButtonItem" destination="Kwt-KN-aVL" id="Y3F-wA-tf8"/>
                 <outlet property="serverOptionsContainer" destination="FIn-2w-e6H" id="Z0e-NN-3LY"/>
                 <outlet property="skipButton" destination="wEJ-AF-rdH" id="smu-MS-2IY"/>
+                <outlet property="socialLoginContainerView" destination="TjK-XL-dQS" id="Rte-h1-blp"/>
                 <outlet property="softLogoutClearDataButton" destination="ZRO-C2-hH1" id="PDa-aM-Hso"/>
                 <outlet property="softLogoutClearDataContainer" destination="vX2-5Y-rQc" id="mgK-41-cnX"/>
                 <outlet property="softLogoutClearDataLabel" destination="QYL-Lo-tmH" id="ks9-5X-xfs"/>
@@ -134,7 +135,7 @@
                                         <constraint firstItem="54b-4O-ip9" firstAttribute="top" secondItem="xWb-IJ-v7F" secondAttribute="top" constant="8" id="Ddp-gU-nLY"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="54b-4O-ip9" secondAttribute="trailing" constant="8" id="VEQ-w9-9Ln"/>
                                         <constraint firstAttribute="centerY" secondItem="30E-gm-z6O" secondAttribute="centerY" id="ctL-D3-bgP"/>
-                                        <constraint firstAttribute="height" constant="200" id="e04-1Y-4gZ"/>
+                                        <constraint firstAttribute="height" priority="750" constant="200" id="e04-1Y-4gZ"/>
                                         <constraint firstItem="wIH-Kd-r7q" firstAttribute="top" secondItem="54b-4O-ip9" secondAttribute="bottom" constant="5" id="grf-0I-rwT"/>
                                         <constraint firstItem="54b-4O-ip9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xWb-IJ-v7F" secondAttribute="leading" constant="8" id="phW-Yy-zN7"/>
                                         <constraint firstAttribute="centerX" secondItem="wIH-Kd-r7q" secondAttribute="centerX" id="rTd-Qc-xrD"/>
@@ -409,11 +410,18 @@ Clear it if you're finished using this device, or want to sign in to another acc
                                         <constraint firstItem="AJ2-lJ-NUq" firstAttribute="centerY" secondItem="k3J-Eg-itz" secondAttribute="centerY" id="dcE-Vs-7Rt"/>
                                         <constraint firstAttribute="trailing" secondItem="FIn-2w-e6H" secondAttribute="trailing" id="kFj-6g-v3H"/>
                                         <constraint firstItem="vX2-5Y-rQc" firstAttribute="leading" secondItem="Gg0-TE-OGb" secondAttribute="leading" id="kYN-Lj-zYP"/>
-                                        <constraint firstAttribute="height" constant="300" id="lXv-gM-CjN"/>
+                                        <constraint firstAttribute="height" priority="700" constant="300" id="lXv-gM-CjN"/>
                                         <constraint firstItem="k3J-Eg-itz" firstAttribute="top" secondItem="Gg0-TE-OGb" secondAttribute="top" constant="33" id="mor-t9-7Ke"/>
                                         <constraint firstItem="FIn-2w-e6H" firstAttribute="top" secondItem="k3J-Eg-itz" secondAttribute="bottom" constant="5" id="oTS-5o-MMW"/>
                                         <constraint firstItem="wEJ-AF-rdH" firstAttribute="leading" secondItem="Gg0-TE-OGb" secondAttribute="leading" constant="11" id="sax-RY-aOJ"/>
                                         <constraint firstItem="AJ2-lJ-NUq" firstAttribute="leading" secondItem="Gg0-TE-OGb" secondAttribute="leading" constant="19" id="xFm-Bs-yzw"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjK-XL-dQS">
+                                    <rect key="frame" x="0.0" y="660" width="375" height="0.0"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" priority="750" id="mIX-QF-Tmn"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -422,14 +430,19 @@ Clear it if you're finished using this device, or want to sign in to another acc
                             <constraints>
                                 <constraint firstAttribute="height" constant="485" id="6v6-fz-e8o"/>
                                 <constraint firstItem="Gg0-TE-OGb" firstAttribute="width" secondItem="rhx-dD-4EJ" secondAttribute="width" id="EBX-KN-pRT"/>
+                                <constraint firstItem="TjK-XL-dQS" firstAttribute="leading" secondItem="rhx-dD-4EJ" secondAttribute="leading" id="MId-fr-A7b"/>
+                                <constraint firstAttribute="bottom" secondItem="TjK-XL-dQS" secondAttribute="bottom" id="PKr-aT-3Qe"/>
+                                <constraint firstItem="TjK-XL-dQS" firstAttribute="top" secondItem="Gg0-TE-OGb" secondAttribute="bottom" id="Sfy-Zn-JkS"/>
                                 <constraint firstItem="Gg0-TE-OGb" firstAttribute="top" secondItem="rhx-dD-4EJ" secondAttribute="top" priority="250" constant="384" id="UEM-Mh-0H9"/>
                                 <constraint firstItem="xWb-IJ-v7F" firstAttribute="leading" secondItem="rhx-dD-4EJ" secondAttribute="leading" id="YnP-Nk-QxR"/>
                                 <constraint firstItem="Gg0-TE-OGb" firstAttribute="top" secondItem="xWb-IJ-v7F" secondAttribute="bottom" id="aGH-m3-xL3"/>
+                                <constraint firstAttribute="trailing" secondItem="TjK-XL-dQS" secondAttribute="trailing" id="d1j-OA-Wwm"/>
                                 <constraint firstAttribute="trailing" secondItem="xWb-IJ-v7F" secondAttribute="trailing" id="hko-ol-XDd"/>
                                 <constraint firstItem="xWb-IJ-v7F" firstAttribute="top" secondItem="rhx-dD-4EJ" secondAttribute="top" constant="160" id="khR-Uj-OTH"/>
                                 <constraint firstItem="d8r-TX-pwX" firstAttribute="top" secondItem="rhx-dD-4EJ" secondAttribute="top" constant="35" id="l68-Ta-YKg"/>
                                 <constraint firstAttribute="centerX" secondItem="d8r-TX-pwX" secondAttribute="centerX" id="l6k-EH-Yb8"/>
                                 <constraint firstItem="Gg0-TE-OGb" firstAttribute="leading" secondItem="rhx-dD-4EJ" secondAttribute="leading" id="rS3-go-zbf"/>
+                                <constraint firstItem="TjK-XL-dQS" firstAttribute="width" secondItem="rhx-dD-4EJ" secondAttribute="width" id="zIZ-fl-i3i"/>
                             </constraints>
                         </view>
                     </subviews>

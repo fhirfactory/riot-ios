@@ -236,8 +236,6 @@
             [childViewControllers removeAllObjects];
         }
         
-        [self presentReviewSessionsAlertIfNeeded];
-        
         [[AppDelegate theDelegate] checkAppVersion];
     }
     
@@ -437,8 +435,6 @@
 - (void)onMatrixSessionStateDidChange:(NSNotification *)notif
 {
     [self refreshTabBarBadges];
-    
-    [self presentReviewSessionsAlertIfNeeded];
 }
 
 - (void)showAuthenticationScreen
@@ -506,6 +502,60 @@
     }
 }
 
+- (void)showRoomDetails
+{
+    [self releaseCurrentDetailsViewController];
+    
+    if (_selectedRoomPreviewData)
+    {
+        // Replace the rootviewcontroller with a room view controller
+        // Get the RoomViewController from the storyboard
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        _currentRoomViewController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewControllerStoryboardId"];
+        
+        [self.masterTabBarDelegate masterTabBarController:self wantsToDisplayDetailViewController:_currentRoomViewController];
+        
+        [_currentRoomViewController displayRoomPreview:_selectedRoomPreviewData];
+        _selectedRoomPreviewData = nil;
+        
+        [self setupLeftBarButtonItem];
+    }
+    else
+    {
+        MXWeakify(self);
+        void (^openRoomDataSource)(MXKRoomDataSource *roomDataSource) = ^(MXKRoomDataSource *roomDataSource) {
+            MXStrongifyAndReturnIfNil(self);
+            
+            // Replace the rootviewcontroller with a room view controller
+            // Get the RoomViewController from the storyboard
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+            self->_currentRoomViewController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewControllerStoryboardId"];
+            
+            [self.masterTabBarDelegate masterTabBarController:self wantsToDisplayDetailViewController:self.currentRoomViewController];
+            
+            [self.currentRoomViewController displayRoom:roomDataSource];
+            
+            [self setupLeftBarButtonItem];
+            
+        };
+        
+        if (_selectedRoomDataSource)
+        {
+            // If the room data source is already loaded, display it
+            openRoomDataSource(_selectedRoomDataSource);
+            _selectedRoomDataSource = nil;
+        }
+        else
+        {
+            // Else, load it. The user may see the EmptyDetailsViewControllerStoryboardId
+            // screen in this case
+            [self dataSourceOfRoomToDisplay:^(MXKRoomDataSource *roomDataSource) {
+                openRoomDataSource(roomDataSource);
+            }];
+        }
+    }
+}
+
 - (void)selectRoomWithId:(NSString*)roomId andEventId:(NSString*)eventId inMatrixSession:(MXSession*)matrixSession
 {
     [self selectRoomWithId:roomId andEventId:eventId inMatrixSession:matrixSession completion:nil];
@@ -538,7 +588,7 @@
             
             self->_selectedRoomDataSource = roomDataSource;
             
-            [self performSegueWithIdentifier:@"showRoomDetails" sender:self];
+            [self showRoomDetails];
             
             if (completion)
             {
@@ -562,14 +612,28 @@
     _selectedRoomId = roomPreviewData.roomId;
     _selectedRoomSession = roomPreviewData.mxSession;
     
-    [self performSegueWithIdentifier:@"showRoomDetails" sender:self];
+    [self showRoomDetails];
 }
 
 - (void)selectContact:(MXKContact*)contact
 {
     _selectedContact = contact;
     
-    [self performSegueWithIdentifier:@"showContactDetails" sender:self];
+    [self showContactDetails];
+}
+
+- (void)showContactDetails
+{
+    [self releaseCurrentDetailsViewController];
+    
+    // Replace the rootviewcontroller with a contact details view controller
+    _currentContactDetailViewController = [ContactDetailsViewController contactDetailsViewController];
+    _currentContactDetailViewController.enableVoipCall = NO;
+    _currentContactDetailViewController.contact = _selectedContact;
+    
+    [self.masterTabBarDelegate masterTabBarController:self wantsToDisplayDetailViewController:_currentContactDetailViewController];
+    
+    [self setupLeftBarButtonItem];
 }
 
 - (void)selectGroup:(MXGroup*)group inMatrixSession:(MXSession*)matrixSession
@@ -577,7 +641,20 @@
     _selectedGroup = group;
     _selectedGroupSession = matrixSession;
     
-    [self performSegueWithIdentifier:@"showGroupDetails" sender:self];
+    [self showGroupDetails];
+}
+
+- (void)showGroupDetails
+{
+    [self releaseCurrentDetailsViewController];
+    
+    // Replace the rootviewcontroller with a group details view controller
+    _currentGroupDetailViewController = [GroupDetailsViewController groupDetailsViewController];
+    [_currentGroupDetailViewController setGroup:_selectedGroup withMatrixSession:_selectedGroupSession];
+    
+    [self.masterTabBarDelegate masterTabBarController:self wantsToDisplayDetailViewController:_currentGroupDetailViewController];
+    
+    [self setupLeftBarButtonItem];
 }
 
 - (void)releaseSelectedItem
@@ -717,85 +794,6 @@
     if ([[segue identifier] isEqualToString:@"showSideMenu"]){
         [self prepareSideMenuSequeFor:segue];
     }
-    else if ([[segue identifier] isEqualToString:@"showRoomDetails"] || [[segue identifier] isEqualToString:@"showContactDetails"] || [[segue identifier] isEqualToString:@"showGroupDetails"])
-    {
-        UINavigationController *navigationController = [segue destinationViewController];
-        
-        [self releaseCurrentDetailsViewController];
-        
-        if ([[segue identifier] isEqualToString:@"showRoomDetails"])
-        {
-            if (_selectedRoomPreviewData)
-            {
-                // Replace the rootviewcontroller with a room view controller
-                // Get the RoomViewController from the storyboard
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-                _currentRoomViewController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewControllerStoryboardId"];
-
-                navigationController.viewControllers = @[_currentRoomViewController];
-
-                [_currentRoomViewController displayRoomPreview:_selectedRoomPreviewData];
-                _selectedRoomPreviewData = nil;
-
-                [self setupLeftBarButtonItem];
-            }
-            else
-            {
-                MXWeakify(self);
-                void (^openRoomDataSource)(MXKRoomDataSource *roomDataSource) = ^(MXKRoomDataSource *roomDataSource) {
-                    MXStrongifyAndReturnIfNil(self);
-
-                    // Replace the rootviewcontroller with a room view controller
-                    // Get the RoomViewController from the storyboard
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-                    self->_currentRoomViewController = [storyboard instantiateViewControllerWithIdentifier:@"RoomViewControllerStoryboardId"];
-
-                    navigationController.viewControllers = @[self.currentRoomViewController];
-
-                    [self.currentRoomViewController displayRoom:roomDataSource];
-
-                    [self setupLeftBarButtonItem];
-
-                };
-
-                if (_selectedRoomDataSource)
-                {
-                    // If the room data source is already loaded, display it
-                    openRoomDataSource(_selectedRoomDataSource);
-                    _selectedRoomDataSource = nil;
-                }
-                else
-                {
-                    // Else, load it. The user may see the EmptyDetailsViewControllerStoryboardId
-                    // screen in this case
-                    [self dataSourceOfRoomToDisplay:^(MXKRoomDataSource *roomDataSource) {
-                        openRoomDataSource(roomDataSource);
-                    }];
-                }
-            }
-        }
-        else if ([[segue identifier] isEqualToString:@"showContactDetails"])
-        {
-            // Replace the rootviewcontroller with a contact details view controller
-            _currentContactDetailViewController = [ContactDetailsViewController contactDetailsViewController];
-            _currentContactDetailViewController.enableVoipCall = NO;
-            _currentContactDetailViewController.contact = _selectedContact;
-            
-            navigationController.viewControllers = @[_currentContactDetailViewController];
-
-            [self setupLeftBarButtonItem];
-        }
-        else
-        {
-            // Replace the rootviewcontroller with a group details view controller
-            _currentGroupDetailViewController = [GroupDetailsViewController groupDetailsViewController];
-            [_currentGroupDetailViewController setGroup:_selectedGroup withMatrixSession:_selectedGroupSession];
-            
-            navigationController.viewControllers = @[_currentGroupDetailViewController];
-
-            [self setupLeftBarButtonItem];
-        }
-    }
     else
     {
         // Keep ref on destinationViewController
@@ -818,12 +816,12 @@
                 [[NSNotificationCenter defaultCenter] removeObserver:authViewControllerObserver];
                 authViewControllerObserver = nil;
             }];
-
+            
             authViewRemovedAccountObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXKAccountManagerDidRemoveAccountNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
-
+                
                 // The user has cleared data for their soft logged out account
                 _authViewController = nil;
-
+                
                 [[NSNotificationCenter defaultCenter] removeObserver:authViewRemovedAccountObserver];
                 authViewRemovedAccountObserver = nil;
             }];
@@ -1135,32 +1133,11 @@
 
 #pragma mark - Review session
 
-- (void)presentReviewSessionsAlertIfNeeded
-{
-    MXSession *mainSession = self.mxSessions.firstObject;
-    
-    if (!(self.viewLoaded
-          && mainSession.state >= MXSessionStateStoreDataReady
-          && mainSession.crypto.crossSigning))
-    {
-        return;
-    }
-    
-    switch (mainSession.crypto.crossSigning.state) {
-        case MXCrossSigningStateCrossSigningExists:
-            [self presentVerifyCurrentSessionAlertIfNeededWithSession:mainSession];
-            break;
-        case MXCrossSigningStateCanCrossSign:
-            [self presentReviewUnverifiedSessionsAlertIfNeededWithSession:mainSession];
-            break;
-        default:
-            break;
-    }
-}
-
 - (void)presentVerifyCurrentSessionAlertIfNeededWithSession:(MXSession*)session
 {
-    if (RiotSettings.shared.hideVerifyThisSessionAlert || self.reviewSessionAlertHasBeenDisplayed)
+    if (RiotSettings.shared.hideVerifyThisSessionAlert
+        || self.reviewSessionAlertHasBeenDisplayed
+        || self.authenticationInProgress)
     {
         return;
     }
@@ -1171,6 +1148,8 @@
 
 - (void)presentVerifyCurrentSessionAlertWithSession:(MXSession*)session
 {
+    NSLog(@"[MasterTabBarController] presentVerifyCurrentSessionAlertWithSession");
+    
     [currentAlert dismissViewControllerAnimated:NO completion:nil];
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"key_verification_self_verify_current_session_alert_title", @"Vector", nil)
@@ -1228,6 +1207,8 @@
 
 - (void)presentReviewUnverifiedSessionsAlertWithSession:(MXSession*)session
 {
+    NSLog(@"[MasterTabBarController] presentReviewUnverifiedSessionsAlertWithSession");
+    
     [currentAlert dismissViewControllerAnimated:NO completion:nil];
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"key_verification_self_verify_unverified_sessions_alert_title", @"Vector", nil)
@@ -1301,10 +1282,7 @@
 - (void)authenticationViewControllerDidDismiss:(AuthenticationViewController *)authenticationViewController
 {
     _authenticationInProgress = NO;
-    if (self.masterVCDelegate)
-    {
-        [self.masterVCDelegate masterTabBarControllerDidCompleteAuthentication:self];
-    }
+    [self.masterTabBarDelegate masterTabBarControllerDidCompleteAuthentication:self];
 }
 
 @end

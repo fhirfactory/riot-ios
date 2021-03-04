@@ -16,6 +16,8 @@
 
 import Foundation
 
+import MatrixKit
+
 /// BuildSettings provides settings computed at build time.
 /// In future, it may be automatically generated from xcconfig files
 @objcMembers
@@ -23,19 +25,42 @@ final class BuildSettings: NSObject {
     
     // MARK: - Bundle Settings
     static var bundleDisplayName: String {
-        Bundle.app.object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+        guard let bundleDisplayName = Bundle.app.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String else {
+            fatalError("CFBundleDisplayName should be defined")
+        }
+        return bundleDisplayName
     }
     
     static var applicationGroupIdentifier: String {
-        Bundle.app.object(forInfoDictionaryKey: "applicationGroupIdentifier") as! String
+        guard let applicationGroupIdentifier = Bundle.app.object(forInfoDictionaryKey: "applicationGroupIdentifier") as? String else {
+            fatalError("applicationGroupIdentifier should be defined")
+        }
+        return applicationGroupIdentifier
     }
     
     static var baseBundleIdentifier: String {
-        Bundle.app.object(forInfoDictionaryKey: "baseBundleIdentifier") as! String
+        guard let baseBundleIdentifier = Bundle.app.object(forInfoDictionaryKey: "baseBundleIdentifier") as? String else {
+            fatalError("baseBundleIdentifier should be defined")
+        }
+        return baseBundleIdentifier
     }
     
     static var keychainAccessGroup: String {
-        Bundle.app.object(forInfoDictionaryKey: "keychainAccessGroup") as! String
+        guard let keychainAccessGroup = Bundle.app.object(forInfoDictionaryKey: "keychainAccessGroup") as? String else {
+            fatalError("keychainAccessGroup should be defined")
+        }
+        return keychainAccessGroup
+    }
+    
+    static var applicationURLScheme: String? {
+        guard let urlTypes = Bundle.app.object(forInfoDictionaryKey: "CFBundleURLTypes") as? [AnyObject],
+              let urlTypeDictionary = urlTypes.first as? [String: AnyObject],
+              let urlSchemes = urlTypeDictionary["CFBundleURLSchemes"] as? [AnyObject],
+              let externalURLScheme = urlSchemes.first as? String else {
+            return nil
+        }
+        
+        return externalURLScheme
     }
     
     static var pushKitAppIdProd: String {
@@ -174,8 +199,19 @@ final class BuildSettings: NSObject {
     /// Not allowed pin codes. User won't be able to select one of the pin in the list.
     static let notAllowedPINs: [String] = []
     
-    // MARK: - General Settings Screen Toggles
-    /// Booleans that hide or show different elements on the Settings screen
+    /// Maximum number of allowed pin failures when unlocking, before force logging out the user. Defaults to `3`
+    static let maxAllowedNumberOfPinFailures: Int = 3
+    
+    /// Maximum number of allowed biometrics failures when unlocking, before fallbacking the user to the pin if set or logging out the user. Defaults to `5`
+    static let maxAllowedNumberOfBiometricsFailures: Int = 5
+    
+    /// Indicates should the app log out the user when number of PIN failures reaches `maxAllowedNumberOfPinFailures`. Defaults to `false`
+    static let logOutUserWhenPINFailuresExceeded: Bool = false
+    
+    /// Indicates should the app log out the user when number of biometrics failures reaches `maxAllowedNumberOfBiometricsFailures`. Defaults to `false`
+    static let logOutUserWhenBiometricsFailuresExceeded: Bool = false
+    
+    // MARK: - General Settings Screen
     
     static let settingsScreenAllowUserSignOut: Bool = true
     static let settingsScreenShowUserFirstName: Bool = false
@@ -236,16 +272,20 @@ final class BuildSettings: NSObject {
     static let roomParticipantShowVoipCallByDefault : Bool = true
     static let roomParticipantAllowHideAll : Bool = false
     
+    // MARK: - Timeline settings
+    static let roomInputToolbarCompressionMode = MXKRoomInputToolbarCompressionModeNone
+    
     // MARK: - Message
-    static let messageDetailsAllowShare: Bool = false
-    static let messageDetailsAllowPermalink: Bool = false
-    static let messageDetailsAllowViewSource: Bool = false
-    static let messageDetailsAllowSave: Bool = false
     static let messageDetailsAllowViewEncryptionInformation : Bool = false
     static let messageDetailsAllowReportContent : Bool = false
     static let messagesAllowViewRoomRightsChanges : Bool = true
     static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = RoomPowerLevel.user.rawValue
-    
+    static let messageDetailsAllowShare: Bool = false
+    static let messageDetailsAllowPermalink: Bool = false
+    static let messageDetailsAllowViewSource: Bool = false
+    static let messageDetailsAllowSave: Bool = false
+    static let messageDetailsAllowCopyMedia: Bool = false
+    static let messageDetailsAllowPasteMedia: Bool = false
     
     // MARK: - HTTP
     /// Additional HTTP headers will be sent by all requests. Not recommended to use request-specific headers, like `Authorization`.

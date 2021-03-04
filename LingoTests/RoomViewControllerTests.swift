@@ -113,7 +113,7 @@ class RoomViewControllerTests: XCTestCase {
         /// When I am taking a photo in the Application
         /// Then the Default Compression setting value = 'Original'.
         
-        XCTAssert(BuildSettings.roomPromptForAttachmentSize == false)
+        XCTAssert(BuildSettings.roomInputToolbarCompressionMode == MXKRoomInputToolbarCompressionModeNone)
         
     }
     

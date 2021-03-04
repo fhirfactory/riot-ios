@@ -50,7 +50,6 @@ extension ChooseAvatarTableViewCell: Themable {
         backgroundView = UIView()
         backgroundView?.backgroundColor = theme.backgroundColor
         avatarImageView.backgroundColor = theme.tintColor
-        avatarImageView.superview?.backgroundColor = theme.backgroundColor
     }
     
 }

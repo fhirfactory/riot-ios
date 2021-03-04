@@ -84,7 +84,7 @@ class ActServicesViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
-    func FavouritesUpdated(favourited: Bool) {
+    func favouritesUpdated(favourited: Bool) {
         //we only actually need to update the tableview if we are currently showing the favourites, and one gets unfavourited. Otherwise, we can rely on the cells doing what they need to.
         if showingFavourites && !favourited {
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)

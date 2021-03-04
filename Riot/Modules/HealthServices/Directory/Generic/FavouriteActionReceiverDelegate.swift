@@ -16,5 +16,5 @@
 
 import Foundation
 protocol FavouriteActionReceiverDelegate {
-    func FavouritesUpdated(favourited: Bool)
+    func favouritesUpdated(favourited: Bool)
 }

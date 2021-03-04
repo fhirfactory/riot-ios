@@ -49,7 +49,7 @@ class PeopleTableViewCell: UITableViewCell {
         } else {
             // Fallback on earlier versions
         }
-        peopleCellDelegate?.FavouritesUpdated(favourited: person.Favourite)
+        peopleCellDelegate?.favouritesUpdated(favourited: person.Favourite)
     }
     
     func setValue(withPerson: ActPeople) {

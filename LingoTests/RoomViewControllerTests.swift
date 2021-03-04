@@ -102,7 +102,7 @@ class RoomViewControllerTests: XCTestCase {
         XCTAssert(BuildSettings.sharingFeaturesAllowGalleryAvatars == true)
         
     }
-
+    
     func test_197523_preventUserOverrideOfMediaFileSizes() throws {
         /// Given I am an authenticated user
         /// AND I have selected my User Profile
@@ -114,6 +114,14 @@ class RoomViewControllerTests: XCTestCase {
         /// Then the Default Compression setting value = 'Original'.
         
         XCTAssert(BuildSettings.roomInputToolbarCompressionMode == MXKRoomInputToolbarCompressionModeNone)
+        
+    }
+    
+    func test_192960_directoryChatInitiation() throws {
+        /// If End-to-End encryption is enabled then initiate a direct chat from the Directory tab using E2E encyrption
+        /// For Lingo we don't use E2E encryption so we want to disable this option at all times
+        
+        XCTAssert(BuildSettings.ifE2EEnabledUseE2EInDirectChats == false)
         
     }
 

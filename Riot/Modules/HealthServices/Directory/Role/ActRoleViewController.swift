@@ -156,7 +156,7 @@ extension ActRoleViewController: RoleCellDelegate {
 }
 
 extension ActRoleViewController: FavouriteActionReceiverDelegate {
-    func FavouritesUpdated(favourited: Bool) {
+    func favouritesUpdated(favourited: Bool) {
         if showingFavourites && !favourited {
             rolesTableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         }

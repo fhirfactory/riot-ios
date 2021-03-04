@@ -70,8 +70,18 @@ Matrix session observer used to detect new opened sessions.
                                                       intentIdentifiers:@[]
                                                       options:UNNotificationCategoryOptionNone];
 
+        //CODE ACTIONS
+        UNNotificationAction *acceptAction = [UNNotificationAction actionWithIdentifier:@"CODE_ACCEPT" title:@"Accept" options:UNNotificationActionOptionNone];
+        UNNotificationAction *declineAction = [UNNotificationAction actionWithIdentifier:@"CODE_DECLINE" title:@"Decline" options:UNNotificationActionOptionNone];
+        UNNotificationAction *standDownAction = [UNNotificationAction actionWithIdentifier:@"CODE_STAND_DOWN" title:@"Stand Down" options:UNNotificationActionOptionNone];
+        UNNotificationCategory *codeNotificationCategory = [UNNotificationCategory categoryWithIdentifier:@"CODE_NOTIFICATION" actions:@[acceptAction, declineAction, standDownAction] intentIdentifiers:@[] options:
+                UNNotificationCategoryOptionCustomDismissAction
+                | UNNotificationCategoryOptionHiddenPreviewsShowSubtitle
+                | UNNotificationCategoryOptionHiddenPreviewsShowTitle
+            ];
+        
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        [center setNotificationCategories:[[NSSet alloc] initWithArray:@[quickReplyCategory]]];
+        [center setNotificationCategories:[[NSSet alloc] initWithArray:@[quickReplyCategory, codeNotificationCategory]]];
         [center setDelegate:self];
 
         UNAuthorizationOptions authorizationOptions = (UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge);

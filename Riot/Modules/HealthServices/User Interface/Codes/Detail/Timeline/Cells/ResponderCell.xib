@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ResponderCell" rowHeight="60" id="99a-C9-zit" customClass="ResponderCell" customModule="Riot" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="99a-C9-zit" id="a9a-HW-B8T">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49U-af-2dL" customClass="MXKImageView">
+                        <rect key="frame" x="7" y="10" width="40" height="40"/>
+                        <color key="backgroundColor" systemColor="systemGray4Color"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="iVZ-xc-ZTh"/>
+                            <constraint firstAttribute="width" secondItem="49U-af-2dL" secondAttribute="height" multiplier="1:1" id="tIK-ia-4KJ"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Smith" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFN-6r-nLD">
+                        <rect key="frame" x="55" y="7" width="86" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doctor on Call" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zd0-3G-9TJ">
+                        <rect key="frame" x="55" y="28" width="109" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="760" text="Accepted" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSo-gf-RdI">
+                        <rect key="frame" x="321" y="7" width="73" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" systemColor="systemGreenColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 MAR 2021 14:55" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mS9-G0-q5K">
+                        <rect key="frame" x="243" y="28" width="147" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="zd0-3G-9TJ" firstAttribute="top" secondItem="NFN-6r-nLD" secondAttribute="bottom" id="5SB-U2-WgB"/>
+                    <constraint firstItem="FSo-gf-RdI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NFN-6r-nLD" secondAttribute="trailing" constant="10" id="8bo-da-vns"/>
+                    <constraint firstItem="mS9-G0-q5K" firstAttribute="bottom" secondItem="zd0-3G-9TJ" secondAttribute="bottom" id="8eA-4V-5j9"/>
+                    <constraint firstAttribute="bottom" secondItem="zd0-3G-9TJ" secondAttribute="bottom" constant="11" id="8oh-uu-2Bs"/>
+                    <constraint firstItem="49U-af-2dL" firstAttribute="centerY" secondItem="a9a-HW-B8T" secondAttribute="centerY" id="CkE-fR-gsU"/>
+                    <constraint firstItem="FSo-gf-RdI" firstAttribute="top" secondItem="NFN-6r-nLD" secondAttribute="top" id="KGW-cj-9x7"/>
+                    <constraint firstItem="NFN-6r-nLD" firstAttribute="leading" secondItem="49U-af-2dL" secondAttribute="trailing" constant="8" symbolic="YES" id="Krl-0m-zft"/>
+                    <constraint firstAttribute="trailing" secondItem="mS9-G0-q5K" secondAttribute="trailing" constant="24" id="bdM-EZ-ebN"/>
+                    <constraint firstItem="49U-af-2dL" firstAttribute="leading" secondItem="a9a-HW-B8T" secondAttribute="leading" constant="7" id="c0R-Rx-wM3"/>
+                    <constraint firstItem="zd0-3G-9TJ" firstAttribute="leading" secondItem="NFN-6r-nLD" secondAttribute="leading" id="fAt-AP-1O8"/>
+                    <constraint firstItem="mS9-G0-q5K" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zd0-3G-9TJ" secondAttribute="trailing" constant="10" id="jNt-gC-W8G"/>
+                    <constraint firstAttribute="trailing" secondItem="FSo-gf-RdI" secondAttribute="trailing" constant="20" symbolic="YES" id="jV9-uh-dim"/>
+                    <constraint firstItem="mS9-G0-q5K" firstAttribute="top" secondItem="zd0-3G-9TJ" secondAttribute="top" id="lCq-dL-Kwd"/>
+                    <constraint firstItem="NFN-6r-nLD" firstAttribute="top" secondItem="a9a-HW-B8T" secondAttribute="top" constant="7" id="sk6-ey-iYY"/>
+                    <constraint firstItem="FSo-gf-RdI" firstAttribute="bottom" secondItem="NFN-6r-nLD" secondAttribute="bottom" id="znI-ih-P07"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="AcceptedLabel" destination="FSo-gf-RdI" id="Pje-2e-RnE"/>
+                <outlet property="AvatarView" destination="49U-af-2dL" id="Vcl-i1-nlg"/>
+                <outlet property="NameLabel" destination="NFN-6r-nLD" id="fjN-1L-V6P"/>
+                <outlet property="RoleLabel" destination="zd0-3G-9TJ" id="Egw-SJ-Vez"/>
+                <outlet property="TimeLabel" destination="mS9-G0-q5K" id="bO6-Ge-uD1"/>
+            </connections>
+            <point key="canvasLocation" x="-652.17391304347836" y="-6.0267857142857144"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

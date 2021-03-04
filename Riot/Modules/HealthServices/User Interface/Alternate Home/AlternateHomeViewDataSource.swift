@@ -16,6 +16,13 @@
 
 import Foundation
 
+enum HomeViewMode {
+    case Chats
+    case Favourites
+    case LowPriority
+    case Invites
+}
+
 class AlternateHomeDataSource: RecentsDataSource {
     var _viewMode: HomeViewMode = HomeViewMode.Chats
     var countsUpdated: (() -> Void)?

@@ -292,11 +292,12 @@
                         <segue destination="qHM-YX-a3R" kind="relationship" relationship="viewControllers" id="elB-Ab-kPq"/>
                         <segue destination="HPQ-zg-lZR" kind="relationship" relationship="viewControllers" id="y12-eg-vhO"/>
                         <segue destination="SLx-Wj-p7E" kind="relationship" relationship="viewControllers" id="MLn-VT-30W"/>
+                        <segue destination="mBS-K0-lKK" kind="relationship" relationship="viewControllers" id="5Sr-wS-2O5"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k1S-FF-3Zu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-516" y="-2203"/>
+            <point key="canvasLocation" x="-482" y="-2203"/>
         </scene>
         <!--Authentication View Controller-->
         <scene sceneID="FoA-N2-3aF">
@@ -428,7 +429,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="58q-wN-pDJ" firstAttribute="top" secondItem="7lq-zD-TYa" secondAttribute="bottom" id="H6W-Sc-6Ha"/>
                             <constraint firstItem="q6N-65-HOy" firstAttribute="top" secondItem="58q-wN-pDJ" secondAttribute="bottom" id="Uua-UQ-K8t"/>
@@ -461,6 +462,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SLD-UC-DBI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1375" y="-1121"/>
+        </scene>
+        <!--Code Notification List-->
+        <scene sceneID="1m3-Hc-hkN">
+            <objects>
+                <viewController id="mBS-K0-lKK" customClass="CodeNotificationList" customModule="Riot" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MTJ-js-Xiy"/>
+                        <viewControllerLayoutGuide type="bottom" id="2sn-a8-Uhx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JJA-ZE-cHH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="bell.fill" catalog="system" id="pue-LZ-dhe"/>
+                    <navigationItem key="navigationItem" id="sPy-4P-wuJ"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pra-ZP-Ifr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-268" y="-1353"/>
         </scene>
         <!--Placeholder Detail View Controller-->
         <scene sceneID="2wP-Cu-Wca">
@@ -495,7 +517,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pZm-ap-zdK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-153" y="-1121"/>
+            <point key="canvasLocation" x="-1375" y="-352"/>
         </scene>
         <!--Room Files View Controller-->
         <scene sceneID="Rqp-Ti-qpu">
@@ -529,7 +551,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="6" image="tab_rooms" id="7eS-Ei-00V">
+                    <tabBarItem key="tabBarItem" tag="6" image="phone.fill" catalog="system" id="7eS-Ei-00V">
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="TabBarItemRooms"/>
                         </userDefinedRuntimeAttributes>
@@ -685,20 +707,21 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="mhb-l9-pM3"/>
+        <segue reference="fIR-e3-ssz"/>
         <segue reference="ziz-Xl-QVg"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="bell.fill" catalog="system" width="128" height="124"/>
         <image name="call_chat_icon" width="32" height="32"/>
         <image name="ellipsis.circle.fill" catalog="system" width="128" height="121"/>
         <image name="integrations_icon" width="24" height="24"/>
-        <image name="logo" width="120" height="101"/>
-        <image name="photo" catalog="system" width="128" height="93"/>
-        <image name="menu" width="24" height="24"/>
         <image name="launch_screen_logo" width="240" height="240"/>
+        <image name="menu" width="24" height="24"/>
+        <image name="phone.fill" catalog="system" width="128" height="114"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
         <image name="search_icon" width="24" height="24"/>
         <image name="tab_favourites" width="24" height="24"/>
         <image name="tab_people" width="24" height="24"/>
-        <image name="tab_rooms" width="24" height="24"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

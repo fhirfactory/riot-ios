@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CodeDetailTopCell" rowHeight="76" id="u9x-Wu-JPv">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u9x-Wu-JPv" id="nAb-wh-ZDP">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="76"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iDl-Xg-SR2">
+                        <rect key="frame" x="20" y="12" width="220" height="21"/>
+                        <string key="text">CODE BLUE TCH RESPOND
+</string>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M78-o1-grt">
+                        <rect key="frame" x="20" y="33" width="209" height="21"/>
+                        <string key="text">BLD1 L2  WARD 4A  BED 12
+</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="23f-Gz-z79">
+                        <rect key="frame" x="0.0" y="62" width="414" height="14"/>
+                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="nVm-K1-tsh"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="iDl-Xg-SR2" firstAttribute="leading" secondItem="nAb-wh-ZDP" secondAttribute="leading" constant="20" symbolic="YES" id="Azr-ll-RQf"/>
+                    <constraint firstItem="M78-o1-grt" firstAttribute="top" secondItem="iDl-Xg-SR2" secondAttribute="bottom" id="CVJ-9p-sqm"/>
+                    <constraint firstItem="M78-o1-grt" firstAttribute="leading" secondItem="iDl-Xg-SR2" secondAttribute="leading" id="Fiy-gC-9a1"/>
+                    <constraint firstAttribute="trailing" secondItem="23f-Gz-z79" secondAttribute="trailing" id="OMi-IO-eu9"/>
+                    <constraint firstAttribute="bottom" secondItem="23f-Gz-z79" secondAttribute="bottom" id="S4Y-MZ-Ak7"/>
+                    <constraint firstItem="iDl-Xg-SR2" firstAttribute="top" secondItem="nAb-wh-ZDP" secondAttribute="top" constant="12" id="Xbu-gV-RO0"/>
+                    <constraint firstItem="23f-Gz-z79" firstAttribute="leading" secondItem="nAb-wh-ZDP" secondAttribute="leading" id="YFJ-7A-tE0"/>
+                    <constraint firstItem="23f-Gz-z79" firstAttribute="top" secondItem="M78-o1-grt" secondAttribute="bottom" constant="8" symbolic="YES" id="nB6-q1-BSK"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="-49.275362318840585" y="55.580357142857139"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

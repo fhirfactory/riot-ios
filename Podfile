@@ -15,7 +15,7 @@ $matrixKitVersion = '= 0.13.9'
 #$matrixSDKVersion = '= 0.17.11'
 
 # $matrixKitVersion = :local
-$matrixKitVersion = {'merge-master-0.13.9' => 'develop'}
+# $matrixKitVersion = {'merge-master-0.13.9' => 'develop'}
 
 #this allows the xcode project options on individual pods to be modified.
 #{'podname' => {'xcodesetting' => 'value', 'setting' => 'value'}} etc

@@ -19,7 +19,7 @@ PODS:
   - BlueRSA (1.0.34)
   - cmark (0.24.1)
   - DGCollectionViewLeftAlignFlowLayout (1.0.4)
-  - Down (0.9.4)
+  - Down (0.9.5)
   - DTCoreText (1.6.25):
     - DTCoreText/Core (= 1.6.25)
     - DTFoundation/Core (~> 1.7.5)
@@ -140,10 +140,10 @@ DEPENDENCIES:
   - KTCenterFlowLayout (~> 1.3.1)
   - Material (~> 3.1.0)
   - MatomoTracker (~> 7.2.2)
-  - MatrixKit (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `merge-master-0.13.9`)
-  - MatrixKit/AppExtension (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `merge-master-0.13.9`)
-  - MatrixSDK (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
-  - MatrixSDK/JingleCallStack (from `https://github.com/matrix-org/matrix-ios-sdk.git`, branch `develop`)
+  - MatrixKit (= 0.13.9)
+  - MatrixKit/AppExtension (= 0.13.9)
+  - MatrixSDK
+  - MatrixSDK/JingleCallStack
   - OLMKit
   - ReadMoreTextView (~> 3.0.1)
   - Reusable (~> 4.1)
@@ -181,6 +181,8 @@ SPEC REPOS:
     - Logging
     - Material
     - MatomoTracker
+    - MatrixKit
+    - MatrixSDK
     - Motion
     - OLMKit
     - ReadMoreTextView
@@ -194,22 +196,6 @@ SPEC REPOS:
     - zxcvbn-ios
     - ZXingObjC
 
-EXTERNAL SOURCES:
-  MatrixKit:
-    :branch: merge-master-0.13.9
-    :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
-  MatrixSDK:
-    :branch: develop
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
-
-CHECKOUT OPTIONS:
-  MatrixKit:
-    :commit: 8fa466dc3bf3df0e38a5da5a9dacb723391bd333
-    :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
-  MatrixSDK:
-    :commit: cc44319fa4f6780cef4256ca60caec91b86bc044
-    :git: https://github.com/matrix-org/matrix-ios-sdk.git
-
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   BlueCryptor: b0aee3d9b8f367b49b30de11cda90e1735571c24
@@ -217,7 +203,7 @@ SPEC CHECKSUMS:
   BlueRSA: 6f9776d62d9773502415a7db3bcbb2bbb3f71fc3
   cmark: 1d9ad0375e3b9fa281732e992467903606015520
   DGCollectionViewLeftAlignFlowLayout: a0fa58797373ded039cafba8133e79373d048399
-  Down: 276f2c3eeeaf30345873bdad25f44b2640fcfa3a
+  Down: 7321a72d0747ed0061dce948bcff518fcb6df2bd
   DTCoreText: e92f4cf6b36d9d71ce4436d12cf089d74ab0596b
   DTFoundation: e7781d9fd2f202bfd451fbbf8cab71ce83b46498
   FFDropDownMenu: 3dc2b1e47d349687b9d451282a3b6bae3e0e8c7a
@@ -250,6 +236,6 @@ SPEC CHECKSUMS:
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 756950909ada2f7ace1198c6c66998202efeb918
+PODFILE CHECKSUM: e91ffb5f7021771be8187f6de25e53383c5f7d1f
 
 COCOAPODS: 1.10.1

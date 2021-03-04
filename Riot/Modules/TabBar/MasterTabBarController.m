@@ -67,7 +67,7 @@
     id kThemeServiceDidChangeThemeNotificationObserver;
     
     // The groups data source
-    GroupsDataSource *groupsDataSource;
+    RoomDataSource *filesDataSource;
 }
 
 @property(nonatomic,getter=isHidden) BOOL hidden;
@@ -89,11 +89,12 @@
     [self vc_removeBackTitle];
 
     // Retrieve the all view controllers
-    _homeViewController = self.viewControllers[TABBAR_HOME_INDEX];
-    _favouritesViewController = self.viewControllers[TABBAR_FAVOURITES_INDEX];
-    _peopleViewController = self.viewControllers[TABBAR_PEOPLE_INDEX];
-    _roomsViewController = self.viewControllers[TABBAR_ROOMS_INDEX];
-    _groupsViewController = self.viewControllers[TABBAR_GROUPS_INDEX];
+    // TODO: Make more neat & extensible
+    _homeViewController = self.viewControllers[0];
+    _favouritesViewController = self.viewControllers[1];
+    _peopleViewController = self.viewControllers[2];
+    _roomsViewController = self.viewControllers[3];
+    _fileGalleryViewController = self.viewControllers[4];
     
     // Set the accessibility labels for all buttons #1842
     [_settingsBarButtonItem setAccessibilityLabel:NSLocalizedStringFromTable(@"settings_title", @"Vector", nil)];
@@ -102,10 +103,10 @@
     [_favouritesViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_favourites", @"Vector", nil)];
     [_peopleViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_people", @"Vector", nil)];
     [_roomsViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_rooms", @"Vector", nil)];
-    [_groupsViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_groups", @"Vector", nil)];
+    [_fileGalleryViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_groups", @"Vector", nil)];
     
     // Sanity check
-    NSAssert(_homeViewController && _favouritesViewController && _peopleViewController && _roomsViewController && _groupsViewController, @"Something wrong in Main.storyboard");
+    NSAssert(_homeViewController && _favouritesViewController && _peopleViewController && _roomsViewController && _fileGalleryViewController, @"Something wrong in Main.storyboard");
 
     // Adjust the display of the icons in the tabbar.
     for (UITabBarItem *tabBarItem in self.tabBar.items)
@@ -268,7 +269,7 @@
     _favouritesViewController = nil;
     _peopleViewController = nil;
     _roomsViewController = nil;
-    _groupsViewController = nil;
+    _fileGalleryViewController = nil;
     
     if (currentAlert)
     {
@@ -317,7 +318,7 @@
         [_homeViewController displayList:recentsDataSource];
         [_favouritesViewController displayList:recentsDataSource];
         //[_peopleViewController displayList:recentsDataSource];
-        [_roomsViewController displayList:recentsDataSource];
+        //[_roomsViewController displayList:recentsDataSource];
         
         // Restore the right delegate of the shared recent data source.
         id<MXKDataSourceDelegate> recentsDataSourceDelegate = _homeViewController;
@@ -335,8 +336,8 @@
                 //recentsDataSourceMode = RecentsDataSourceModePeople;
                 break;
             case TABBAR_ROOMS_INDEX:
-                recentsDataSourceDelegate = _roomsViewController;
-                recentsDataSourceMode = RecentsDataSourceModeRooms;
+                //recentsDataSourceDelegate = _roomsViewController;
+                //recentsDataSourceMode = RecentsDataSourceModeRooms;
                 break;
                 
             default:
@@ -345,9 +346,15 @@
         [recentsDataSource setDelegate:recentsDataSourceDelegate andRecentsDataSourceMode:recentsDataSourceMode];
         
         // Init the recents data source
-        groupsDataSource = [[GroupsDataSource alloc] initWithMatrixSession:mainSession];
-        [groupsDataSource finalizeInitialization];
-        [_groupsViewController displayList:groupsDataSource];
+        //TODO: Replace with variable actual room
+        [RoomDataSource loadRoomDataSourceWithRoomId:@"!HdSQgdQYAGKNMuYUPk:matrix.org" andMatrixSession:mainSession onComplete:^(RoomDataSource *roomDataSource) {
+            [roomDataSource setFilterMessagesWithURL:YES];
+            [roomDataSource finalizeInitialization];
+            [self.fileGalleryViewController setIsInGalleryContext:YES];
+            [self.fileGalleryViewController finalizeInit];
+            [self.fileGalleryViewController setHasRoomDataSourceOwnership:YES];
+            [self.fileGalleryViewController displayRoom:roomDataSource];
+        }];
         
         // Check whether there are others sessions
         NSArray* mxSessions = self.mxSessions;
@@ -1271,15 +1278,14 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
+    if (item.tag == TABBAR_GALLERY_INDEX) {
+        [_fileGalleryViewController changeNavigationTitle];
+    }
     // Detect multi-tap on the current selected tab.
     if (item.tag == self.selectedIndex)
     {
         // Scroll to the next room with missed notifications.
-        if (item.tag == TABBAR_ROOMS_INDEX)
-        {
-            [self.roomsViewController scrollToNextRoomWithMissedNotifications];
-        }
-        else if (item.tag == TABBAR_PEOPLE_INDEX)
+        if (item.tag == TABBAR_PEOPLE_INDEX)
         {
             [self.peopleViewController scrollToNextRoomWithMissedNotifications];
         }

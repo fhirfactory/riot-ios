@@ -72,17 +72,17 @@ class MessageImageView: MessageContentView {
             self.addSubview(patientTagViewContainer)
             
             self.addConstraints([
-                patientTagViewContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-                patientTagViewContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-                patientTagViewContainer.trailingAnchor.constraint(equalTo: trailingAnchor)
+                patientTagViewContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                patientTagViewContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+                patientTagViewContainer.trailingAnchor.constraint(equalTo: self.trailingAnchor)
             ])
             
             patientTagViewContainer.alpha = 0.9
             patientTagViewContainer.sizeToFit()
             
-            tagData = tagInfo
+            self.tagData = tagInfo
             
-            let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(tagTapped))
+            let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tagTapped))
             patientTagViewContainer.addGestureRecognizer(taprecognizer)
             
             self.layoutIfNeeded()

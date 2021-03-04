@@ -30,6 +30,10 @@ internal enum VectorL10n {
   internal static func activeCallDetails(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "active_call_details", p1)
   }
+  /// Okay
+  internal static var alertOkay: String { 
+    return VectorL10n.tr("Vector", "alert_okay") 
+  }
   /// Please review and accept the policies of this homeserver:
   internal static var authAcceptPolicies: String { 
     return VectorL10n.tr("Vector", "auth_accept_policies") 
@@ -422,6 +426,10 @@ internal enum VectorL10n {
   internal static var callAlreadyDisplayed: String { 
     return VectorL10n.tr("Vector", "call_already_displayed") 
   }
+  /// Call to
+  internal static var callDestination: String { 
+    return VectorL10n.tr("Vector", "call_destination") 
+  }
   /// Incoming video call…
   internal static var callIncomingVideo: String { 
     return VectorL10n.tr("Vector", "call_incoming_video") 
@@ -457,6 +465,10 @@ internal enum VectorL10n {
   /// Try using %@
   internal static func callNoStunServerErrorUseFallbackButton(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "call_no_stun_server_error_use_fallback_button", p1)
+  }
+  /// Picked up by
+  internal static var callPickedUpBy: String { 
+    return VectorL10n.tr("Vector", "call_picked_up_by") 
   }
   /// Camera
   internal static var camera: String { 
@@ -1042,6 +1054,46 @@ internal enum VectorL10n {
   internal static var deviceVerificationVerifyWaitPartner: String { 
     return VectorL10n.tr("Vector", "device_verification_verify_wait_partner") 
   }
+  /// +
+  internal static var dialer0: String { 
+    return VectorL10n.tr("Vector", "dialer_0") 
+  }
+  /// 
+  internal static var dialer1: String { 
+    return VectorL10n.tr("Vector", "dialer_1") 
+  }
+  /// ABC
+  internal static var dialer2: String { 
+    return VectorL10n.tr("Vector", "dialer_2") 
+  }
+  /// DEF
+  internal static var dialer3: String { 
+    return VectorL10n.tr("Vector", "dialer_3") 
+  }
+  /// GHI
+  internal static var dialer4: String { 
+    return VectorL10n.tr("Vector", "dialer_4") 
+  }
+  /// JKL
+  internal static var dialer5: String { 
+    return VectorL10n.tr("Vector", "dialer_5") 
+  }
+  /// MNO
+  internal static var dialer6: String { 
+    return VectorL10n.tr("Vector", "dialer_6") 
+  }
+  /// PQRS
+  internal static var dialer7: String { 
+    return VectorL10n.tr("Vector", "dialer_7") 
+  }
+  /// TUV
+  internal static var dialer8: String { 
+    return VectorL10n.tr("Vector", "dialer_8") 
+  }
+  /// WXYZ
+  internal static var dialer9: String { 
+    return VectorL10n.tr("Vector", "dialer_9") 
+  }
   /// %tu rooms
   internal static func directoryCellDescription(_ p1: Int) -> String {
     return VectorL10n.tr("Vector", "directory_cell_description", p1)
@@ -1049,6 +1101,10 @@ internal enum VectorL10n {
   /// Browse directory
   internal static var directoryCellTitle: String { 
     return VectorL10n.tr("Vector", "directory_cell_title") 
+  }
+  /// You haven't marked any %@ as favourites
+  internal static func directoryNoFavouritesSet(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "directory_no_favourites_set", p1)
   }
   /// Failed to fetch data
   internal static var directorySearchFail: String { 
@@ -1262,6 +1318,26 @@ internal enum VectorL10n {
   internal static var externalLinkConfirmationTitle: String { 
     return VectorL10n.tr("Vector", "external_link_confirmation_title") 
   }
+  /// You have marked this %@ as a favourite.
+  internal static func favouriteDetailFavourite(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "favourite_detail_favourite", p1)
+  }
+  /// Mark as favourite
+  internal static var favouriteDetailMark: String { 
+    return VectorL10n.tr("Vector", "favourite_detail_mark") 
+  }
+  /// You haven't marked this %@ as a favourite.
+  internal static func favouriteDetailNotFavourite(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "favourite_detail_not_favourite", p1)
+  }
+  /// Unfavourite
+  internal static var favouriteDetailUnmark: String { 
+    return VectorL10n.tr("Vector", "favourite_detail_unmark") 
+  }
+  /// Fetching Data
+  internal static var fetchingData: String { 
+    return VectorL10n.tr("Vector", "fetching_data") 
+  }
   /// File upload
   internal static var fileUploadErrorTitle: String { 
     return VectorL10n.tr("Vector", "file_upload_error_title") 
@@ -1269,6 +1345,10 @@ internal enum VectorL10n {
   /// File type not supported.
   internal static var fileUploadErrorUnsupportedFileTypeMessage: String { 
     return VectorL10n.tr("Vector", "file_upload_error_unsupported_file_type_message") 
+  }
+  /// You can't delete a photo with a patient tag attached to it.
+  internal static var galleryNoDeletingTaggedImages: String { 
+    return VectorL10n.tr("Vector", "gallery_no_deleting_tagged_images") 
   }
   /// To continue using the %@ homeserver you must review and agree to the terms and conditions.
   internal static func gdprConsentNotGivenAlertMessage(_ p1: String) -> String {
@@ -1473,6 +1553,10 @@ internal enum VectorL10n {
   /// Choose from library
   internal static var imagePickerActionLibrary: String { 
     return VectorL10n.tr("Vector", "image_picker_action_library") 
+  }
+  /// Incoming Call
+  internal static var incomingCall: String { 
+    return VectorL10n.tr("Vector", "incoming_call") 
   }
   /// Invite
   internal static var invite: String { 
@@ -1934,6 +2018,18 @@ internal enum VectorL10n {
   internal static var leave: String { 
     return VectorL10n.tr("Vector", "leave") 
   }
+  /// Lingo Audio
+  internal static var lingoAudio: String { 
+    return VectorL10n.tr("Vector", "lingo_audio") 
+  }
+  /// Lingo Conference
+  internal static var lingoConference: String { 
+    return VectorL10n.tr("Vector", "lingo_conference") 
+  }
+  /// Lingo Video
+  internal static var lingoVideo: String { 
+    return VectorL10n.tr("Vector", "lingo_video") 
+  }
   /// Got it
   internal static var majorUpdateDoneAction: String { 
     return VectorL10n.tr("Vector", "major_update_done_action") 
@@ -2070,6 +2166,10 @@ internal enum VectorL10n {
   internal static var or: String { 
     return VectorL10n.tr("Vector", "or") 
   }
+  /// Outgoing Call
+  internal static var outgoingCall: String { 
+    return VectorL10n.tr("Vector", "outgoing_call") 
+  }
   /// d-MMM-yyyy
   internal static var patientDobFormat: String { 
     return VectorL10n.tr("Vector", "patient_dob_format") 
@@ -2097,6 +2197,14 @@ internal enum VectorL10n {
   /// person
   internal static var personSingle: String { 
     return VectorL10n.tr("Vector", "person_single") 
+  }
+  /// Person
+  internal static var personTitle: String { 
+    return VectorL10n.tr("Vector", "person_title") 
+  }
+  /// Phone
+  internal static var phone: String { 
+    return VectorL10n.tr("Vector", "phone") 
   }
   /// %@ doesn't have permission to access photo library, please change privacy settings
   internal static func photoLibraryAccessNotGranted(_ p1: String) -> String {
@@ -2242,9 +2350,49 @@ internal enum VectorL10n {
   internal static var retry: String { 
     return VectorL10n.tr("Vector", "retry") 
   }
+  /// Category: %@
+  internal static func roleDetailCategory(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_category", p1)
+  }
+  /// Category
+  internal static var roleDetailCategoryTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_category_title") 
+  }
+  /// Location: %@
+  internal static func roleDetailLocation(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_location", p1)
+  }
+  /// Location
+  internal static var roleDetailLocationTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_location_title") 
+  }
+  /// Org Unit: %@
+  internal static func roleDetailOrgUnit(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_org_unit", p1)
+  }
+  /// Organization Unit
+  internal static var roleDetailOrgUnitTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_org_unit_title") 
+  }
+  /// Practitioner in Role
+  internal static var roleDetailPractitionerInRole: String { 
+    return VectorL10n.tr("Vector", "role_detail_practitioner_in_role") 
+  }
+  /// Role: %@
+  internal static func roleDetailRole(_ p1: String) -> String {
+    return VectorL10n.tr("Vector", "role_detail_role", p1)
+  }
+  /// Specialty
+  internal static var roleDetailSpecialtyTitle: String { 
+    return VectorL10n.tr("Vector", "role_detail_specialty_title") 
+  }
   /// Role
   internal static var roleTitle: String { 
     return VectorL10n.tr("Vector", "role_title") 
+  }
+  /// Roles
+  internal static var rolesTitle: String { 
+    return VectorL10n.tr("Vector", "roles_title") 
   }
   /// Call
   internal static var roomAccessibilityCall: String { 
@@ -3626,6 +3774,10 @@ internal enum VectorL10n {
   internal static var sending: String { 
     return VectorL10n.tr("Vector", "sending") 
   }
+  /// Location
+  internal static var serviceDetailLocationTitle: String { 
+    return VectorL10n.tr("Vector", "service_detail_location_title") 
+  }
   /// Accept
   internal static var serviceTermsModalAcceptButton: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_accept_button") 
@@ -3665,6 +3817,14 @@ internal enum VectorL10n {
   /// Contact discovery
   internal static var serviceTermsModalTitleIdentityServer: String { 
     return VectorL10n.tr("Vector", "service_terms_modal_title_identity_server") 
+  }
+  /// Service
+  internal static var serviceTitle: String { 
+    return VectorL10n.tr("Vector", "service_title") 
+  }
+  /// Services
+  internal static var servicesTitle: String { 
+    return VectorL10n.tr("Vector", "services_title") 
   }
   /// Invalid password
   internal static var settingsAdd3pidInvalidPasswordMessage: String { 
@@ -4318,6 +4478,14 @@ internal enum VectorL10n {
   internal static var `switch`: String { 
     return VectorL10n.tr("Vector", "switch") 
   }
+  /// Calls
+  internal static var tabCalls: String { 
+    return VectorL10n.tr("Vector", "tab_calls") 
+  }
+  /// Gallery
+  internal static var tabGallery: String { 
+    return VectorL10n.tr("Vector", "tab_gallery") 
+  }
   /// Please select a designation before saving.
   internal static var tagErrorNoRoleSelected: String { 
     return VectorL10n.tr("Vector", "tag_error_no_role_selected") 
@@ -4325,6 +4493,14 @@ internal enum VectorL10n {
   /// Tag History
   internal static var tagHistoryTitle: String { 
     return VectorL10n.tr("Vector", "tag_history_title") 
+  }
+  /// The tagged photo of the patient would now be uploaded, with relevant tag data being stored by the CPF. This feature is pending on updates to the backend.
+  internal static var taggedMediaConfirmationAlertBody: String { 
+    return VectorL10n.tr("Vector", "tagged_media_confirmation_alert_body") 
+  }
+  /// Tagged Photo Uploaded
+  internal static var taggedMediaConfirmationAlertTitle: String { 
+    return VectorL10n.tr("Vector", "tagged_media_confirmation_alert_title") 
   }
   /// Taken
   internal static var taken: String { 

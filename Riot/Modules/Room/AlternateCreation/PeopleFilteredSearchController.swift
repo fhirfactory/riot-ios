@@ -46,12 +46,12 @@ class PeopleFilteredSearchController: SelectableFilteredSearchController<ActPeop
     }
     override func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> ActPeople? {
         guard let actualCell = tableViewCell as? PeopleTableViewCell else { return nil }
-        return actualCell.actPeople
+        return actualCell.actPeopleModel
     }
     override func getTableviewCell(_ tableView: UITableView, atIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleTableViewCell") as? PeopleTableViewCell else { return UITableViewCell() }
         let person = peopleList[indexPath.row]
-        cell.setValue(actPeople: person, displayFavourites: false)
+        cell.setValue(withPerson: person)
         return cell
     }
     override func getIndexPathFor(Item theItem: ActPeople) -> IndexPath? {

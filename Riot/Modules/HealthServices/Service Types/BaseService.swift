@@ -16,6 +16,6 @@
 
 import Foundation
 
-class BaseService<T> {
+class BaseService<T>: DebugService {
     
 }

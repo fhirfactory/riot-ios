@@ -5569,7 +5569,7 @@
 }
 
 //Enable the new room rendering pipeline. Currently, this must be set to true for tags and other custom elements to render correctly.
-BOOL enableNewRoomRendering = TRUE;
+BOOL enableNewRoomRendering = YES;
 
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
     if (enableNewRoomRendering){
@@ -5744,8 +5744,8 @@ BOOL enableNewRoomRendering = TRUE;
                 if (tagData.Patients.count > 0){
                     //A patient was tagged
                     //TODO: Replace this debug message with the actual actions necessary to tag the patient and upload to CPF.
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Tagged Photo Uploaded"
-                                                   message:@"The tagged photo of the patient would now be uploaded, with relevant tag data being stored by the CPF. This feature is pending on updates to the backend."
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle: NSLocalizedStringFromTable(@"tagged_media_confirmation_alert_title", @"Vector", nil)
+                                                                                   message: NSLocalizedStringFromTable(@"tagged_media_confirmation_alert_body", @"Vector", nil)
                                                    preferredStyle:UIAlertControllerStyleAlert];
 
                     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];

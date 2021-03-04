@@ -20,5 +20,7 @@ limitations under the License.
  This view controller displays the attachments of a room. Only one matrix session is handled by this view controller.
  */
 @interface RoomFilesViewController : MXKRoomViewController
-
+@property bool isInGalleryContext;
+@property UIButton *galleryTakePhotoButton;
+- (void)changeNavigationTitle;
 @end

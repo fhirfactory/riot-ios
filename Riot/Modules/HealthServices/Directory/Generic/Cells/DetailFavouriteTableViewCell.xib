@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="81" id="OOn-wR-0JW" customClass="DetailFavouriteTableViewCell" customModule="Riot" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="81"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OOn-wR-0JW" id="6GU-LP-4OA">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="81"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have marked this Service as a favourite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1L7-Xd-7Nj">
+                        <rect key="frame" x="42.5" y="12" width="329" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUf-91-V6b">
+                        <rect key="frame" x="167" y="41" width="80" height="30"/>
+                        <state key="normal" title="Unfavourite"/>
+                        <connections>
+                            <action selector="ToggleFavourite" destination="OOn-wR-0JW" eventType="touchUpInside" id="0Fj-xL-04o"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1L7-Xd-7Nj" secondAttribute="trailing" constant="5" id="3ag-bx-abK"/>
+                    <constraint firstItem="1L7-Xd-7Nj" firstAttribute="centerX" secondItem="6GU-LP-4OA" secondAttribute="centerX" id="Lxb-tI-y9d"/>
+                    <constraint firstItem="1L7-Xd-7Nj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6GU-LP-4OA" secondAttribute="leading" constant="5" id="MAb-3c-GXc"/>
+                    <constraint firstAttribute="bottom" secondItem="UUf-91-V6b" secondAttribute="bottom" constant="10" id="MKl-pf-DL9"/>
+                    <constraint firstItem="1L7-Xd-7Nj" firstAttribute="top" secondItem="6GU-LP-4OA" secondAttribute="top" constant="12" id="XbH-a6-cdQ"/>
+                    <constraint firstItem="UUf-91-V6b" firstAttribute="top" secondItem="1L7-Xd-7Nj" secondAttribute="bottom" constant="8" symbolic="YES" id="nee-Et-stc"/>
+                    <constraint firstItem="UUf-91-V6b" firstAttribute="centerX" secondItem="6GU-LP-4OA" secondAttribute="centerX" id="pTV-Me-tQ1"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="FavouriteButton" destination="UUf-91-V6b" id="JNE-mh-SzD"/>
+                <outlet property="FavouriteTitleLabel" destination="1L7-Xd-7Nj" id="PxU-1J-y2E"/>
+            </connections>
+            <point key="canvasLocation" x="-68.115942028985515" y="59.263392857142854"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -38,14 +38,6 @@ class PatientViewCell: QueryTableViewCell<PatientModel> {
         DateOfBirthLabel.isHidden = false
     }
     
-    func ReorderNameString(Name namestring: String) -> (String, String) {
-        let splitName = namestring.split(separator: " ")
-        guard let lastname = splitName.last?.uppercased() else {return ("", "")}
-        let lastNamePosition = splitName.last?.startIndex ?? namestring.startIndex
-        let firstNamesSubstring = namestring[..<lastNamePosition]
-        return (firstNamesSubstring.trimmingCharacters(in: CharacterSet(charactersIn: " ")), String(lastname))
-    }
-    
     override func RenderWith(Object value: PatientModel) {
         super.RenderWith(Object: value)
         contentView.backgroundColor = ThemeService.shared().theme.backgroundColor
@@ -57,7 +49,7 @@ class PatientViewCell: QueryTableViewCell<PatientModel> {
         formatter.dateFormat = AlternateHomeTools.getNSLocalized("patient_dob_format", in: "Vector")
         DateOfBirthLabel.text = formatter.string(from: value.DoB)
         URNLabel.text = value.URN
-        let nameStringDetails = ReorderNameString(Name: value.Name)
+        let nameStringDetails = PatientModel.ReorderNameString(Name: value.Name)
         let nameString = nameStringDetails.1 + ", " + nameStringDetails.0
         let attributedNameString = NSMutableAttributedString(string: nameString)
         attributedNameString.beginEditing()

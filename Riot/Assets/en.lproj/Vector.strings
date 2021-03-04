@@ -460,6 +460,7 @@
 "settings_roles" = "Roles";
 "settings_settings" = "Settings";
 
+
 "settings_sign_out_confirmation" = "Are you sure?";
 "settings_sign_out_e2e_warn" = "You will lose your end-to-end encryption keys. That means you will no longer be able to read old messages in encrypted rooms on this device.";
 "settings_profile_picture" = "Profile Picture";
@@ -788,6 +789,10 @@
 // Image picker
 "image_picker_action_camera" = "Take photo";
 "image_picker_action_library" = "Choose from library";
+
+// Tagged Media
+"tagged_media_confirmation_alert_title" = "Tagged Photo Uploaded";
+"tagged_media_confirmation_alert_body" = "The tagged photo of the patient would now be uploaded, with relevant tag data being stored by the CPF. This feature is pending on updates to the backend.";
 
 // Directory
 "directory_title" = "Directory";
@@ -1539,6 +1544,34 @@
 "tag_history_title" = "Tag History";
 "message_forwarding_title" = "Forward a message to a Room";
 "warn_tag_changes" = "This media has patient tag changes";
+
+"dialer_1" = "";
+"dialer_2" = "ABC";
+"dialer_3" = "DEF";
+"dialer_4" = "GHI";
+"dialer_5" = "JKL";
+"dialer_6" = "MNO";
+"dialer_7" = "PQRS";
+"dialer_8" = "TUV";
+"dialer_9" = "WXYZ";
+"dialer_0" = "+";
+
+//Recent calls
+"outgoing_call" = "Outgoing Call";
+"incoming_call" = "Incoming Call";
+"lingo_audio" = "Lingo Audio";
+"lingo_video" = "Lingo Video";
+"lingo_conference" = "Lingo Conference";
+"call_destination" = "Call to";
+"call_picked_up_by" = "Picked up by";
+
+"tab_gallery" = "Gallery";
+"tab_calls" = "Calls";
+
+//The failure state for not implementing these strings is pretty severe
+"patient_dob_format" = "d-MMM-yyyy";
+"photo_metadata_taken_format" = "dd-MMM-yyyy";
+"photo_metadata_taken_time_format" = "h:mm a";
 "tag_error_no_role_selected" = "Please select a designation before saving.";
 "error_title" = "Error";
 
@@ -1549,5 +1582,33 @@
 // MARK: - Role-based User Directory
 
 "role_title" = "Role";
+"roles_title" = "Roles";
 "people_title" = "People";
+"person_title" = "Person";
+"service_title" = "Service";
+"services_title" = "Services";
 "directory_title" = "Directory";
+
+"role_detail_role" = "Role: %@";
+"role_detail_category" = "Category: %@";
+"role_detail_org_unit" = "Org Unit: %@";
+"role_detail_location" = "Location: %@";
+"role_detail_category_title" = "Category";
+"role_detail_org_unit_title" = "Organization Unit";
+"role_detail_location_title" = "Location";
+"role_detail_specialty_title" = "Specialty";
+"role_detail_practitioner_in_role" = "Practitioner in Role";
+"service_detail_location_title" = "Location";
+"phone" = "Phone";
+
+"directory_no_favourites_set" = "You haven't marked any %@ as favourites";
+
+"fetching_data" = "Fetching Data";
+
+"alert_okay" = "Okay";
+"gallery_no_deleting_tagged_images" = "You can't delete a photo with a patient tag attached to it.";
+
+"favourite_detail_not_favourite" = "You haven't marked this %@ as a favourite.";
+"favourite_detail_favourite" = "You have marked this %@ as a favourite.";
+"favourite_detail_mark" = "Mark as favourite";
+"favourite_detail_unmark" = "Unfavourite";

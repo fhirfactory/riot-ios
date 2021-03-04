@@ -27,8 +27,10 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
     private var componentCount: Int {
         if cellData == nil {
             return 0
-        }
-        return cellData.bubbleComponents.count == 0 ? (cellData.hasNoDisplay ? 0 : 1) : cellData.bubbleComponents.count
+        }//need to fold bubbleComponents
+        return cellData.bubbleComponents.count == 0 ? (cellData.hasNoDisplay ? 0 : 1) : cellData.bubbleComponents.reduce(0, { curr, cell in
+            curr + (cell.attributedTextMessage == nil ? 0 : 1)
+        })
     }
     
     private var theme: Theme {
@@ -272,7 +274,12 @@ class RoomMessageContentCell: MXKRoomBubbleTableViewCell, UITableViewDelegate, U
                 }
             }
         }
-        return UITableViewCell()
+        let ccount = componentCount
+        let ir = indexPath.row
+        getComponentContentIdentifier(forBubbleComponent: cellData.bubbleComponents[indexPath.row])
+        let returnCell = UITableViewCell()
+        returnCell.contentView.addConstraint(returnCell.contentView.heightAnchor.constraint(equalToConstant: 0))
+        return returnCell
     }
     
     func getComponentContentIdentifier(forBubbleComponent data: MXKRoomBubbleComponent) -> String? {

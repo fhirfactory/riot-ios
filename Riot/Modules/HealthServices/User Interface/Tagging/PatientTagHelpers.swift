@@ -39,6 +39,11 @@ import Foundation
             t.Description == tag.Description
         }))
     }
+    @objc static func historyContainsPatient(InTagData tags: [TagData]) -> Bool {
+        !tags.allSatisfy { (x) -> Bool in
+            x.Patients.count == 0
+        }
+    }
     @objc static func getPatientViewCell(ForTagData tags: [TagData]) -> PatientViewCellData? {
         let returnData = PatientViewCellData()
         let returnView = Stackview()

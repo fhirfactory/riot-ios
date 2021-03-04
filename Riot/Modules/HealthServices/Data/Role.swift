@@ -22,22 +22,50 @@ class Role: Equatable {
     }
     
     let Name: String
+    let Title: String
     let Identifier: String
-    let Description: String
+    let OfficialName: String
+    
+    //Category, Org Unit, Location and Designation should in reality not be strings but instead links to other objects
     let Designation: String
-    init(withName n: String, andId id: String, andDescription desc: String) {
-        Name = n
-        Identifier = id
-        Description = desc
-        Designation = n
+    
+    let Location: String
+    //is "Category" actually "Specialty"?
+    let Category: String
+    let OrgUnit: String
+    
+    convenience init(withName name: String, andId id: String, andDescription description: String) {
+        //  a location string should come about by looking up the location, and then generating the abbreviated string.
+        //  Location = "CH {Canberra Hospital}"
+        //  Category = "Emergency"
+        //  OrgUnit = "ED {Emergency Department}"
+        self.init(name: name, longname: name, id: id, description: description, designation: name, category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}")
     }
-    init(withName n: String, andId id: String, andDescription desc: String, andDesignation des: String) {
-        Name = n
+    convenience init(withName name: String, andId id: String, andDescription description: String, andDesignation designation: String) {
+        //  a location string should come about by looking up the location, and then generating the abbreviated string.
+        //  Location = "CH {Canberra Hospital}"
+        //  Category = "Emergency"
+        //  OrgUnit = "ED {Emergency Department}"
+            self.init(name: name, longname: name, id: id, description: description, designation: designation, category: "Emergency", location: "CH {Canberra Hospital}", orgunit: "ED {Emergency Department}")
+    }
+    convenience init(withName name: String, andId id: String, andDescription description: String, andDesignation designation: String, andLocation location: String) {
+        //  a location string should come about by looking up the location, and then generating the abbreviated string.
+        //  Location = location
+        //  Category = "Emergency"
+        //  OrgUnit = "ED {Emergency Department}"
+        self.init(name: name, longname: name, id: id, description: description, designation: designation, category: "Emergency", location: location, orgunit: "ED {Emergency Department}")
+    }
+    init(name: String, longname: String, id: String, description: String, designation: String, category: String, location: String, orgunit: String) {
+        Name = name
+        Title = longname
         Identifier = id
-        Description = desc
-        Designation = des
+        OfficialName = description
+        Designation = designation
+        Category = category
+        Location = location
+        OrgUnit = orgunit
     }
     func getRoleModel() -> RoleModel {
-        return RoleModel(name: Name, description: Description, isExpanded: false)
+        return RoleModel(innerRole: self, isExpanded: false)
     }
 }

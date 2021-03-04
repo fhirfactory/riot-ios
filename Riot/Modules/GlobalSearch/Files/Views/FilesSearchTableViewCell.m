@@ -43,7 +43,9 @@
 
 - (void)render:(MXKCellData*)cellData
 {
-    
+    [self setContainsPatientTagData:NO];
+    [[self ViewEdgeConstraint] setActive:NO];
+    [ObjcThemeHelpers recursiveApplyWithTheme:[ThemeService shared].theme onView:self.contentView];
     if ([self tagWarning]) {
         [self setTagWarning:NULL];
         [[self tagWarning] removeFromSuperview];
@@ -96,9 +98,21 @@
             }
             
             if (bubbleData.attachment.type == MXKAttachmentTypeImage) {
+                [_URNDOBLabel setText:@""];
+                NSDateFormatter *dateFormatter = [NSDateFormatter new];
+                [dateFormatter setDateFormat:NSLocalizedStringFromTable(@"patient_dob_format", @"Vector", nil)];
                 [[Services ImageTagDataService] LookupTagInfoForObjcWithURL: bubbleData.attachment.contentURL andHandler:^(NSArray *tagData) {
-                    
-                    bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:[tagData lastObject]];
+                    TagData *tag = [tagData lastObject];
+                    PatientModel *patient = [tag.Patients firstObject];
+                    bool containsChanges = [PatientTagHelpers containsTagChangesForTagData:tagData andTag:tag];
+                    if ([PatientTagHelpers historyContainsPatientInTagData:tagData]) {
+                        [self setContainsPatientTagData:YES];
+                        [[self ViewEdgeConstraint] setActive:YES];
+                    }
+                    if (patient) {
+                        [super title].text = [PatientModel GetReorderedNameStringWithName:[patient Name]];
+                        _URNDOBLabel.text = [NSString stringWithFormat:@"%@ | %@", [patient URN], [dateFormatter stringFromDate:[patient DoB]]];
+                    }
                     if (containsChanges) {
                         if ([self tagWarning]) {
                             [[self tagWarning].contentView setHidden:NO];
@@ -148,6 +162,7 @@
             self.iconImage.image = nil;
         }
     }
+    [ObjcThemeHelpers recursiveApplyWithTheme:[ThemeService shared].theme onView:self.contentView];
 }
 
 #pragma mark -

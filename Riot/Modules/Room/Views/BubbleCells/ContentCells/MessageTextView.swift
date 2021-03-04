@@ -46,6 +46,6 @@ class MessageTextView: MessageContentView, RendersBubbleComponent {
         self.backgroundColor = .none
     }
     @objc func textTapped() {
-        super.didRecognizeAction(kMXKRoomBubbleCellTapOnMessageTextView, userInfo: [kMXKRoomBubbleCellEventKey: cellData?.events.first])
+        super.didRecognizeAction(kMXKRoomBubbleCellTapOnMessageTextView, userInfo: [kMXKRoomBubbleCellEventKey: cellData?.events.first as Any])
     }
 }

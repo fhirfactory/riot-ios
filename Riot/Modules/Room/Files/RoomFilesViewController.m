@@ -23,13 +23,15 @@
 
 #import "AttachmentsViewController.h"
 
-@interface RoomFilesViewController ()
+@interface RoomFilesViewController () <CameraPresenterDelegate>
 {
     /**
      Observe kThemeServiceDidChangeThemeNotification to handle user interface theme change.
      */
     id kThemeServiceDidChangeThemeNotificationObserver;
 }
+
+@property CameraPresenter *cameraPresenter;
 
 @end
 
@@ -44,7 +46,7 @@
     {
         self.autoJoinInvitedRoom = NO;
     }
-    
+    [self setIsInGalleryContext:NO];
     return self;
 }
 
@@ -55,7 +57,7 @@
     {
         self.autoJoinInvitedRoom = NO;
     }
-    
+    [self setIsInGalleryContext:NO];
     return self;
 }
 
@@ -110,6 +112,39 @@
     [UIView setAnimationsEnabled:NO];
     [self roomInputToolbarView:self.inputToolbarView heightDidChanged:0 completion:nil];
     [UIView setAnimationsEnabled:YES];
+    
+    if ([self isInGalleryContext] && !([self galleryTakePhotoButton])) {
+        if (@available(iOS 13.0, *)) {
+            UIImage *image = [UIImage systemImageNamed:@"camera.fill"];
+            _galleryTakePhotoButton = [UIButton systemButtonWithImage:image target:self action:@selector(takePhoto)];
+            _galleryTakePhotoButton.translatesAutoresizingMaskIntoConstraints = NO;
+            _galleryTakePhotoButton.tintColor = [ThemeService shared].theme.tintColor;
+            _galleryTakePhotoButton.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
+            _galleryTakePhotoButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
+            [_galleryTakePhotoButton addConstraints:@[
+                [[_galleryTakePhotoButton widthAnchor] constraintEqualToConstant:40],
+                [[_galleryTakePhotoButton heightAnchor] constraintEqualToConstant:30],
+            ]];
+            
+            [[self view] addSubview:_galleryTakePhotoButton];
+            [[self view] addConstraints:@[
+                [[self view].centerXAnchor constraintEqualToAnchor:[_galleryTakePhotoButton centerXAnchor]],
+                [[self view].bottomAnchor constraintEqualToAnchor:[_galleryTakePhotoButton bottomAnchor] constant:10]
+            ]];
+            
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        
+    }
+}
+
+- (void)takePhoto {
+    CameraPresenter *cameraPresenter = [CameraPresenter new];
+    cameraPresenter.delegate = self;
+    [cameraPresenter presentCameraFrom:self with:@[MXKUTI.image, MXKUTI.movie] animated:YES];
+    self.cameraPresenter = cameraPresenter;
 }
 
 - (void)userInterfaceThemeDidChange
@@ -198,6 +233,43 @@
 
 #pragma mark - UITableView delegate
 
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //only allow deletions from the user's gallery (rather than every files view in the app).
+    if (!_isInGalleryContext) {
+        return @[];
+    }
+    UITableViewRowAction *action = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:NSLocalizedStringFromTable(@"room_event_action_delete", @"Vector", nil) handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        FilesSearchTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        if ([cell containsPatientTagData]) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"error_title", @"Vector", nil) message:NSLocalizedStringFromTable(@"gallery_no_deleting_tagged_images", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"alert_okay", @"Vector", nil) style:UIAlertActionStyleDefault handler:nil];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+        } else {
+            MXKCellData *cellData = [cell mxkCellData];
+            if ([cellData isKindOfClass:[RoomBubbleCellData self]]) {
+                RoomBubbleCellData *data = (id)cellData; //this makes Objective-C less unhappy about this sketchy cast (that we can be sure is actually safe)
+                if (data) {
+                    NSString *eventId = [[[data events] firstObject] eventId];
+
+                    [self.roomDataSource.room redactEvent:eventId reason:nil success:^{
+                        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    } failure:^(NSError *error) {
+
+                        //Alert user
+                        [[AppDelegate theDelegate] showErrorAsAlert:error];
+
+                    }];
+                }
+            }
+        }
+    }];
+    return @[
+        action,
+    ];
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     cell.backgroundColor = ThemeService.shared.theme.backgroundColor;
@@ -230,6 +302,77 @@
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+}
+
+- (void)changeNavigationTitle {
+    [[[[AppDelegate theDelegate] masterTabBarController] navigationItem] setTitle:NSLocalizedStringFromTable(@"tab_gallery", @"Vector", @"")];
+}
+
+#pragma mark - CameraPresenterDelegate
+
+- (void)cameraPresenterDidCancel:(CameraPresenter *)cameraPresenter
+{
+    [cameraPresenter dismissWithAnimated:YES completion:nil];
+    self.cameraPresenter = nil;
+}
+
+- (void)cameraPresenter:(CameraPresenter *)cameraPresenter didSelectImageData:(NSData *)imageData withUTI:(MXKUTI *)uti
+{
+    if (BuildSettings.sendMessageRequirePatientTagging){
+        
+        [cameraPresenter dismissWithAnimated:YES completion:^{
+            PatientTaggingViewController *PatientTaggingController = [PatientTaggingViewController new];
+            [PatientTaggingController setImageTo: imageData WithHandler:^(TagData *tagData) {
+                if (tagData.Patients.count > 0){
+                    //A patient was tagged
+                    //TODO: Replace this debug message with the actual actions necessary to tag the patient and upload to CPF.
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle: NSLocalizedStringFromTable(@"tagged_media_confirmation_alert_title", @"Vector", nil)
+                                                   message: NSLocalizedStringFromTable(@"tagged_media_confirmation_alert_body", @"Vector", nil)
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    [[self roomDataSource] sendImage:imageData mimeType:uti.mimeType success:^(NSString *success) {
+                        NSLog(@"Sent");
+                    } failure:^(NSError *err) {
+                        NSLog(@"err");
+                    }];
+                    
+                } else {
+                    [[self roomDataSource] sendImage:imageData mimeType:uti.mimeType success:^(NSString *success) {
+                        NSLog(@"Sent");
+                    } failure:^(NSError *err) {
+                        NSLog(@"err");
+                    }];
+                }
+            }];
+            [self showViewController:PatientTaggingController sender:self];
+        }];
+        self.cameraPresenter = nil;
+        
+    }else{
+        [cameraPresenter dismissWithAnimated:YES completion:nil];
+        self.cameraPresenter = nil;
+        
+        [[self roomDataSource] sendImage:imageData mimeType:uti.mimeType success:^(NSString *success) {
+            NSLog(@"Sent");
+        } failure:^(NSError *err) {
+            NSLog(@"err");
+        }];
+    }
+}
+
+- (void)cameraPresenter:(CameraPresenter *)cameraPresenter didSelectVideoAt:(NSURL *)url
+{
+    [cameraPresenter dismissWithAnimated:YES completion:nil];
+    self.cameraPresenter = nil;
+    [[self roomDataSource] sendVideo:url withThumbnail:nil success:^(NSString *eventId) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 @end

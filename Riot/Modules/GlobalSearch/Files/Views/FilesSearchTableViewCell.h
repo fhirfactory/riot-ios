@@ -21,6 +21,9 @@
  Each `FilesSearchTableViewCell` instance displays a files search result.
  */
 @interface FilesSearchTableViewCell : MXKSearchTableViewCell
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ViewEdgeConstraint;
 @property TagChangesWarning *tagWarning;
+@property (weak, nonatomic) IBOutlet UILabel *URNDOBLabel;
 @property UIView *originalContentView;
+@property bool containsPatientTagData;
 @end

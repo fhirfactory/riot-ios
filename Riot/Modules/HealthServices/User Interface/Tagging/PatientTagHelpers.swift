@@ -25,6 +25,7 @@ import Foundation
     var otherViews: UIView?
     var displayTagHistory: Bool = false
     var displayTagHistoryView: UIView?
+    var tagChangesWarningView: UIView?
 }
 
 @objc class PatientTagHelpers: NSObject {
@@ -45,6 +46,10 @@ import Foundation
         }
     }
     @objc static func getPatientViewCell(ForTagData tags: [TagData]) -> PatientViewCellData? {
+        return getPatientViewCell(ForTagData: tags, forTimeline: false)
+    }
+    
+    @objc static func getPatientViewCell(ForTagData tags: [TagData], forTimeline: Bool = false) -> PatientViewCellData? {
         let returnData = PatientViewCellData()
         let returnView = Stackview()
         let childStackView = Stackview()
@@ -59,7 +64,9 @@ import Foundation
         descriptionCell.render(withString: viewModel.description ?? "")
         descriptionCell.sizeToFit()
         let descriptionView = descriptionCell.contentView
-        descriptionView.backgroundColor = ThemeService.shared().theme.backgroundShadedColor
+        if !forTimeline {
+            descriptionView.backgroundColor = ThemeService.shared().theme.backgroundShadedColor
+        }
     
         //subviews.append(descriptionView)
         descriptionView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,6 +96,7 @@ import Foundation
                 tagChangesWarning.contentView.translatesAutoresizingMaskIntoConstraints = false
                 tagChangesWarning.contentView.addConstraint(tagChangesWarning.contentView.heightAnchor.constraint(equalToConstant: tagChangesWarning.frame.height * 2))
                 patientViewSubviews.append(tagChangesWarning.contentView)
+                returnData.tagChangesWarningView = tagChangesWarning
             }
             
             patientViewSubviews.append(patientTagView)
@@ -98,20 +106,22 @@ import Foundation
             returnData.patientDetailsView = patientViewContainer
             topLevelViews.append(patientViewContainer)
             
-            guard let photographerInfo = tag.PhotographerDetails else { return nil }
-            guard let photographerInfoView = Bundle(for: PhotographerInfoViewSmall.self).loadNibNamed("PhotographerInfoViewSmall", owner: PhotographerInfoViewSmall(), options: nil)?.first as? PhotographerInfoViewSmall else { return nil }
-            photographerInfoView.displayDetails(photographerTagDetails: photographerInfo)
-            
-            let photographerView = photographerInfoView.contentView
-            
-            photographerView.translatesAutoresizingMaskIntoConstraints = false
-            photographerView.sizeToFit()
-            returnData.photographerDetailsView = photographerView
-            subviews.append(photographerView)
-            
-            photographerView.layoutSubviews()
+            if !forTimeline {
+                guard let photographerInfo = tag.PhotographerDetails else { return nil }
+                guard let photographerInfoView = Bundle(for: PhotographerInfoViewSmall.self).loadNibNamed("PhotographerInfoViewSmall", owner: PhotographerInfoViewSmall(), options: nil)?.first as? PhotographerInfoViewSmall else { return nil }
+                photographerInfoView.displayDetails(photographerTagDetails: photographerInfo)
+                
+                let photographerView = photographerInfoView.contentView
+                
+                photographerView.translatesAutoresizingMaskIntoConstraints = false
+                photographerView.sizeToFit()
+                returnData.photographerDetailsView = photographerView
+                subviews.append(photographerView)
+                
+                photographerView.layoutSubviews()
+                photographerView.sizeToFit()
+            }
             descriptionView.layoutSubviews()
-            photographerView.sizeToFit()
             descriptionView.sizeToFit()
         }
         
@@ -120,7 +130,7 @@ import Foundation
         returnView.translatesAutoresizingMaskIntoConstraints = false
         returnView.sizeToFit()
         
-        if tags.count > 1 {
+        if tags.count > 1 && !forTimeline {
             //display a cell saying there's tag history available
             let historyView = UIView()
             let historyLabel = UILabel()

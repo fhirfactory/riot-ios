@@ -95,7 +95,7 @@ static UILabel* backgroundLabel = nil;
         backgroundLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         backgroundLabel.textColor = ThemeService.shared.theme.backgroundColor;
         backgroundLabel.textAlignment = NSTextAlignmentCenter;
-        backgroundLabel.font = [UIFont boldSystemFontOfSize:25]; //size 18 if 3 chars needed
+        backgroundLabel.font = [UIFont boldSystemFontOfSize:23]; //size 18 if 3 chars needed
     }
     
     backgroundLabel.text = text;

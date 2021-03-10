@@ -245,7 +245,7 @@
         }
     }
     
-    return count;
+    return count * 2;
 }
 
 
@@ -961,6 +961,105 @@
 - (void)bubbleReactionsViewModel:(BubbleReactionsViewModel *)viewModel didLongPressForEventId:(NSString *)eventId
 {
     [self.delegate dataSource:self didRecognizeAction:kMXKRoomBubbleCellLongPressOnReactionView inCell:nil userInfo:@{ kMXKRoomBubbleCellEventIdKey: eventId }];
+}
+
+NSMutableDictionary *SiblingRows;
+
+- (UITableViewCell *)tableView:(UITableView *)tableView fakeCellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell<MXKCellRendering> *cell;
+    
+    id<MXKRoomBubbleCellDataStoring> bubbleData = [self cellDataAtIndex:indexPath.row / 2];
+    
+    // Launch an antivirus scan on events contained in bubble data if needed
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    [super performSelector:@selector(scanBubbleDataIfNeeded:) withObject:bubbleData];
+#pragma clang diagnostic pop
+    
+    if (bubbleData && self.delegate)
+    {
+        // Retrieve the cell identifier according to cell data.
+        NSString *identifier = [self.delegate cellReuseIdentifierForCellData:bubbleData];
+        if (identifier)
+        {
+            cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+            
+            // Make sure we listen to user actions on the cell
+            cell.delegate = self;
+            
+            // Update typing flag before rendering
+            bubbleData.isTyping = [super valueForKey:@"_showTypingNotifications"] && [super valueForKey:@"currentTypingUsers"] && ([[super valueForKey:@"currentTypingUsers"] indexOfObject:bubbleData.senderId] != NSNotFound);
+            // Report the current timestamp display option
+            bubbleData.showBubbleDateTime = self.showBubblesDateTime;
+            // display the read receipts
+            bubbleData.showBubbleReceipts = self.showBubbleReceipts;
+            // let the caller application manages the time label?
+            bubbleData.useCustomDateTimeLabel = self.useCustomDateTimeLabel;
+            // let the caller application manages the receipt?
+            bubbleData.useCustomReceipts = self.useCustomReceipts;
+            // let the caller application manages the unsent button?
+            bubbleData.useCustomUnsentButton = self.useCustomUnsentButton;
+            
+            // Make the bubble display the data
+            [cell render:bubbleData];
+        }
+    }
+    
+    // Sanity check: this method may be called during a layout refresh while room data have been modified.
+    if (!cell)
+    {
+        // Return an empty cell
+        return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"fakeCell"];
+    }
+    
+    return cell;
+}
+
+- (BOOL)shouldRenderInsertedCells{
+    return [self.delegate isKindOfClass:RoomViewController.class];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *translatedLocation = [NSIndexPath indexPathForRow:indexPath.item / 2 inSection:indexPath.section];
+    id<MXKRoomBubbleCellDataStoring> bubbleData = [self cellDataAtIndex:translatedLocation.row];
+    if ([self shouldRenderInsertedCells] && indexPath.item % 2 == 0) {
+        if (bubbleData.attachment) {
+            NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
+            [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:[bubbleData.attachment contentURL] andHandler:^(NSArray* tags) {
+                if (!SiblingRows) {
+                    SiblingRows = [NSMutableDictionary new];
+                }
+                [SiblingRows setObject:tags forKey:[[bubbleData.events firstObject] eventId]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [tableView beginUpdates];
+                    [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    [tableView endUpdates];
+                });
+            }];
+        }
+        
+        return [self tableView:tableView fakeCellForRowAtIndexPath:indexPath];
+    } else if (![self shouldRenderInsertedCells]) {
+        return [self tableView:tableView fakeCellForRowAtIndexPath:indexPath];
+    }
+    if ([self shouldRenderInsertedCells] && SiblingRows && [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]]) {
+        LegacyTagViewContainer *element = [tableView dequeueReusableCellWithIdentifier:@"LegacyTagViewContainer" forIndexPath:indexPath];
+        NSArray *tags = [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]];
+        [element renderWithTags:tags];
+        return element;
+    }
+    return [UITableViewCell new];
+}
+
+- (CGFloat)getHeightForInsertedCellAtIndexPath:(NSIndexPath *)indexPath withMaxWidth:(CGFloat)maxWidth {
+    NSIndexPath *index = [NSIndexPath indexPathForRow:(indexPath.row - 1) / 2 inSection:indexPath.section];
+    id<MXKRoomBubbleCellDataStoring> bubbleData = [self cellDataAtIndex:index.row];
+    if (SiblingRows && [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]]) {
+        NSArray *tags = [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]];
+        return [LegacyTagViewContainer getHeightWithTags:tags withWidth:maxWidth];
+    }
+    return 0;
 }
 
 @end

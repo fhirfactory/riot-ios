@@ -124,6 +124,8 @@
 #import "SettingsViewController.h"
 #import "SecurityViewController.h"
 
+#import <objc/message.h>
+#import "MXKRoomDataSource+Lingo.h"
 #import "Riot-Swift.h"
 
 @interface RoomViewController () <UISearchBarDelegate, UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate, RoomTitleViewTapGestureDelegate, RoomParticipantsViewControllerDelegate, MXKRoomMemberDetailsViewControllerDelegate, ContactsTableViewControllerDelegate, MXServerNoticesDelegate, RoomContextualMenuViewControllerDelegate,
@@ -365,6 +367,7 @@
     [self.bubblesTableView registerClass:RoomCreationCollapsedBubbleCell.class forCellReuseIdentifier:RoomCreationCollapsedBubbleCell.defaultReuseIdentifier];
     [self.bubblesTableView registerClass:RoomCreationWithPaginationCollapsedBubbleCell.class forCellReuseIdentifier:RoomCreationWithPaginationCollapsedBubbleCell.defaultReuseIdentifier];
     
+    [self.bubblesTableView registerNib:[UINib nibWithNibName:@"LegacyTagViewContainer" bundle:NULL] forCellReuseIdentifier:@"LegacyTagViewContainer"];
     [self.bubblesTableView registerNib:[RoomMessageContentCell nib] forCellReuseIdentifier:@"RoomMessageContentCell"];
     [self vc_removeBackTitle];
     
@@ -592,6 +595,13 @@
     }];
     [self refreshMissedDiscussionsCount:YES];
     self.keyboardHeight = MAX(self.keyboardHeight, 0);
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item % 2 == 0) {
+        return [super tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.item / 2 inSection:indexPath.section]];
+    }
+    return [[self roomDataSource] getHeightForInsertedCellAtIndexPath:indexPath withMaxWidth:[self view].frame.size.width];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -5539,7 +5549,7 @@
 }
 
 //Enable the new room rendering pipeline. Currently, this must be set to true for tags and other custom elements to render correctly.
-BOOL enableNewRoomRendering = YES;
+BOOL enableNewRoomRendering = NO;
 
 - (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
     if (enableNewRoomRendering){

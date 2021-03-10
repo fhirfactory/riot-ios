@@ -93,6 +93,8 @@
                                      success:(void(^)(void))success
                                      failure:(void(^)(NSError*))failure;
 
+- (CGFloat)getHeightForInsertedCellAtIndexPath:(NSIndexPath *)indexPath withMaxWidth:(CGFloat)maxWidth;
+
 @end
 
 @protocol RoomDataSourceDelegate <MXKDataSourceDelegate>

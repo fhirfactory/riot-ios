@@ -27,6 +27,15 @@ class ResponderCell: UITableViewCell {
         AcceptedLabel.textColor = colour
     }
     
+    func SetRoleText(_ text: String) {
+        RoleLabel.text = text
+    }
+    
+    func SetName(_ text: String) {
+        NameLabel.text = text
+        AvatarView.setImageURI(nil, withType: nil, andImageOrientation: .up, previewImage: AvatarGenerator.generateAvatar(forMatrixItem: "matrixItem", withDisplayName: text), mediaManager: nil)
+    }
+    
     override func awakeFromNib() {
         AvatarView.layer.cornerRadius = AvatarView.frame.width / 2
         AvatarView.layer.masksToBounds = true

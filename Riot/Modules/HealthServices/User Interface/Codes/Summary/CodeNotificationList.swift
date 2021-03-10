@@ -22,9 +22,6 @@ class CodeNotificationList: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row < 5 {
-            return tableView.dequeueReusableCell(withIdentifier: "CodeSummaryCell", for: indexPath)
-        }
         return tableView.dequeueReusableCell(withIdentifier: "AlternateCodeSummaryCell", for: indexPath)
     }
     
@@ -67,9 +64,6 @@ class CodeNotificationList: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row % 2 == 1 {
-            self.show(CodeDetailDemo(), sender: self)
-        }
         let demovc = AlternateCodeDetailDemo()
         self.show(demovc, sender: self)
     }

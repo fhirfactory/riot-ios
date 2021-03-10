@@ -875,6 +875,10 @@
 		EB4280C92560110E00B9BBBF /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280C82560110E00B9BBBF /* PatientModel.swift */; };
 		EB4280E1256015CF00B9BBBF /* PatientViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */; };
 		EB4280E92560C5DD00B9BBBF /* PatientViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */; };
+		EB47C74F25F2140800D76A8F /* LegacyTagViewContainer.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB47C74D25F2140800D76A8F /* LegacyTagViewContainer.xib */; };
+		EB47C75025F2140800D76A8F /* LegacyTagViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB47C74E25F2140800D76A8F /* LegacyTagViewContainer.swift */; };
+		EB47C75925F4FE4500D76A8F /* ChecklistItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB47C75825F4FE4500D76A8F /* ChecklistItemCell.xib */; };
+		EB47C76D25F5045F00D76A8F /* ChecklistItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB47C76C25F5045F00D76A8F /* ChecklistItemCell.swift */; };
 		EB47E68325B021E10025A469 /* RecentCallItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB47E68225B021E10025A469 /* RecentCallItem.xib */; };
 		EB47E68B25B186B90025A469 /* RecentCallItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB47E68A25B186B90025A469 /* RecentCallItem.swift */; };
 		EB47E69325B1878D0025A469 /* RecentCallsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB47E69225B1878D0025A469 /* RecentCallsList.swift */; };
@@ -2316,6 +2320,10 @@
 		EB4280C82560110E00B9BBBF /* PatientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
 		EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PatientViewCell.xib; sourceTree = "<group>"; };
 		EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientViewCell.swift; sourceTree = "<group>"; };
+		EB47C74D25F2140800D76A8F /* LegacyTagViewContainer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LegacyTagViewContainer.xib; sourceTree = "<group>"; };
+		EB47C74E25F2140800D76A8F /* LegacyTagViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LegacyTagViewContainer.swift; sourceTree = "<group>"; };
+		EB47C75825F4FE4500D76A8F /* ChecklistItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChecklistItemCell.xib; sourceTree = "<group>"; };
+		EB47C76C25F5045F00D76A8F /* ChecklistItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItemCell.swift; sourceTree = "<group>"; };
 		EB47E68225B021E10025A469 /* RecentCallItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentCallItem.xib; sourceTree = "<group>"; };
 		EB47E68A25B186B90025A469 /* RecentCallItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCallItem.swift; sourceTree = "<group>"; };
 		EB47E69225B1878D0025A469 /* RecentCallsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCallsList.swift; sourceTree = "<group>"; };
@@ -2382,6 +2390,9 @@
 		EBAC79AD2543CDB800A0B1BF /* SearchViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewSection.swift; sourceTree = "<group>"; };
 		EBAC79B52543F9EE00A0B1BF /* SelectableFilteredSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableFilteredSearchController.swift; sourceTree = "<group>"; };
 		EBAC79BD2543FA5700A0B1BF /* SelectableFilteredSearchController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectableFilteredSearchController.xib; sourceTree = "<group>"; };
+		EBAF8E7F25B2DD3F0013B383 /* MXKRoomDataSource+Lingo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MXKRoomDataSource+Lingo.h"; sourceTree = "<group>"; };
+		EBAF8E8925B2E1610013B383 /* TimelineFeature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimelineFeature.h; sourceTree = "<group>"; };
+		EBAF8E8A25B2E1800013B383 /* PatientTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatientTag.h; sourceTree = "<group>"; };
 		EBB6C3082579E643002EA9AB /* PatientTagHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientTagHelpers.swift; sourceTree = "<group>"; };
 		EBCC032525C8049100F7013B /* ActServicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActServicesViewController.swift; sourceTree = "<group>"; };
 		EBCC033325C804A900F7013B /* ActServicesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActServicesViewController.xib; sourceTree = "<group>"; };
@@ -5571,6 +5582,15 @@
 			path = Calls;
 			sourceTree = "<group>";
 		};
+		EB47C75725F4FE2700D76A8F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EB47C75825F4FE4500D76A8F /* ChecklistItemCell.xib */,
+				EB47C76C25F5045F00D76A8F /* ChecklistItemCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		EB47E67925B021AE0025A469 /* Recent Calls */ = {
 			isa = PBXGroup;
 			children = (
@@ -5602,6 +5622,7 @@
 		EB5E700D25F04C8B00A01BA4 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				EB47C75725F4FE2700D76A8F /* Cells */,
 				EB5E702525F0EAC200A01BA4 /* Timeline */,
 				EB5E701625F0564C00A01BA4 /* Detail */,
 				EB5E700E25F0564800A01BA4 /* CodeDetailDemo.swift */,
@@ -5749,6 +5770,7 @@
 			isa = PBXGroup;
 			children = (
 				EB80021C25D92913007E76DF /* Role Selection */,
+				EBAF8E8825B2E14F0013B383 /* Timeline Features */,
 				4397158F24D1359500D0D582 /* Directory */,
 				EBEE3AF12585C1CB0011345B /* User Interface */,
 				EBEE3AF02585C1AA0011345B /* Service Types */,
@@ -5794,6 +5816,15 @@
 				EB016D712549271D0078F610 /* AlternateRoomCreationFlowDetails.xib */,
 			);
 			path = "Alternate Room Creation";
+			sourceTree = "<group>";
+		};
+		EBAF8E8825B2E14F0013B383 /* Timeline Features */ = {
+			isa = PBXGroup;
+			children = (
+				EBAF8E8925B2E1610013B383 /* TimelineFeature.h */,
+				EBAF8E8A25B2E1800013B383 /* PatientTag.h */,
+			);
+			path = "Timeline Features";
 			sourceTree = "<group>";
 		};
 		EBCC030C25C8034800F7013B /* Services */ = {
@@ -5844,6 +5875,8 @@
 		EBEE3AEC2585C0F40011345B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				EB47C74E25F2140800D76A8F /* LegacyTagViewContainer.swift */,
+				EB47C74D25F2140800D76A8F /* LegacyTagViewContainer.xib */,
 				EBE34E1A2584D02200F6FF04 /* TagHistoryCell.swift */,
 				EB4280E0256015CF00B9BBBF /* PatientViewCell.xib */,
 				EB4280E82560C5DD00B9BBBF /* PatientViewCell.swift */,
@@ -6544,6 +6577,7 @@
 				ECF57A4F250913E4004BBF9D /* MXKTableViewCellWithLabelAndSwitch.swift */,
 				ECF57A5625091ECC004BBF9D /* MXKTableViewCellWithTextView.swift */,
 				B1A15BD525A526A200BDCA36 /* URLComponents.swift */,
+				EBAF8E7F25B2DD3F0013B383 /* MXKRoomDataSource+Lingo.h */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -6901,6 +6935,7 @@
 				B1B5594420EF7BD000210D55 /* TableViewCellWithCollectionView.xib in Resources */,
 				ECFBD5CA250A7AAF00DD5F5A /* ShowDirectoryViewController.storyboard in Resources */,
 				EB016D7A25492E3E0078F610 /* TableViewCellWithPeopleSelector.xib in Resources */,
+				EB47C74F25F2140800D76A8F /* LegacyTagViewContainer.xib in Resources */,
 				B1B558D520EF768F00210D55 /* RoomIncomingEncryptedTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.xib in Resources */,
 				EBE34E132582DD7500F6FF04 /* TagHistoryView.xib in Resources */,
 				EB5E701E25F0566400A01BA4 /* CodeDetailTopCell.xib in Resources */,
@@ -6943,6 +6978,7 @@
 				B1BEE73A23DF44A60003A4CB /* UserVerificationSessionsStatusViewController.storyboard in Resources */,
 				B1B5572120EE6C4D00210D55 /* ContactsTableViewController.xib in Resources */,
 				B1B5593A20EF7BAC00210D55 /* TableViewCellWithLabelAndLargeTextView.xib in Resources */,
+				EB47C75925F4FE4500D76A8F /* ChecklistItemCell.xib in Resources */,
 				B1B558D820EF768F00210D55 /* RoomIncomingEncryptedAttachmentWithPaginationTitleBubbleCell.xib in Resources */,
 				B1B558DA20EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithoutSenderInfoBubbleCell.xib in Resources */,
 				B1B558D620EF768F00210D55 /* RoomOutgoingEncryptedTextMsgWithPaginationTitleWithoutSenderNameBubbleCell.xib in Resources */,
@@ -7625,6 +7661,7 @@
 				B1D211E222BD193C00D939BD /* ReactionsMenuViewModel.swift in Sources */,
 				EC2B4EF124A1EEBD005EB739 /* DataProtectionHelper.swift in Sources */,
 				B16DC23A258A75B7004DAB1A /* SocialLoginButtonViewData.swift in Sources */,
+				EB47C76D25F5045F00D76A8F /* ChecklistItemCell.swift in Sources */,
 				B140B4A621F89E7600E3F5FE /* KeyBackupSetupCoordinatorBridgePresenter.swift in Sources */,
 				B1B5577420EE702900210D55 /* WidgetViewController.m in Sources */,
 				B1DCC63122E7026F00625807 /* EmojiPickerHeaderView.swift in Sources */,
@@ -8267,6 +8304,7 @@
 				ECB101362477D00700CF8C11 /* UniversalLink.m in Sources */,
 				32BF995521FA2AB700698084 /* SettingsKeyBackupViewAction.swift in Sources */,
 				B109D6F1222D8C400061B6D9 /* UIApplication.swift in Sources */,
+				EB47C75025F2140800D76A8F /* LegacyTagViewContainer.swift in Sources */,
 				ECFBD5D6250A7AAF00DD5F5A /* ShowDirectoryViewAction.swift in Sources */,
 				EC711BB124A63B58008F830C /* SecureBackupBannerPreferences.swift in Sources */,
 				ECF57A4625090C23004BBF9D /* CreateRoomCoordinator.swift in Sources */,

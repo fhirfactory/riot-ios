@@ -855,6 +855,10 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
         [self.submitButton removeFromSuperview];
     }
     
+    if (authInputsview.isSingleSignOnRequired){
+        [self presentDefaultSSOAuthentication];
+    }
+    
     [self refreshContentViewHeightConstraint];
 }
 

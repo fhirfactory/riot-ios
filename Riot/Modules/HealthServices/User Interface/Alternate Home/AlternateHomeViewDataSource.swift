@@ -95,7 +95,7 @@ class AlternateHomeDataSource: RecentsDataSource {
                         let res = AlternateHomeTools.runComparer(comparer, against: peopleCell, andThen: conversationCell)
                         if res == ComparrisonResult.equalTo {
                             if let pCell = peopleCell, let cCell = conversationCell {
-                                if pCell.lastEvent.originServerTs >= cCell.lastEvent.originServerTs {
+                                if cCell.lastEvent != nil && pCell.lastEvent != nil && pCell.lastEvent.originServerTs >= cCell.lastEvent.originServerTs {
                                     interleaveRecord.append((0, peopleIndex))
                                     peopleIndex += 1
                                 } else {

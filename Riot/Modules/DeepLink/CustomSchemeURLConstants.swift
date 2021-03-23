@@ -23,6 +23,6 @@ enum CustomSchemeURLConstants {
     }
     
     enum Hosts {
-        static let connect = "connect"
+        static let connect = "login"
     }
 }

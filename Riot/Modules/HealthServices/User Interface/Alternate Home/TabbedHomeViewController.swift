@@ -46,6 +46,9 @@ class TabbedHomeViewController: RecentsViewController {
             let lowPriority = homeDataSource.lowPrioritySection > -1
             sections.visible[2] = lowPriority as NSNumber
             if !(favouritesWasVisible == favourites && lowPriorityWasVisible == lowPriority) || !initialDrawComplete {
+                if sections.selectedIndex >= (favourites ? 1 : 0) + (lowPriority ? 1 : 0) {
+                    sections.selectedIndex = 0
+                }
                 sections.createSegmentedViews()
                 initialDrawComplete = true
             }

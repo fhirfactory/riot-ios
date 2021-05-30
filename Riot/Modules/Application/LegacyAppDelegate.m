@@ -90,7 +90,7 @@ NSString *const AppDelegateDidValidateEmailNotificationClientSecretKey = @"AppDe
 
 NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUniversalLinkDidChangeNotification";
 
-@interface LegacyAppDelegate () <GDPRConsentViewControllerDelegate, KeyVerificationCoordinatorBridgePresenterDelegate, ServiceTermsModalCoordinatorBridgePresenterDelegate, PushNotificationServiceDelegate, SetPinCoordinatorBridgePresenterDelegate, MasterTabBarControllerDelegate>
+@interface LegacyAppDelegate () <GDPRConsentViewControllerDelegate, KeyVerificationCoordinatorBridgePresenterDelegate, ServiceTermsModalCoordinatorBridgePresenterDelegate, PushNotificationServiceDelegate, SetPinCoordinatorBridgePresenterDelegate, CallPresenterDelegate, CallBarDelegate>
 {
     /**
      Reachability observer
@@ -113,16 +113,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     id addedAccountObserver;
     id removedAccountObserver;
     
-    /**
-     matrix call observer used to handle incoming/outgoing call.
-     */
-    id matrixCallObserver;
-    
-    /**
-     The current call view controller (if any).
-     */
-    CallViewController *currentCallViewController;
-
     /**
      Incoming room key requests observers
      */
@@ -176,7 +166,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
      Suspend the error notifications when the navigation stack of the root view controller is updating.
      */
     BOOL isErrorNotificationSuspended;
-    
     
     /**
      The listeners to call events.
@@ -235,6 +224,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 @property (nonatomic, strong) PushNotificationService *pushNotificationService;
 @property (nonatomic, strong) PushNotificationStore *pushNotificationStore;
 @property (nonatomic, strong) LocalAuthenticationService *localAuthenticationService;
+@property (nonatomic, strong, readwrite) CallPresenter *callPresenter;
 
 @property (nonatomic, strong) MajorUpdateManager *majorUpdateManager;
 
@@ -446,7 +436,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     [NSBundle mxk_setLanguage:language];
     [NSBundle mxk_setFallbackLanguage:@"en"];
 
-    
     mxSessionArray = [NSMutableArray array];
     callEventsListeners = [NSMutableDictionary dictionary];
 
@@ -474,6 +463,9 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     [analytics start];
 
     self.localAuthenticationService = [[LocalAuthenticationService alloc] initWithPinCodePreferences:[PinCodePreferences shared]];
+    
+    self.callPresenter = [[CallPresenter alloc] init];
+    self.callPresenter.delegate = self;
 
     self.pushNotificationStore = [PushNotificationStore new];
     self.pushNotificationService = [[PushNotificationService alloc] initWithPushNotificationStore:self.pushNotificationStore];
@@ -1780,8 +1772,8 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         }
         else if (mxSession.state == MXSessionStateStoreDataReady)
         {
-            // A new call observer may be added here
-            [self addMatrixCallObserver];
+            //  start the call service
+            [self.callPresenter start];
             
             // Look for the account related to this session.
             NSArray *mxAccounts = [MXKAccountManager sharedManager].activeAccounts;
@@ -1985,6 +1977,9 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         // Register the session to the widgets manager
         [[WidgetManager sharedManager] addMatrixSession:mxSession];
         
+        // register the session to the call service
+        [_callPresenter addMatrixSession:mxSession];
+        
         [mxSessionArray addObject:mxSession];
         
         // Do the one time check on device id
@@ -1998,6 +1993,9 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     
     // Update home data sources
     [_masterTabBarController removeMatrixSession:mxSession];
+    
+    // remove session from the call service
+    [_callPresenter removeMatrixSession:mxSession];
 
     // Update the widgets manager
     [[WidgetManager sharedManager] removeMatrixSession:mxSession]; 
@@ -2013,10 +2011,10 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
     [mxSessionArray removeObject:mxSession];
     
-    if (!mxSessionArray.count && matrixCallObserver)
+    if (!mxSessionArray.count)
     {
-        [[NSNotificationCenter defaultCenter] removeObserver:matrixCallObserver];
-        matrixCallObserver = nil;
+        //  if no session left, stop the call service
+        [self.callPresenter stop];
     }
 }
 
@@ -2215,113 +2213,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     }
 }
 
-- (void)addMatrixCallObserver
-{
-    if (matrixCallObserver)
-    {
-        return;
-    }
-    
-    MXWeakify(self);
-    
-    // Register call observer in order to handle incoming calls
-    matrixCallObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXCallManagerNewCall
-                                                                           object:nil
-                                                                            queue:[NSOperationQueue mainQueue]
-                                                                       usingBlock:^(NSNotification *notif)
-    {
-        MXStrongifyAndReturnIfNil(self);
-        
-        // Ignore the call if a call is already in progress
-        if (!self->currentCallViewController && !self->_jitsiViewController)
-        {
-            MXCall *mxCall = (MXCall*)notif.object;
-            
-            BOOL isCallKitEnabled = [MXCallKitAdapter callKitAvailable] && [MXKAppSettings standardAppSettings].isCallKitEnabled;
-            
-            // Prepare the call view controller
-            self->currentCallViewController = [CallViewController callViewController:nil];
-            self->currentCallViewController.playRingtone = !isCallKitEnabled;
-            self->currentCallViewController.mxCall = mxCall;
-            self->currentCallViewController.delegate = self;
-
-            UIApplicationState applicationState = UIApplication.sharedApplication.applicationState;
-            
-            // App has been woken by PushKit notification in the background
-            if (applicationState == UIApplicationStateBackground && mxCall.isIncoming)
-            {
-                // Create backgound task.
-                // Without CallKit this will allow us to play vibro until the call was ended
-                // With CallKit we'll inform the system when the call is ended to let the system terminate our app to save resources
-                id<MXBackgroundModeHandler> handler = [MXSDKOptions sharedInstance].backgroundModeHandler;
-                id<MXBackgroundTask> callBackgroundTask = [handler startBackgroundTaskWithName:@"[AppDelegate] addMatrixCallObserver" expirationHandler:nil];
-                
-                MXWeakify(self);
-                
-                // Start listening for call state change notifications
-                __weak NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-                __block id token = [[NSNotificationCenter defaultCenter] addObserverForName:kMXCallStateDidChange
-                                                                                     object:mxCall
-                                                                                      queue:nil
-                                                                                 usingBlock:^(NSNotification * _Nonnull note) {
-                                                        
-                                                                                     MXStrongifyAndReturnIfNil(self);
-                    
-                                                                                     MXCall *call = (MXCall *)note.object;
-                                                                                     
-                                                                                     if (call.state == MXCallStateEnded)
-                                                                                     {
-                                                                                         // Set call vc to nil to let our app handle new incoming calls even it wasn't killed by the system
-                                                                                         [self->currentCallViewController destroy];
-                                                                                         self->currentCallViewController = nil;
-                                                                                         [notificationCenter removeObserver:token];
-                                                                                         [callBackgroundTask stop];
-                                                                                     }
-                                                                                 }];
-            }
-            
-            if (mxCall.isIncoming && isCallKitEnabled)
-            {
-                MXWeakify(self);
-                
-                // Let's CallKit display the system incoming call screen
-                // Show the callVC only after the user answered the call
-                __weak NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-                __block id token = [[NSNotificationCenter defaultCenter] addObserverForName:kMXCallStateDidChange
-                                                                                     object:mxCall
-                                                                                      queue:nil
-                                                                                 usingBlock:^(NSNotification * _Nonnull note) {
-                    
-                                                                                     MXStrongifyAndReturnIfNil(self);
-                    
-                                                                                     MXCall *call = (MXCall *)note.object;
-
-                                                                                     NSLog(@"[AppDelegate] call.state: %@", call);
-
-                                                                                     if (call.state == MXCallStateCreateAnswer)
-                                                                                     {
-                                                                                         [notificationCenter removeObserver:token];
-
-                                                                                         NSLog(@"[AppDelegate] presentCallViewController");
-                                                                                         [self presentCallViewController:NO completion:nil];
-                                                                                     }
-                                                                                     else if (call.state == MXCallStateEnded)
-                                                                                     {
-                                                                                         [notificationCenter removeObserver:token];
-                                                                                         
-                                                                                         // Set call vc to nil to let our app handle new incoming calls even it wasn't killed by the system
-                                                                                         [self dismissCallViewController:self->currentCallViewController completion:nil];
-                                                                                     }
-                                                                                 }];
-            }
-            else
-            {
-                [self presentCallViewController:YES completion:nil];
-            }
-        }
-    }];
-}
-
 - (void)handleAppState
 {
     MXSession *mainSession = self.mxSessions.firstObject;
@@ -2332,11 +2223,10 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         
         if (_masterTabBarController.authenticationInProgress)
         {
-            NSLog(@"[AppDelegate] handleLaunchAnimation: Authentication still in progress");
+            NSLog(@"[AppDelegate] handleAppState: Authentication still in progress");
                   
             // Wait for the return of masterTabBarControllerDidCompleteAuthentication
-            isLaunching = YES;
-            _masterTabBarController.masterVCDelegate = self;
+            isLaunching = YES;            
         }
         else
         {
@@ -2378,24 +2268,57 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
             NSLog(@"[AppDelegate] handleAppState: PIN code is presented. Do not go further");
             return;
         }
+        else
+        {
+            switch (mainSession.state)
+            {
+                case MXSessionStateClosed:
+                case MXSessionStateInitialised:
+                    isLaunching = YES;
+                    break;
+                case MXSessionStateStoreDataReady:
+                case MXSessionStateSyncInProgress:
+                    // Stay in launching during the first server sync if the store is empty.
+                    isLaunching = (mainSession.rooms.count == 0 && launchAnimationContainerView);
+                    
+                    if (mainSession.crypto.crossSigning && mainSession.crypto.crossSigning.state == MXCrossSigningStateCrossSigningExists)
+                    {
+                        [mainSession.crypto setOutgoingKeyRequestsEnabled:NO onComplete:nil];
+                    }
+                    break;
+                default:
+                    isLaunching = NO;
+                    break;
+            }
+        }
+        
+        NSLog(@"[AppDelegate] handleAppState: isLaunching: %@", isLaunching ? @"YES" : @"NO");
         
         if (mainSession.crypto.crossSigning)
         {
-            NSLog(@"[AppDelegate] handleAppState: crossSigning.state: %@", @(mainSession.crypto.crossSigning.state));
-            
-            switch (mainSession.crypto.crossSigning.state)
-            {
-                case MXCrossSigningStateCrossSigningExists:
-                    NSLog(@"[AppDelegate] handleAppState: presentVerifyCurrentSessionAlertIfNeededWithSession");
-                    [_masterTabBarController presentVerifyCurrentSessionAlertIfNeededWithSession:mainSession];
-                    break;
-                case MXCrossSigningStateCanCrossSign:
-                    NSLog(@"[AppDelegate] handleAppState: presentReviewUnverifiedSessionsAlertIfNeededWithSession");
-                    [_masterTabBarController presentReviewUnverifiedSessionsAlertIfNeededWithSession:mainSession];
-                    break;
-                default:
-                    break;
-            }
+            // Get the up-to-date cross-signing state
+            MXWeakify(self);
+            [mainSession.crypto.crossSigning refreshStateWithSuccess:^(BOOL stateUpdated) {
+                MXStrongifyAndReturnIfNil(self);
+                
+                NSLog(@"[AppDelegate] handleAppState: crossSigning.state: %@", @(mainSession.crypto.crossSigning.state));
+                
+                switch (mainSession.crypto.crossSigning.state)
+                {
+                    case MXCrossSigningStateCrossSigningExists:
+                        NSLog(@"[AppDelegate] handleAppState: presentVerifyCurrentSessionAlertIfNeededWithSession");
+                        [self.masterTabBarController presentVerifyCurrentSessionAlertIfNeededWithSession:mainSession];
+                        break;
+                    case MXCrossSigningStateCanCrossSign:
+                        NSLog(@"[AppDelegate] handleAppState: presentReviewUnverifiedSessionsAlertIfNeededWithSession");
+                        [self.masterTabBarController presentReviewUnverifiedSessionsAlertIfNeededWithSession:mainSession];
+                        break;
+                    default:
+                        break;
+                }
+            } failure:^(NSError * _Nonnull error) {
+                NSLog(@"[AppDelegate] handleAppState: crossSigning.state: %@. Error: %@", @(mainSession.crypto.crossSigning.state), error);
+            }];
         }
         
         // TODO: We should wait that cross-signing screens are done before going further but it seems fine. Those screens
@@ -2417,10 +2340,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
             
             // Enable listening of incoming key verification requests
             [self enableIncomingKeyVerificationObserver:mainSession];
-        }
-        else
-        {
-            NSLog(@"[AppDelegate] handleLaunchAnimation: isLaunching: NO");
         }
     }
 }
@@ -3120,78 +3039,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     }];
 }
 
-#pragma mark - MXKCallViewControllerDelegate
-
-- (void)dismissCallViewController:(MXKCallViewController *)callViewController completion:(void (^)(void))completion
-{
-    if (currentCallViewController && callViewController == currentCallViewController)
-    {
-        if (callViewController.isBeingPresented)
-        {
-            // Here the presentation of the call view controller is in progress
-            // Postpone the dismiss
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self dismissCallViewController:callViewController completion:completion];
-            });
-        }
-        // Check whether the call view controller is actually presented
-        else if (callViewController.presentingViewController)
-        {
-            BOOL callIsEnded = (callViewController.mxCall.state == MXCallStateEnded);
-            NSLog(@"Call view controller is dismissed (%d)", callIsEnded);
-            
-            [callViewController dismissViewControllerAnimated:YES completion:^{
-                
-                if (!callIsEnded)
-                {
-                    NSString *btnTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"active_call_details", @"Vector", nil), callViewController.callerNameLabel.text];
-                    [self addCallStatusBar:btnTitle];
-                }
-
-                if ([callViewController isKindOfClass:[CallViewController class]]
-                    && ((CallViewController*)callViewController).shouldPromptForStunServerFallback)
-                {
-                    [self promptForStunServerFallback];
-                }
-                
-                if (completion)
-                {
-                    completion();
-                }
-                
-            }];
-            
-            if (callIsEnded)
-            {
-                [self removeCallStatusBar];
-                
-                // Release properly
-                [currentCallViewController destroy];
-                currentCallViewController = nil;
-            }
-        }
-        else if (_callStatusBarWindow)
-        {
-            // Here the call view controller was not presented.
-            NSLog(@"Call view controller was not presented");
-            
-            // Workaround to manage the "back to call" banner: present temporarily the call screen.
-            // This will correctly manage the navigation bar layout.
-            [self presentCallViewController:YES completion:^{
-                
-                [self dismissCallViewController:currentCallViewController completion:completion];
-                
-            }];
-        }
-        else
-        {
-            // Release properly
-            [currentCallViewController destroy];
-            currentCallViewController = nil;
-        }
-    }
-}
-
 - (void)promptForStunServerFallback
 {
     [_errorNotification dismissViewControllerAnimated:NO completion:nil];
@@ -3237,90 +3084,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         [self showNotificationAlert:_errorNotification];
     }
 }
-
-#pragma mark - Jitsi call
-
-- (void)displayJitsiViewControllerWithWidget:(Widget*)jitsiWidget andVideo:(BOOL)video
-{
-#ifdef CALL_STACK_JINGLE
-    if (!_jitsiViewController && !currentCallViewController)
-    {
-        MXWeakify(self);
-        [self checkPermissionForNativeWidget:jitsiWidget fromUrl:JitsiService.shared.serverURL completion:^(BOOL granted) {
-            MXStrongifyAndReturnIfNil(self);
-            if (!granted)
-            {
-                return;
-            }
-
-            self->_jitsiViewController = [JitsiViewController jitsiViewController];
-
-            [self->_jitsiViewController openWidget:jitsiWidget withVideo:video success:^{
-
-                self->_jitsiViewController.delegate = self;
-                [self presentJitsiViewController:nil];
-
-            } failure:^(NSError *error) {
-
-                self->_jitsiViewController = nil;
-
-                [self showAlertWithTitle:nil message:NSLocalizedStringFromTable(@"call_jitsi_error", @"Vector", nil)];
-            }];
-        }];
-    }
-    else
-    {
-        [self showAlertWithTitle:nil message:NSLocalizedStringFromTable(@"call_already_displayed", @"Vector", nil)];
-    }
-#else
-    [self showAlertWithTitle:nil message:[NSBundle mxk_localizedStringForKey:@"not_supported_yet"]];
-#endif
-}
-
-- (void)presentJitsiViewController:(void (^)(void))completion
-{
-    [self removeCallStatusBar];
-
-    if (_jitsiViewController)
-    {
-        if (@available(iOS 13.0, *))
-        {
-            _jitsiViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        }
-
-        [self presentViewController:_jitsiViewController animated:YES completion:completion];
-    }
-}
-
-- (void)jitsiViewController:(JitsiViewController *)jitsiViewController dismissViewJitsiController:(void (^)(void))completion
-{
-    if (jitsiViewController == _jitsiViewController)
-    {
-        [_jitsiViewController dismissViewControllerAnimated:YES completion:completion];
-        _jitsiViewController = nil;
-
-        [self removeCallStatusBar];
-    }
-}
-
-- (void)jitsiViewController:(JitsiViewController *)jitsiViewController goBackToApp:(void (^)(void))completion
-{
-    if (jitsiViewController == _jitsiViewController)
-    {
-        [_jitsiViewController dismissViewControllerAnimated:YES completion:^{
-
-            MXRoom *room = [_jitsiViewController.widget.mxSession roomWithRoomId:_jitsiViewController.widget.roomId];
-            NSString *btnTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"active_call_details", @"Vector", nil), room.summary.displayname];
-            [self addCallStatusBar:btnTitle];
-
-            if (completion)
-            {
-                completion();
-            }
-        }];
-    }
-}
-
 
 #pragma mark - Native Widget Permission
 
@@ -3454,7 +3217,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     return result;
 }
 
-- (void)addCallStatusBar:(NSString*)buttonTitle
+- (void)displayCallStatusBarWithTitle:(NSString*)title
 {
     // Add a call status bar
     CGSize topBarSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width, [self calculateCallStatusBarHeight]);
@@ -3463,98 +3226,54 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     _callStatusBarWindow.windowLevel = UIWindowLevelStatusBar;
     
     // Create statusBarButton
-    _callStatusBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _callStatusBarButton.frame = CGRectMake(0, 0, topBarSize.width, topBarSize.height);
-    
-    [_callStatusBarButton setTitle:buttonTitle forState:UIControlStateNormal];
-    [_callStatusBarButton setTitle:buttonTitle forState:UIControlStateHighlighted];
-
-    _callStatusBarButton.titleLabel.textColor = ThemeService.shared.theme.backgroundColor;
-
-    _callStatusBarButton.titleLabel.font = [UIFont systemFontOfSize:17 weight:UIFontWeightMedium];
-    
-    [_callStatusBarButton setBackgroundColor:ThemeService.shared.theme.tintColor];
-    [_callStatusBarButton addTarget:self action:@selector(onCallStatusBarButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    _callBar = [CallBar instantiate];
+    _callBar.frame = CGRectMake(0, 0, topBarSize.width, topBarSize.height);
+    _callBar.title = title;
+    _callBar.backgroundColor = ThemeService.shared.theme.tintColor;
+    _callBar.delegate = self;
     
     // Place button into the new window
-    [_callStatusBarButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [_callStatusBarWindow addSubview:_callStatusBarButton];
+    [_callBar setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [_callStatusBarWindow addSubview:_callBar];
     
-    // Force callStatusBarButton to fill the window (to handle auto-layout in case of screen rotation)
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:_callStatusBarButton
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:_callStatusBarWindow
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                      multiplier:1.0
-                                                                        constant:0];
-    
-    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:_callStatusBarButton
-                                                                        attribute:NSLayoutAttributeHeight
-                                                                        relatedBy:NSLayoutRelationEqual
-                                                                           toItem:_callStatusBarWindow
-                                                                        attribute:NSLayoutAttributeHeight
-                                                                       multiplier:1.0
-                                                                         constant:0];
-    
-    [NSLayoutConstraint activateConstraints:@[widthConstraint, heightConstraint]];
-    
+    // Force callBar to fill the window (to handle auto-layout in case of screen rotation)
+    [_callBar.widthAnchor constraintEqualToAnchor:_callStatusBarWindow.widthAnchor].active = YES;
+    [_callBar.heightAnchor constraintEqualToAnchor:_callStatusBarWindow.heightAnchor].active = YES;
+
     _callStatusBarWindow.hidden = NO;
-    [self statusBarDidChangeFrame];
+    [self deviceOrientationDidChange];
     
-    // We need to listen to the system status bar size change events to refresh the root controller frame.
+    // We need to listen to the device orientation change events to refresh the root controller frame.
     // Else the navigation bar position will be wrong.
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(statusBarDidChangeFrame)
-                                                 name:UIApplicationDidChangeStatusBarFrameNotification
+                                             selector:@selector(deviceOrientationDidChange)
+                                                 name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
+}
+
+- (void)updateCallStatusBarWithTitle:(NSString*)title
+{
+    _callBar.title = title;
 }
 
 - (void)removeCallStatusBar
 {
     if (_callStatusBarWindow)
     {
-        // No more need to listen to system status bar changes
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
+        // No more need to listen to device orientation changes
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
         
         // Hide & destroy it
         _callStatusBarWindow.hidden = YES;
-        [_callStatusBarButton removeFromSuperview];
-        _callStatusBarButton = nil;
+        [_callBar removeFromSuperview];
+        _callBar = nil;
         _callStatusBarWindow = nil;
         
-        [self statusBarDidChangeFrame];
+        [self deviceOrientationDidChange];
     }
 }
 
-- (void)onCallStatusBarButtonPressed
-{
-    if (currentCallViewController)
-    {
-        [self presentCallViewController:YES completion:nil];
-    }
-    else if (_jitsiViewController)
-    {
-        [self presentJitsiViewController:nil];
-    }
-}
-
-- (void)presentCallViewController:(BOOL)animated completion:(void (^)(void))completion
-{
-    [self removeCallStatusBar];
-    
-    if (currentCallViewController)
-    {
-        if (@available(iOS 13.0, *))
-        {
-            currentCallViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        }
-
-        [self presentViewController:currentCallViewController animated:animated completion:completion];
-    }
-}
-
-- (void)statusBarDidChangeFrame
+- (void)deviceOrientationDidChange
 {
     UIApplication *app = [UIApplication sharedApplication];
     UIViewController *rootController = app.keyWindow.rootViewController;
@@ -3566,43 +3285,19 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     {
         CGFloat callStatusBarHeight = [self calculateCallStatusBarHeight];
 
-        UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].statusBarOrientation;
+        UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+        CGFloat width;
         
-        switch (statusBarOrientation)
+        if (UIDeviceOrientationIsPortrait(deviceOrientation))
         {
-            case UIInterfaceOrientationLandscapeLeft:
-            {
-                _callStatusBarWindow.frame = CGRectMake(-rootControllerFrame.size.width / 2, -callStatusBarHeight / 2, rootControllerFrame.size.width, callStatusBarHeight);
-                _callStatusBarWindow.transform = CGAffineTransformMake(0, -1, 1, 0, callStatusBarHeight / 2, rootControllerFrame.size.width / 2);
-                break;
-            }
-            case UIInterfaceOrientationLandscapeRight:
-            {
-                _callStatusBarWindow.frame = CGRectMake(-rootControllerFrame.size.width / 2, -callStatusBarHeight / 2, rootControllerFrame.size.width, callStatusBarHeight);
-                _callStatusBarWindow.transform = CGAffineTransformMake(0, 1, -1, 0, rootControllerFrame.size.height - callStatusBarHeight / 2, rootControllerFrame.size.width / 2);
-                break;
-            }
-            default:
-            {
-                _callStatusBarWindow.transform = CGAffineTransformIdentity;
-                _callStatusBarWindow.frame = CGRectMake(0, 0, rootControllerFrame.size.width, callStatusBarHeight);
-                break;
-            }
+            width = MIN(rootControllerFrame.size.width, rootControllerFrame.size.height);
         }
-
-        UIEdgeInsets callBarButtonContentEdgeInsets = UIEdgeInsetsZero;
-
-        if (@available(iOS 11.0, *))
+        else
         {
-            callBarButtonContentEdgeInsets = UIApplication.sharedApplication.keyWindow.safeAreaInsets;
-            //  should override top inset
-            callBarButtonContentEdgeInsets.top = callStatusBarHeight - CALL_STATUS_BAR_HEIGHT;
-            //  should ignore bottom inset
-            callBarButtonContentEdgeInsets.bottom = 0.0;
-            //  should keep left, and right insets as original
+            width = MAX(rootControllerFrame.size.width, rootControllerFrame.size.height);
         }
-
-        _callStatusBarButton.contentEdgeInsets = callBarButtonContentEdgeInsets;
+        
+        _callStatusBarWindow.frame = CGRectMake(0, 0, width, callStatusBarHeight);
         
         // Apply the vertical offset due to call status bar
         rootControllerFrame.origin.y = callStatusBarHeight;
@@ -3648,7 +3343,10 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
                                        kMXEventTypeStringCallInvite,
                                        kMXEventTypeStringCallCandidates,
                                        kMXEventTypeStringCallAnswer,
-                                       kMXEventTypeStringCallHangup
+                                       kMXEventTypeStringCallSelectAnswer,
+                                       kMXEventTypeStringCallHangup,
+                                       kMXEventTypeStringCallReject,
+                                       kMXEventTypeStringCallNegotiate
                                        ]
                              onEvent:^(MXEvent *event, MXTimelineDirection direction, id customObject) {
                                  
@@ -3704,23 +3402,24 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
                                                                                                     style:UIAlertActionStyleDefault
                                                                                                   handler:^(UIAlertAction * action) {
                                                                                                       
-                                                                                                      // Reject the call by sending the hangup event
-                                                                                                      NSDictionary *content = @{
-                                                                                                                                @"call_id": callInviteEventContent.callId,
-                                                                                                                                @"version": @(0)
-                                                                                                                                };
-                                                                                                      
-                                                                                                      [mxSession.matrixRestClient sendEventToRoom:event.roomId eventType:kMXEventTypeStringCallHangup content:content txnId:nil success:nil failure:^(NSError *error) {
-                                                                                                          NSLog(@"[AppDelegate] enableNoVoIPOnMatrixSession: ERROR: Cannot send m.call.hangup event.");
-                                                                                                      }];
-                                                                                                      
-                                                                                                      if (weakSelf)
-                                                                                                      {
-                                                                                                          typeof(self) self = weakSelf;
-                                                                                                          self->noCallSupportAlert = nil;
-                                                                                                      }
-                                                                                                      
-                                                                                                  }]];
+                                                 // Reject the call by sending the hangup event
+                                                 NSDictionary *content = @{
+                                                     @"call_id": callInviteEventContent.callId,
+                                                     @"version": kMXCallVersion,
+                                                     @"party_id": mxSession.myDeviceId
+                                                 };
+                                                 
+                                                 [mxSession.matrixRestClient sendEventToRoom:event.roomId eventType:kMXEventTypeStringCallReject content:content txnId:nil success:nil failure:^(NSError *error) {
+                                                     NSLog(@"[AppDelegate] enableNoVoIPOnMatrixSession: ERROR: Cannot send m.call.reject event.");
+                                                 }];
+                                                 
+                                                 if (weakSelf)
+                                                 {
+                                                     typeof(self) self = weakSelf;
+                                                     self->noCallSupportAlert = nil;
+                                                 }
+                                                 
+                                             }]];
                                              
                                              [self showNotificationAlert:noCallSupportAlert];
                                              break;
@@ -3728,6 +3427,7 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
                                              
                                          case MXEventTypeCallAnswer:
                                          case MXEventTypeCallHangup:
+                                         case MXEventTypeCallReject:
                                              // The call has ended. The alert is no more needed.
                                              if (noCallSupportAlert)
                                              {
@@ -4217,6 +3917,18 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         [self.incomingKeyVerificationRequestAlertController dismissViewControllerAnimated:NO completion:nil];
     }
     
+    if (self.userNewSignInAlertController
+        && [session.myUserId isEqualToString:senderId])
+    {
+        // If it is a self verification for my device, we can discard the new signin alert.
+        // Note: It will not work well with several devices to verify at the same time.
+        NSLog(@"[AppDelegate] presentNewKeyVerificationRequest: Remove the alert for new sign in detected");
+        [self.userNewSignInAlertController dismissViewControllerAnimated:NO completion:^{
+            self.userNewSignInAlertController = nil;
+            [self presentNewKeyVerificationRequestAlertForSession:session senderName:senderName senderId:senderId request:keyVerificationRequest];
+        }];
+    }
+    
     NSString *senderInfo;
     
     if (senderName)
@@ -4238,7 +3950,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
         }
     };
 
-    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"key_verification_tile_request_incoming_title", @"Vector", nil)
                                                                                              message:senderInfo
                                                                                       preferredStyle:UIAlertControllerStyleAlert];
@@ -4747,6 +4458,174 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     }
 }
 
+#pragma mark - CallPresenterDelegate
+
+- (void)callPresenter:(CallPresenter *)presenter presentCallViewController:(CallViewController *)viewController completion:(void (^)(void))completion
+{
+    if (@available(iOS 13.0, *))
+    {
+        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+    
+    [self presentViewController:viewController animated:NO completion:completion];
+}
+
+- (void)callPresenter:(CallPresenter *)presenter dismissCallViewController:(UIViewController *)viewController completion:(void (^)(void))completion
+{
+    // Check whether the call view controller is actually presented
+    if (viewController.presentingViewController)
+    {
+        [viewController.presentingViewController dismissViewControllerAnimated:NO completion:^{
+            
+            if ([viewController isKindOfClass:CallViewController.class])
+            {
+                CallViewController *callVC = (CallViewController *)viewController;
+                if (callVC.shouldPromptForStunServerFallback)
+                {
+                    [self promptForStunServerFallback];
+                }
+            }
+            
+            if (completion)
+            {
+                completion();
+            }
+            
+        }];
+    }
+    else
+    {
+        if (completion)
+        {
+            completion();
+        }
+    }
+}
+
+- (void)callPresenter:(CallPresenter *)presenter presentCallBarFor:(UIViewController *)activeCallViewController numberOfPausedCalls:(NSUInteger)numberOfPausedCalls completion:(void (^)(void))completion
+{
+    [self displayCallStatusBarWithTitle:nil];
+    [self callPresenter:presenter updateCallBarFor:activeCallViewController numberOfPausedCalls:numberOfPausedCalls];
+    
+    if (completion)
+    {
+        completion();
+    }
+}
+
+- (void)callPresenter:(CallPresenter *)presenter updateCallBarFor:(UIViewController *)activeCallViewController numberOfPausedCalls:(NSUInteger)numberOfPausedCalls
+{
+    NSString *btnTitle;
+    
+    if (activeCallViewController)
+    {
+        NSString *callStatus = @"";
+        BOOL isGroupCall = NO;
+        if ([activeCallViewController isKindOfClass:[CallViewController class]])
+        {
+            CallViewController *activeCallVC = (CallViewController *)activeCallViewController;
+            callStatus = activeCallVC.callStatusLabel.text;
+        }
+        else if ([activeCallViewController isKindOfClass:[JitsiViewController class]])
+        {
+            JitsiViewController *jitsiVC = (JitsiViewController *)activeCallViewController;
+            NSUInteger duration = jitsiVC.callDuration / 1000;
+            NSUInteger secs = duration % 60;
+            NSUInteger mins = (duration / 60) % 60;
+            NSUInteger hours = duration / 3600;
+            if (hours > 0)
+            {
+                callStatus = [NSString stringWithFormat:@"%02tu:%02tu:%02tu", hours, mins, secs];
+            }
+            else
+            {
+                callStatus = [NSString stringWithFormat:@"%02tu:%02tu", mins, secs];
+            }
+            isGroupCall = YES;
+        }
+        
+        if (numberOfPausedCalls == 0)
+        {
+            //  only one active
+            if (isGroupCall)
+            {
+                btnTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"callbar_only_single_active_group", @"Vector", nil), callStatus];
+            }
+            else
+            {
+                btnTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"callbar_only_single_active", @"Vector", nil), callStatus];
+            }
+        }
+        else if (numberOfPausedCalls == 1)
+        {
+            //  one active and one paused
+            btnTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"callbar_active_and_single_paused", @"Vector", nil), callStatus];
+        }
+        else
+        {
+            //  one active and multiple paused
+            btnTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"callbar_active_and_multiple_paused", @"Vector", nil), callStatus, @(numberOfPausedCalls)];
+        }
+    }
+    else
+    {
+        //  no active calls
+        if (numberOfPausedCalls == 1)
+        {
+            btnTitle = NSLocalizedStringFromTable(@"callbar_only_single_paused", @"Vector", nil);
+        }
+        else
+        {
+            btnTitle = [NSString stringWithFormat:NSLocalizedStringFromTable(@"callbar_only_multiple_paused", @"Vector", nil), @(numberOfPausedCalls)];
+        }
+    }
+    
+    [self updateCallStatusBarWithTitle:btnTitle];
+}
+
+- (void)callPresenter:(CallPresenter *)presenter dismissCallBar:(void (^)(void))completion
+{
+    [self removeCallStatusBar];
+    
+    if (completion)
+    {
+        completion();
+    }
+}
+
+- (void)callPresenter:(CallPresenter *)presenter enterPipForCallViewController:(UIViewController *)viewController completion:(void (^)(void))completion
+{
+    // Check whether the call view controller is actually presented
+    if (viewController.presentingViewController)
+    {
+        [viewController dismissViewControllerAnimated:YES completion:completion];
+    }
+    else
+    {
+        if (completion)
+        {
+            completion();
+        }
+    }
+}
+
+- (void)callPresenter:(CallPresenter *)presenter exitPipForCallViewController:(UIViewController *)viewController completion:(void (^)(void))completion
+{
+    if (@available(iOS 13.0, *))
+    {
+        viewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+    
+    [self presentViewController:viewController animated:YES completion:completion];
+}
+
+#pragma mark - CallBarDelegate
+
+- (void)callBarDidTap:(CallBar *)callBar
+{
+    [_callPresenter callStatusBarTapped];
+}
+
 #pragma mark - Authentication
 
 - (BOOL)continueSSOLoginWithToken:(NSString*)loginToken txnId:(NSString*)txnId
@@ -4760,13 +4639,6 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
     }
     
     return [authVC continueSSOLoginWithToken:loginToken txnId:txnId];
-}
-
-#pragma mark - MasterTabBarControllerDelegate
-
-- (void)masterTabBarControllerDidCompleteAuthentication:(MasterTabBarController *)masterTabBarController
-{
-    [self handleAppState];
 }
 
 @end

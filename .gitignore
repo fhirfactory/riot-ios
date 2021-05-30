@@ -27,7 +27,8 @@ out/
 #
 Pods/
 
-# Do not track our workspace since it is created by CocoaPods
+## Ignore project files as we generate them with xcodegen (https://github.com/yonaskolb/XcodeGen)
+*.xcodeproj
 *.xcworkspace
 
 # Fastlane
@@ -38,5 +39,8 @@ fastlane/Preview.html
 fastlane/metadata/
 
 provisioning_profiles/
+<<<<<<< HEAD
 
 .DS_Store
+=======
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926

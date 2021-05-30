@@ -30,8 +30,6 @@
     UIView* footerSpinnerView;
 }
 
-@property (nonatomic, strong) RoomsDirectoryCoordinatorBridgePresenter *roomsDirectoryCoordinatorBridgePresenter;
-
 @end
 
 @implementation RoomsViewController
@@ -59,8 +57,6 @@
                                             target:self
                                             action:@selector(onPlusButtonPressed)];
     
-    plusButtonImageView.image = [UIImage imageNamed:@"rooms_floating_action"];
-    
     self.enableStickyHeaders = YES;
 }
 
@@ -70,6 +66,9 @@
     
     [AppDelegate theDelegate].masterTabBarController.navigationItem.title = NSLocalizedStringFromTable(@"title_rooms", @"Vector", nil);
     [AppDelegate theDelegate].masterTabBarController.tabBar.tintColor = ThemeService.shared.theme.tintColor;
+    
+    // TODO: Notify RiotSettings.shared.showNSFWPublicRooms change for iPad as viewWillAppear may not be called
+    recentsDataSource.publicRoomsDirectoryDataSource.showNSFWRooms = RiotSettings.shared.showNSFWPublicRooms;
     
     if ([self.dataSource isKindOfClass:RecentsDataSource.class])
     {
@@ -130,9 +129,7 @@
 
 - (void)onPlusButtonPressed
 {
-    self.roomsDirectoryCoordinatorBridgePresenter = [[RoomsDirectoryCoordinatorBridgePresenter alloc] initWithSession:self.mainSession dataSource:[recentsDataSource.publicRoomsDirectoryDataSource copy]];
-    self.roomsDirectoryCoordinatorBridgePresenter.delegate = self;
-    [self.roomsDirectoryCoordinatorBridgePresenter presentFrom:self animated:YES];
+    [self showRoomDirectory];
 }
 
 #pragma mark - 
@@ -265,38 +262,6 @@
     [self openPublicRoom:publicRoom];
 }
 
-- (void)openPublicRoom:(MXPublicRoom *)publicRoom
-{
-    // Check whether the user has already joined the selected public room
-    if ([recentsDataSource.publicRoomsDirectoryDataSource.mxSession roomWithRoomId:publicRoom.roomId])
-    {
-        // Open the public room
-        [[AppDelegate theDelegate] showRoom:publicRoom.roomId andEventId:nil withMatrixSession:recentsDataSource.publicRoomsDirectoryDataSource.mxSession restoreInitialDisplay:NO];
-    }
-    else
-    {
-        // Preview the public room
-        if (publicRoom.worldReadable)
-        {
-            RoomPreviewData *roomPreviewData = [[RoomPreviewData alloc] initWithPublicRoom:publicRoom andSession:recentsDataSource.publicRoomsDirectoryDataSource.mxSession];
-            
-            [self startActivityIndicator];
-
-            // Try to get more information about the room before opening its preview
-            [roomPreviewData peekInRoom:^(BOOL succeeded) {
-                [self stopActivityIndicator];
-
-                [[AppDelegate theDelegate].masterTabBarController showRoomPreview:roomPreviewData];
-            }];
-        }
-        else
-        {
-            RoomPreviewData *roomPreviewData = [[RoomPreviewData alloc] initWithPublicRoom:publicRoom andSession:recentsDataSource.publicRoomsDirectoryDataSource.mxSession];
-            [[AppDelegate theDelegate].masterTabBarController showRoomPreview:roomPreviewData];
-        }
-    }
-}
-
 - (void)triggerDirectoryPagination
 {
     if (!recentsDataSource
@@ -351,30 +316,6 @@
         // Hide line separators of empty cells
         self.recentsTableView.tableFooterView = [[UIView alloc] init];;
     }
-}
-
-#pragma mark - RoomsDirectoryCoordinatorBridgePresenterDelegate
-
-- (void)roomsDirectoryCoordinatorBridgePresenterDelegateDidComplete:(RoomsDirectoryCoordinatorBridgePresenter *)coordinatorBridgePresenter
-{
-    [coordinatorBridgePresenter dismissWithAnimated:YES completion:nil];
-    self.roomsDirectoryCoordinatorBridgePresenter = nil;
-}
-
-- (void)roomsDirectoryCoordinatorBridgePresenterDelegate:(RoomsDirectoryCoordinatorBridgePresenter *)coordinatorBridgePresenter didSelectRoom:(MXPublicRoom *)room
-{
-    [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
-        [self openPublicRoom:room];
-    }];
-    self.roomsDirectoryCoordinatorBridgePresenter = nil;
-}
-
-- (void)roomsDirectoryCoordinatorBridgePresenterDelegateDidTapCreateNewRoom:(RoomsDirectoryCoordinatorBridgePresenter *)coordinatorBridgePresenter
-{
-    [coordinatorBridgePresenter dismissWithAnimated:YES completion:^{
-        [self createNewRoom];
-    }];
-    self.roomsDirectoryCoordinatorBridgePresenter = nil;
 }
 
 #pragma mark - Empty view management

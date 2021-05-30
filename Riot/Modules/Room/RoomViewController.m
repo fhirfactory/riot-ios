@@ -126,12 +126,18 @@
 
 #import <objc/message.h>
 #import "MXKRoomDataSource+Lingo.h"
+#import "TypingUserInfo.h"
+
 #import "Riot-Swift.h"
+
+NSNotificationName const RoomCallTileTappedNotification = @"RoomCallTileTappedNotification";
+NSNotificationName const RoomGroupCallTileTappedNotification = @"RoomGroupCallTileTappedNotification";
+const NSTimeInterval kResizeComposerAnimationDuration = .05;
 
 @interface RoomViewController () <UISearchBarDelegate, UIGestureRecognizerDelegate, UIScrollViewAccessibilityDelegate, RoomTitleViewTapGestureDelegate, RoomParticipantsViewControllerDelegate, MXKRoomMemberDetailsViewControllerDelegate, ContactsTableViewControllerDelegate, MXServerNoticesDelegate, RoomContextualMenuViewControllerDelegate,
     ReactionsMenuViewModelCoordinatorDelegate, EditHistoryCoordinatorBridgePresenterDelegate, MXKDocumentPickerPresenterDelegate, EmojiPickerCoordinatorBridgePresenterDelegate,
     ReactionHistoryCoordinatorBridgePresenterDelegate, CameraPresenterDelegate, MediaPickerCoordinatorBridgePresenterDelegate,
-    RoomDataSourceDelegate, RoomCreationModalCoordinatorBridgePresenterDelegate, RoomInfoCoordinatorBridgePresenterDelegate>
+    RoomDataSourceDelegate, RoomCreationModalCoordinatorBridgePresenterDelegate, RoomInfoCoordinatorBridgePresenterDelegate, DialpadViewControllerDelegate, RemoveJitsiWidgetViewDelegate>
 {
     
     // The preview header
@@ -155,10 +161,8 @@
     // Missed discussions badge
     NSUInteger missedDiscussionsCount;
     NSUInteger missedHighlightCount;
-    UIBarButtonItem *missedDiscussionsButton;
     UILabel *missedDiscussionsBadgeLabel;
-    UIView  *missedDiscussionsBadgeLabelBgView;
-    UIView  *missedDiscussionsBarButtonCustomView;
+    UIView *missedDiscussionsDotView;
     
     // Potential encryption details view.
     EncryptionInfoView *encryptionInfoView;
@@ -195,6 +199,9 @@
     // Tell whether the view controller is appeared or not.
     BOOL isAppeared;
     
+    // Tell whether the room has a Jitsi call or not.
+    BOOL hasJitsiCall;
+    
     // The right bar button items back up.
     NSArray<UIBarButtonItem *> *rightBarButtonItems;
 
@@ -215,6 +222,7 @@
 }
 
 @property (nonatomic, weak) IBOutlet UIView *overlayContainerView;
+@property (nonatomic, strong) RemoveJitsiWidgetView *removeJitsiWidgetView;
 
 
 @property (nonatomic, strong) RoomContextualMenuViewController *roomContextualMenuViewController;
@@ -230,6 +238,9 @@
 @property (nonatomic, strong) RoomMessageURLParser *roomMessageURLParser;
 @property (nonatomic, strong) RoomCreationModalCoordinatorBridgePresenter *roomCreationModalCoordinatorBridgePresenter;
 @property (nonatomic, strong) RoomInfoCoordinatorBridgePresenter *roomInfoCoordinatorBridgePresenter;
+@property (nonatomic, strong) CustomSizedPresentationController *customSizedPresentationController;
+@property (nonatomic, getter=isActivitiesViewExpanded) BOOL activitiesViewExpanded;
+@property (nonatomic, getter=isScrollToBottomHidden) BOOL scrollToBottomHidden;
 
 @end
 
@@ -288,13 +299,15 @@
 {
     [super finalizeInit];
     
+    self.resizeComposerAnimationDuration = kResizeComposerAnimationDuration;
+    
     // Setup `MXKViewControllerHandling` properties
     self.enableBarTintColorStatusChange = NO;
     self.rageShakeManager = [RageShakeManager sharedManager];
     formattedBodyParser = [FormattedBodyParser new];
     
     _showMissedDiscussionsBadge = YES;
-    
+    _scrollToBottomHidden = YES;
     
     // Listen to the event sent state changes
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(eventDidChangeSentState:) name:kMXEventDidChangeSentStateNotification object:nil];
@@ -371,6 +384,18 @@
     [self.bubblesTableView registerNib:[RoomMessageContentCell nib] forCellReuseIdentifier:@"RoomMessageContentCell"];
     [self vc_removeBackTitle];
     
+    //  call cells
+    [self.bubblesTableView registerClass:RoomDirectCallStatusBubbleCell.class forCellReuseIdentifier:RoomDirectCallStatusBubbleCell.defaultReuseIdentifier];
+    [self.bubblesTableView registerClass:RoomGroupCallStatusBubbleCell.class forCellReuseIdentifier:RoomGroupCallStatusBubbleCell.defaultReuseIdentifier];
+    
+    [self.bubblesTableView registerClass:RoomCreationIntroCell.class forCellReuseIdentifier:RoomCreationIntroCell.defaultReuseIdentifier];
+    
+    [self.bubblesTableView registerNib:RoomTypingBubbleCell.nib forCellReuseIdentifier:RoomTypingBubbleCell.defaultReuseIdentifier];
+    
+    [self vc_removeBackTitle];
+    
+    [self setupRemoveJitsiWidgetRemoveView];
+    
     // Replace the default input toolbar view.
     // Note: this operation will force the layout of subviews. That is why cell view classes must be registered before.
     [self updateRoomInputToolbarViewClassIfNeeded];
@@ -384,13 +409,6 @@
     // Custom the event details view
     [self setEventDetailsViewClass:EventDetailsView.class];
     
-    // Update navigation bar items
-    for (UIBarButtonItem *barButtonItem in self.navigationItem.rightBarButtonItems)
-    {
-        barButtonItem.target = self;
-        barButtonItem.action = @selector(onButtonPressed:);
-    }
-
     // Prepare missed dicussion badge (if any)
     self.showMissedDiscussionsBadge = _showMissedDiscussionsBadge;
     
@@ -416,6 +434,8 @@
         
     }];
     [self userInterfaceThemeDidChange];
+    
+    [self setupActions];
 }
 
 - (void)userInterfaceThemeDidChange
@@ -432,7 +452,7 @@
     {
         [ThemeService.shared.theme applyStyleOnNavigationBar:mainNavigationController.navigationBar];
     }
-
+    
     // Keep navigation bar transparent in some cases
     if (!self.previewHeaderContainer.hidden)
     {
@@ -444,17 +464,13 @@
     
     self.activityIndicator.backgroundColor = ThemeService.shared.theme.overlayBackgroundColor;
     
+    [self.removeJitsiWidgetView updateWithTheme:ThemeService.shared.theme];
+    
     // Prepare jump to last unread banner
-    self.jumpToLastUnreadBannerContainer.backgroundColor = ThemeService.shared.theme.backgroundColor;
-    self.jumpToLastUnreadImageView.tintColor = ThemeService.shared.theme.textPrimaryColor;
+    self.jumpToLastUnreadImageView.tintColor = ThemeService.shared.theme.tintColor;
     self.jumpToLastUnreadLabel.textColor = ThemeService.shared.theme.textPrimaryColor;
-    self.jumpToLastUnreadBannerSeparatorView.backgroundColor = ThemeService.shared.theme.lineBreakColor;
     
     self.previewHeaderContainer.backgroundColor = ThemeService.shared.theme.headerBackgroundColor;
-    
-    missedDiscussionsBadgeLabel.textColor = ThemeService.shared.theme.baseTextPrimaryColor;
-    missedDiscussionsBadgeLabel.font = [UIFont boldSystemFontOfSize:14];
-    missedDiscussionsBadgeLabel.backgroundColor = [UIColor clearColor];
     
     // Check the table view style to select its bg color.
     self.bubblesTableView.backgroundColor = ((self.bubblesTableView.style == UITableViewStylePlain) ? ThemeService.shared.theme.backgroundColor : ThemeService.shared.theme.headerBackgroundColor);
@@ -465,7 +481,36 @@
     {
         [self.bubblesTableView reloadData];
     }
+    
+    [self.scrollToBottomButton vc_addShadowWithColor:ThemeService.shared.theme.shadowColor
+                                              offset:CGSizeMake(0, 4)
+                                              radius:6
+                                             opacity:0.2];
 
+    self.inputBackgroundView.backgroundColor = [ThemeService.shared.theme.backgroundColor colorWithAlphaComponent:0.98];
+    
+    if (ThemeService.shared.isCurrentThemeDark)
+    {
+        [self.scrollToBottomButton setImage:[UIImage imageNamed:@"scrolldown_dark"] forState:UIControlStateNormal];
+
+        self.jumpToLastUnreadBanner.backgroundColor = ThemeService.shared.theme.colors.navigation;
+        [self.jumpToLastUnreadBanner vc_removeShadow];
+        self.resetReadMarkerButton.tintColor = ThemeService.shared.theme.colors.quarterlyContent;
+    }
+    else
+    {
+        [self.scrollToBottomButton setImage:[UIImage imageNamed:@"scrolldown"] forState:UIControlStateNormal];
+        
+        self.jumpToLastUnreadBanner.backgroundColor = ThemeService.shared.theme.colors.background;
+        [self.jumpToLastUnreadBanner vc_addShadowWithColor:ThemeService.shared.theme.shadowColor
+                                                    offset:CGSizeMake(0, 4)
+                                                    radius:8
+                                                   opacity:0.1];
+        self.resetReadMarkerButton.tintColor = ThemeService.shared.theme.colors.tertiaryContent;
+    }
+    
+    self.scrollToBottomBadgeLabel.badgeColor = ThemeService.shared.theme.tintColor;
+    
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -483,12 +528,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     // Screen tracking
     [[Analytics sharedInstance] trackScreen:@"ChatRoom"];
     
     // Refresh the room title view
     [self refreshRoomTitle];
+    
+    //  refresh remove Jitsi widget view
+    [self refreshRemoveJitsiWidgetView];
     
     // Refresh tool bar if the room data source is set.
     if (self.roomDataSource)
@@ -496,6 +544,12 @@
         [self refreshRoomInputToolbar];
     }
     
+    // Reset typing notification in order to remove the allocated space
+    if ([self.roomDataSource isKindOfClass:RoomDataSource.class])
+    {
+        [((RoomDataSource*)self.roomDataSource) resetTypingNotification];
+    }
+
     [self listenTypingNotifications];
     [self listenCallNotifications];
     [self listenWidgetNotifications];
@@ -554,7 +608,7 @@
     [self removeWidgetNotificationsListeners];
     [self removeTombstoneEventNotificationsListener];
     [self removeMXSessionStateChangeNotificationsListener];
-
+    
     // Re-enable the read marker display, and disable its update.
     self.roomDataSource.showReadMarker = YES;
     self.updateRoomReadMarker = NO;
@@ -585,9 +639,9 @@
     
     // Observe missed notifications
     mxRoomSummaryDidChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXRoomSummaryDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
-
+        
         MXRoomSummary *roomSummary = notif.object;
-
+        
         if ([roomSummary.roomId isEqualToString:self.roomDataSource.roomId])
         {
             [self refreshMissedDiscussionsCount:NO];
@@ -595,6 +649,14 @@
     }];
     [self refreshMissedDiscussionsCount:YES];
     self.keyboardHeight = MAX(self.keyboardHeight, 0);
+    
+    if (hasJitsiCall &&
+        ![[AppDelegate theDelegate].callPresenter.jitsiVC.widget.roomId isEqualToString:self.roomDataSource.roomId])
+    {
+        //  the room had a Jitsi call before, but not now
+        hasJitsiCall = NO;
+        [self reloadBubblesTable:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -625,11 +687,18 @@
         [[NSNotificationCenter defaultCenter] removeObserver:mxRoomSummaryDidChangeObserver];
         mxRoomSummaryDidChangeObserver = nil;
     }
-
+    
     if (mxEventDidDecryptNotificationObserver)
     {
         [[NSNotificationCenter defaultCenter] removeObserver:mxEventDidDecryptNotificationObserver];
         mxEventDidDecryptNotificationObserver = nil;
+    }
+    
+    JitsiViewController *jitsiVC = [AppDelegate theDelegate].callPresenter.jitsiVC;
+    if ([jitsiVC.widget.roomId isEqualToString:self.roomDataSource.roomId])
+    {
+        hasJitsiCall = YES;
+        [self reloadBubblesTable:YES];
     }
 }
 
@@ -638,7 +707,7 @@
     [super viewDidLayoutSubviews];
     
     UIEdgeInsets contentInset = self.bubblesTableView.contentInset;
-    contentInset.bottom = self.bottomLayoutGuide.length;
+    contentInset.bottom = self.view.safeAreaInsets.bottom;
     self.bubblesTableView.contentInset = contentInset;
     
     // Check here whether a subview has been added or removed
@@ -662,7 +731,7 @@
             eventDetailsView = nil;
         }
     }
-
+    
     // Check whether the preview header is visible
     if (previewHeader)
     {
@@ -682,23 +751,26 @@
                 [previewHeader layoutIfNeeded];
             }
         }
-
+        
         self.edgesForExtendedLayout = UIRectEdgeAll;
-
+        
         // Adjust the top constraint of the bubbles table
         CGRect frame = previewHeader.bottomBorderView.frame;
         self.previewHeaderContainerHeightConstraint.constant = frame.origin.y + frame.size.height;
-
+        
         self.bubblesTableViewTopConstraint.constant = self.previewHeaderContainerHeightConstraint.constant - self.bubblesTableView.mxk_adjustedContentInset.top;
-        self.jumpToLastUnreadBannerContainerTopConstraint.constant = self.previewHeaderContainerHeightConstraint.constant;
     }
     else
     {
         // In non expanded header mode, the navigation bar is opaque
         // The table view must not display behind it
         self.edgesForExtendedLayout = UIRectEdgeLeft | UIRectEdgeBottom | UIRectEdgeRight;
-
-        self.jumpToLastUnreadBannerContainerTopConstraint.constant = self.bubblesTableView.mxk_adjustedContentInset.top; // no expanded
+    }
+    
+    //  stay at the bottom if already was
+    if (self.isBubblesTableScrollViewAtTheBottom)
+    {
+        [self scrollBubblesTableViewToBottomAnimated:NO];
     }
     
     [self refreshMissedDiscussionsCount:YES];
@@ -706,6 +778,19 @@
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id <UIViewControllerTransitionCoordinator>)coordinator
 {
+    if ([self.titleView isKindOfClass:RoomTitleView.class])
+    {
+        RoomTitleView *roomTitleView = (RoomTitleView*)self.titleView;
+        if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
+        {
+            [roomTitleView updateLayoutForOrientation:UIInterfaceOrientationPortrait];
+        }
+        else
+        {
+            [roomTitleView updateLayoutForOrientation:UIInterfaceOrientationLandscapeLeft];
+        }
+    }
+
     // Hide the expanded header or the preview in case of iPad and iPhone 6 plus.
     // On these devices, the display mode of the splitviewcontroller may change during screen rotation.
     // It may correspond to an overlay mode in portrait and a side-by-side mode in landscape.
@@ -775,25 +860,25 @@
 - (BOOL)accessibilityScroll:(UIAccessibilityScrollDirection)direction
 {
     BOOL canScroll = YES;
-
+    
     // Scroll by one page
     CGFloat tableViewHeight = self.bubblesTableView.frame.size.height;
-
+    
     CGPoint offset = self.bubblesTableView.contentOffset;
     switch (direction)
     {
         case UIAccessibilityScrollDirectionUp:
             offset.y -= tableViewHeight;
             break;
-
+            
         case UIAccessibilityScrollDirectionDown:
             offset.y += tableViewHeight;
             break;
-
+            
         default:
             break;
     }
-
+    
     if (offset.y < 0 && ![self.roomDataSource.timeline canPaginate:MXTimelineDirectionBackwards])
     {
         // Can't paginate more. Let's stick on the first item
@@ -813,9 +898,9 @@
     {
         // Disable VoiceOver while scrolling
         self.bubblesTableView.accessibilityElementsHidden = YES;
-
+        
         [self setBubbleTableViewContentOffset:offset animated:NO];
-
+        
         NSEnumerator<UITableViewCell*> *cells;
         if (direction == UIAccessibilityScrollDirectionUp)
         {
@@ -826,13 +911,13 @@
             cells = self.bubblesTableView.visibleCells.reverseObjectEnumerator;
         }
         UIView *cell = [self firstCellWithAccessibilityDataInCells:cells];
-
+        
         self.bubblesTableView.accessibilityElementsHidden = NO;
-
+        
         // Force VoiceOver to focus on a visible item
         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, cell);
     }
-
+    
     // If we cannot scroll, let VoiceOver indicates the border
     return canScroll;
 }
@@ -840,7 +925,7 @@
 - (UIView*)firstCellWithAccessibilityDataInCells:(NSEnumerator<UITableViewCell*>*)cells
 {
     UIView *view;
-
+    
     for (UITableViewCell *cell in cells)
     {
         if (![cell isKindOfClass:[RoomEmptyBubbleCell class]])
@@ -849,7 +934,7 @@
             break;
         }
     }
-
+    
     return view;
 }
 
@@ -897,17 +982,17 @@
     if (self.roomDataSource)
     {
         [self listenToServerNotices];
-
-        self.eventsAcknowledgementEnabled = YES;
         
-        // Set room title view
-        [self refreshRoomTitle];
+        self.eventsAcknowledgementEnabled = YES;
         
         // Store ref on customized room data source
         if ([dataSource isKindOfClass:RoomDataSource.class])
         {
             customizedRoomDataSource = (RoomDataSource*)dataSource;
         }
+        
+        // Set room title view
+        [self refreshRoomTitle];
     }
     else
     {
@@ -1003,7 +1088,7 @@
     Class roomInputToolbarViewClass = RoomInputToolbarView.class;
     
     BOOL shouldDismissContextualMenu = NO;
-
+    
     // Check the user has enough power to post message
     if (self.roomDataSource.roomState)
     {
@@ -1025,7 +1110,7 @@
             shouldDismissContextualMenu = YES;
         }
     }
-
+    
     // Do not show toolbar in case of preview
     if (self.isRoomPreview)
     {
@@ -1050,7 +1135,7 @@
 - (CGFloat)inputToolbarHeight
 {
     CGFloat height = 0;
-
+    
     if ([self.inputToolbarView isKindOfClass:RoomInputToolbarView.class])
     {
         height = ((RoomInputToolbarView*)self.inputToolbarView).mainToolbarHeightConstraint.constant;
@@ -1059,7 +1144,7 @@
     {
         height = ((DisabledRoomInputToolbarView*)self.inputToolbarView).mainToolbarMinHeightConstraint.constant;
     }
-
+    
     return height;
 }
 
@@ -1072,6 +1157,11 @@
     }
     
     [super setRoomActivitiesViewClass:roomActivitiesViewClass];
+    
+    if (!self.isActivitiesViewExpanded)
+    {
+        self.roomActivitiesContainerHeightConstraint.constant = 0;
+    }
 }
 
 - (BOOL)isIRCStyleCommand:(NSString*)string
@@ -1122,7 +1212,9 @@
 - (void)setKeyboardHeight:(CGFloat)keyboardHeight
 {
     [super setKeyboardHeight:keyboardHeight];
-    
+
+    self.inputToolbarView.maxHeight = round(([UIScreen mainScreen].bounds.size.height - keyboardHeight) * 0.7);
+
     // Make the activity indicator follow the keyboard
     // At runtime, this creates a smooth animation
     CGPoint activityIndicatorCenter = self.activityIndicator.center;
@@ -1179,29 +1271,43 @@
         // Let the datasource send it and manage the local echo
         [self.roomDataSource sendTextMessage:msgTxt success:nil failure:^(NSError *error)
          {
-             // Just log the error. The message will be displayed in red in the room history
-             NSLog(@"[MXKRoomViewController] sendTextMessage failed.");
-         }];
+            // Just log the error. The message will be displayed in red in the room history
+            NSLog(@"[MXKRoomViewController] sendTextMessage failed.");
+        }];
     }
     
-    [self cancelEventSelection];
+    if (customizedRoomDataSource.selectedEventId)
+    {
+        [self cancelEventSelection];
+    }
 }
 
 - (void)setRoomTitleViewClass:(Class)roomTitleViewClass
 {
-    [super setRoomTitleViewClass:roomTitleViewClass];
+    // Sanity check: accept only MXKRoomTitleView classes or sub-classes
+    NSParameterAssert([roomTitleViewClass isSubclassOfClass:MXKRoomTitleView.class]);
+    
+    MXKRoomTitleView *titleView = [roomTitleViewClass roomTitleView];
+    [self setValue:titleView forKey:@"titleView"];
+    titleView.delegate = self;
+    titleView.mxRoom = self.roomDataSource.room;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:titleView];
+    
+    if ([titleView isKindOfClass:RoomTitleView.class])
+    {
+        RoomTitleView *roomTitleView = (RoomTitleView*)self.titleView;
+        missedDiscussionsBadgeLabel = roomTitleView.missedDiscussionsBadgeLabel;
+        missedDiscussionsDotView = roomTitleView.dotView;
+        [roomTitleView updateLayoutForOrientation:[UIApplication sharedApplication].statusBarOrientation];
+    }
+
+    [self updateViewControllerAppearanceOnRoomDataSourceState];
     
     [self updateTitleViewEncryptionDecoration];
 }
 
 - (void)destroy
 {
-    rightBarButtonItems = nil;
-    for (UIBarButtonItem *barButtonItem in self.navigationItem.rightBarButtonItems)
-    {
-        barButtonItem.enabled = NO;
-    }
-    
     if (currentAlert)
     {
         [currentAlert dismissViewControllerAnimated:NO completion:nil];
@@ -1247,7 +1353,7 @@
     [self removeTombstoneEventNotificationsListener];
     [self removeMXSessionStateChangeNotificationsListener];
     [self removeServerNoticesListener];
-
+    
     if (previewHeader)
     {
         // Here [destroy] is called before [viewWillDisappear:]
@@ -1262,8 +1368,6 @@
     
     roomPreviewData = nil;
     
-    missedDiscussionsBarButtonCustomView = nil;
-    missedDiscussionsBadgeLabelBgView = nil;
     missedDiscussionsBadgeLabel = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kMXEventDidChangeSentStateNotification object:nil];
@@ -1272,63 +1376,72 @@
     [super destroy];
 }
 
-#pragma mark -
+#pragma mark - Properties
 
-- (void)setShowMissedDiscussionsBadge:(BOOL)showMissedDiscussionsBadge
+-(void)setActivitiesViewExpanded:(BOOL)activitiesViewExpanded
 {
-    _showMissedDiscussionsBadge = showMissedDiscussionsBadge;
-    
-    if (_showMissedDiscussionsBadge && !missedDiscussionsBarButtonCustomView)
+    if (_activitiesViewExpanded != activitiesViewExpanded)
     {
-        // Prepare missed dicussion badge
-        missedDiscussionsBarButtonCustomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 21)];
-        missedDiscussionsBarButtonCustomView.backgroundColor = [UIColor clearColor];
-        missedDiscussionsBarButtonCustomView.clipsToBounds = NO;
+        _activitiesViewExpanded = activitiesViewExpanded;
         
-        NSLayoutConstraint *heightConstraint = [NSLayoutConstraint constraintWithItem:missedDiscussionsBarButtonCustomView
-                                                                            attribute:NSLayoutAttributeHeight
-                                                                            relatedBy:NSLayoutRelationEqual
-                                                                               toItem:nil
-                                                                            attribute:NSLayoutAttributeNotAnAttribute
-                                                                           multiplier:1.0
-                                                                             constant:21];
-        
-        missedDiscussionsBadgeLabelBgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 21, 21)];
-        [missedDiscussionsBadgeLabelBgView.layer setCornerRadius:10];
-        
-        [missedDiscussionsBarButtonCustomView addSubview:missedDiscussionsBadgeLabelBgView];
-        missedDiscussionsBarButtonCustomView.accessibilityIdentifier = @"RoomVCMissedDiscussionsBarButton";
-        
-        missedDiscussionsBadgeLabel = [[UILabel alloc]initWithFrame:CGRectMake(2, 2, 17, 17)];
-        missedDiscussionsBadgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [missedDiscussionsBadgeLabelBgView addSubview:missedDiscussionsBadgeLabel];
-        
-        NSLayoutConstraint *centerXConstraint = [NSLayoutConstraint constraintWithItem:missedDiscussionsBadgeLabel
-                                                                             attribute:NSLayoutAttributeCenterX
-                                                                             relatedBy:NSLayoutRelationEqual
-                                                                                toItem:missedDiscussionsBadgeLabelBgView
-                                                                             attribute:NSLayoutAttributeCenterX
-                                                                            multiplier:1.0
-                                                                              constant:0];
-        NSLayoutConstraint *centerYConstraint = [NSLayoutConstraint constraintWithItem:missedDiscussionsBadgeLabel
-                                                                             attribute:NSLayoutAttributeCenterY
-                                                                             relatedBy:NSLayoutRelationEqual
-                                                                                toItem:missedDiscussionsBadgeLabelBgView
-                                                                             attribute:NSLayoutAttributeCenterY
-                                                                            multiplier:1.0
-                                                                              constant:0];
-        
-        [NSLayoutConstraint activateConstraints:@[heightConstraint, centerXConstraint, centerYConstraint]];
-    }
-    else
-    {
-        missedDiscussionsBarButtonCustomView = nil;
-        missedDiscussionsBadgeLabelBgView = nil;
-        missedDiscussionsBadgeLabel = nil;
+        self.roomActivitiesContainerHeightConstraint.constant = activitiesViewExpanded ? 53 : 0;
+        [super roomInputToolbarView:self.inputToolbarView heightDidChanged:[self inputToolbarHeight] completion:nil];
     }
 }
 
+- (void)setShowMissedDiscussionsBadge:(BOOL)showMissedDiscussionsBadge
+{
+    missedDiscussionsBadgeLabel.hidden = !showMissedDiscussionsBadge;
+    missedDiscussionsDotView.hidden = !showMissedDiscussionsBadge;
+}
+
+- (void)setScrollToBottomHidden:(BOOL)scrollToBottomHidden
+{
+    if (_scrollToBottomHidden != scrollToBottomHidden)
+    {
+        _scrollToBottomHidden = scrollToBottomHidden;
+    }
+    
+    if (!_scrollToBottomHidden && [self.roomDataSource isKindOfClass:RoomDataSource.class])
+    {
+        RoomDataSource *roomDataSource = (RoomDataSource *) self.roomDataSource;
+        if (roomDataSource.currentTypingUsers && !roomDataSource.currentTypingUsers.count)
+        {
+            [roomDataSource resetTypingNotification];
+            [self.bubblesTableView reloadData];
+        }
+    }
+
+    [UIView animateWithDuration:.2 animations:^{
+        self.scrollToBottomBadgeLabel.alpha = (scrollToBottomHidden || !self.scrollToBottomBadgeLabel.text) ? 0 : 1;
+        self.scrollToBottomButton.alpha = scrollToBottomHidden ? 0 : 1;
+    }];
+}
+
 #pragma mark - Internals
+
+- (UIBarButtonItem *)videoCallBarButtonItem
+{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"video_call"]
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(onVideoCallPressed:)];
+    item.accessibilityLabel = NSLocalizedStringFromTable(@"room_accessibility_video_call", @"Vector", nil);
+    
+    return item;
+}
+
+- (void)setupRemoveJitsiWidgetRemoveView
+{
+    self.removeJitsiWidgetView = [RemoveJitsiWidgetView instantiate];
+    self.removeJitsiWidgetView.delegate = self;
+    
+    [self.removeJitsiWidgetContainer vc_addSubViewMatchingParent:self.removeJitsiWidgetView];
+    
+    self.removeJitsiWidgetContainer.hidden = YES;
+    
+    [self refreshRemoveJitsiWidgetView];
+}
 
 - (void)forceLayoutRefresh
 {
@@ -1360,20 +1473,38 @@
     return self.roomDataSource.room.summary.isEncrypted && self.mainSession.crypto != nil;
 }
 
+- (BOOL)supportCallOption
+{
+    BOOL callOptionAllowed = (self.roomDataSource.room.isDirect && RiotSettings.shared.roomScreenAllowVoIPForDirectRoom) || (!self.roomDataSource.room.isDirect && RiotSettings.shared.roomScreenAllowVoIPForNonDirectRoom);
+    return callOptionAllowed && BuildSettings.allowVoIPUsage && self.roomDataSource.mxSession.callManager && self.roomDataSource.room.summary.membersCount.joined >= 2;
+}
+
+- (BOOL)isCallActive
+{
+    MXCall *callInRoom = [self.roomDataSource.mxSession.callManager callInRoom:self.roomDataSource.roomId];
+    
+    return (callInRoom && callInRoom.state != MXCallStateEnded)
+    || customizedRoomDataSource.jitsiWidget;
+}
+
+/**
+ Returns a flag for the current user whether it's privileged to add/remove Jitsi widgets to this room.
+ */
+- (BOOL)canEditJitsiWidget
+{
+    MXRoomPowerLevels *powerLevels = [self.roomDataSource.roomState powerLevels];
+    NSInteger requiredPower = [powerLevels minimumPowerLevelForSendingEventAsStateEvent:kWidgetModularEventTypeString];
+    NSInteger myPower = [powerLevels powerLevelOfUserWithUserID:self.roomDataSource.mxSession.myUserId];
+    return myPower >= requiredPower;
+}
+
 - (void)refreshRoomTitle
 {
-    if (rightBarButtonItems && !self.navigationItem.rightBarButtonItems)
-    {
-        // Restore by default the search bar button.
-        self.navigationItem.rightBarButtonItems = rightBarButtonItems;
-    }
+    NSMutableArray *rightBarButtonItems = nil;
     
     // Set the right room title view
     if (self.isRoomPreview)
     {
-        // Do not show the right buttons
-        self.navigationItem.rightBarButtonItems = nil;
-        
         [self showPreviewHeader:YES];
     }
     else if (self.roomDataSource)
@@ -1382,92 +1513,115 @@
         
         if (self.roomDataSource.isLive)
         {
-            // Enable the right buttons (Search and Integrations)
-            for (UIBarButtonItem *barButtonItem in self.navigationItem.rightBarButtonItems)
+            rightBarButtonItems = [NSMutableArray new];
+            BOOL hasCustomJoinButton = NO;
+            
+            if (self.supportCallOption)
             {
-                barButtonItem.enabled = YES;
-            }
-
-            if (self.navigationItem.rightBarButtonItems.count == 2)
-            {
-                BOOL matrixAppsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"matrixApps"];
-                if (!matrixAppsEnabled)
+                if (self.roomDataSource.room.summary.membersCount.joined == 2 && self.roomDataSource.room.isDirect)
                 {
-                    // If the setting is disabled, do not show the icon
-                    self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem];
-                }
-                else if ([self widgetsCount:NO])
-                {
-                    // Show there are widgets by changing the "apps" icon color
-                    // Show it in red only for room widgets, not user's widgets
-                    // TODO: Design must be reviewed
-                    UIImage *icon = self.navigationItem.rightBarButtonItems[1].image;
-                    icon = [MXKTools paintImage:icon withColor:ThemeService.shared.theme.warningColor];
-                    icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-
-                    self.navigationItem.rightBarButtonItems[1].image = icon;
-                    self.navigationItem.rightBarButtonItems[1].accessibilityLabel = NSLocalizedStringFromTable(@"room_accessibility_integrations", @"Vector", nil);
+                    //  voice call button for Matrix call
+                    UIBarButtonItem *itemVoice = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"voice_call_hangon_icon"]
+                                                                                  style:UIBarButtonItemStylePlain
+                                                                                 target:self
+                                                                                 action:@selector(onVoiceCallPressed:)];
+                    itemVoice.accessibilityLabel = NSLocalizedStringFromTable(@"room_accessibility_call", @"Vector", nil);
+                    itemVoice.enabled = !self.isCallActive;
+                    [rightBarButtonItems addObject:itemVoice];
+                    
+                    //  video call button for Matrix call
+                    UIBarButtonItem *itemVideo = [self videoCallBarButtonItem];
+                    itemVideo.enabled = !self.isCallActive;
+                    [rightBarButtonItems addObject:itemVideo];
                 }
                 else
                 {
-                    // Reset original icon
-                    self.navigationItem.rightBarButtonItems[1].image = [UIImage imageNamed:@"integrations_icon"];
-                    self.navigationItem.rightBarButtonItems[1].accessibilityLabel = NSLocalizedStringFromTable(@"room_accessibility_integrations", @"Vector", nil);
+                    //  video call button for Jitsi call
+                    if (self.isCallActive)
+                    {
+                        JitsiViewController *jitsiVC = [AppDelegate theDelegate].callPresenter.jitsiVC;
+                        if ([jitsiVC.widget.roomId isEqualToString:self.roomDataSource.roomId])
+                        {
+                            //  show a disabled call button
+                            UIBarButtonItem *item = [self videoCallBarButtonItem];
+                            item.enabled = NO;
+                            [rightBarButtonItems addObject:item];
+                        }
+                        else
+                        {
+                            //  show Join button
+                            CallTileActionButton *button = [CallTileActionButton new];
+                            [button setImage:[UIImage imageNamed:@"call_video_icon"]
+                                    forState:UIControlStateNormal];
+                            [button setTitle:NSLocalizedStringFromTable(@"room_join_group_call", @"Vector", nil)
+                                    forState:UIControlStateNormal];
+                            [button addTarget:self
+                                       action:@selector(onVideoCallPressed:)
+                             forControlEvents:UIControlEventTouchUpInside];
+                            button.contentEdgeInsets = UIEdgeInsetsMake(4, 12, 4, 12);
+                            UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
+                            item.accessibilityLabel = NSLocalizedStringFromTable(@"room_accessibility_video_call", @"Vector", nil);
+                            [rightBarButtonItems addObject:item];
+                            
+                            hasCustomJoinButton = YES;
+                        }
+                    }
+                    else
+                    {
+                        //  show a video call button
+                        //  item will still be enabled, and when tapped an alert will be displayed to the user
+                        UIBarButtonItem *item = [self videoCallBarButtonItem];
+                        if (!self.canEditJitsiWidget)
+                        {
+                            item.image = [[UIImage imageNamed:@"video_call"] vc_withAlpha:0.3];
+                        }
+                        [rightBarButtonItems addObject:item];
+                    }
                 }
-                
-                self.navigationItem.rightBarButtonItems.firstObject.accessibilityLabel = NSLocalizedStringFromTable(@"room_accessibility_search", @"Vector", nil);
             }
-
+            
+            if ([self widgetsCount:NO])
+            {
+                UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"integrations_icon"]
+                                                                         style:UIBarButtonItemStylePlain
+                                                                        target:self
+                                                                        action:@selector(onIntegrationsPressed:)];
+                item.accessibilityLabel = NSLocalizedStringFromTable(@"room_accessibility_integrations", @"Vector", nil);
+                if (hasCustomJoinButton)
+                {
+                    item.imageInsets = UIEdgeInsetsMake(0, -5, 0, -5);
+                    item.landscapeImagePhoneInsets = UIEdgeInsetsMake(0, -5, 0, -5);
+                }
+                [rightBarButtonItems addObject:item];
+            }
+            
             // Do not change title view class here if the expanded header is visible.
             [self setRoomTitleViewClass:RoomTitleView.class];
             ((RoomTitleView*)self.titleView).tapGestureDelegate = self;
         }
-        else
+        
+        MXKImageView *userPictureView = ((RoomTitleView*)self.titleView).pictureView;
+        
+        // Set user picture in input toolbar
+        if (userPictureView)
         {
-            // Remove the search button temporarily
-            rightBarButtonItems = self.navigationItem.rightBarButtonItems;
-            self.navigationItem.rightBarButtonItems = nil;
-            
-            [self setRoomTitleViewClass:SimpleRoomTitleView.class];
-            self.titleView.editable = NO;
+            [self.roomDataSource.room.summary setRoomAvatarImageIn:userPictureView];
         }
+        
+        [self refreshMissedDiscussionsCount:YES];
     }
-    else
-    {
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
+    
+    self.navigationItem.rightBarButtonItems = rightBarButtonItems;
 }
 
 - (void)refreshRoomInputToolbar
 {
     MXKImageView *userPictureView;
-
+    
     // Check whether the input toolbar is ready before updating it.
     if (self.inputToolbarView && [self.inputToolbarView isKindOfClass:RoomInputToolbarView.class])
     {
         RoomInputToolbarView *roomInputToolbarView = (RoomInputToolbarView*)self.inputToolbarView;
-        
-        // Check whether the call option is supported
-        roomInputToolbarView.supportCallOption = BuildSettings.allowVoIPUsage && self.roomDataSource.mxSession.callManager && self.roomDataSource.room.summary.membersCount.joined >= 2;
-        
-        // Get user picture view in input toolbar
-        userPictureView = roomInputToolbarView.pictureView;
-        
-        // Show the hangup button if there is an active call or an active jitsi
-        // conference call in the current room
-        MXCall *callInRoom = [self.roomDataSource.mxSession.callManager callInRoom:self.roomDataSource.roomId];
-        if ((callInRoom && callInRoom.state != MXCallStateEnded)
-            || [[AppDelegate theDelegate].jitsiViewController.widget.roomId isEqualToString:self.roomDataSource.roomId])
-        {
-            roomInputToolbarView.activeCall = YES;
-        }
-        else
-        {
-            roomInputToolbarView.activeCall = NO;
-            
-            // Hide the call button if there is an active call in another room
-            roomInputToolbarView.supportCallOption &= ([[AppDelegate theDelegate] callStatusBarWindow] == nil);
-        }
         
         // Update encryption decoration if needed
         [self updateEncryptionDecorationForRoomInputToolbar:roomInputToolbarView];
@@ -1475,14 +1629,14 @@
     else if (self.inputToolbarView && [self.inputToolbarView isKindOfClass:DisabledRoomInputToolbarView.class])
     {
         DisabledRoomInputToolbarView *roomInputToolbarView = (DisabledRoomInputToolbarView*)self.inputToolbarView;
-
+        
         // Get user picture view in input toolbar
         userPictureView = roomInputToolbarView.pictureView;
-
+        
         // For the moment, there is only one reason to use `DisabledRoomInputToolbarView`
         [roomInputToolbarView setDisabledReason:NSLocalizedStringFromTable(@"room_do_not_have_permission_to_post", @"Vector", nil)];
     }
-
+    
     // Set user picture in input toolbar
     if (userPictureView)
     {
@@ -1502,11 +1656,28 @@
     }
 }
 
-- (void)setInputToolBarSendMode:(RoomInputToolbarViewSendMode)sendMode
+- (void)setInputToolBarSendMode:(RoomInputToolbarViewSendMode)sendMode forEventWithId:(NSString *)eventId
 {
     if (self.inputToolbarView && [self.inputToolbarView isKindOfClass:[RoomInputToolbarView class]])
     {
         RoomInputToolbarView *roomInputToolbarView = (RoomInputToolbarView*)self.inputToolbarView;
+        if (eventId)
+        {
+            MXEvent *event = [self.roomDataSource eventWithEventId:eventId];
+            MXRoomMember * roomMember = [self.roomDataSource.roomState.members memberWithUserId:event.sender];
+            if (roomMember.displayname.length)
+            {
+                roomInputToolbarView.eventSenderDisplayName = roomMember.displayname;
+            }
+            else
+            {
+                roomInputToolbarView.eventSenderDisplayName = event.sender;
+            }
+        }
+        else
+        {
+            roomInputToolbarView.eventSenderDisplayName = nil;
+        }
         roomInputToolbarView.sendMode = sendMode;
     }
 }
@@ -1519,7 +1690,7 @@
         RoomInputToolbarView *roomInputToolbarView = (RoomInputToolbarView*)self.inputToolbarView;
         sendMode = roomInputToolbarView.sendMode;
     }
-
+    
     return sendMode;
 }
 
@@ -1581,7 +1752,6 @@
 - (void)updateEncryptionDecorationForRoomInputToolbar:(RoomInputToolbarView*)roomInputToolbarView
 {
     roomInputToolbarView.isEncryptionEnabled = self.isEncryptionEnabled;
-    roomInputToolbarView.encryptedRoomIcon.image = self.roomEncryptionBadgeImage;
 }
 
 - (void)handleLongPressFromCell:(id<MXKCellRendering>)cell withTappedEvent:(MXEvent*)event
@@ -1612,7 +1782,7 @@
     CameraPresenter *cameraPresenter = [CameraPresenter new];
     cameraPresenter.delegate = self;
     [cameraPresenter presentCameraFrom:self with:@[MXKUTI.image, MXKUTI.movie] animated:YES];
-
+    
     self.cameraPresenter = cameraPresenter;
 }
 
@@ -1634,7 +1804,7 @@
     {
         sourceView = self.inputToolbarView;
     }
-
+    
     [mediaPickerPresenter presentFrom:self sourceView:sourceView sourceRect:sourceView.bounds animated:YES];
     
     self.mediaPickerPresenter = mediaPickerPresenter;
@@ -1665,6 +1835,208 @@
     [memberViewController displayRoomMember:member withMatrixRoom:self.roomDataSource.room];
     
     [self.navigationController pushViewController:memberViewController animated:YES];
+}
+
+- (void)showRoomAvatarChange
+{
+    [self showRoomInfoWithInitialSection:RoomInfoSectionChangeAvatar];
+}
+
+- (void)showAddParticipants
+{
+    [self showRoomInfoWithInitialSection:RoomInfoSectionAddParticipants];
+}
+
+- (void)showRoomTopicChange
+{
+    [self showRoomInfoWithInitialSection:RoomInfoSectionChangeTopic];
+}
+
+- (void)showRoomInfo
+{
+    [self showRoomInfoWithInitialSection:RoomInfoSectionNone];
+}
+
+- (void)showRoomInfoWithInitialSection:(RoomInfoSection)roomInfoSection
+{
+    RoomInfoCoordinatorParameters *parameters = [[RoomInfoCoordinatorParameters alloc] initWithSession:self.roomDataSource.mxSession room:self.roomDataSource.room initialSection:roomInfoSection];
+    
+    self.roomInfoCoordinatorBridgePresenter = [[RoomInfoCoordinatorBridgePresenter alloc] initWithParameters:parameters];
+    
+    self.roomInfoCoordinatorBridgePresenter.delegate = self;
+    [self.roomInfoCoordinatorBridgePresenter pushFrom:self.navigationController animated:YES];
+}
+
+- (void)setupActions {
+    if (![self.inputToolbarView isKindOfClass:RoomInputToolbarView.class]) {
+        return;
+    }
+    
+    RoomInputToolbarView *roomInputView = ((RoomInputToolbarView *) self.inputToolbarView);
+    MXWeakify(self);
+    NSMutableArray *actionItems = [NSMutableArray new];
+    if (RiotSettings.shared.roomScreenAllowCameraAction)
+    {
+        [actionItems addObject:[[RoomActionItem alloc] initWithImage:[UIImage imageNamed:@"action_camera"] andAction:^{
+            MXStrongifyAndReturnIfNil(self);
+            if ([self.inputToolbarView isKindOfClass:RoomInputToolbarView.class]) {
+                ((RoomInputToolbarView *) self.inputToolbarView).actionMenuOpened = NO;
+            }
+            [self showCameraControllerAnimated:YES];
+        }]];
+    }
+    if (RiotSettings.shared.roomScreenAllowMediaLibraryAction)
+    {
+        [actionItems addObject:[[RoomActionItem alloc] initWithImage:[UIImage imageNamed:@"action_media_library"] andAction:^{
+            MXStrongifyAndReturnIfNil(self);
+            if ([self.inputToolbarView isKindOfClass:RoomInputToolbarView.class]) {
+                ((RoomInputToolbarView *) self.inputToolbarView).actionMenuOpened = NO;
+            }
+            [self showMediaPickerAnimated:YES];
+        }]];
+    }
+    if (RiotSettings.shared.roomScreenAllowStickerAction)
+    {
+        [actionItems addObject:[[RoomActionItem alloc] initWithImage:[UIImage imageNamed:@"action_sticker"] andAction:^{
+            MXStrongifyAndReturnIfNil(self);
+            if ([self.inputToolbarView isKindOfClass:RoomInputToolbarView.class]) {
+                ((RoomInputToolbarView *) self.inputToolbarView).actionMenuOpened = NO;
+            }
+            [self roomInputToolbarViewPresentStickerPicker];
+        }]];
+    }
+    if (RiotSettings.shared.roomScreenAllowFilesAction)
+    {
+        [actionItems addObject:[[RoomActionItem alloc] initWithImage:[UIImage imageNamed:@"action_file"] andAction:^{
+            MXStrongifyAndReturnIfNil(self);
+            if ([self.inputToolbarView isKindOfClass:RoomInputToolbarView.class]) {
+                ((RoomInputToolbarView *) self.inputToolbarView).actionMenuOpened = NO;
+            }
+            [self roomInputToolbarViewDidTapFileUpload];
+        }]];
+    }
+    roomInputView.actionsBar.actionItems = actionItems;
+}
+
+- (void)roomInputToolbarViewPresentStickerPicker
+{
+    // Search for the sticker picker widget in the user account
+    Widget *widget = [[WidgetManager sharedManager] userWidgets:self.roomDataSource.mxSession ofTypes:@[kWidgetTypeStickerPicker]].firstObject;
+    
+    if (widget)
+    {
+        // Display the widget
+        [widget widgetUrl:^(NSString * _Nonnull widgetUrl) {
+            
+            StickerPickerViewController *stickerPickerVC = [[StickerPickerViewController alloc] initWithUrl:widgetUrl forWidget:widget];
+            
+            stickerPickerVC.roomDataSource = self.roomDataSource;
+            
+            [self.navigationController pushViewController:stickerPickerVC animated:YES];
+        } failure:^(NSError * _Nonnull error) {
+            
+            NSLog(@"[RoomVC] Cannot display widget %@", widget);
+            [[AppDelegate theDelegate] showErrorAsAlert:error];
+        }];
+    }
+    else
+    {
+        // The Sticker picker widget is not installed yet. Propose the user to install it
+        MXWeakify(self);
+
+        [currentAlert dismissViewControllerAnimated:NO completion:nil];
+        
+        NSString *alertMessage = [NSString stringWithFormat:@"%@\n%@",
+                                  NSLocalizedStringFromTable(@"widget_sticker_picker_no_stickerpacks_alert", @"Vector", nil),
+                                  NSLocalizedStringFromTable(@"widget_sticker_picker_no_stickerpacks_alert_add_now", @"Vector", nil)
+                                  ];
+        
+        currentAlert = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+        
+        [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"no"]
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:^(UIAlertAction * action)
+                                 {
+            MXStrongifyAndReturnIfNil(self);
+            self->currentAlert = nil;
+            
+        }]];
+        
+        [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"yes"]
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action)
+                                 {
+            MXStrongifyAndReturnIfNil(self);
+            self->currentAlert = nil;
+            
+            // Show the sticker picker settings screen
+            IntegrationManagerViewController *modularVC = [[IntegrationManagerViewController alloc]
+                                                           initForMXSession:self.roomDataSource.mxSession
+                                                           inRoom:self.roomDataSource.roomId
+                                                           screen:[IntegrationManagerViewController screenForWidget:kWidgetTypeStickerPicker]
+                                                           widgetId:nil];
+            
+            [self presentViewController:modularVC animated:NO completion:nil];
+        }]];
+        
+        [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCStickerPickerAlert"];
+        [self presentViewController:currentAlert animated:YES completion:nil];
+    }
+}
+
+- (void)roomInputToolbarViewDidTapFileUpload
+{
+    MXKDocumentPickerPresenter *documentPickerPresenter = [MXKDocumentPickerPresenter new];
+    documentPickerPresenter.delegate = self;
+    
+    NSArray<MXKUTI*> *allowedUTIs = @[MXKUTI.data];
+    [documentPickerPresenter presentDocumentPickerWith:allowedUTIs from:self animated:YES completion:nil];
+    
+    self.documentPickerPresenter = documentPickerPresenter;
+}
+
+#pragma mark - Dialpad
+
+- (void)openDialpad
+{
+    DialpadViewController *controller = [DialpadViewController instantiateWithConfiguration:[DialpadConfiguration default]];
+    controller.delegate = self;
+    self.customSizedPresentationController = [[CustomSizedPresentationController alloc] initWithPresentedViewController:controller presentingViewController:self];
+    self.customSizedPresentationController.dismissOnBackgroundTap = NO;
+    self.customSizedPresentationController.cornerRadius = 16;
+    
+    controller.transitioningDelegate = self.customSizedPresentationController;
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - DialpadViewControllerDelegate
+
+- (void)dialpadViewControllerDidTapCall:(DialpadViewController *)viewController withPhoneNumber:(NSString *)phoneNumber
+{
+    if (self.mainSession.callManager && phoneNumber.length > 0)
+    {
+        [self startActivityIndicator];
+        
+        [viewController dismissViewControllerAnimated:YES completion:^{
+            MXWeakify(self);
+            [self.mainSession.callManager placeCallAgainst:phoneNumber withVideo:NO success:^(MXCall * _Nonnull call) {
+                MXStrongifyAndReturnIfNil(self);
+                [self stopActivityIndicator];
+                self.customSizedPresentationController = nil;
+                
+                //  do nothing extra here. UI will be handled automatically by the CallService.
+            } failure:^(NSError * _Nullable error) {
+                MXStrongifyAndReturnIfNil(self);
+                [self stopActivityIndicator];
+            }];
+        }];
+    }
+}
+
+- (void)dialpadViewControllerDidTapClose:(DialpadViewController *)viewController
+{
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+    self.customSizedPresentationController = nil;
 }
 
 #pragma mark - Hide/Show preview header
@@ -1732,7 +2104,7 @@
             }
             
             self.previewHeaderContainer.hidden = NO;
-
+            
             // Finalize preview header display according to the screen orientation
             [self refreshPreviewHeader:UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])];
         }
@@ -1755,8 +2127,6 @@
             
             // Remove details icon
             RoomTitleView *roomTitleView = (RoomTitleView*)self.titleView;
-            [roomTitleView.roomDetailsIconImageView removeFromSuperview];
-            roomTitleView.roomDetailsIconImageView = nil;
             
             // Remove the shadow image used to hide the bottom border of the navigation bar when the preview header is displayed
             [mainNavigationController.navigationBar setShadowImage:nil];
@@ -1764,19 +2134,18 @@
             
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseIn
                              animations:^{
-                                 
-                                 self.bubblesTableViewTopConstraint.constant = 0;
-                                 self.jumpToLastUnreadBannerContainerTopConstraint.constant = self.bubblesTableView.mxk_adjustedContentInset.top;
-                                 
-                                 // Force to render the view
-                                 [self forceLayoutRefresh];
-                                 
-                             }
+                
+                self.bubblesTableViewTopConstraint.constant = 0;
+                
+                // Force to render the view
+                [self forceLayoutRefresh];
+                
+            }
                              completion:^(BOOL finished){
-                             }];
+            }];
         }
     }
-
+    
     // Consider the main navigation controller if the current view controller is embedded inside a split view controller.
     UINavigationController *mainNavigationController = self.navigationController;
     if (self.splitViewController.isCollapsed && self.splitViewController.viewControllers.count)
@@ -1804,8 +2173,6 @@
             
             // Remove details icon
             RoomTitleView *roomTitleView = (RoomTitleView*)self.titleView;
-            [roomTitleView.roomDetailsIconImageView removeFromSuperview];
-            roomTitleView.roomDetailsIconImageView = nil;
             
             // Set preview data to provide the room name
             roomTitleView.roomPreviewData = roomPreviewData;
@@ -1814,17 +2181,17 @@
         {
             previewHeader.mainHeaderContainer.hidden = NO;
             previewHeader.mainHeaderBackgroundHeightConstraint.constant = previewHeader.mainHeaderContainer.frame.size.height;
-
+            
             if ([previewHeader isKindOfClass:PreviewRoomTitleView.class])
             {
                 // In case of preview, update the header height so that we can
                 // display as much as possible the room topic in this header.
                 // Note: the header height is handled by the previewHeader.mainHeaderBackgroundHeightConstraint.
                 PreviewRoomTitleView *previewRoomTitleView = (PreviewRoomTitleView *)previewHeader;
-
+                
                 // Compute the height required to display all the room topic
                 CGSize sizeThatFitsTextView = [previewRoomTitleView.roomTopic sizeThatFits:CGSizeMake(previewRoomTitleView.roomTopic.frame.size.width, MAXFLOAT)];
-
+                
                 // Increase the preview header height according to the room topic height
                 // but limit it in order to let room for room messages at the screen bottom.
                 // This free space depends on the device.
@@ -1833,13 +2200,13 @@
                 // apply a factor to give more priority to the display of more messages.
                 CGFloat screenHeight = [[UIScreen mainScreen] bounds].size.height;
                 CGFloat maxRoomTopicHeight = 50 + (screenHeight - 568) / 3;
-
+                
                 CGFloat additionalHeight = MIN(maxRoomTopicHeight, sizeThatFitsTextView.height)
-                                            - previewRoomTitleView.roomTopic.frame.size.height;
-
+                - previewRoomTitleView.roomTopic.frame.size.height;
+                
                 previewHeader.mainHeaderBackgroundHeightConstraint.constant += additionalHeight;
             }
-
+            
             [self setRoomTitleViewClass:RoomAvatarTitleView.class];
             // Note the avatar title view does not define tap gesture.
             
@@ -1885,18 +2252,17 @@
         
         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseIn
                          animations:^{
-                             
-                             self.bubblesTableViewTopConstraint.constant = self.previewHeaderContainerHeightConstraint.constant - self.bubblesTableView.mxk_adjustedContentInset.top;
-                             self.jumpToLastUnreadBannerContainerTopConstraint.constant = self.previewHeaderContainerHeightConstraint.constant;
-                             
-                             previewHeader.roomAvatar.alpha = 1;
-                             
-                             // Force to render the view
-                             [self forceLayoutRefresh];
-                             
-                         }
+            
+            self.bubblesTableViewTopConstraint.constant = self.previewHeaderContainerHeightConstraint.constant - self.bubblesTableView.mxk_adjustedContentInset.top;
+            
+            previewHeader.roomAvatar.alpha = 1;
+            
+            // Force to render the view
+            [self forceLayoutRefresh];
+            
+        }
                          completion:^(BOOL finished){
-                         }];
+        }];
     }
 }
 
@@ -1975,6 +2341,10 @@
         {
             cellViewClass = RoomEmptyBubbleCell.class;
         }
+        else if (bubbleData.tag == RoomBubbleCellDataTagRoomCreationIntro)
+        {
+            cellViewClass = RoomCreationIntroCell.class;
+        }
         else if (bubbleData.tag == RoomBubbleCellDataTagRoomCreateWithPredecessor)
         {
             cellViewClass = RoomPredecessorBubbleCell.class;
@@ -2019,6 +2389,14 @@
         else if (bubbleData.tag == RoomBubbleCellDataTagRoomCreateConfiguration)
         {
             cellViewClass = bubbleData.isPaginationFirstBubble ? RoomCreationWithPaginationCollapsedBubbleCell.class : RoomCreationCollapsedBubbleCell.class;
+        }
+        else if (bubbleData.tag == RoomBubbleCellDataTagCall)
+        {
+            cellViewClass = RoomDirectCallStatusBubbleCell.class;
+        }
+        else if (bubbleData.tag == RoomBubbleCellDataTagGroupCall)
+        {
+            cellViewClass = RoomGroupCallStatusBubbleCell.class;
         }
         else if (bubbleData.isIncoming)
         {
@@ -2190,6 +2568,28 @@
                         }
                     }
                 }
+                else if (bubbleData.tag == RoomBubbleCellDataTagCall)
+                {
+                    if ([bubbleData isKindOfClass:[RoomBubbleCellData class]])
+                    {
+                        //  post notification `RoomCallTileTapped`
+                        [[NSNotificationCenter defaultCenter] postNotificationName:RoomCallTileTappedNotification object:bubbleData];
+                        
+                        preventBubblesTableViewScroll = YES;
+                        [self selectEventWithId:tappedEvent.eventId];
+                    }
+                }
+                else if (bubbleData.tag == RoomBubbleCellDataTagGroupCall)
+                {
+                    if ([bubbleData isKindOfClass:[RoomBubbleCellData class]])
+                    {
+                        //  post notification `RoomGroupCallTileTapped`
+                        [[NSNotificationCenter defaultCenter] postNotificationName:RoomGroupCallTileTappedNotification object:bubbleData];
+                        
+                        preventBubblesTableViewScroll = YES;
+                        [self selectEventWithId:tappedEvent.eventId];
+                    }
+                }
                 else
                 {
                     // Show contextual menu on single tap if bubble is not collapsed
@@ -2227,7 +2627,7 @@
             RoomDataSource *roomDataSource = (RoomDataSource*)self.roomDataSource;
             
             [roomDataSource acceptVerificationRequestForEventId:eventId success:^{
-
+                
             } failure:^(NSError *error) {
                 [[AppDelegate theDelegate] showErrorAsAlert:error];
             }];
@@ -2322,6 +2722,95 @@
                 [self showReactionHistoryForEventId:tappedEventId animated:YES];
             }
         }
+        else if ([actionIdentifier isEqualToString:RoomDirectCallStatusBubbleCell.callBackAction])
+        {
+            MXEvent *callInviteEvent = userInfo[kMXKRoomBubbleCellEventKey];
+            MXCallInviteEventContent *eventContent = [MXCallInviteEventContent modelFromJSON:callInviteEvent.content];
+            
+            [self placeCallWithVideo2:eventContent.isVideoCall];
+        }
+        else if ([actionIdentifier isEqualToString:RoomDirectCallStatusBubbleCell.declineAction])
+        {
+            MXEvent *callInviteEvent = userInfo[kMXKRoomBubbleCellEventKey];
+            MXCallInviteEventContent *eventContent = [MXCallInviteEventContent modelFromJSON:callInviteEvent.content];
+            
+            MXCall *call = [self.mainSession.callManager callWithCallId:eventContent.callId];
+            [call hangup];
+        }
+        else if ([actionIdentifier isEqualToString:RoomDirectCallStatusBubbleCell.answerAction])
+        {
+            MXEvent *callInviteEvent = userInfo[kMXKRoomBubbleCellEventKey];
+            MXCallInviteEventContent *eventContent = [MXCallInviteEventContent modelFromJSON:callInviteEvent.content];
+            
+            MXCall *call = [self.mainSession.callManager callWithCallId:eventContent.callId];
+            [call answer];
+        }
+        else if ([actionIdentifier isEqualToString:RoomDirectCallStatusBubbleCell.endCallAction])
+        {
+            MXEvent *callInviteEvent = userInfo[kMXKRoomBubbleCellEventKey];
+            MXCallInviteEventContent *eventContent = [MXCallInviteEventContent modelFromJSON:callInviteEvent.content];
+            
+            MXCall *call = [self.mainSession.callManager callWithCallId:eventContent.callId];
+            [call hangup];
+        }
+        else if ([actionIdentifier isEqualToString:RoomGroupCallStatusBubbleCell.joinAction] ||
+                 [actionIdentifier isEqualToString:RoomGroupCallStatusBubbleCell.answerAction])
+        {
+            MXWeakify(self);
+            NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
+
+            // Check app permissions first
+            [MXKTools checkAccessForCall:YES
+             manualChangeMessageForAudio:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"microphone_access_not_granted_for_call"], appDisplayName]
+             manualChangeMessageForVideo:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"camera_access_not_granted_for_call"], appDisplayName]
+               showPopUpInViewController:self completionHandler:^(BOOL granted) {
+                
+                MXStrongifyAndReturnIfNil(self);
+                if (granted)
+                {
+                    // Present the Jitsi view controller
+                    Widget *jitsiWidget = [self->customizedRoomDataSource jitsiWidget];
+                    if (jitsiWidget)
+                    {
+                        [[AppDelegate theDelegate].callPresenter displayJitsiCallWithWidget:jitsiWidget];
+                    }
+                }
+                else
+                {
+                    NSLog(@"[RoomVC] didRecognizeAction:inCell:userInfo Warning: The application does not have the permission to join/answer the group call");
+                }
+            }];
+            
+            MXEvent *widgetEvent = userInfo[kMXKRoomBubbleCellEventKey];
+            Widget *widget = [[Widget alloc] initWithWidgetEvent:widgetEvent
+                                                 inMatrixSession:customizedRoomDataSource.mxSession];
+            [[JitsiService shared] resetDeclineForWidgetWithId:widget.widgetId];
+        }
+        else if ([actionIdentifier isEqualToString:RoomGroupCallStatusBubbleCell.leaveAction])
+        {
+            [[AppDelegate theDelegate].callPresenter endActiveJitsiCall];
+            [self reloadBubblesTable:YES];
+        }
+        else if ([actionIdentifier isEqualToString:RoomGroupCallStatusBubbleCell.declineAction])
+        {
+            MXEvent *widgetEvent = userInfo[kMXKRoomBubbleCellEventKey];
+            Widget *widget = [[Widget alloc] initWithWidgetEvent:widgetEvent
+                                                 inMatrixSession:customizedRoomDataSource.mxSession];
+            [[JitsiService shared] declineWidgetWithId:widget.widgetId];
+            [self reloadBubblesTable:YES];
+        }
+        else if ([actionIdentifier isEqualToString:RoomCreationIntroCell.tapOnAvatarView])
+        {
+            [self showRoomAvatarChange];
+        }
+        else if ([actionIdentifier isEqualToString:RoomCreationIntroCell.tapOnAddParticipants])
+        {
+            [self showAddParticipants];
+        }
+        else if ([actionIdentifier isEqualToString:RoomCreationIntroCell.tapOnAddTopic])
+        {
+            [self showRoomTopicChange];
+        }
         else
         {
             // Keep default implementation for other actions
@@ -2352,6 +2841,23 @@
     MXKRoomBubbleTableViewCell *roomBubbleTableViewCell = (MXKRoomBubbleTableViewCell *)cell;
     MXKAttachment *attachment = roomBubbleTableViewCell.bubbleData.attachment;
     
+    BOOL isJitsiCallEvent = NO;
+    switch (selectedEvent.eventType) {
+        case MXEventTypeCustom:
+            if ([selectedEvent.type isEqualToString:kWidgetMatrixEventTypeString]
+                || [selectedEvent.type isEqualToString:kWidgetModularEventTypeString])
+            {
+                Widget *widget = [[Widget alloc] initWithWidgetEvent:selectedEvent inMatrixSession:self.roomDataSource.mxSession];
+                if ([widget.type isEqualToString:kWidgetTypeJitsiV1] ||
+                    [widget.type isEqualToString:kWidgetTypeJitsiV2])
+                {
+                    isJitsiCallEvent = YES;
+                }
+            }
+        default:
+            break;
+    }
+    
     if (currentAlert)
     {
         [currentAlert dismissViewControllerAnimated:NO completion:nil];
@@ -2364,36 +2870,36 @@
     // Add actions for a failed event
     if (selectedEvent.sentState == MXEventSentStateFailed)
     {
-        [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_resend", @"Vector", nil)
+        [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"retry", @"Vector", nil)
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {
-                                                           
-                                                           if (weakSelf)
-                                                           {
-                                                               typeof(self) self = weakSelf;
-                                                               
-                                                               [self cancelEventSelection];
-                                                               
-                                                               // Let the datasource resend. It will manage local echo, etc.
-                                                               [self.roomDataSource resendEventWithEventId:selectedEvent.eventId success:nil failure:nil];
-                                                           }
-                                                           
-                                                       }]];
+            
+            if (weakSelf)
+            {
+                typeof(self) self = weakSelf;
+                
+                [self cancelEventSelection];
+                
+                // Let the datasource resend. It will manage local echo, etc.
+                [self.roomDataSource resendEventWithEventId:selectedEvent.eventId success:nil failure:nil];
+            }
+            
+        }]];
         
         [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_delete", @"Vector", nil)
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {
-                                                           
-                                                           if (weakSelf)
-                                                           {
-                                                               typeof(self) self = weakSelf;
-                                                               
-                                                               [self cancelEventSelection];
-                                                               
-                                                               [self.roomDataSource removeEventWithEventId:selectedEvent.eventId];
-                                                           }
-                                                           
-                                                       }]];
+            
+            if (weakSelf)
+            {
+                typeof(self) self = weakSelf;
+                
+                [self cancelEventSelection];
+                
+                [self.roomDataSource removeEventWithEventId:selectedEvent.eventId];
+            }
+            
+        }]];
     }
     
     // Add actions for text message
@@ -2411,7 +2917,7 @@
             selectedComponent = nil;
         }
         
-
+        
         // Check status of the selected event
         if (selectedEvent.sentState == MXEventSentStatePreparing ||
             selectedEvent.sentState == MXEventSentStateEncrypting ||
@@ -2421,42 +2927,45 @@
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action)
                                      {
-                                         if (weakSelf)
-                                         {
-                                             typeof(self) self = weakSelf;
-                                             
-                                             self->currentAlert = nil;
-                                             
-                                             // Cancel and remove the outgoing message
-                                             [self.roomDataSource.room cancelSendingOperation:selectedEvent.eventId];
-                                             [self.roomDataSource removeEventWithEventId:selectedEvent.eventId];
-                                             
-                                             [self cancelEventSelection];
-                                         }
-                                         
-                                     }]];
+                if (weakSelf)
+                {
+                    typeof(self) self = weakSelf;
+                    
+                    self->currentAlert = nil;
+                    
+                    // Cancel and remove the outgoing message
+                    [self.roomDataSource.room cancelSendingOperation:selectedEvent.eventId];
+                    [self.roomDataSource removeEventWithEventId:selectedEvent.eventId];
+                    
+                    [self cancelEventSelection];
+                }
+                
+            }]];
         }
-
-        [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_quote", @"Vector", nil)
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action) {
-                                                           
-                                                           if (weakSelf)
-                                                           {
-                                                               typeof(self) self = weakSelf;
-                                                               
-                                                               [self cancelEventSelection];
-                                                               
-                                                               // Quote the message a la Markdown into the input toolbar composer
-                                                               self.inputToolbarView.textMessage = [NSString stringWithFormat:@"%@\n>%@\n\n", self.inputToolbarView.textMessage, selectedComponent.textMessage];
-                                                               
-                                                               // And display the keyboard
-                                                               [self.inputToolbarView becomeFirstResponder];
-                                                           }
-                                                           
-                                                       }]];
-
-        if (BuildSettings.messageDetailsAllowShare)
+        
+        if (!isJitsiCallEvent)
+        {
+            [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_quote", @"Vector", nil)
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
+                
+                if (weakSelf)
+                {
+                    typeof(self) self = weakSelf;
+                    
+                    [self cancelEventSelection];
+                    
+                    // Quote the message a la Markdown into the input toolbar composer
+                    self.inputToolbarView.textMessage = [NSString stringWithFormat:@"%@\n>%@\n\n", self.inputToolbarView.textMessage, selectedComponent.textMessage];
+                    
+                    // And display the keyboard
+                    [self.inputToolbarView becomeFirstResponder];
+                }
+                
+            }]];
+        }
+        
+        if (!isJitsiCallEvent && BuildSettings.messageDetailsAllowShare)
         {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_share", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault
@@ -2525,7 +3034,7 @@
                 }]];
             }
         }
-            
+        
         // Check status of the selected event
         if (selectedEvent.sentState == MXEventSentStatePreparing ||
             selectedEvent.sentState == MXEventSentStateEncrypting ||
@@ -2539,37 +3048,37 @@
                 [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_cancel_send", @"Vector", nil)
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * action) {
-                                                                   
-                                                                   // Get again the loader
-                                                                   MXMediaLoader *loader = [MXMediaManager existingUploaderWithId:uploadId];
-                                                                   if (loader)
-                                                                   {
-                                                                       [loader cancel];
-                                                                   }
-                                                                   // Hide the progress animation
-                                                                   roomBubbleTableViewCell.progressView.hidden = YES;
-                                                                   
-                                                                   if (weakSelf)
-                                                                   {
-                                                                       typeof(self) self = weakSelf;
-                                                                       
-                                                                       self->currentAlert = nil;
-                                                                       
-                                                                       // Remove the outgoing message and its related cached file.
-                                                                       [[NSFileManager defaultManager] removeItemAtPath:roomBubbleTableViewCell.bubbleData.attachment.cacheFilePath error:nil];
-                                                                       [[NSFileManager defaultManager] removeItemAtPath:roomBubbleTableViewCell.bubbleData.attachment.thumbnailCachePath error:nil];
-                                                                       
-                                                                       // Cancel and remove the outgoing message
-                                                                       [self.roomDataSource.room cancelSendingOperation:selectedEvent.eventId];
-                                                                       [self.roomDataSource removeEventWithEventId:selectedEvent.eventId];
-                                                                       
-                                                                       [self cancelEventSelection];
-                                                                   }
-                                                                   
-                                                               }]];
+                    
+                    // Get again the loader
+                    MXMediaLoader *loader = [MXMediaManager existingUploaderWithId:uploadId];
+                    if (loader)
+                    {
+                        [loader cancel];
+                    }
+                    // Hide the progress animation
+                    roomBubbleTableViewCell.progressView.hidden = YES;
+                    
+                    if (weakSelf)
+                    {
+                        typeof(self) self = weakSelf;
+                        
+                        self->currentAlert = nil;
+                        
+                        // Remove the outgoing message and its related cached file.
+                        [[NSFileManager defaultManager] removeItemAtPath:roomBubbleTableViewCell.bubbleData.attachment.cacheFilePath error:nil];
+                        [[NSFileManager defaultManager] removeItemAtPath:roomBubbleTableViewCell.bubbleData.attachment.thumbnailCachePath error:nil];
+                        
+                        // Cancel and remove the outgoing message
+                        [self.roomDataSource.room cancelSendingOperation:selectedEvent.eventId];
+                        [self.roomDataSource removeEventWithEventId:selectedEvent.eventId];
+                        
+                        [self cancelEventSelection];
+                    }
+                    
+                }]];
             }
         }
-
+        
         if (attachment.type != MXKAttachmentTypeSticker)
         {
             if (BuildSettings.messageDetailsAllowShare)
@@ -2626,24 +3135,24 @@
                 [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_cancel_download", @"Vector", nil)
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * action) {
-                                                                   
-                                                                   if (weakSelf)
-                                                                   {
-                                                                       typeof(self) self = weakSelf;
-                                                                       
-                                                                       [self cancelEventSelection];
-                                                                       
-                                                                       // Get again the loader
-                                                                       MXMediaLoader *loader = [MXMediaManager existingDownloaderWithIdentifier:downloadId];
-                                                                       if (loader)
-                                                                       {
-                                                                           [loader cancel];
-                                                                       }
-                                                                       // Hide the progress animation
-                                                                       roomBubbleTableViewCell.progressView.hidden = YES;
-                                                                   }
-                                                                   
-                                                               }]];
+                    
+                    if (weakSelf)
+                    {
+                        typeof(self) self = weakSelf;
+                        
+                        [self cancelEventSelection];
+                        
+                        // Get again the loader
+                        MXMediaLoader *loader = [MXMediaManager existingDownloaderWithIdentifier:downloadId];
+                        if (loader)
+                        {
+                            [loader cancel];
+                        }
+                        // Hide the progress animation
+                        roomBubbleTableViewCell.progressView.hidden = YES;
+                    }
+                    
+                }]];
             }
         }
         
@@ -2654,35 +3163,35 @@
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_redact", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action) {
-                                                               
-                                                               if (weakSelf)
-                                                               {
-                                                                   typeof(self) self = weakSelf;
-                                                                   
-                                                                   [self cancelEventSelection];
-                                                                   
-                                                                   [self startActivityIndicator];
-                                                                   
-                                                                   [self.roomDataSource.room redactEvent:selectedEvent.eventId reason:nil success:^{
-                                                                       
-                                                                       __strong __typeof(weakSelf)self = weakSelf;
-                                                                       [self stopActivityIndicator];
-                                                                       
-                                                                   } failure:^(NSError *error) {
-                                                                       
-                                                                       __strong __typeof(weakSelf)self = weakSelf;
-                                                                       [self stopActivityIndicator];
-                                                                       
-                                                                       NSLog(@"[RoomVC] Redact event (%@) failed", selectedEvent.eventId);
-                                                                       //Alert user
-                                                                       [[AppDelegate theDelegate] showErrorAsAlert:error];
-                                                                       
-                                                                   }];
-                                                               }
-                                                               
-                                                           }]];
+                
+                if (weakSelf)
+                {
+                    typeof(self) self = weakSelf;
+                    
+                    [self cancelEventSelection];
+                    
+                    [self startActivityIndicator];
+                    
+                    [self.roomDataSource.room redactEvent:selectedEvent.eventId reason:nil success:^{
+                        
+                        __strong __typeof(weakSelf)self = weakSelf;
+                        [self stopActivityIndicator];
+                        
+                    } failure:^(NSError *error) {
+                        
+                        __strong __typeof(weakSelf)self = weakSelf;
+                        [self stopActivityIndicator];
+                        
+                        NSLog(@"[RoomVC] Redact event (%@) failed", selectedEvent.eventId);
+                        //Alert user
+                        [[AppDelegate theDelegate] showErrorAsAlert:error];
+                        
+                    }];
+                }
+                
+            }]];
         }
-
+        
         if (BuildSettings.messageDetailsAllowPermalink)
         {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_permalink", @"Vector", nil)
@@ -2717,12 +3226,12 @@
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_reaction_history", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action) {
-                                                               
-                                                               [self cancelEventSelection];
-                                                               
-                                                               // Show reaction history
-                                                               [self showReactionHistoryForEventId:selectedEvent.eventId animated:YES];
-                                                           }]];
+                
+                [self cancelEventSelection];
+                
+                // Show reaction history
+                [self showReactionHistoryForEventId:selectedEvent.eventId animated:YES];
+            }]];
         }
         
         if (BuildSettings.messageDetailsAllowViewSource)
@@ -2742,8 +3251,8 @@
                 }
                 
             }]];
-        
-
+            
+            
             // Add "View Decrypted Source" for e2ee event we can decrypt
             if (selectedEvent.isEncrypted && selectedEvent.clearEvent)
             {
@@ -2765,7 +3274,7 @@
             }
         }
         
-        if (![selectedEvent.sender isEqualToString:self.mainSession.myUser.userId] && BuildSettings.messageDetailsAllowReportContent)
+        if (![selectedEvent.sender isEqualToString:self.mainSession.myUser.userId] && RiotSettings.shared.roomContextualMenuShowReportContentOption)
         {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_report", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault
@@ -2874,36 +3383,37 @@
                 
             }]];
         }
-        if (self.roomDataSource.room.summary.isEncrypted && BuildSettings.messageDetailsAllowViewEncryptionInformation)
+        
+        if (!isJitsiCallEvent && self.roomDataSource.room.summary.isEncrypted && BuildSettings.messageDetailsAllowViewEncryptionInformation)
         {
             [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_event_action_view_encryption", @"Vector", nil)
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * action) {
-                                                               
-                                                               if (weakSelf)
-                                                               {
-                                                                   typeof(self) self = weakSelf;
-                                                                   [self cancelEventSelection];
-                                                                   
-                                                                   // Display encryption details
-                                                                   [self showEncryptionInformation:selectedEvent];
-                                                               }
-                                                               
-                                                           }]];
+                
+                if (weakSelf)
+                {
+                    typeof(self) self = weakSelf;
+                    [self cancelEventSelection];
+                    
+                    // Display encryption details
+                    [self showEncryptionInformation:selectedEvent];
+                }
+                
+            }]];
         }
     }
     
     [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"cancel", @"Vector", nil)
                                                      style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction * action) {
-                                                       
-                                                       if (weakSelf)
-                                                       {
-                                                           typeof(self) self = weakSelf;
-                                                           [self hideContextualMenuAnimated:YES];
-                                                       }
-                                                       
-                                                   }]];
+        
+        if (weakSelf)
+        {
+            typeof(self) self = weakSelf;
+            [self hideContextualMenuAnimated:YES];
+        }
+        
+    }]];
     
     // Do not display empty action sheet
     if (currentAlert.actions.count > 1)
@@ -3010,7 +3520,7 @@
             {
                 NSString *eventId = arguments[1];
                 MXEvent *event = [self.roomDataSource eventWithEventId:eventId];
-
+                
                 if (event)
                 {
                     [self reRequestKeysAndShowExplanationAlert:event];
@@ -3087,7 +3597,7 @@
                             shouldDoAction = NO;
                             break;
                         }
-                    }                                        
+                    }
                 }
                     break;
                 case UITextItemInteractionPresentActions:
@@ -3127,7 +3637,7 @@
 
 - (void)selectEventWithId:(NSString*)eventId inputToolBarSendMode:(RoomInputToolbarViewSendMode)inputToolBarSendMode showTimestamp:(BOOL)showTimestamp
 {
-    [self setInputToolBarSendMode:inputToolBarSendMode];
+    [self setInputToolBarSendMode:inputToolBarSendMode forEventWithId:eventId];
     
     customizedRoomDataSource.showBubbleDateTimeOnSelection = showTimestamp;
     customizedRoomDataSource.selectedEventId = eventId;
@@ -3138,7 +3648,7 @@
 
 - (void)cancelEventSelection
 {
-    [self setInputToolBarSendMode:RoomInputToolbarViewSendModeSend];
+    [self setInputToolBarSendMode:RoomInputToolbarViewSendModeSend forEventWithId:nil];
     
     if (currentAlert)
     {
@@ -3252,78 +3762,183 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
-#pragma mark - RoomInputToolbarViewDelegate
+#pragma mark - VoIP
 
-- (void)roomInputToolbarViewPresentStickerPicker:(MXKRoomInputToolbarView*)toolbarView
+- (void)placeCallWithVideo:(BOOL)video
 {
-    // Search for the sticker picker widget in the user account
-    Widget *widget = [[WidgetManager sharedManager] userWidgets:self.roomDataSource.mxSession ofTypes:@[kWidgetTypeStickerPicker]].firstObject;
+    __weak __typeof(self) weakSelf = self;
+    
+    NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
+    
+    // Check app permissions first
+    [MXKTools checkAccessForCall:video
+     manualChangeMessageForAudio:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"microphone_access_not_granted_for_call"], appDisplayName]
+     manualChangeMessageForVideo:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"camera_access_not_granted_for_call"], appDisplayName]
+       showPopUpInViewController:self completionHandler:^(BOOL granted) {
+        
+        if (weakSelf)
+        {
+            typeof(self) self = weakSelf;
+            
+            if (granted)
+            {
+                if (video)
+                {
+                    [self placeCallWithVideo2:video];
+                }
+                else if (self.mainSession.callManager.supportsPSTN)
+                {
+                    [self showVoiceCallActionSheet];
+                }
+                else
+                {
+                    [self placeCallWithVideo2:NO];
+                }
+            }
+            else
+            {
+                NSLog(@"RoomViewController: Warning: The application does not have the permission to place the call");
+            }
+        }
+    }];
+}
 
-    if (widget)
+- (void)showVoiceCallActionSheet
+{
+    // Ask the user the kind of the call: voice or dialpad?
+    currentAlert = [UIAlertController alertControllerWithTitle:nil
+                                                       message:nil
+                                                preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    __weak typeof(self) weakSelf = self;
+    [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_place_voice_call", @"Vector", nil)
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action) {
+        
+        if (weakSelf)
+        {
+            typeof(self) self = weakSelf;
+            self->currentAlert = nil;
+            
+            [self placeCallWithVideo2:NO];
+        }
+        
+    }]];
+    
+    [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_open_dialpad", @"Vector", nil)
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action) {
+        
+        if (weakSelf)
+        {
+            typeof(self) self = weakSelf;
+            self->currentAlert = nil;
+            
+            [self openDialpad];
+        }
+        
+    }]];
+    
+    [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"]
+                                                     style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction * action) {
+        
+        if (weakSelf)
+        {
+            typeof(self) self = weakSelf;
+            self->currentAlert = nil;
+        }
+        
+    }]];
+    
+    [currentAlert popoverPresentationController].barButtonItem = self.navigationItem.rightBarButtonItems.firstObject;
+    [currentAlert popoverPresentationController].permittedArrowDirections = UIPopoverArrowDirectionUp;
+    [self presentViewController:currentAlert animated:YES completion:nil];
+}
+
+- (void)placeCallWithVideo2:(BOOL)video
+{
+    Widget *jitsiWidget = [customizedRoomDataSource jitsiWidget];
+    if (jitsiWidget)
     {
-        // Display the widget
-        [widget widgetUrl:^(NSString * _Nonnull widgetUrl) {
-
-            StickerPickerViewController *stickerPickerVC = [[StickerPickerViewController alloc] initWithUrl:widgetUrl forWidget:widget];
-
-            stickerPickerVC.roomDataSource = self.roomDataSource;
-
-            [self.navigationController pushViewController:stickerPickerVC animated:YES];
-        } failure:^(NSError * _Nonnull error) {
-
-            NSLog(@"[RoomVC] Cannot display widget %@", widget);
-            [[AppDelegate theDelegate] showErrorAsAlert:error];
-        }];
+        //  If there is already a Jitsi call, join it
+        [[AppDelegate theDelegate].callPresenter displayJitsiCallWithWidget:jitsiWidget];
     }
     else
     {
-        // The Sticker picker widget is not installed yet. Propose the user to install it
-        __weak typeof(self) weakSelf = self;
-
-        [currentAlert dismissViewControllerAnimated:NO completion:nil];
-
-        NSString *alertMessage = [NSString stringWithFormat:@"%@\n%@",
-                                  NSLocalizedStringFromTable(@"widget_sticker_picker_no_stickerpacks_alert", @"Vector", nil),
-                                  NSLocalizedStringFromTable(@"widget_sticker_picker_no_stickerpacks_alert_add_now", @"Vector", nil)
-                                  ];
-
-        currentAlert = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-
-        [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"no"]
-                                                         style:UIAlertActionStyleCancel
-                                                       handler:^(UIAlertAction * action)
+        if (self.roomDataSource.room.summary.membersCount.joined == 2 && self.roomDataSource.room.isDirect)
         {
-            if (weakSelf)
-            {
-                typeof(self) self = weakSelf;
-                self->currentAlert = nil;
-            }
-
-        }]];
-
-        [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"yes"]
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action)
+            //  Matrix call
+            [self.roomDataSource.room placeCallWithVideo:video success:nil failure:nil];
+        }
+        else
         {
-            if (weakSelf)
+            //  Jitsi call
+            if (self.canEditJitsiWidget)
             {
-                typeof(self) self = weakSelf;
-                self->currentAlert = nil;
-
-                // Show the sticker picker settings screen
-                IntegrationManagerViewController *modularVC = [[IntegrationManagerViewController alloc]
-                                                               initForMXSession:self.roomDataSource.mxSession
-                                                               inRoom:self.roomDataSource.roomId
-                                                               screen:[IntegrationManagerViewController screenForWidget:kWidgetTypeStickerPicker]
-                                                               widgetId:nil];
-
-                [self presentViewController:modularVC animated:NO completion:nil];
+                //  User has right to add a Jitsi widget
+                //  Create the Jitsi widget and open it directly
+                [self startActivityIndicator];
+                
+                MXWeakify(self);
+                
+                [[WidgetManager sharedManager] createJitsiWidgetInRoom:self.roomDataSource.room
+                                                             withVideo:video
+                                                               success:^(Widget *jitsiWidget)
+                 {
+                    MXStrongifyAndReturnIfNil(self);
+                    [self stopActivityIndicator];
+                    
+                    [[AppDelegate theDelegate].callPresenter displayJitsiCallWithWidget:jitsiWidget];
+                }
+                                                               failure:^(NSError *error)
+                 {
+                    MXStrongifyAndReturnIfNil(self);
+                    [self stopActivityIndicator];
+                    
+                    [self showJitsiErrorAsAlert:error];
+                }];
             }
-        }]];
-
-        [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCStickerPickerAlert"];
-        [self presentViewController:currentAlert animated:YES completion:nil];
+            else
+            {
+                //  Insufficient privileges to add a Jitsi widget
+                MXWeakify(self);
+                [currentAlert dismissViewControllerAnimated:NO completion:nil];
+                
+                currentAlert = [UIAlertController alertControllerWithTitle:[NSBundle mxk_localizedStringForKey:@"room_no_privileges_to_create_group_call"]
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+                
+                [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"]
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction * action)
+                                         {
+                    MXStrongifyAndReturnIfNil(self);
+                    self->currentAlert = nil;
+                }]];
+                
+                [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCCallAlert"];
+                [self presentViewController:currentAlert animated:YES completion:nil];
+            }
+        }
     }
+}
+
+- (void)hangupCall
+{
+    MXCall *callInRoom = [self.roomDataSource.mxSession.callManager callInRoom:self.roomDataSource.roomId];
+    if (callInRoom)
+    {
+        [callInRoom hangup];
+    }
+    else if ([[AppDelegate theDelegate].callPresenter.jitsiVC.widget.roomId isEqualToString:self.roomDataSource.roomId])
+    {
+        [[AppDelegate theDelegate].callPresenter endActiveJitsiCall];
+        [self reloadBubblesTable:YES];
+    }
+    
+    [self refreshActivitiesViewDisplay];
+    [self refreshRoomInputToolbar];
 }
 
 #pragma mark - MXKRoomInputToolbarViewDelegate
@@ -3331,150 +3946,13 @@
 - (void)roomInputToolbarView:(MXKRoomInputToolbarView*)toolbarView isTyping:(BOOL)typing
 {
     [super roomInputToolbarView:toolbarView isTyping:typing];
-
+    
     // Cancel potential selected event (to leave edition mode)
     NSString *selectedEventId = customizedRoomDataSource.selectedEventId;
     if (typing && selectedEventId && ![self.roomDataSource canReplyToEventWithId:selectedEventId])
     {
         [self cancelEventSelection];
     }
-}
-
-- (void)roomInputToolbarView:(MXKRoomInputToolbarView*)toolbarView placeCallWithVideo:(BOOL)video
-{
-    __weak __typeof(self) weakSelf = self;
-
-    NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
-
-    // Check app permissions first
-    [MXKTools checkAccessForCall:video
-     manualChangeMessageForAudio:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"microphone_access_not_granted_for_call"], appDisplayName]
-     manualChangeMessageForVideo:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"camera_access_not_granted_for_call"], appDisplayName]
-       showPopUpInViewController:self completionHandler:^(BOOL granted) {
-
-           if (weakSelf)
-           {
-               typeof(self) self = weakSelf;
-
-               if (granted)
-               {
-                   [self roomInputToolbarView:toolbarView placeCallWithVideo2:video];
-               }
-               else
-               {
-                   NSLog(@"RoomViewController: Warning: The application does not have the perssion to place the call");
-               }
-           }
-       }];
-}
-
-- (void)roomInputToolbarView:(MXKRoomInputToolbarView*)toolbarView placeCallWithVideo2:(BOOL)video
-{
-     __weak __typeof(self) weakSelf = self;
-
-    // If there is already a jitsi widget, join it
-    Widget *jitsiWidget = [customizedRoomDataSource jitsiWidget];
-    if (jitsiWidget)
-    {
-        [[AppDelegate theDelegate] displayJitsiViewControllerWithWidget:jitsiWidget andVideo:video];
-    }
-
-    // If enabled, create the conf using jitsi widget and open it directly
-    else if (RiotSettings.shared.createConferenceCallsWithJitsi
-             && self.roomDataSource.room.summary.membersCount.joined > 2)
-    {
-        [self startActivityIndicator];
-
-        [[WidgetManager sharedManager] createJitsiWidgetInRoom:self.roomDataSource.room
-                                                     withVideo:video
-                                                       success:^(Widget *jitsiWidget)
-         {
-             if (weakSelf)
-             {
-                 typeof(self) self = weakSelf;
-                 [self stopActivityIndicator];
-
-                 [[AppDelegate theDelegate] displayJitsiViewControllerWithWidget:jitsiWidget andVideo:video];
-             }
-         }
-                                                       failure:^(NSError *error)
-         {
-             if (weakSelf)
-             {
-                 typeof(self) self = weakSelf;
-                 [self stopActivityIndicator];
-
-                 [self showJitsiErrorAsAlert:error];
-             }
-         }];
-    }
-    // Classic conference call is not supported in encrypted rooms
-    else if (self.roomDataSource.room.summary.isEncrypted && self.roomDataSource.room.summary.membersCount.joined > 2)
-    {
-        [currentAlert dismissViewControllerAnimated:NO completion:nil];
-
-        currentAlert = [UIAlertController alertControllerWithTitle:[NSBundle mxk_localizedStringForKey:@"room_no_conference_call_in_encrypted_rooms"]  message:nil preferredStyle:UIAlertControllerStyleAlert];
-
-        [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"]
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action)
-                                 {
-                                     if (weakSelf)
-                                     {
-                                         typeof(self) self = weakSelf;
-                                         self->currentAlert = nil;
-                                     }
-
-                                 }]];
-
-        [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCCallAlert"];
-        [self presentViewController:currentAlert animated:YES completion:nil];
-    }
-
-    // In case of conference call, check that the user has enough power level
-    else if (self.roomDataSource.room.summary.membersCount.joined > 2 &&
-             ![MXCallManager canPlaceConferenceCallInRoom:self.roomDataSource.room roomState:self.roomDataSource.roomState])
-    {
-        [currentAlert dismissViewControllerAnimated:NO completion:nil];
-
-        currentAlert = [UIAlertController alertControllerWithTitle:[NSBundle mxk_localizedStringForKey:@"room_no_power_to_create_conference_call"]  message:nil preferredStyle:UIAlertControllerStyleAlert];
-
-        [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"]
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action)
-                                 {
-                                     if (weakSelf)
-                                     {
-                                         typeof(self) self = weakSelf;
-                                         self->currentAlert = nil;
-                                     }
-                                 }]];
-
-        [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCCallAlert"];
-        [self presentViewController:currentAlert animated:YES completion:nil];
-    }
-
-    // Classic 1:1 or group call can be done
-    else
-    {
-        [self.roomDataSource.room placeCallWithVideo:video success:nil failure:nil];
-    }
-}
-
-- (void)roomInputToolbarViewHangupCall:(MXKRoomInputToolbarView *)toolbarView
-{
-    MXCall *callInRoom = [self.roomDataSource.mxSession.callManager callInRoom:self.roomDataSource.roomId];
-    if (callInRoom)
-    {
-        [callInRoom hangup];
-    }
-    else if ([[AppDelegate theDelegate].jitsiViewController.widget.roomId isEqualToString:self.roomDataSource.roomId])
-    {
-        [[AppDelegate theDelegate].jitsiViewController hangup];
-    }
-
-    [self refreshActivitiesViewDisplay];
-    [self refreshRoomInputToolbar];
 }
 
 - (void)roomInputToolbarView:(MXKRoomInputToolbarView*)toolbarView heightDidChanged:(CGFloat)height completion:(void (^)(BOOL finished))completion
@@ -3499,32 +3977,16 @@
             if (!toolbarView.placeholder)
             {
                 // Restore the placeholder if any
-                toolbarView.placeholder =  savedInputToolbarPlaceholder.length ? savedInputToolbarPlaceholder : nil;
+                toolbarView.placeholder = self->savedInputToolbarPlaceholder.length ? self->savedInputToolbarPlaceholder : nil;
             }
-            savedInputToolbarPlaceholder = nil;
+            self->savedInputToolbarPlaceholder = nil;
         }];
     }
 }
 
-- (void)roomInputToolbarViewDidTapFileUpload:(MXKRoomInputToolbarView *)toolbarView
+- (void)roomInputToolbarViewDidTapCancel:(MXKRoomInputToolbarView*)toolbarView
 {
-    MXKDocumentPickerPresenter *documentPickerPresenter = [MXKDocumentPickerPresenter new];
-    documentPickerPresenter.delegate = self;
-                                      
-    NSArray<MXKUTI*> *allowedUTIs = @[MXKUTI.data];
-    [documentPickerPresenter presentDocumentPickerWith:allowedUTIs from:self animated:YES completion:nil];
-    
-    self.documentPickerPresenter = documentPickerPresenter;
-}
-
-- (void)roomInputToolbarViewDidTapCamera:(MXKRoomInputToolbarView*)toolbarView
-{
-    [self showCameraControllerAnimated:YES];
-}
-
-- (void)roomInputToolbarViewDidTapMediaLibrary:(MXKRoomInputToolbarView*)toolbarView
-{
-    [self showMediaPickerAnimated:YES];
+    [self cancelEventSelection];
 }
 
 #pragma mark - RoomParticipantsViewControllerDelegate
@@ -3548,50 +4010,54 @@
 
 #pragma mark - Action
 
+- (IBAction)onVoiceCallPressed:(id)sender
+{
+    if (self.isCallActive)
+    {
+        [self hangupCall];
+    }
+    else
+    {
+        [self placeCallWithVideo:NO];
+    }
+}
+
+- (IBAction)onVideoCallPressed:(id)sender
+{
+    [self placeCallWithVideo:YES];
+}
+
+- (IBAction)onIntegrationsPressed:(id)sender
+{
+    WidgetPickerViewController *widgetPicker = [[WidgetPickerViewController alloc] initForMXSession:self.roomDataSource.mxSession
+                                                                                             inRoom:self.roomDataSource.roomId];
+    
+    [widgetPicker showInViewController:self];
+}
+
+- (void)scrollToBottomAction:(id)sender
+{
+    [self goBackToLive];
+}
+
 - (IBAction)onButtonPressed:(id)sender
 {
-    // Search button
-    if (sender == self.navigationItem.rightBarButtonItem)
-    {
-        [self performSegueWithIdentifier:@"showRoomSearch" sender:self];
-    }
-    // Matrix Apps button
-    else if (self.navigationItem.rightBarButtonItems.count == 2 && sender == self.navigationItem.rightBarButtonItems[1])
-    {
-        if ([self widgetsCount:NO])
-        {
-            WidgetPickerViewController *widgetPicker = [[WidgetPickerViewController alloc] initForMXSession:self.roomDataSource.mxSession
-                                                                                                     inRoom:self.roomDataSource.roomId];
-
-            [widgetPicker showInViewController:self];
-        }
-        else
-        {
-            // No widgets -> Directly show the integration manager
-            IntegrationManagerViewController *modularVC = [[IntegrationManagerViewController alloc] initForMXSession:self.roomDataSource.mxSession
-                                                                                                              inRoom:self.roomDataSource.roomId
-                                                                                                              screen:kIntegrationManagerMainScreen
-                                                                                                            widgetId:nil];
-
-            [self presentViewController:modularVC animated:NO completion:nil];
-        }
-    }
-    else if (sender == self.jumpToLastUnreadButton)
+    if (sender == self.jumpToLastUnreadButton)
     {
         // Dismiss potential keyboard.
         [self dismissKeyboard];
-
+        
         // Jump to the last unread event by using a temporary room data source initialized with the last unread event id.
         MXWeakify(self);
         [RoomDataSource loadRoomDataSourceWithRoomId:self.roomDataSource.roomId initialEventId:self.roomDataSource.room.accountData.readMarkerEventId andMatrixSession:self.mainSession onComplete:^(id roomDataSource) {
             MXStrongifyAndReturnIfNil(self);
-
+            
             [roomDataSource finalizeInitialization];
-
+            
             // Center the bubbles table content on the bottom of the read marker event in order to display correctly the read marker view.
             self.centerBubblesTableViewContentOnTheInitialEventBottom = YES;
             [self displayRoom:roomDataSource];
-
+            
             // Give the data source ownership to the room view controller.
             self.hasRoomDataSourceOwnership = YES;
         }];
@@ -3754,9 +4220,7 @@
     
     if (tappedView == titleView.titleMask)
     {
-        self.roomInfoCoordinatorBridgePresenter = [[RoomInfoCoordinatorBridgePresenter alloc] initWithSession:self.roomDataSource.mxSession room:self.roomDataSource.room];
-        self.roomInfoCoordinatorBridgePresenter.delegate = self;
-        [self.roomInfoCoordinatorBridgePresenter presentFrom:self animated:YES];
+        [self showRoomInfo];
     }
     else if (tappedView == previewHeader.rightButton)
     {
@@ -3789,12 +4253,12 @@
                         MXWeakify(self);
                         [RoomDataSource loadRoomDataSourceWithRoomId:self.roomDataSource.roomId initialEventId:eventId andMatrixSession:self.mainSession onComplete:^(id roomDataSource) {
                             MXStrongifyAndReturnIfNil(self);
-
+                            
                             [roomDataSource finalizeInitialization];
                             ((RoomDataSource*)roomDataSource).markTimelineInitialEvent = YES;
-
+                            
                             [self displayRoom:roomDataSource];
-
+                            
                             self.hasRoomDataSourceOwnership = YES;
                         }];
                     }
@@ -3868,7 +4332,7 @@
             MXWeakify(self);
             [self.roomDataSource.room liveTimeline:^(MXEventTimeline *liveTimeline) {
                 MXStrongifyAndReturnIfNil(self);
-
+                
                 [liveTimeline removeListener:self->typingNotifListener];
                 self->typingNotifListener = nil;
             }];
@@ -3886,7 +4350,7 @@
         MXWeakify(self);
         self->typingNotifListener = [self.roomDataSource.room listenToEventsOfTypes:@[kMXEventTypeStringTypingNotification] onEvent:^(MXEvent *event, MXTimelineDirection direction, MXRoomState *roomState) {
             MXStrongifyAndReturnIfNil(self);
-
+            
             // Handle only live events
             if (direction == MXTimelineDirectionForwards)
             {
@@ -3898,7 +4362,7 @@
                 {
                     [typingUsers removeObjectAtIndex:index];
                 }
-
+                
                 // Ignore this notification if both arrays are empty
                 if (self->currentTypingUsers.count || typingUsers.count)
                 {
@@ -3907,7 +4371,7 @@
                 }
             }
         }];
-
+        
         // Retrieve the current typing users list
         NSMutableArray *typingUsers = [NSMutableArray arrayWithArray:self.roomDataSource.room.typingUsers];
         // Remove typing info for the current user
@@ -3923,52 +4387,53 @@
 
 - (void)refreshTypingNotification
 {
-    if ([self.activitiesView isKindOfClass:RoomActivitiesView.class])
-    {
-        // Prepare here typing notification
-        NSString* text = nil;
-        NSUInteger count = currentTypingUsers.count;
-        
-        // get the room member names
-        NSMutableArray *names = [[NSMutableArray alloc] init];
-        
-        // keeps the only the first two users
-        for(int i = 0; i < MIN(count, 2); i++)
+    RoomDataSource *roomDataSource = (RoomDataSource *) self.roomDataSource;
+    BOOL needsUpdate = currentTypingUsers.count != roomDataSource.currentTypingUsers.count;
+
+    NSMutableArray *typingUsers = [NSMutableArray new];
+    for (NSUInteger i = 0 ; i < currentTypingUsers.count ; i++) {
+        NSString *userId = currentTypingUsers[i];
+        MXRoomMember* member = [self.roomDataSource.roomState.members memberWithUserId:userId];
+        TypingUserInfo *userInfo;
+        if (member)
         {
-            NSString* name = currentTypingUsers[i];
-            
-            MXRoomMember* member = [self.roomDataSource.roomState.members memberWithUserId:name];
-            
-            if (member && member.displayname.length)
-            {
-                name = member.displayname;
-            }
-            
-            // sanity check
-            if (name)
-            {
-                [names addObject:name];
-            }
-        }
-        
-        if (0 == names.count)
-        {
-            // something to do ?
-        }
-        else if (1 == names.count)
-        {
-            text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"room_one_user_is_typing", @"Vector", nil), names[0]];
-        }
-        else if (2 == names.count)
-        {
-            text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"room_two_users_are_typing", @"Vector", nil), names[0], names[1]];
+            userInfo = [[TypingUserInfo alloc] initWithMember: member];
         }
         else
         {
-            text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"room_many_users_are_typing", @"Vector", nil), names[0], names[1]];
+            userInfo = [[TypingUserInfo alloc] initWithUserId: userId];
+        }
+        [typingUsers addObject:userInfo];
+        needsUpdate = needsUpdate || userInfo.userId != ((MXRoomMember *) roomDataSource.currentTypingUsers[i]).userId;
+    }
+
+    if (needsUpdate)
+    {
+//        BOOL needsReload = roomDataSource.currentTypingUsers == nil;
+        // Quick fix for https://github.com/vector-im/element-ios/issues/4230
+        BOOL needsReload = YES;
+        roomDataSource.currentTypingUsers = typingUsers;
+        if (needsReload)
+        {
+            [self.bubblesTableView reloadData];
+        }
+        else
+        {
+            NSInteger count = [self.bubblesTableView numberOfRowsInSection:0];
+            NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:count - 1 inSection:0];
+            [self.bubblesTableView reloadRowsAtIndexPaths:@[lastIndexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
         
-        [((RoomActivitiesView*) self.activitiesView) displayTypingNotification:text];
+        if (self.isScrollToBottomHidden
+            && !self.bubblesTableView.isDragging
+            && !self.bubblesTableView.isDecelerating)
+        {
+            NSInteger count = [self.bubblesTableView numberOfRowsInSection:0];
+            if (count)
+            {
+                [self scrollBubblesTableViewToBottomAnimated:YES];
+            }
+        }
     }
 }
 
@@ -4062,17 +4527,20 @@
 
 - (void)listenWidgetNotifications
 {
+    MXWeakify(self);
+    
     kMXKWidgetManagerDidUpdateWidgetObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kWidgetManagerDidUpdateWidgetNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
-
+        
+        MXStrongifyAndReturnIfNil(self);
+        
         Widget *widget = notif.object;
         if (widget.mxSession == self.roomDataSource.mxSession
-            && [widget.roomId isEqualToString:customizedRoomDataSource.roomId])
+            && [widget.roomId isEqualToString:self->customizedRoomDataSource.roomId])
         {
-            // Jitsi conference widget existence is shown in the bottom bar
-            // Update the bar
-            [self refreshActivitiesViewDisplay];
-            [self refreshRoomInputToolbar];
+            //  Call button update
             [self refreshRoomTitle];
+            //  Remove Jitsi widget view update
+            [self refreshRemoveJitsiWidgetView];
         }
     }];
 }
@@ -4085,10 +4553,10 @@
         error = [NSError errorWithDomain:error.domain
                                     code:error.code
                                 userInfo:@{
-                                           NSLocalizedDescriptionKey: NSLocalizedStringFromTable(@"room_conference_call_no_power", @"Vector", nil)
-                                           }];
+                                    NSLocalizedDescriptionKey: NSLocalizedStringFromTable(@"room_conference_call_no_power", @"Vector", nil)
+                                }];
     }
-
+    
     // Alert user
     [[AppDelegate theDelegate] showErrorAsAlert:error];
 }
@@ -4102,7 +4570,7 @@
     {
         widgetsCount += [[WidgetManager sharedManager] userWidgets:self.roomDataSource.room.mxSession].count;
     }
-
+    
     return widgetsCount;
 }
 
@@ -4113,38 +4581,39 @@
     if ([self.activitiesView isKindOfClass:RoomActivitiesView.class])
     {
         RoomActivitiesView *roomActivitiesView = (RoomActivitiesView*)self.activitiesView;
-
+        
         // Reset gesture recognizers
         while (roomActivitiesView.gestureRecognizers.count)
         {
             [roomActivitiesView removeGestureRecognizer:roomActivitiesView.gestureRecognizers[0]];
         }
-
-        Widget *jitsiWidget = [customizedRoomDataSource jitsiWidget];
-
+        
         if ([self.roomDataSource.mxSession.syncError.errcode isEqualToString:kMXErrCodeStringResourceLimitExceeded])
         {
+            self.activitiesViewExpanded = YES;
             [roomActivitiesView showResourceLimitExceededError:self.roomDataSource.mxSession.syncError.userInfo onAdminContactTapped:^(NSURL *adminContactURL) {
                 [[UIApplication sharedApplication] vc_open:adminContactURL completionHandler:^(BOOL success) {
-                   if (!success)
-                   {
+                    if (!success)
+                    {
                         NSLog(@"[RoomVC] refreshActivitiesViewDisplay: adminContact(%@) cannot be opened", adminContactURL);
-                   }
+                    }
                 }];
             }];
         }
         else if ([AppDelegate theDelegate].isOffline)
         {
+            self.activitiesViewExpanded = YES;
             [roomActivitiesView displayNetworkErrorNotification:NSLocalizedStringFromTable(@"room_offline_notification", @"Vector", nil)];
         }
         else if (customizedRoomDataSource.roomState.isObsolete)
         {
+            self.activitiesViewExpanded = YES;
             MXWeakify(self);
             [roomActivitiesView displayRoomReplacementWithRoomLinkTappedHandler:^{
                 MXStrongifyAndReturnIfNil(self);
-
+                
                 MXEvent *stoneTombEvent = [self->customizedRoomDataSource.roomState stateEventsWithType:kMXEventTypeStringRoomTombStone].lastObject;
-
+                
                 NSString *replacementRoomId = self->customizedRoomDataSource.roomState.tombStoneContent.replacementRoomId;
                 if ([self.roomDataSource.mxSession roomWithRoomId:replacementRoomId])
                 {
@@ -4156,20 +4625,20 @@
                     // Else auto join it via the server that sent the event
                     NSLog(@"[RoomVC] Auto join an upgraded room: %@ -> %@. Sender: %@",                              self->customizedRoomDataSource.roomState.roomId,
                           replacementRoomId, stoneTombEvent.sender);
-                          
+                    
                     NSString *viaSenderServer = [MXTools serverNameInMatrixIdentifier:stoneTombEvent.sender];
-
+                    
                     if (viaSenderServer)
                     {
                         [self startActivityIndicator];
                         [self.roomDataSource.mxSession joinRoom:replacementRoomId viaServers:@[viaSenderServer] success:^(MXRoom *room) {
                             [self stopActivityIndicator];
-
+                            
                             [[AppDelegate theDelegate] showRoom:replacementRoomId andEventId:nil withMatrixSession:self.roomDataSource.mxSession];
-
+                            
                         } failure:^(NSError *error) {
                             [self stopActivityIndicator];
-
+                            
                             NSLog(@"[RoomVC] Failed to join an upgraded room. Error: %@",
                                   error);
                             [[AppDelegate theDelegate] showErrorAsAlert:error];
@@ -4178,100 +4647,6 @@
                 }
             }];
         }
-        else if (customizedRoomDataSource.roomState.isOngoingConferenceCall)
-        {
-            // Show the "Ongoing conference call" banner only if the user is not in the conference
-            MXCall *callInRoom = [self.roomDataSource.mxSession.callManager callInRoom:self.roomDataSource.roomId];
-            if (callInRoom && callInRoom.state != MXCallStateEnded)
-            {
-                if ([self checkUnsentMessages] == NO)
-                {
-                    [self refreshTypingNotification];
-                }
-            }
-            else
-            {
-                [roomActivitiesView displayOngoingConferenceCall:^(BOOL video) {
-                    
-                    NSLog(@"[RoomVC] onOngoingConferenceCallPressed");
-                    
-                    // Make sure there is not yet a call
-                    if (![customizedRoomDataSource.mxSession.callManager callInRoom:customizedRoomDataSource.roomId])
-                    {
-                        [customizedRoomDataSource.room placeCallWithVideo:video success:nil failure:nil];
-                    }
-                } onClosePressed:nil];
-            }
-        }
-        else if (jitsiWidget)
-        {
-            // The room has an active jitsi widget
-            // Show it in the banner if the user is not already in
-            LegacyAppDelegate *appDelegate = [AppDelegate theDelegate];
-            if ([appDelegate.jitsiViewController.widget.widgetId isEqualToString:jitsiWidget.widgetId])
-            {
-                if ([self checkUnsentMessages] == NO)
-                {
-                    [self refreshTypingNotification];
-                }
-            }
-            else
-            {
-                [roomActivitiesView displayOngoingConferenceCall:^(BOOL video) {
-
-                    NSLog(@"[RoomVC] onOngoingConferenceCallPressed (jitsi)");
-
-                    __weak __typeof(self) weakSelf = self;
-                    NSString *appDisplayName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
-
-                    // Check app permissions first
-                    [MXKTools checkAccessForCall:video
-                     manualChangeMessageForAudio:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"microphone_access_not_granted_for_call"], appDisplayName]
-                     manualChangeMessageForVideo:[NSString stringWithFormat:[NSBundle mxk_localizedStringForKey:@"camera_access_not_granted_for_call"], appDisplayName]
-                       showPopUpInViewController:self completionHandler:^(BOOL granted) {
-
-                           if (weakSelf)
-                           {
-                               if (granted)
-                               {
-                                   // Present the Jitsi view controller
-                                   [appDelegate displayJitsiViewControllerWithWidget:jitsiWidget andVideo:video];
-                               }
-                               else
-                               {
-                                   NSLog(@"[RoomVC] onOngoingConferenceCallPressed: Warning: The application does not have the perssion to join the call");
-                               }
-                           }
-                       }];
-
-                } onClosePressed:^{
-
-                    [self startActivityIndicator];
-
-                    // Close the widget
-                    __weak __typeof(self) weakSelf = self;
-                    [[WidgetManager sharedManager] closeWidget:jitsiWidget.widgetId inRoom:self.roomDataSource.room success:^{
-
-                        if (weakSelf)
-                        {
-                            typeof(self) self = weakSelf;
-                            [self stopActivityIndicator];
-
-                            // The banner will automatically leave thanks to kWidgetManagerDidUpdateWidgetNotification
-                        }
-
-                    } failure:^(NSError *error) {
-                        if (weakSelf)
-                        {
-                            typeof(self) self = weakSelf;
-
-                            [self showJitsiErrorAsAlert:error];
-                            [self stopActivityIndicator];
-                        }
-                    }];
-                }];
-            }
-        }
         else if ([self checkUnsentMessages] == NO)
         {
             // Show "scroll to bottom" icon when the most recent message is not visible,
@@ -4279,35 +4654,38 @@
             // Note: we check if `currentEventIdAtTableBottom` is set to know whether the table has been rendered at least once.
             if (!self.roomDataSource.isLive || (currentEventIdAtTableBottom && [self isBubblesTableScrollViewAtTheBottom] == NO))
             {
-                // Retrieve the unread messages count
-                NSUInteger unreadCount = self.roomDataSource.room.summary.localUnreadEventCount;
-                
-                if (unreadCount == 0)
+                if (self.roomDataSource.room)
                 {
-                    // Refresh the typing notification here
-                    // We will keep visible this notification (if any) beside the "scroll to bottom" icon.
-                    [self refreshTypingNotification];
+                    // Retrieve the unread messages count
+                    NSUInteger unreadCount = self.roomDataSource.room.summary.localUnreadEventCount;
+                    
+                    self.scrollToBottomBadgeLabel.text = unreadCount ? [NSString stringWithFormat:@"%lu", unreadCount] : nil;
+                    self.scrollToBottomHidden = NO;
                 }
-                
-                [roomActivitiesView displayScrollToBottomIcon:unreadCount onIconTapGesture:^{
-                    
-                    [self goBackToLive];
-                    
-                }];
+                else
+                {
+                    //  will be here for left rooms
+                    self.scrollToBottomBadgeLabel.text = nil;
+                    self.scrollToBottomHidden = YES;
+                }
             }
             else if (serverNotices.usageLimit && serverNotices.usageLimit.isServerNoticeUsageLimit)
             {
-                [roomActivitiesView showResourceUsageLimitNotice:serverNotices.usageLimit onAdminContactTapped:^(NSURL *adminContactURL) {                    
+                self.scrollToBottomHidden = YES;
+                self.activitiesViewExpanded = YES;
+                [roomActivitiesView showResourceUsageLimitNotice:serverNotices.usageLimit onAdminContactTapped:^(NSURL *adminContactURL) {
                     [[UIApplication sharedApplication] vc_open:adminContactURL completionHandler:^(BOOL success) {
-                       if (!success)
-                       {
+                        if (!success)
+                        {
                             NSLog(@"[RoomVC] refreshActivitiesViewDisplay: adminContact(%@) cannot be opened", adminContactURL);
-                       }
+                        }
                     }];
                 }];
             }
             else
             {
+                self.scrollToBottomHidden = YES;
+                self.activitiesViewExpanded = NO;
                 [self refreshTypingNotification];
             }
         }
@@ -4334,22 +4712,22 @@
     {
         // Switch back to the room live timeline managed by MXKRoomDataSourceManager
         MXKRoomDataSourceManager *roomDataSourceManager = [MXKRoomDataSourceManager sharedManagerForMatrixSession:self.mainSession];
-
+        
         MXWeakify(self);
         [roomDataSourceManager roomDataSourceForRoom:self.roomDataSource.roomId create:YES onComplete:^(MXKRoomDataSource *roomDataSource) {
             MXStrongifyAndReturnIfNil(self);
-
+            
             // Scroll to bottom the bubble history on the display refresh.
             self->shouldScrollToBottomOnTableRefresh = YES;
-
+            
             [self displayRoom:roomDataSource];
-
+            
             // The room view controller do not have here the data source ownership.
             self.hasRoomDataSourceOwnership = NO;
-
+            
             [self refreshActivitiesViewDisplay];
             [self refreshJumpToLastUnreadBannerDisplay];
-
+            
             if (self.saveProgressTextInput)
             {
                 // Restore the potential message partially typed before jump to last unread messages.
@@ -4364,10 +4742,15 @@
 - (void)refreshMissedDiscussionsCount:(BOOL)force
 {
     // Ignore this action when no room is displayed
-    if (!self.roomDataSource || !missedDiscussionsBarButtonCustomView)
+    if (!self.roomDataSource || !missedDiscussionsBadgeLabel
+        || [UIDevice currentDevice].userInterfaceIdiom != UIUserInterfaceIdiomPhone
+        || ([[UIScreen mainScreen] nativeBounds].size.height > 2532 && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)))
     {
+        self.showMissedDiscussionsBadge = NO;
         return;
     }
+    
+    self.showMissedDiscussionsBadge = YES;
     
     NSUInteger highlightCount = 0;
     NSUInteger missedCount = [[AppDelegate theDelegate].masterTabBarController missedDiscussionsCount];
@@ -4402,8 +4785,6 @@
         missedDiscussionsCount = missedCount;
         missedHighlightCount = highlightCount;
         
-        NSMutableArray *leftBarButtonItems = [NSMutableArray arrayWithArray: self.navigationItem.leftBarButtonItems];
-        
         if (missedCount)
         {
             // Refresh missed discussions count label
@@ -4416,65 +4797,12 @@
                 missedDiscussionsBadgeLabel.text = [NSString stringWithFormat:@"%tu", missedCount];
             }
             
-            [missedDiscussionsBadgeLabel sizeToFit];
-            
-            // Update the label background view frame
-            CGRect frame = missedDiscussionsBadgeLabelBgView.frame;
-            frame.size.width = round(missedDiscussionsBadgeLabel.frame.size.width + 18);
-            
-            if ([GBDeviceInfo deviceInfo].osVersion.major < 11)
-            {
-                // Consider the main navigation controller if the current view controller is embedded inside a split view controller.
-                UINavigationController *mainNavigationController = self.navigationController;
-                if (self.splitViewController.isCollapsed && self.splitViewController.viewControllers.count)
-                {
-                    mainNavigationController = self.splitViewController.viewControllers.firstObject;
-                }
-                UINavigationItem *backItem = mainNavigationController.navigationBar.backItem;
-                UIBarButtonItem *backButton = backItem.backBarButtonItem;
-                
-                if (backButton && !backButton.title.length)
-                {
-                    // Shift the badge on the left to be close the back icon
-                    frame.origin.x = ([GBDeviceInfo deviceInfo].displayInfo.display > GBDeviceDisplay4Inch ? -35 : -25);
-                }
-                else
-                {
-                    frame.origin.x = 0;
-                }
-            }
-            
-            // Caution: set label background view frame only in case of changes to prevent from looping on 'viewDidLayoutSubviews'.
-            if (!CGRectEqualToRect(missedDiscussionsBadgeLabelBgView.frame, frame))
-            {
-                missedDiscussionsBadgeLabelBgView.frame = frame;
-            }
-            
-            // Set the right background color
-            if (highlightCount)
-            {
-                missedDiscussionsBadgeLabelBgView.backgroundColor = ThemeService.shared.theme.noticeColor;
-            }
-            else
-            {
-                missedDiscussionsBadgeLabelBgView.backgroundColor = ThemeService.shared.theme.noticeSecondaryColor;
-            }
-            
-            if (!missedDiscussionsButton || [leftBarButtonItems indexOfObject:missedDiscussionsButton] == NSNotFound)
-            {
-                missedDiscussionsButton = [[UIBarButtonItem alloc] initWithCustomView:missedDiscussionsBarButtonCustomView];
-                
-                // Add it in left bar items
-                [leftBarButtonItems addObject:missedDiscussionsButton];
-            }
+            missedDiscussionsDotView.alpha = highlightCount == 0 ? 0 : 1;
         }
-        else if (missedDiscussionsButton)
+        else
         {
-            [leftBarButtonItems removeObject:missedDiscussionsButton];
-            missedDiscussionsButton = nil;
+            missedDiscussionsBadgeLabel.text = nil;
         }
-        
-        self.navigationItem.leftBarButtonItems = leftBarButtonItems;
     }
 }
 
@@ -4482,36 +4810,19 @@
 
 -(BOOL)checkUnsentMessages
 {
-    BOOL hasUnsent = NO;
-    BOOL hasUnsentDueToUnknownDevices = NO;
-    
+    RoomSentStatus sentStatus = RoomSentStatusOk;
     if ([self.activitiesView isKindOfClass:RoomActivitiesView.class])
     {
-        NSArray<MXEvent*> *outgoingMsgs = self.roomDataSource.room.outgoingMessages;
+        sentStatus = self.roomDataSource.room.sentStatus;
         
-        for (MXEvent *event in outgoingMsgs)
+        if (sentStatus != RoomSentStatusOk)
         {
-            if (event.sentState == MXEventSentStateFailed)
-            {
-                hasUnsent = YES;
-                
-                // Check if the error is due to unknown devices
-                if ([event.sentError.domain isEqualToString:MXEncryptingErrorDomain]
-                    && event.sentError.code == MXEncryptingErrorUnknownDeviceCode)
-                {
-                    hasUnsentDueToUnknownDevices = YES;
-                    break;
-                }
-            }
-        }
-        
-        if (hasUnsent)
-        {
-            NSString *notification = hasUnsentDueToUnknownDevices ?
+            NSString *notification = sentStatus == RoomSentStatusSentFailedDueToUnknownDevices ?
             NSLocalizedStringFromTable(@"room_unsent_messages_unknown_devices_notification", @"Vector", nil) :
             NSLocalizedStringFromTable(@"room_unsent_messages_notification", @"Vector", nil);
             
             RoomActivitiesView *roomActivitiesView = (RoomActivitiesView*) self.activitiesView;
+            self.activitiesViewExpanded = YES;
             [roomActivitiesView displayUnsentMessagesNotification:notification withResendLink:^{
                 
                 [self resendAllUnsentMessages];
@@ -4533,40 +4844,40 @@
                 [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_resend_unsent_messages", @"Vector", nil)
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * action) {
-                                                                   
-                                                                   if (weakSelf)
-                                                                   {
-                                                                       typeof(self) self = weakSelf;
-                                                                       [self resendAllUnsentMessages];
-                                                                       self->currentAlert = nil;
-                                                                   }
-                                                                   
-                                                               }]];
+                    
+                    if (weakSelf)
+                    {
+                        typeof(self) self = weakSelf;
+                        [self resendAllUnsentMessages];
+                        self->currentAlert = nil;
+                    }
+                    
+                }]];
                 
                 [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"room_delete_unsent_messages", @"Vector", nil)
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction * action) {
-                                                                   
-                                                                   if (weakSelf)
-                                                                   {
-                                                                       typeof(self) self = weakSelf;
-                                                                       [self cancelAllUnsentMessages];
-                                                                       self->currentAlert = nil;
-                                                                   }
-                                                                   
-                                                               }]];
+                    
+                    if (weakSelf)
+                    {
+                        typeof(self) self = weakSelf;
+                        [self cancelAllUnsentMessages];
+                        self->currentAlert = nil;
+                    }
+                    
+                }]];
                 
                 [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"cancel", @"Vector", nil)
                                                                  style:UIAlertActionStyleCancel
                                                                handler:^(UIAlertAction * action) {
-                                                                   
-                                                                   if (weakSelf)
-                                                                   {
-                                                                       typeof(self) self = weakSelf;
-                                                                       self->currentAlert = nil;
-                                                                   }
-                                                                   
-                                                               }]];
+                    
+                    if (weakSelf)
+                    {
+                        typeof(self) self = weakSelf;
+                        self->currentAlert = nil;
+                    }
+                    
+                }]];
                 
                 [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCUnsentMessagesMenuAlert"];
                 [currentAlert popoverPresentationController].sourceView = roomActivitiesView;
@@ -4577,7 +4888,7 @@
         }
     }
     
-    return hasUnsent;
+    return sentStatus != RoomSentStatusOk;
 }
 
 - (void)eventDidChangeSentState:(NSNotification *)notif
@@ -4618,39 +4929,39 @@
         [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"unknown_devices_verify"]
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {
-                                                           
-                                                           if (weakSelf)
-                                                           {
-                                                               typeof(self) self = weakSelf;
-                                                               self->currentAlert = nil;
-                                                               
-                                                               [self performSegueWithIdentifier:@"showUnknownDevices" sender:self];
-                                                           }
-                                                           
-                                                       }]];
+            
+            if (weakSelf)
+            {
+                typeof(self) self = weakSelf;
+                self->currentAlert = nil;
+                
+                [self performSegueWithIdentifier:@"showUnknownDevices" sender:self];
+            }
+            
+        }]];
         
         [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"unknown_devices_send_anyway"]
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {
-                                                           
-                                                           if (weakSelf)
-                                                           {
-                                                               typeof(self) self = weakSelf;
-                                                               self->currentAlert = nil;
-                                                               
-                                                               // Acknowledge the existence of all devices
-                                                               [self startActivityIndicator];
-                                                               [self.mainSession.crypto setDevicesKnown:self->unknownDevices complete:^{
-                                                                   
-                                                                   self->unknownDevices = nil;
-                                                                   [self stopActivityIndicator];
-                                                                   
-                                                                   // And resend pending messages
-                                                                   [self resendAllUnsentMessages];
-                                                               }];
-                                                           }
-                                                           
-                                                       }]];
+            
+            if (weakSelf)
+            {
+                typeof(self) self = weakSelf;
+                self->currentAlert = nil;
+                
+                // Acknowledge the existence of all devices
+                [self startActivityIndicator];
+                [self.mainSession.crypto setDevicesKnown:self->unknownDevices complete:^{
+                    
+                    self->unknownDevices = nil;
+                    [self stopActivityIndicator];
+                    
+                    // And resend pending messages
+                    [self resendAllUnsentMessages];
+                }];
+            }
+            
+        }]];
         
         [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCUnknownDevicesAlert"];
         [self presentViewController:currentAlert animated:YES completion:nil];
@@ -4661,7 +4972,7 @@
 {
     MXEvent *event = notif.object;
     NSString *previousId = notif.userInfo[kMXEventIdentifierKey];
-
+    
     if ([customizedRoomDataSource.selectedEventId isEqualToString:previousId])
     {
         NSLog(@"[RoomVC] eventDidChangeIdentifier: Update selectedEventId");
@@ -4715,19 +5026,34 @@
 
 - (void)cancelAllUnsentMessages
 {
-    // Remove unsent event ids
-    for (NSUInteger index = 0; index < self.roomDataSource.room.outgoingMessages.count;)
-    {
-        MXEvent *event = self.roomDataSource.room.outgoingMessages[index];
-        if (event.sentState == MXEventSentStateFailed)
+    currentAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_unsent_messages_cancel_title", @"Vector", nil) message:NSLocalizedStringFromTable(@"room_unsent_messages_cancel_message", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
+    
+    MXWeakify(self);
+    [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+        MXStrongifyAndReturnIfNil(self);
+        self->currentAlert = nil;
+    }]];
+    
+    [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"delete"] style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+        MXStrongifyAndReturnIfNil(self);
+        // Remove unsent event ids
+        for (NSUInteger index = 0; index < self.roomDataSource.room.outgoingMessages.count;)
         {
-            [self.roomDataSource removeEventWithEventId:event.eventId];
+            MXEvent *event = self.roomDataSource.room.outgoingMessages[index];
+            if (event.sentState == MXEventSentStateFailed)
+            {
+                [self.roomDataSource removeEventWithEventId:event.eventId];
+            }
+            else
+            {
+                index ++;
+            }
         }
-        else
-        {
-            index ++;
-        }
-    }
+        
+        [self refreshActivitiesViewDisplay];
+    }]];
+    
+    [self presentViewController:currentAlert animated:YES completion:nil];
 }
 
 # pragma mark - Encryption Information view
@@ -4842,24 +5168,50 @@
                 
                 [UIView animateWithDuration:1.5 delay:0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseIn
                                  animations:^{
-                                     
-                                     readMarkerTableViewCell.readMarkerViewLeadingConstraint.constant = readMarkerTableViewCell.readMarkerViewTrailingConstraint.constant = readMarkerTableViewCell.bubbleOverlayContainer.frame.size.width / 2;
-                                     readMarkerTableViewCell.readMarkerView.alpha = 0;
-                                     
-                                     // Force to render the view
-                                     [readMarkerTableViewCell.bubbleOverlayContainer layoutIfNeeded];
-                                     
-                                 }
+                    
+                    readMarkerTableViewCell.readMarkerViewLeadingConstraint.constant = readMarkerTableViewCell.readMarkerViewTrailingConstraint.constant = readMarkerTableViewCell.bubbleOverlayContainer.frame.size.width / 2;
+                    readMarkerTableViewCell.readMarkerView.alpha = 0;
+                    
+                    // Force to render the view
+                    [readMarkerTableViewCell.bubbleOverlayContainer layoutIfNeeded];
+                    
+                }
                                  completion:^(BOOL finished){
-                                     
-                                     readMarkerTableViewCell.readMarkerView.hidden = YES;
-                                     readMarkerTableViewCell.readMarkerView.alpha = 1;
-                                     
-                                     readMarkerTableViewCell = nil;
-                                 }];
+                    
+                    readMarkerTableViewCell.readMarkerView.hidden = YES;
+                    readMarkerTableViewCell.readMarkerView.alpha = 1;
+                    
+                    readMarkerTableViewCell = nil;
+                }];
                 
             });
         }
+    }
+}
+
+- (void)refreshRemoveJitsiWidgetView
+{
+    if (self.roomDataSource.isLive && !self.roomDataSource.isPeeking)
+    {
+        Widget *jitsiWidget = [customizedRoomDataSource jitsiWidget];
+        
+        if (jitsiWidget && self.canEditJitsiWidget)
+        {
+            [self.removeJitsiWidgetView reset];
+            self.removeJitsiWidgetContainer.hidden = NO;
+            self.removeJitsiWidgetView.delegate = self;
+        }
+        else
+        {
+            self.removeJitsiWidgetContainer.hidden = YES;
+            self.removeJitsiWidgetView.delegate = nil;
+        }
+    }
+    else
+    {
+        [self.removeJitsiWidgetView reset];
+        self.removeJitsiWidgetContainer.hidden = YES;
+        self.removeJitsiWidgetView.delegate = self;
     }
 }
 
@@ -4935,110 +5287,110 @@
     [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"]
                                                      style:UIAlertActionStyleCancel
                                                    handler:^(UIAlertAction * action) {
-                                                       
-                                                       if (weakSelf)
-                                                       {
-                                                           typeof(self) self = weakSelf;
-                                                           self->currentAlert = nil;
-                                                       }
-                                                       
-                                                   }]];
+        
+        if (weakSelf)
+        {
+            typeof(self) self = weakSelf;
+            self->currentAlert = nil;
+        }
+        
+    }]];
     
     [currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"invite", @"Vector", nil)
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
-                                                       
-                                                       // Sanity check
-                                                       if (!weakSelf)
-                                                       {
-                                                           return;
-                                                       }
-                                                       
-                                                       typeof(self) self = weakSelf;
-                                                       self->currentAlert = nil;
-                                                       
-                                                       MXSession* session = self.roomDataSource.mxSession;
-                                                       NSString* roomId = self.roomDataSource.roomId;
-                                                       MXRoom *room = [session roomWithRoomId:roomId];
-                                                       
-                                                       NSArray *identifiers = contact.matrixIdentifiers;
-                                                       NSString *participantId;
-                                                       
-                                                       if (identifiers.count)
-                                                       {
-                                                           participantId = identifiers.firstObject;
-                                                           
-                                                           // Invite this user if a room is defined
-                                                           [room inviteUser:participantId success:^{
-                                                               
-                                                               // Refresh display by removing the contacts picker
-                                                               [contactsTableViewController withdrawViewControllerAnimated:YES completion:nil];
-                                                               
-                                                           } failure:^(NSError *error) {
-                                                               
-                                                               NSLog(@"[RoomVC] Invite %@ failed", participantId);
-                                                               // Alert user
-                                                               [[AppDelegate theDelegate] showErrorAsAlert:error];
-                                                               
-                                                           }];
-                                                       }
-                                                       else
-                                                       {
-                                                           if (contact.emailAddresses.count)
-                                                           {
-                                                               // This is a local contact, consider the first email by default.
-                                                               // TODO: Prompt the user to select the right email.
-                                                               MXKEmail *email = contact.emailAddresses.firstObject;
-                                                               participantId = email.emailAddress;
-                                                           }
-                                                           else
-                                                           {
-                                                               // This is the text filled by the user.
-                                                               participantId = contact.displayName;
-                                                           }
-                                                           
-                                                           // Is it an email or a Matrix user ID?
-                                                           if ([MXTools isEmailAddress:participantId])
-                                                           {
-                                                               [room inviteUserByEmail:participantId success:^{
-                                                                   
-                                                                   // Refresh display by removing the contacts picker
-                                                                   [contactsTableViewController withdrawViewControllerAnimated:YES completion:nil];
-                                                                   
-                                                               } failure:^(NSError *error) {
-                                                                   
-                                                                   NSLog(@"[RoomVC] Invite be email %@ failed", participantId);
-                                                                   // Alert user
-                                                                   if ([error.domain isEqualToString:kMXRestClientErrorDomain]
-                                                                       && error.code == MXRestClientErrorMissingIdentityServer)
-                                                                   {
-                                                                       NSString *message = [NSBundle mxk_localizedStringForKey:@"error_invite_3pid_with_no_identity_server"];
-                                                                       [[AppDelegate theDelegate] showAlertWithTitle:message message:nil];
-                                                                   }
-                                                                   else
-                                                                   {
-                                                                       [[AppDelegate theDelegate] showErrorAsAlert:error];
-                                                                   }
-                                                               }];
-                                                           }
-                                                           else //if ([MXTools isMatrixUserIdentifier:participantId])
-                                                           {
-                                                               [room inviteUser:participantId success:^{
-                                                                   
-                                                                   // Refresh display by removing the contacts picker
-                                                                   [contactsTableViewController withdrawViewControllerAnimated:YES completion:nil];
-                                                                   
-                                                               } failure:^(NSError *error) {
-                                                                   
-                                                                   NSLog(@"[RoomVC] Invite %@ failed", participantId);
-                                                                   // Alert user
-                                                                   [[AppDelegate theDelegate] showErrorAsAlert:error];
-                                                                   
-                                                               }];
-                                                           }
-                                                       }
-                                                       
-                                                   }]];
+        
+        // Sanity check
+        if (!weakSelf)
+        {
+            return;
+        }
+        
+        typeof(self) self = weakSelf;
+        self->currentAlert = nil;
+        
+        MXSession* session = self.roomDataSource.mxSession;
+        NSString* roomId = self.roomDataSource.roomId;
+        MXRoom *room = [session roomWithRoomId:roomId];
+        
+        NSArray *identifiers = contact.matrixIdentifiers;
+        NSString *participantId;
+        
+        if (identifiers.count)
+        {
+            participantId = identifiers.firstObject;
+            
+            // Invite this user if a room is defined
+            [room inviteUser:participantId success:^{
+                
+                // Refresh display by removing the contacts picker
+                [contactsTableViewController withdrawViewControllerAnimated:YES completion:nil];
+                
+            } failure:^(NSError *error) {
+                
+                NSLog(@"[RoomVC] Invite %@ failed", participantId);
+                // Alert user
+                [[AppDelegate theDelegate] showErrorAsAlert:error];
+                
+            }];
+        }
+        else
+        {
+            if (contact.emailAddresses.count)
+            {
+                // This is a local contact, consider the first email by default.
+                // TODO: Prompt the user to select the right email.
+                MXKEmail *email = contact.emailAddresses.firstObject;
+                participantId = email.emailAddress;
+            }
+            else
+            {
+                // This is the text filled by the user.
+                participantId = contact.displayName;
+            }
+            
+            // Is it an email or a Matrix user ID?
+            if ([MXTools isEmailAddress:participantId])
+            {
+                [room inviteUserByEmail:participantId success:^{
+                    
+                    // Refresh display by removing the contacts picker
+                    [contactsTableViewController withdrawViewControllerAnimated:YES completion:nil];
+                    
+                } failure:^(NSError *error) {
+                    
+                    NSLog(@"[RoomVC] Invite be email %@ failed", participantId);
+                    // Alert user
+                    if ([error.domain isEqualToString:kMXRestClientErrorDomain]
+                        && error.code == MXRestClientErrorMissingIdentityServer)
+                    {
+                        NSString *message = [NSBundle mxk_localizedStringForKey:@"error_invite_3pid_with_no_identity_server"];
+                        [[AppDelegate theDelegate] showAlertWithTitle:message message:nil];
+                    }
+                    else
+                    {
+                        [[AppDelegate theDelegate] showErrorAsAlert:error];
+                    }
+                }];
+            }
+            else //if ([MXTools isMatrixUserIdentifier:participantId])
+            {
+                [room inviteUser:participantId success:^{
+                    
+                    // Refresh display by removing the contacts picker
+                    [contactsTableViewController withdrawViewControllerAnimated:YES completion:nil];
+                    
+                } failure:^(NSError *error) {
+                    
+                    NSLog(@"[RoomVC] Invite %@ failed", participantId);
+                    // Alert user
+                    [[AppDelegate theDelegate] showErrorAsAlert:error];
+                    
+                }];
+            }
+        }
+        
+    }]];
     
     [currentAlert mxk_setAccessibilityIdentifier:@"RoomVCInviteAlert"];
     [self presentViewController:currentAlert animated:YES completion:nil];
@@ -5057,22 +5409,22 @@
         [self presentReviewUnverifiedSessionsAlert];
         return;
     }
-
+    
     // Make the re-request
     [self.mainSession.crypto reRequestRoomKeyForEvent:event];
-
+    
     // Observe kMXEventDidDecryptNotification to remove automatically the dialog
     // if the user has shared the keys from another device
     mxEventDidDecryptNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXEventDidDecryptNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
         MXStrongifyAndReturnIfNil(self);
-
+        
         MXEvent *decryptedEvent = notif.object;
-
+        
         if ([decryptedEvent.eventId isEqualToString:event.eventId])
         {
             [[NSNotificationCenter defaultCenter] removeObserver:self->mxEventDidDecryptNotificationObserver];
             self->mxEventDidDecryptNotificationObserver = nil;
-
+            
             if (self->currentAlert == alert)
             {
                 [self->currentAlert dismissViewControllerAnimated:YES completion:nil];
@@ -5080,51 +5432,51 @@
             }
         }
     }];
-
+    
     // Show the explanation dialog
     alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"rerequest_keys_alert_title", @"Vector", nil)
-                                                       message:NSLocalizedStringFromTable(@"rerequest_keys_alert_message", @"Vector", nil)
-                                                preferredStyle:UIAlertControllerStyleAlert];
+                                                message:NSLocalizedStringFromTable(@"rerequest_keys_alert_message", @"Vector", nil)
+                                         preferredStyle:UIAlertControllerStyleAlert];
     currentAlert = alert;
-
-
+    
+    
     [alert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"ok"]
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * action)
-                             {
-                                 MXStrongifyAndReturnIfNil(self);
-
-                                 [[NSNotificationCenter defaultCenter] removeObserver:self->mxEventDidDecryptNotificationObserver];
-                                 self->mxEventDidDecryptNotificationObserver = nil;
-
-                                 self->currentAlert = nil;
-                             }]];
-
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * action)
+                      {
+        MXStrongifyAndReturnIfNil(self);
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self->mxEventDidDecryptNotificationObserver];
+        self->mxEventDidDecryptNotificationObserver = nil;
+        
+        self->currentAlert = nil;
+    }]];
+    
     [self presentViewController:currentAlert animated:YES completion:nil];
 }
 
 - (void)presentReviewUnverifiedSessionsAlert
 {
     NSLog(@"[MasterTabBarController] presentReviewUnverifiedSessionsAlertWithSession");
-
+    
     [currentAlert dismissViewControllerAnimated:NO completion:nil];
-
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"key_verification_self_verify_unverified_sessions_alert_title", @"Vector", nil)
                                                                    message:NSLocalizedStringFromTable(@"key_verification_self_verify_unverified_sessions_alert_message", @"Vector", nil)
                                                             preferredStyle:UIAlertControllerStyleAlert];
-
+    
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"key_verification_self_verify_unverified_sessions_alert_validate_action", @"Vector", nil)
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction * action) {
-                                                [self showSettingsSecurityScreen];
-                                            }]];
-
+        [self showSettingsSecurityScreen];
+    }]];
+    
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"later", @"Vector", nil)
                                               style:UIAlertActionStyleCancel
                                             handler:nil]];
-
+    
     [self presentViewController:alert animated:YES completion:nil];
-
+    
     currentAlert = alert;
 }
 
@@ -5175,12 +5527,12 @@
 - (void)listenMXSessionStateChangeNotifications
 {
     kMXSessionStateDidChangeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXSessionStateDidChangeNotification object:self.roomDataSource.mxSession queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
-
+        
         if (self.roomDataSource.mxSession.state == MXSessionStateSyncError
             || self.roomDataSource.mxSession.state == MXSessionStateRunning)
         {
             [self refreshActivitiesViewDisplay];
-
+            
             // update inputToolbarView
             [self updateRoomInputToolbarViewClassIfNeeded];
         }
@@ -5200,204 +5552,35 @@
 
 - (NSArray<RoomContextualMenuItem*>*)contextualMenuItemsForEvent:(MXEvent*)event andCell:(id<MXKCellRendering>)cell
 {
-    NSString *eventId = event.eventId;
-    MXKRoomBubbleTableViewCell *roomBubbleTableViewCell = (MXKRoomBubbleTableViewCell *)cell;
-    MXKAttachment *attachment = roomBubbleTableViewCell.bubbleData.attachment;
-    
-    MXWeakify(self);
-    
-    // Copy action
-    
-    BOOL isCopyActionEnabled = !attachment || (attachment.type != MXKAttachmentTypeSticker && BuildSettings.sharingFeaturesEnabled);
-    
-    if (attachment && !BuildSettings.messageDetailsAllowCopyMedia)
+    if (event.sentState == MXEventSentStateFailed)
     {
-        isCopyActionEnabled = NO;
+        return @[
+            [self resendMenuItemWithEvent:event],
+            [self deleteMenuItemWithEvent:event],
+            [self editMenuItemWithEvent:event],
+            [self copyMenuItemWithEvent:event andCell:cell]
+        ];
     }
     
-    if (isCopyActionEnabled)
+    BOOL showMoreOption = (event.isState && RiotSettings.shared.roomContextualMenuShowMoreOptionForStates) || (!event.isState && RiotSettings.shared.roomContextualMenuShowMoreOptionForMessages);
+    
+    if (showMoreOption)
     {
-        switch (event.eventType) {
-            case MXEventTypeRoomMessage:
-            {
-                NSString *messageType = event.content[@"msgtype"];
-                
-                if ([messageType isEqualToString:kMXMessageTypeKeyVerificationRequest])
-                {
-                    isCopyActionEnabled = NO;
-                }
-                break;
-            }
-            case MXEventTypeKeyVerificationStart:
-            case MXEventTypeKeyVerificationAccept:
-            case MXEventTypeKeyVerificationKey:
-            case MXEventTypeKeyVerificationMac:
-            case MXEventTypeKeyVerificationDone:
-            case MXEventTypeKeyVerificationCancel:
-                isCopyActionEnabled = NO;
-                break;
-            default:
-                break;
-        }
+        return @[
+            [self copyMenuItemWithEvent:event andCell:cell],
+            [self replyMenuItemWithEvent:event],
+            [self editMenuItemWithEvent:event],
+            [self moreMenuItemWithEvent:event andCell:cell]
+        ];
     }
-    
-    RoomContextualMenuItem *copyMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionCopy];
-    copyMenuItem.isEnabled = isCopyActionEnabled;
-    copyMenuItem.action = ^{
-        MXStrongifyAndReturnIfNil(self);
-        
-        if (!attachment)
-        {
-            NSArray *components = roomBubbleTableViewCell.bubbleData.bubbleComponents;
-            MXKRoomBubbleComponent *selectedComponent;
-            for (selectedComponent in components)
-            {
-                if ([selectedComponent.event.eventId isEqualToString:event.eventId])
-                {
-                    break;
-                }
-                selectedComponent = nil;
-            }
-            NSString *textMessage = selectedComponent.textMessage;
-            
-            if (textMessage)
-            {
-                MXKPasteboardManager.shared.pasteboard.string = textMessage;
-            }
-            else
-            {
-                NSLog(@"[RoomViewController] Contextual menu copy failed. Text is nil for room id/event id: %@/%@", selectedComponent.event.roomId, selectedComponent.event.eventId);
-            }
-            
-            [self hideContextualMenuAnimated:YES];
-        }
-        else if (attachment.type != MXKAttachmentTypeSticker)
-        {
-            [self hideContextualMenuAnimated:YES completion:^{
-                [self startActivityIndicator];
-                
-                [attachment copy:^{
-                    
-                    [self stopActivityIndicator];
-                    
-                } failure:^(NSError *error) {
-                    
-                    [self stopActivityIndicator];
-                    
-                    //Alert user
-                    [[AppDelegate theDelegate] showErrorAsAlert:error];
-                }];
-                
-                // Start animation in case of download during attachment preparing
-                [roomBubbleTableViewCell startProgressUI];
-            }];
-        }
-    };
-    
-    // Reply action
-    
-    RoomContextualMenuItem *replyMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionReply];
-    replyMenuItem.isEnabled = [self.roomDataSource canReplyToEventWithId:eventId];
-    replyMenuItem.action = ^{
-        MXStrongifyAndReturnIfNil(self);
-        
-        [self hideContextualMenuAnimated:YES cancelEventSelection:NO completion:nil];
-        [self selectEventWithId:eventId inputToolBarSendMode:RoomInputToolbarViewSendModeReply showTimestamp:NO];
-
-        // And display the keyboard
-        [self.inputToolbarView becomeFirstResponder];
-    };
-    
-    // Edit action
-    
-    RoomContextualMenuItem *editMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionEdit];
-    editMenuItem.action = ^{
-        MXStrongifyAndReturnIfNil(self);
-        [self hideContextualMenuAnimated:YES cancelEventSelection:NO completion:nil];
-        [self editEventContentWithId:eventId];
-
-        // And display the keyboard
-        [self.inputToolbarView becomeFirstResponder];
-    };
-    
-    editMenuItem.isEnabled = [self.roomDataSource canEditEventWithId:eventId];
-    
-    // More action
-    
-    RoomContextualMenuItem *moreMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionMore];
-    moreMenuItem.action = ^{
-        MXStrongifyAndReturnIfNil(self);
-        [self hideContextualMenuAnimated:YES completion:nil];
-        [self showAdditionalActionsMenuForEvent:event inCell:cell animated:YES];
-    };
-    
-    RoomContextualMenuItem *removeMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionRemove];
-    
-    // Do not allow to redact the event that enabled encryption (m.room.encryption)
-    // because it breaks everything
-    bool allowRemoveMessage = (![self getEventIsAdministrative:event] || BuildSettings.roomAllowRemoveAdministrativeMessage) && event.eventType != MXEventTypeRoomEncryption;
-    removeMenuItem.action = ^{
-        if (allowRemoveMessage)
-        {
-            if (weakself)
-            {
-                typeof(self) self = weakself;
-                
-                [self cancelEventSelection];
-                
-                [self startActivityIndicator];
-                
-                [self.roomDataSource.room redactEvent:event.eventId reason:nil success:^{
-                    
-                    __strong __typeof(weakself)self = weakself;
-                    [self stopActivityIndicator];
-                    
-                } failure:^(NSError *error) {
-                    
-                    __strong __typeof(weakself)self = weakself;
-                    [self stopActivityIndicator];
-                    
-                    NSLog(@"[RoomVC] Redact event (%@) failed", event.eventId);
-                    //Alert user
-                    [[AppDelegate theDelegate] showErrorAsAlert:error];
-                    
-                }];
-            }
-            [self hideContextualMenuAnimated:YES completion:nil];
-        }
-    };
-    
-    // Actions list
-    
-    NSMutableArray<RoomContextualMenuItem*> *actionItems = [NSMutableArray new];
-    /*@[messageDetailsAllowViewSource
-      copyMenuItem,
-      replyMenuItem,
-      editMenuItem,
-      moreMenuItem
-      ];*/
-    if (BuildSettings.sharingFeaturesEnabled){
-        [actionItems addObject:copyMenuItem];
-        [actionItems addObject:replyMenuItem];
-        [actionItems addObject:editMenuItem];
-        [actionItems addObject:moreMenuItem];
-    } else {
-        [actionItems addObject:replyMenuItem];
-        //only allow forwarding attachments
-        if (attachment && attachment.type == MXKAttachmentTypeImage){
-            RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
-            menuItem.action = ^{
-                [[AppDelegate theDelegate] forwardAttachment:attachment];
-                [self hideContextualMenuAnimated:YES];
-            };
-            [actionItems addObject:menuItem];
-        }
-        if (allowRemoveMessage){
-            [actionItems addObject:removeMenuItem];
-        }
+    else
+    {
+        return @[
+            [self copyMenuItemWithEvent:event andCell:cell],
+            [self replyMenuItemWithEvent:event],
+            [self editMenuItemWithEvent:event]
+        ];
     }
-    
-    return actionItems;
 }
 
 - (void)showContextualMenuForEvent:(MXEvent*)event fromSingleTapGesture:(BOOL)usedSingleTapGesture cell:(id<MXKCellRendering>)cell animated:(BOOL)animated
@@ -5459,10 +5642,10 @@
                                                              fromSingleTapGesture:usedSingleTapGesture
                                                                          animated:animated
                                                                        completion:^{
-                                                                       }];
+    }];
     
     preventBubblesTableViewScroll = YES;
-    [self selectEventWithId:selectedEventId];    
+    [self selectEventWithId:selectedEventId];
 }
 
 - (void)hideContextualMenuAnimated:(BOOL)animated
@@ -5504,6 +5687,210 @@
     self.inputToolbarView.editable = !enableOverlayContainerUserInteractions;
     self.bubblesTableView.scrollsToTop = !enableOverlayContainerUserInteractions;
     self.overlayContainerView.userInteractionEnabled = enableOverlayContainerUserInteractions;
+}
+
+- (RoomContextualMenuItem *)resendMenuItemWithEvent:(MXEvent*)event
+{
+    MXWeakify(self);
+    
+    RoomContextualMenuItem *resendMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionResend];
+    resendMenuItem.action = ^{
+        MXStrongifyAndReturnIfNil(self);
+        [self hideContextualMenuAnimated:YES cancelEventSelection:NO completion:nil];
+        [self cancelEventSelection];
+        [self.roomDataSource resendEventWithEventId:event.eventId success:nil failure:nil];
+    };
+    
+    return resendMenuItem;
+}
+
+- (RoomContextualMenuItem *)deleteMenuItemWithEvent:(MXEvent*)event
+{
+    MXWeakify(self);
+    
+    RoomContextualMenuItem *deleteMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionDelete];
+    deleteMenuItem.action = ^{
+        MXStrongifyAndReturnIfNil(self);
+        
+        MXWeakify(self);
+        [self hideContextualMenuAnimated:YES cancelEventSelection:YES completion:^{
+            MXStrongifyAndReturnIfNil(self);
+            
+            self->currentAlert = [UIAlertController alertControllerWithTitle:NSLocalizedStringFromTable(@"room_event_action_delete_confirmation_title", @"Vector", nil)  message:NSLocalizedStringFromTable(@"room_event_action_delete_confirmation_message", @"Vector", nil) preferredStyle:UIAlertControllerStyleAlert];
+            
+            [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            }]];
+            
+            [self->currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"delete"] style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+                [self.roomDataSource removeEventWithEventId:event.eventId];
+            }]];
+            
+            [self presentViewController:self->currentAlert animated:YES completion:nil];
+        }];
+    };
+    
+    return deleteMenuItem;
+}
+
+- (RoomContextualMenuItem *)editMenuItemWithEvent:(MXEvent*)event
+{
+    MXWeakify(self);
+    
+    RoomContextualMenuItem *editMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionEdit];
+    editMenuItem.action = ^{
+        MXStrongifyAndReturnIfNil(self);
+        [self hideContextualMenuAnimated:YES cancelEventSelection:NO completion:nil];
+        [self editEventContentWithId:event.eventId];
+        
+        // And display the keyboard
+        [self.inputToolbarView becomeFirstResponder];
+    };
+    
+    editMenuItem.isEnabled = [self.roomDataSource canEditEventWithId:event.eventId];
+    
+    return editMenuItem;
+}
+
+- (RoomContextualMenuItem *)copyMenuItemWithEvent:(MXEvent*)event andCell:(id<MXKCellRendering>)cell
+{
+    MXKRoomBubbleTableViewCell *roomBubbleTableViewCell = (MXKRoomBubbleTableViewCell *)cell;
+    MXKAttachment *attachment = roomBubbleTableViewCell.bubbleData.attachment;
+    
+    MXWeakify(self);
+    
+    // Copy action
+    
+    BOOL isCopyActionEnabled = !attachment || (attachment.type != MXKAttachmentTypeSticker && BuildSettings.sharingFeaturesEnabled);
+    
+    if (attachment && !BuildSettings.messageDetailsAllowCopyMedia)
+    {
+        isCopyActionEnabled = NO;
+    }
+    
+    if (isCopyActionEnabled)
+    {
+        switch (event.eventType) {
+            case MXEventTypeRoomMessage:
+            {
+                NSString *messageType = event.content[@"msgtype"];
+                
+                if ([messageType isEqualToString:kMXMessageTypeKeyVerificationRequest])
+                {
+                    isCopyActionEnabled = NO;
+                }
+                break;
+            }
+            case MXEventTypeKeyVerificationStart:
+            case MXEventTypeKeyVerificationAccept:
+            case MXEventTypeKeyVerificationKey:
+            case MXEventTypeKeyVerificationMac:
+            case MXEventTypeKeyVerificationDone:
+            case MXEventTypeKeyVerificationCancel:
+                isCopyActionEnabled = NO;
+                break;
+            case MXEventTypeCustom:
+                if ([event.type isEqualToString:kWidgetMatrixEventTypeString]
+                    || [event.type isEqualToString:kWidgetModularEventTypeString])
+                {
+                    Widget *widget = [[Widget alloc] initWithWidgetEvent:event inMatrixSession:self.roomDataSource.mxSession];
+                    if ([widget.type isEqualToString:kWidgetTypeJitsiV1] ||
+                        [widget.type isEqualToString:kWidgetTypeJitsiV2])
+                    {
+                        isCopyActionEnabled = NO;
+                    }
+                }
+            default:
+                break;
+        }
+    }
+    
+    RoomContextualMenuItem *copyMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionCopy];
+    copyMenuItem.isEnabled = isCopyActionEnabled;
+    copyMenuItem.action = ^{
+        MXStrongifyAndReturnIfNil(self);
+        
+        if (!attachment)
+        {
+            NSArray *components = roomBubbleTableViewCell.bubbleData.bubbleComponents;
+            MXKRoomBubbleComponent *selectedComponent;
+            for (selectedComponent in components)
+            {
+                if ([selectedComponent.event.eventId isEqualToString:event.eventId])
+                {
+                    break;
+                }
+                selectedComponent = nil;
+            }
+            NSString *textMessage = selectedComponent.textMessage;
+            
+            if (textMessage)
+            {
+                MXKPasteboardManager.shared.pasteboard.string = textMessage;
+            }
+            else
+            {
+                NSLog(@"[RoomViewController] Contextual menu copy failed. Text is nil for room id/event id: %@/%@", selectedComponent.event.roomId, selectedComponent.event.eventId);
+            }
+            
+            [self hideContextualMenuAnimated:YES];
+        }
+        else if (attachment.type != MXKAttachmentTypeSticker)
+        {
+            [self hideContextualMenuAnimated:YES completion:^{
+                [self startActivityIndicator];
+                
+                [attachment copy:^{
+                    
+                    [self stopActivityIndicator];
+                    
+                } failure:^(NSError *error) {
+                    
+                    [self stopActivityIndicator];
+                    
+                    //Alert user
+                    [[AppDelegate theDelegate] showErrorAsAlert:error];
+                }];
+                
+                // Start animation in case of download during attachment preparing
+                [roomBubbleTableViewCell startProgressUI];
+            }];
+        }
+    };
+    
+    return copyMenuItem;
+}
+
+- (RoomContextualMenuItem *)replyMenuItemWithEvent:(MXEvent*)event
+{
+    MXWeakify(self);
+    
+    RoomContextualMenuItem *replyMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionReply];
+    replyMenuItem.isEnabled = [self.roomDataSource canReplyToEventWithId:event.eventId];
+    replyMenuItem.action = ^{
+        MXStrongifyAndReturnIfNil(self);
+        
+        [self hideContextualMenuAnimated:YES cancelEventSelection:NO completion:nil];
+        [self selectEventWithId:event.eventId inputToolBarSendMode:RoomInputToolbarViewSendModeReply showTimestamp:NO];
+        
+        // And display the keyboard
+        [self.inputToolbarView becomeFirstResponder];
+    };
+    
+    return replyMenuItem;
+}
+
+- (RoomContextualMenuItem *)moreMenuItemWithEvent:(MXEvent*)event andCell:(id<MXKCellRendering>)cell
+{
+    MXWeakify(self);
+    
+    RoomContextualMenuItem *moreMenuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionMore];
+    moreMenuItem.action = ^{
+        MXStrongifyAndReturnIfNil(self);
+        [self hideContextualMenuAnimated:YES completion:nil];
+        [self showAdditionalActionsMenuForEvent:event inCell:cell animated:YES];
+    };
+    
+    return moreMenuItem;
 }
 
 #pragma mark - RoomContextualMenuViewControllerDelegate
@@ -5572,7 +5959,7 @@ BOOL enableNewRoomRendering = NO;
     
     if (cellRow >= 0)
     {
-        NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:cellRow inSection:0];        
+        NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:cellRow inSection:0];
         UITableViewCell *cell = [self.bubblesTableView cellForRowAtIndexPath:cellIndexPath];
         sourceView = cell;
         
@@ -5852,6 +6239,39 @@ BOOL enableNewRoomRendering = NO;
 {
     [coordinatorBridgePresenter dismissWithAnimated:YES completion:nil];
     self.roomInfoCoordinatorBridgePresenter = nil;
+}
+
+#pragma mark - RemoveJitsiWidgetViewDelegate
+
+- (void)removeJitsiWidgetViewDidCompleteSliding:(RemoveJitsiWidgetView *)view
+{
+    view.delegate = nil;
+    Widget *jitsiWidget = [customizedRoomDataSource jitsiWidget];
+    
+    [self startActivityIndicator];
+    
+    //  close the widget
+    MXWeakify(self);
+    
+    [[WidgetManager sharedManager] closeWidget:jitsiWidget.widgetId
+                                        inRoom:self.roomDataSource.room
+                                       success:^{
+        MXStrongifyAndReturnIfNil(self);
+        [self stopActivityIndicator];
+        //  we can wait for kWidgetManagerDidUpdateWidgetNotification, but we want to be faster
+        self.removeJitsiWidgetContainer.hidden = YES;
+        self.removeJitsiWidgetView.delegate = nil;
+        
+        //  end active call if exists
+        if ([[AppDelegate theDelegate].callPresenter.jitsiVC.widget.widgetId isEqualToString:jitsiWidget.widgetId])
+        {
+            [[AppDelegate theDelegate].callPresenter endActiveJitsiCall];
+        }
+    } failure:^(NSError *error) {
+        MXStrongifyAndReturnIfNil(self);
+        [self showJitsiErrorAsAlert:error];
+        [self stopActivityIndicator];
+    }];
 }
 
 @end

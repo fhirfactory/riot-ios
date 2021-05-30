@@ -110,6 +110,8 @@ final class BuildSettings: NSObject {
     
     
     // MARK: - Legal URLs
+    
+    // Note: Set empty strings to hide the related entry in application settings
     static let applicationCopyrightUrlString = "https://element.io/copyright"
     static let applicationPrivacyPolicyUrlString = "https://element.io/privacy"
     static let applicationAcknowledgementUrlString = "https://element.io/privacy"
@@ -136,7 +138,7 @@ final class BuildSettings: NSObject {
     
     // MARK: - VoIP
     static var allowVoIPUsage: Bool {
-        #if canImport(JitsiMeet)
+        #if canImport(JitsiMeetSDK)
         return true
         #else
         return false
@@ -150,9 +152,12 @@ final class BuildSettings: NSObject {
     static let publicRoomsAllowServerChange: Bool = true
     // List of homeservers for the public rooms directory
     static let publicRoomsDirectoryServers = [
-        "matrix.org"
+        "matrix.org",
+        "gitter.im"
     ]
     
+    // MARK: -  Rooms Screen
+    static let roomsAllowToJoinPublicRooms: Bool = true
     
     // MARK: - Analytics
     static let analyticsServerUrl = URL(string: "https://piwik.riot.im/piwik.php")
@@ -177,7 +182,7 @@ final class BuildSettings: NSObject {
         "https://scalar-staging.riot.im/scalar/api",
     ]
     // Jitsi server used outside integrations to create conference calls from the call button in the timeline
-    static let jitsiServerUrl = NSURL(string: "https://jitsi.riot.im")
+    static let jitsiServerUrl: URL = URL(string: "https://jitsi.riot.im")!
 
     
     // MARK: - Features
@@ -203,6 +208,10 @@ final class BuildSettings: NSObject {
     /// Maximum number of allowed pin failures when unlocking, before force logging out the user. Defaults to `3`
     static let maxAllowedNumberOfPinFailures: Int = 3
     
+    static let allowInviteExernalUsers: Bool = true
+    
+    // MARK: - Feature Specifics
+    
     /// Maximum number of allowed biometrics failures when unlocking, before fallbacking the user to the pin if set or logging out the user. Defaults to `5`
     static let maxAllowedNumberOfBiometricsFailures: Int = 5
     
@@ -211,6 +220,13 @@ final class BuildSettings: NSObject {
     
     /// Indicates should the app log out the user when number of biometrics failures reaches `maxAllowedNumberOfBiometricsFailures`. Defaults to `false`
     static let logOutUserWhenBiometricsFailuresExceeded: Bool = false
+    
+    // MARK: - Main Tabs
+    
+    static let homeScreenShowFavouritesTab: Bool = true
+    static let homeScreenShowPeopleTab: Bool = true
+    static let homeScreenShowRoomsTab: Bool = true
+    static let homeScreenShowCommunitiesTab: Bool = true
     
     // MARK: - General Settings Screen
     
@@ -227,6 +243,8 @@ final class BuildSettings: NSObject {
     static let settingsScreenAllowIdentityServerConfig: Bool = true
     static let settingsScreenAllowSelectingIdentityServer: Bool = false
     static let settingsScreenShowAdvancedSettings: Bool = true
+
+
     static let settingsScreenShowLabSettings: Bool = false
     static let settingsScreenShowIntegrationSettings: Bool = false
     static let settingsScreenShowCallsSettings: Bool = false
@@ -271,16 +289,60 @@ final class BuildSettings: NSObject {
     static let roomParticipantAllowBan : Bool = false
     static let roomParticipantShowSecurity : Bool = false
     static let roomParticipantShowVoipCallByDefault : Bool = true
-    static let roomParticipantAllowHideAll : Bool = false
     
     // MARK: - Timeline settings
     static let roomInputToolbarCompressionMode = MXKRoomInputToolbarCompressionModeNone
+    static let settingsScreenShowChangePassword:Bool = false
+    static let settingsScreenShowInviteFriends:Bool = false
+    static let settingsScreenShowEnableStunServerFallback: Bool = true
+    static let settingsScreenShowNotificationDecodedContentOption: Bool = true
+    static let settingsScreenShowNsfwRoomsOption: Bool = true
+    static let settingsSecurityScreenShowSessions:Bool = true
+    static let settingsSecurityScreenShowSetupBackup:Bool = true
+    static let settingsSecurityScreenShowRestoreBackup:Bool = true
+    static let settingsSecurityScreenShowDeleteBackup:Bool = true
+    static let settingsSecurityScreenShowCryptographyInfo:Bool = true
+    static let settingsSecurityScreenShowCryptographyExport:Bool = true
+    static let settingsSecurityScreenShowAdvancedUnverifiedDevices:Bool = true
     
+    // MARK: - Room Creation Screen
+    
+    static let roomCreationScreenAllowEncryptionConfiguration: Bool = true
+    static let roomCreationScreenRoomIsEncrypted: Bool = true
+    static let roomCreationScreenAllowRoomTypeConfiguration: Bool = true
+    static let roomCreationScreenRoomIsPublic: Bool = false
+    
+    // MARK: - Room Screen
+    
+    static let roomScreenAllowVoIPForDirectRoom: Bool = true
+    static let roomScreenAllowVoIPForNonDirectRoom: Bool = true
+    static let roomScreenAllowCameraAction: Bool = true
+    static let roomScreenAllowMediaLibraryAction: Bool = true
+    static let roomScreenAllowStickerAction: Bool = true
+    static let roomScreenAllowFilesAction: Bool = true
+    
+    // MARK: - Room Contextual Menu
+
+    static let roomContextualMenuShowMoreOptionForMessages: Bool = true
+    static let roomContextualMenuShowMoreOptionForStates: Bool = true
+    static let roomContextualMenuShowReportContentOption: Bool = false
+
+    // MARK: - Room Info Screen
+    
+    static let roomInfoScreenShowIntegrations: Bool = true
+
+    // MARK: - Room Settings Screen
+    static let roomSettingsScreenAdvancedShowEncryptToVerifiedOption: Bool = true
+
+    // MARK: - Room Member Screen
+    
+    static let roomMemberScreenShowIgnore: Bool = false
+
     // MARK: - Message
     static let messageDetailsAllowViewEncryptionInformation : Bool = false
-    static let messageDetailsAllowReportContent : Bool = false
     static let messagesAllowViewRoomRightsChanges : Bool = true
-    static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = RoomPowerLevel.user.rawValue
+    //TODO: Fix this so it references the power levels enum, after the project builds again.
+    static let messagesMinimumPowerLevelAllowViewRoomRightsChanges : Int = 0
     static let messageDetailsAllowShare: Bool = false
     static let messageDetailsAllowPermalink: Bool = false
     static let messageDetailsAllowViewSource: Bool = false
@@ -323,4 +385,6 @@ final class BuildSettings: NSObject {
     static let themeAppliesToLoginPageLogo: Bool = false
     static let defaultAnimationLength: Double = 0.4
     
+    // Mark: - Unified Search
+    static let unifiedSearchScreenShowPublicDirectory = true
 }

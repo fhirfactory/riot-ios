@@ -26,6 +26,7 @@
 #import "DecryptionFailureTracker.h"
 
 #import "EventFormatter+DTCoreTextFix.h"
+#import <MatrixSDK/MatrixSDK.h>
 
 #pragma mark - Constants definitions
 
@@ -126,14 +127,7 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
                                 || [activeWidget.type isEqualToString:kWidgetTypeJitsiV2])
                             {
                                 // This was a jitsi widget
-                                if (isEventSenderMyUser)
-                                {
-                                    displayText = NSLocalizedStringFromTable(@"event_formatter_jitsi_widget_removed_by_you", @"Vector", nil);
-                                }
-                                else
-                                {
-                                    displayText = [NSString stringWithFormat:NSLocalizedStringFromTable(@"event_formatter_jitsi_widget_removed", @"Vector", nil), senderDisplayName];
-                                }
+                                return nil;
                             }
                             else
                             {
@@ -168,30 +162,53 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
         }
     }
     
-    if (event.eventType == MXEventTypeRoomCreate)
+    switch (event.eventType)
     {
-        MXRoomCreateContent *createContent = [MXRoomCreateContent modelFromJSON:event.content];
-        
-        NSString *roomPredecessorId = createContent.roomPredecessorInfo.roomId;
-        
-        if (roomPredecessorId)
+        case MXEventTypeRoomCreate:
         {
-            return [self roomCreatePredecessorAttributedStringWithPredecessorRoomId:roomPredecessorId];
+            MXRoomCreateContent *createContent = [MXRoomCreateContent modelFromJSON:event.content];
+            
+            NSString *roomPredecessorId = createContent.roomPredecessorInfo.roomId;
+            
+            if (roomPredecessorId)
+            {
+                return [self roomCreatePredecessorAttributedStringWithPredecessorRoomId:roomPredecessorId];
+            }
+            else
+            {
+                NSAttributedString *string = [super attributedStringFromEvent:event withRoomState:roomState error:error];
+                NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@"· "];
+                [result appendAttributedString:string];
+                return result;
+            }
         }
-        else
+            break;
+        case MXEventTypeCallCandidates:
+        case MXEventTypeCallSelectAnswer:
+        case MXEventTypeCallNegotiate:
+        case MXEventTypeCallReplaces:
+        case MXEventTypeCallRejectReplacement:
+            //  Do not show call events except invite and reject in timeline
+            return nil;
+        case MXEventTypeCallInvite:
         {
-            NSAttributedString *string = [super attributedStringFromEvent:event withRoomState:roomState error:error];
-            NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@"· "];
-            [result appendAttributedString:string];
-            return result;
+            MXCallInviteEventContent *content = [MXCallInviteEventContent modelFromJSON:event.content];
+            MXCall *call = [mxSession.callManager callWithCallId:content.callId];
+            if (call && call.isIncoming && call.state == MXCallStateRinging)
+            {
+                //  incoming call UI will be handled by CallKit (or incoming call screen if CallKit disabled)
+                //  do not show a bubble for this case
+                return nil;
+            }
         }
-    }
-    
-    // Make event types MXEventTypeKeyVerificationCancel and MXEventTypeKeyVerificationDone visible in timeline.
-    // TODO: Find another way to keep them visible and avoid instantiate empty NSMutableAttributedString.
-    if (event.eventType == MXEventTypeKeyVerificationCancel || event.eventType == MXEventTypeKeyVerificationDone)
-    {
-        return [NSMutableAttributedString new];
+            break;
+        case MXEventTypeKeyVerificationCancel:
+        case MXEventTypeKeyVerificationDone:
+            // Make event types MXEventTypeKeyVerificationCancel and MXEventTypeKeyVerificationDone visible in timeline.
+            // TODO: Find another way to keep them visible and avoid instantiate empty NSMutableAttributedString.
+            return [NSMutableAttributedString new];
+        default:
+            break;
     }
     
     NSAttributedString *attributedString = [super attributedStringFromEvent:event withRoomState:roomState error:error];
@@ -353,6 +370,8 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
     {
         MXEvent *roomCreateEvent = [events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %@", kMXEventTypeStringRoomCreate]].firstObject;
         
+        MXEvent *callInviteEvent = [events filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"type == %@", kMXEventTypeStringCallInvite]].firstObject;
+        
         if (roomCreateEvent)
         {
             MXKEventFormatterError tmpError;
@@ -374,6 +393,11 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
             }];
             [result appendAttributedString:linkMore];
             return result;
+        }
+        else if (callInviteEvent)
+        {
+            //  return a non-nil value
+            return [NSMutableAttributedString new];
         }
         else if (events[0].eventType == MXEventTypeRoomMember)
         {
@@ -415,9 +439,9 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
         self.subTitleTextColor = ThemeService.shared.theme.textSecondaryColor;
         self.prefixTextColor = ThemeService.shared.theme.textSecondaryColor;
         self.bingTextColor = ThemeService.shared.theme.noticeColor;
-        self.encryptingTextColor = ThemeService.shared.theme.tintColor;
-        self.sendingTextColor = ThemeService.shared.theme.textSecondaryColor;
-        self.errorTextColor = ThemeService.shared.theme.warningColor;
+        self.encryptingTextColor = ThemeService.shared.theme.textPrimaryColor;
+        self.sendingTextColor = ThemeService.shared.theme.textPrimaryColor;
+        self.errorTextColor = ThemeService.shared.theme.textPrimaryColor;
         self.showEditionMention = YES;
         self.editionMentionTextColor = ThemeService.shared.theme.textSecondaryColor;
         

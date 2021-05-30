@@ -79,6 +79,8 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
 // Current SSO transaction id used to identify and validate the SSO authentication callback
 @property (nonatomic, strong) NSString *ssoCallbackTxnId;
 
+@property (nonatomic, strong) CrossSigningService *crossSigningService;
+
 @property (nonatomic, getter = isFirstViewAppearing) BOOL firstViewAppearing;
 
 @end
@@ -114,6 +116,8 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
     didCheckFalseAuthScreenDisplay = NO;
     
     _firstViewAppearing = YES;
+    
+    self.crossSigningService = [CrossSigningService new];
 }
 
 - (void)viewDidLoad
@@ -1438,7 +1442,7 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
                         // TODO: This is still not sure we want to disable the automatic cross-signing bootstrap
                         // if the admin disabled e2e by default.
                         // Do like riot-web for the moment
-                        if (session.vc_isE2EByDefaultEnabledByHSAdmin)
+                        if ([session vc_homeserverConfiguration].isE2EEByDefaultEnabled)
                         {
                             // Bootstrap cross-signing on user's account
                             // We do it for both registration and new login as long as cross-signing does not exist yet
@@ -1457,10 +1461,15 @@ static const CGFloat kAuthInputContainerViewMinHeightConstraintConstant = 150.0;
                             }
                             else
                             {
-                                NSLog(@"[AuthenticationVC] sessionStateDidChange: Do not know how to bootstrap cross-signing. Skip it.");
-                                
-                                [session.crypto setOutgoingKeyRequestsEnabled:YES onComplete:nil];
-                                [self dismiss];
+                                // Try to setup cross-signing without authentication parameters in case if a grace period is enabled
+                                [self.crossSigningService setupCrossSigningWithoutAuthenticationFor:session success:^{
+                                    NSLog(@"[AuthenticationVC] sessionStateDidChange: Bootstrap succeeded without credentials");
+                                    [self dismiss];
+                                } failure:^(NSError * _Nonnull error) {
+                                    NSLog(@"[AuthenticationVC] sessionStateDidChange: Do not know how to bootstrap cross-signing. Skip it.");
+                                    [session.crypto setOutgoingKeyRequestsEnabled:YES onComplete:nil];
+                                    [self dismiss];
+                                }];
                             }
                         }
                         else

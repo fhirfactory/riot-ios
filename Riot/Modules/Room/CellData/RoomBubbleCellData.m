@@ -53,6 +53,7 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
     if (self)
     {
         _eventsToShowAllReactions = [NSMutableSet set];
+        _componentIndexOfSentMessageTick = -1;
     }
     return self;
 }
@@ -65,6 +66,8 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
     
     if (self)
     {
+        self.displayTimestampForSelectedComponentOnLeftWhenPossible = YES;
+        
         switch (event.eventType)
         {
             case MXEventTypeRoomMember:
@@ -131,6 +134,39 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
                 self.collapsed = YES;
             }
                 break;
+            case MXEventTypeCallInvite:
+            case MXEventTypeCallAnswer:
+            case MXEventTypeCallHangup:
+            case MXEventTypeCallReject:
+            {
+                self.tag = RoomBubbleCellDataTagCall;
+                
+                // Call events can be collapsed together
+                self.collapsable = YES;
+                
+                // Collapse them by default
+                self.collapsed = YES;
+                
+                // Show timestamps always on right
+                self.displayTimestampForSelectedComponentOnLeftWhenPossible = NO;
+            }
+            case MXEventTypeCustom:
+            {
+                if ([event.type isEqualToString:kWidgetMatrixEventTypeString]
+                    || [event.type isEqualToString:kWidgetModularEventTypeString])
+                {
+                    Widget *widget = [[Widget alloc] initWithWidgetEvent:event inMatrixSession:roomDataSource.mxSession];
+                    if ([widget.type isEqualToString:kWidgetTypeJitsiV1] ||
+                        [widget.type isEqualToString:kWidgetTypeJitsiV2])
+                    {
+                        self.tag = RoomBubbleCellDataTagGroupCall;
+                        
+                        // Show timestamps always on right
+                        self.displayTimestampForSelectedComponentOnLeftWhenPossible = NO;
+                    }
+                }
+            }
+                break;
             default:
                 break;
         }
@@ -142,8 +178,6 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
 
         // Reset attributedTextMessage to force reset MXKRoomCellData parameters
         self.attributedTextMessage = nil;
-        
-        self.displayTimestampForSelectedComponentOnLeftWhenPossible = YES;
     }
     
     return self;
@@ -207,6 +241,11 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
         return YES;
     }
     
+    if (self.tag == RoomBubbleCellDataTagRoomCreationIntro)
+    {
+        return NO;
+    }
+    
     return [super hasNoDisplay];
 }
 
@@ -231,17 +270,20 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
 
         return NO;
     }
-    else if (self.tag == RoomBubbleCellDataTagRoomCreateConfiguration &&
-             (cellData.tag == RoomBubbleCellDataTagRoomCreateConfiguration || cellData.tag == RoomBubbleCellDataTagMembership))
-    {
-        return YES;
-    }
-    else if (self.tag == RoomBubbleCellDataTagMembership && cellData.tag == RoomBubbleCellDataTagRoomCreateConfiguration) {
-        return YES;
-    }
     else if (self.tag == RoomBubbleCellDataTagRoomCreateConfiguration && cellData.tag == RoomBubbleCellDataTagRoomCreateConfiguration)
     {
         return YES;
+    }
+    else if (self.tag == RoomBubbleCellDataTagCall && cellData.tag == RoomBubbleCellDataTagCall)
+    {
+        //  Check if the same call
+        MXEvent * event1 = self.events.firstObject;
+        MXCallEventContent *eventContent1 = [MXCallEventContent modelFromJSON:event1.content];
+
+        MXEvent * event2 = cellData.events.firstObject;
+        MXCallEventContent *eventContent2 = [MXCallEventContent modelFromJSON:event2.content];
+
+        return [eventContent1.callId isEqualToString:eventContent2.callId];
     }
     
     if (self.tag == RoomBubbleCellDataTagRoomCreateWithPredecessor || cellData.tag == RoomBubbleCellDataTagRoomCreateWithPredecessor)
@@ -721,7 +763,16 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
             // One single bubble per membership event
             shouldAddEvent = NO;
             break;
+        case RoomBubbleCellDataTagCall:
+            shouldAddEvent = NO;
+            break;
+        case RoomBubbleCellDataTagGroupCall:
+            shouldAddEvent = NO;
+            break;
         case RoomBubbleCellDataTagRoomCreateConfiguration:
+            shouldAddEvent = NO;
+            break;
+        case RoomBubbleCellDataTagRoomCreationIntro:
             shouldAddEvent = NO;
             break;
         default:
@@ -765,6 +816,26 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
             case MXEventTypeRoomJoinRules:
                 shouldAddEvent = NO;
                 break;
+            case MXEventTypeCallInvite:
+            case MXEventTypeCallAnswer:
+            case MXEventTypeCallHangup:
+            case MXEventTypeCallReject:
+                shouldAddEvent = NO;
+                break;
+            case MXEventTypeCustom:
+            {
+                if ([event.type isEqualToString:kWidgetMatrixEventTypeString]
+                    || [event.type isEqualToString:kWidgetModularEventTypeString])
+                {
+                    Widget *widget = [[Widget alloc] initWithWidgetEvent:event inMatrixSession:roomDataSource.mxSession];
+                    if ([widget.type isEqualToString:kWidgetTypeJitsiV1] ||
+                        [widget.type isEqualToString:kWidgetTypeJitsiV2])
+                    {
+                        shouldAddEvent = NO;
+                    }
+                }
+                break;
+            }
             default:
                 break;
         }

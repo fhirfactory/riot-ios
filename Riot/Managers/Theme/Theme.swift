@@ -15,10 +15,11 @@
  */
 
 import UIKit
+import DesignKit
 
 /// Provide color constant values defined by the designer
 /// https://app.zeplin.io/project/5c122fa790c5b4241ffa6be7/screen/5c619592daff2f1241d82e75
-@objc protocol Theme {
+@objc protocol Theme: ThemeV2 {
     
     var identifier: String { get }
 
@@ -40,6 +41,7 @@ import UIKit
 
     var textPrimaryColor: UIColor { get }
     var textSecondaryColor: UIColor { get }
+    var textTertiaryColor: UIColor { get }
 
     var sideMenuProfileBackground: UIColor { get }
     
@@ -65,9 +67,14 @@ import UIKit
     var placeholderTextColor: UIColor { get }
 
     var selectedBackgroundColor: UIColor { get }
+    
+    // MARK: - Call Screen Specific Colors
+    
+    var callScreenButtonTintColor: UIColor { get }
 
     // MARK: - Appearance and style
 
+    var roomInputTextBorder: UIColor { get }
 
     /// Status bar style to use
     var statusBarStyle: UIStatusBarStyle { get }
@@ -81,13 +88,18 @@ import UIKit
 
 
     // MARK: - Colors not defined in the design palette
+    
+    var secondaryCircleButtonBackgroundColor: UIColor { get }
 
     /// fading behind dialog modals
     var overlayBackgroundColor: UIColor { get }
 
     /// Color to tint the search background image
     var matrixSearchBackgroundImageTintColor: UIColor { get }
-
+    
+    /// Color to use in shadows. Should be contrast to `backgroundColor`.
+    var shadowColor: UIColor { get }
+    
     // MARK: - Customisation methods
 
     

@@ -16,6 +16,7 @@
 
 import Foundation
 import UIKit
+import DesignKit
 
 /// Color constants for the dark theme
 @objcMembers
@@ -39,10 +40,10 @@ class DarkTheme: NSObject, Theme {
     var headerTextPrimaryColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
     var headerTextSecondaryColor: UIColor = UIColor(rgbHex: 0xA9B2BC)
 
+    var sideMenuProfileBackground: UIColor = UIColor(rgbHex: 0x414141)
     var textPrimaryColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
     var textSecondaryColor: UIColor = UIColor(rgbHex: 0xA9B2BC)
-
-    var sideMenuProfileBackground: UIColor = UIColor(rgbHex: 0x414141)
+    var textTertiaryColor: UIColor = UIColor(rgbHex: 0x8E99A4)
 
     var tintColor: UIColor = UIColor(displayP3Red: 0.05098039216, green: 0.7450980392, blue: 0.5450980392, alpha: 1.0)
     var tintBackgroundColor: UIColor = UIColor(rgbHex: 0x1F6954)
@@ -54,6 +55,8 @@ class DarkTheme: NSObject, Theme {
     var noticeSecondaryColor: UIColor = UIColor(rgbHex: 0x61708B)
 
     var warningColor: UIColor = UIColor(rgbHex: 0xFF4B55)
+    
+    var roomInputTextBorder: UIColor = UIColor(rgbHex: 0x8D97A5).withAlphaComponent(0.2)
 
     var avatarColors: [UIColor] = [
         UIColor(rgbHex: 0x03B381),
@@ -82,9 +85,15 @@ class DarkTheme: NSObject, Theme {
 
     var placeholderTextColor: UIColor = UIColor(rgbHex: 0xA1B2D1) // Use secondary text color
     var selectedBackgroundColor: UIColor = UIColor(rgbHex: 0x040506)
+    var callScreenButtonTintColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
     var overlayBackgroundColor: UIColor = UIColor(white: 0.7, alpha: 0.5)
     var matrixSearchBackgroundImageTintColor: UIColor = UIColor(rgbHex: 0x7E7E7E)
+    var secondaryCircleButtonBackgroundColor: UIColor = UIColor(rgbHex: 0xE3E8F0)
     
+    var shadowColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
+    
+    var messageTickColor: UIColor = .white
+
     func applyStyle(onTabBar tabBar: UITabBar) {
         tabBar.unselectedItemTintColor = self.tabBarUnselectedItemTintColor
         tabBar.tintColor = self.tintColor
@@ -133,4 +142,10 @@ class DarkTheme: NSObject, Theme {
         button.tintColor = self.tintColor
         button.setTitleColor(self.tintColor, for: .normal)
     }
+    
+    ///  MARK: - Theme v2
+    
+    lazy var colors: Colors = {
+        return DarkColors()
+    }()
 }

@@ -67,7 +67,10 @@
     id kThemeServiceDidChangeThemeNotificationObserver;
     
     // The groups data source
-    RoomDataSource *filesDataSource;
+    GroupsDataSource *groupsDataSource;
+
+    // All tabs deinfed in the storyboard
+    NSArray *initalTabs;
 }
 
 @property(nonatomic,getter=isHidden) BOOL hidden;
@@ -139,6 +142,8 @@
         
     }];
     [self userInterfaceThemeDidChange];
+    
+    initalTabs = [NSArray arrayWithArray:self.viewControllers];
 }
 
 - (void)removeFromTabBarAt:(NSInteger)Index{
@@ -174,6 +179,8 @@
     
     // Show the tab bar view controller content only when a user is logged in.
     self.hidden = ([MXKAccountManager sharedManager].accounts.count == 0);
+    
+    [self updateTabs];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -791,61 +798,55 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    // Keep ref on destinationViewController
+    [childViewControllers addObject:segue.destinationViewController];
     if ([[segue identifier] isEqualToString:@"showSideMenu"]){
         [self prepareSideMenuSequeFor:segue];
-    }
-    else
-    {
-        // Keep ref on destinationViewController
-        [childViewControllers addObject:segue.destinationViewController];
+    } else if ([[segue identifier] isEqualToString:@"showAuth"]){
+        // Keep ref on the authentification view controller while it is displayed
+        // ie until we get the notification about a new account
+        _authViewController = segue.destinationViewController;
+        isAuthViewControllerPreparing = NO;
         
-        if ([[segue identifier] isEqualToString:@"showAuth"])
+        // Listen to the end of the authentication flow
+        _authViewController.authVCDelegate = self;
+        
+        authViewControllerObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXKAccountManagerDidAddAccountNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
+            
+            _authViewController = nil;
+            
+            [[NSNotificationCenter defaultCenter] removeObserver:authViewControllerObserver];
+            authViewControllerObserver = nil;
+        }];
+        
+        authViewRemovedAccountObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXKAccountManagerDidRemoveAccountNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
+            
+            // The user has cleared data for their soft logged out account
+            _authViewController = nil;
+            
+            [[NSNotificationCenter defaultCenter] removeObserver:authViewRemovedAccountObserver];
+            authViewRemovedAccountObserver = nil;
+        }];
+        
+        // Forward parameters if any
+        if (authViewControllerRegistrationParameters)
         {
-            // Keep ref on the authentification view controller while it is displayed
-            // ie until we get the notification about a new account
-            _authViewController = segue.destinationViewController;
-            isAuthViewControllerPreparing = NO;
-            
-            // Listen to the end of the authentication flow
-            _authViewController.authVCDelegate = self;
-            
-            authViewControllerObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXKAccountManagerDidAddAccountNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
-                
-                _authViewController = nil;
-                
-                [[NSNotificationCenter defaultCenter] removeObserver:authViewControllerObserver];
-                authViewControllerObserver = nil;
-            }];
-            
-            authViewRemovedAccountObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXKAccountManagerDidRemoveAccountNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
-                
-                // The user has cleared data for their soft logged out account
-                _authViewController = nil;
-                
-                [[NSNotificationCenter defaultCenter] removeObserver:authViewRemovedAccountObserver];
-                authViewRemovedAccountObserver = nil;
-            }];
-            
-            // Forward parameters if any
-            if (authViewControllerRegistrationParameters)
-            {
-                _authViewController.externalRegistrationParameters = authViewControllerRegistrationParameters;
-                authViewControllerRegistrationParameters = nil;
-            }
-            if (softLogoutCredentials)
-            {
-                _authViewController.softLogoutCredentials = softLogoutCredentials;
-                softLogoutCredentials = nil;
-            }
+            _authViewController.externalRegistrationParameters = authViewControllerRegistrationParameters;
+            authViewControllerRegistrationParameters = nil;
         }
-        else if ([[segue identifier] isEqualToString:@"showUnifiedSearch"])
+        if (softLogoutCredentials)
         {
-            unifiedSearchViewController= segue.destinationViewController;
-            
-            for (MXSession *session in mxSessionArray)
-            {
-                [unifiedSearchViewController addMatrixSession:session];
-            }
+            _authViewController.softLogoutCredentials = softLogoutCredentials;
+            softLogoutCredentials = nil;
+        }
+    }
+    else if ([[segue identifier] isEqualToString:@"showUnifiedSearch"])
+    {
+        unifiedSearchViewController= segue.destinationViewController;
+        
+        for (MXSession *session in mxSessionArray)
+        {
+            [unifiedSearchViewController addMatrixSession:session];
         }
     }
     
@@ -992,6 +993,28 @@
 
 #pragma mark -
 
+- (void)updateTabs
+{
+    NSMutableArray *newTabs = [NSMutableArray arrayWithArray:initalTabs];
+    if (!RiotSettings.shared.homeScreenShowCommunitiesTab)
+    {
+        [newTabs removeObjectAtIndex:TABBAR_GROUPS_INDEX];
+    }
+    if (!RiotSettings.shared.homeScreenShowRoomsTab)
+    {
+        [newTabs removeObjectAtIndex:TABBAR_ROOMS_INDEX];
+    }
+    if (!RiotSettings.shared.homeScreenShowPeopleTab)
+    {
+        [newTabs removeObjectAtIndex:TABBAR_PEOPLE_INDEX];
+    }
+    if (!RiotSettings.shared.homeScreenShowFavouritesTab)
+    {
+        [newTabs removeObjectAtIndex:TABBAR_FAVOURITES_INDEX];
+    }
+    self.viewControllers = newTabs;
+}
+
 - (void)refreshTabBarBadges
 {
     // For Lingo we want to display the actual notitication value not just a dot
@@ -1000,69 +1023,98 @@
         [self setMissedDiscussionsCount:recentsDataSource.missedFavouriteDiscussionsCount
                           onTabBarItem:TABBAR_FAVOURITES_INDEX
                         withBadgeColor:(recentsDataSource.missedHighlightFavouriteDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
-    } else {
+    } else if (RiotSettings.shared.homeScreenShowFavouritesTab)
+    {
         // This is the OOB Default behaviour for Element, which is the fallback if the BuildSettings toggle is not configured
+        // Use a middle dot to signal missed notif in favourites
         // Use a middle dot to signal missed notif in favourites
         [self setMissedDiscussionsMark:(recentsDataSource.missedFavouriteDiscussionsCount? @"\u00B7": nil)
                           onTabBarItem:TABBAR_FAVOURITES_INDEX
                         withBadgeColor:(recentsDataSource.missedHighlightFavouriteDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
     }
     
-    
     // Update the badge on People and Rooms tabs
-    [self setMissedDiscussionsCount:recentsDataSource.missedDirectDiscussionsCount
-                       onTabBarItem:TABBAR_PEOPLE_INDEX
-                     withBadgeColor:(recentsDataSource.missedHighlightDirectDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
-    [self setMissedDiscussionsCount:recentsDataSource.missedGroupDiscussionsCount
-                       onTabBarItem:TABBAR_ROOMS_INDEX
-                     withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
-    [self setMissedDiscussionsCount:recentsDataSource.missedChatCount + recentsDataSource.missedLowPriorityCount + recentsDataSource.missedFavouriteCount
-                       onTabBarItem:TABBAR_HOME_INDEX
-                     withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
-    if (@available(iOS 14, *)){
-        [self setupPullDownMenuiOS14];
+    if (RiotSettings.shared.homeScreenShowPeopleTab)
+    {
+        if (recentsDataSource.unsentMessagesDirectDiscussionsCount)
+        {
+            [self setBadgeValue:@"!"
+                               onTabBarItem:TABBAR_PEOPLE_INDEX
+                             withBadgeColor:ThemeService.shared.theme.noticeColor];
+        }
+        else
+        {
+            [self setMissedDiscussionsCount:recentsDataSource.missedDirectDiscussionsCount
+                               onTabBarItem:TABBAR_PEOPLE_INDEX
+                             withBadgeColor:(recentsDataSource.missedHighlightDirectDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+        }
     }
-    [AppDelegate.theDelegate refreshApplicationIconBadgeNumber];
-    [self updateInvitesBarButtonItem];
+    
+    if (RiotSettings.shared.homeScreenShowRoomsTab)
+    {
+        if (recentsDataSource.unsentMessagesGroupDiscussionsCount)
+        {
+            [self setMissedDiscussionsCount:recentsDataSource.unsentMessagesGroupDiscussionsCount
+                               onTabBarItem:TABBAR_ROOMS_INDEX
+                             withBadgeColor:ThemeService.shared.theme.noticeColor];
+        }
+        else
+        {
+            [self setMissedDiscussionsCount:recentsDataSource.missedGroupDiscussionsCount
+                               onTabBarItem:TABBAR_ROOMS_INDEX
+                             withBadgeColor:(recentsDataSource.missedHighlightGroupDiscussionsCount ? ThemeService.shared.theme.noticeColor : ThemeService.shared.theme.noticeSecondaryColor)];
+        }
+    }
 }
 
 - (void)setMissedDiscussionsCount:(NSUInteger)count onTabBarItem:(NSUInteger)index withBadgeColor:(UIColor*)badgeColor
 {
-    if (count)
+    [self setBadgeValue:count ? [self tabBarBadgeStringValue:count] : nil onTabBarItem:index withBadgeColor:badgeColor];
+}
+
+- (void)setBadgeValue:(NSString *)value onTabBarItem:(NSUInteger)index withBadgeColor:(UIColor*)badgeColor
+{
+    NSInteger itemIndex = [self indexOfTabItemWithTag:index];
+    if (itemIndex != NSNotFound)
     {
-        NSString *badgeValue = [self tabBarBadgeStringValue:count];
-        
-        self.tabBar.items[index].badgeValue = badgeValue;
-        
-        self.tabBar.items[index].badgeColor = badgeColor;
-        
-        [self.tabBar.items[index] setBadgeTextAttributes:@{
-                                                           NSForegroundColorAttributeName: ThemeService.shared.theme.baseTextPrimaryColor
-                                                           }
-                                                forState:UIControlStateNormal];
-    }
-    else
-    {
-        self.tabBar.items[index].badgeValue = nil;
+        if (value)
+        {
+            self.tabBar.items[itemIndex].badgeValue = value;
+            
+            self.tabBar.items[itemIndex].badgeColor = badgeColor;
+            
+            [self.tabBar.items[itemIndex] setBadgeTextAttributes:@{
+                                                               NSForegroundColorAttributeName: ThemeService.shared.theme.baseTextPrimaryColor
+                                                               }
+                                                    forState:UIControlStateNormal];
+        }
+        else
+        {
+            self.tabBar.items[itemIndex].badgeValue = nil;
+        }
     }
 }
 
 - (void)setMissedDiscussionsMark:(NSString*)mark onTabBarItem:(NSUInteger)index withBadgeColor:(UIColor*)badgeColor
 {
-    if (mark)
+    NSInteger itemIndex = [self indexOfTabItemWithTag:index];
+    if (itemIndex != NSNotFound)
     {
-        self.tabBar.items[index].badgeValue = mark;
-                
-        self.tabBar.items[index].badgeColor = badgeColor;
-        
-        [self.tabBar.items[index] setBadgeTextAttributes:@{
-                                                           NSForegroundColorAttributeName: ThemeService.shared.theme.baseTextPrimaryColor
-                                                           }
-                                                forState:UIControlStateNormal];
-    }
-    else
-    {
-        self.tabBar.items[index].badgeValue = nil;
+        if (mark)
+        {
+            self.tabBar.items[itemIndex].badgeValue = mark;
+                    
+            self.tabBar.items[itemIndex].badgeColor = badgeColor;
+            
+            [self.tabBar.items[itemIndex] setBadgeTextAttributes:@{
+                                                               NSForegroundColorAttributeName: ThemeService.shared.theme.baseTextPrimaryColor
+                                                               }
+                                                    forState:UIControlStateNormal];
+        }
+        else
+        {
+            self.tabBar.items[itemIndex].badgeValue = nil;
+        }
     }
 }
 
@@ -1081,6 +1133,19 @@
     }
     
     return badgeValue;
+}
+
+- (NSInteger)indexOfTabItemWithTag:(NSUInteger)tag
+{
+    for (int i = 0 ; i < self.tabBar.items.count ; i++)
+    {
+        if (self.tabBar.items[i].tag == tag)
+        {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
 }
 
 #pragma mark -

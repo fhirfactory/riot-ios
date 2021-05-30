@@ -21,8 +21,9 @@ import Foundation
     case reply
     case edit
     case more
-    case remove
     case forward
+    case resend
+    case delete
     
     // MARK: - Properties
     
@@ -40,8 +41,10 @@ import Foundation
             title = VectorL10n.roomEventActionMore
         case .forward:
             title = VectorL10n.roomEventActionForward
-        case .remove:
-            title = VectorL10n.remove
+        case .resend:
+            title = VectorL10n.retry
+        case .delete:
+            title = VectorL10n.roomEventActionDelete
         }
         
         return title
@@ -59,11 +62,13 @@ import Foundation
             image = Asset.Images.roomContextMenuEdit.image
         case .more:
             image = Asset.Images.roomContextMenuMore.image
-        case .remove:
-            image = Asset.Images.removeIcon.image
         case .forward:
             //TODO: Find a more appropriate image (an arrow going to the right would make sense)
             image = Asset.Images.chevron.image
+        case .resend:
+            image = Asset.Images.roomContextMenuRetry.image
+        case .delete:
+            image = Asset.Images.roomContextMenuDelete.image
         default:
             image = nil
         }

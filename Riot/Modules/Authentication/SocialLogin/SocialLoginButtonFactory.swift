@@ -154,7 +154,7 @@ class SocialLoginButtonFactory {
         
         let darkStyle = SocialLoginButtonStyle(logo: darkImage,
                                                titleColor: .white,
-                                               backgroundColor: UIColor(rgb: 0x4285F4),
+                                               backgroundColor: UIColor(rgbHex: 0x4285F4),
                                                borderColor: nil)
         
         let defaultStyle: SocialLoginButtonStyle = lightStyle
@@ -172,7 +172,7 @@ class SocialLoginButtonFactory {
         
         let defaultStyle = SocialLoginButtonStyle(logo: .local(Asset.Images.socialLoginButtonTwitter.image),
                                                   titleColor: .white,
-                                                  backgroundColor: UIColor(rgb: 0x47ACDF),
+                                                  backgroundColor: UIColor(rgbHex: 0x47ACDF),
                                                   borderColor: nil)
         return (defaultStyle, [:])
     }
@@ -181,7 +181,7 @@ class SocialLoginButtonFactory {
         
         let defaultStyle = SocialLoginButtonStyle(logo: .local(Asset.Images.socialLoginButtonFacebook.image),
                                                   titleColor: .white,
-                                                  backgroundColor: UIColor(rgb: 0x3C5A99),
+                                                  backgroundColor: UIColor(rgbHex: 0x3C5A99),
                                                   borderColor: nil)
         return (defaultStyle, [:])
     }

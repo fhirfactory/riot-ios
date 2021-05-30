@@ -7,6 +7,10 @@ To build Element iOS project you need:
 - Xcode 12.1+.
 - [Ruby](https://www.ruby-lang.org/), a dynamic programming language used by several build tools.
 - [CocoaPods](https://cocoapods.org), library dependencies manager for Xcode projects.
+<<<<<<< HEAD
+=======
+- [XcodeGen](https://github.com/yonaskolb/XcodeGen), an Xcode project generator.
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 - [bundler](https://bundler.io/) (optional), is also a dependency manager used to manage build tools dependency (CocoaPods, Fastlane).
 
 ### Install Ruby
@@ -20,17 +24,36 @@ If you do not want to grant the ruby package manager, [RubyGems](https://rubygem
 To install CocoaPods you can grab the right version by using `bundler` (recommended) or you can directly install it with RubyGems:
 
 ```
+<<<<<<< HEAD
 gem install cocoapods
+=======
+$ gem install cocoapods
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 ```
 
 In the last case please ensure that you are using the same version as indicated at the end of the `Podfile.lock` file.
 
+<<<<<<< HEAD
+=======
+### Install XcodeGen
+
+You can directly install XcodeGen with [Homebrew](https://brew.sh) or RubyGems:
+
+```
+$ brew install xcodegen
+```
+
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 ### Install bundler (optional)
 
 By using `bundler` you will ensure to use the right versions of build tools used to build and deliver the project. You can find dependency definitions in the `Gemfile`. To install `bundler`:
 
 ```
+<<<<<<< HEAD
 gem install bundler
+=======
+$ gem install bundler
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 ```
 
 ## Choose Matrix SDKs version to build
@@ -51,12 +74,17 @@ If you want to build last development code you have to checkout the develop bran
 
 - **Build specific branch of Kit and SDK and modify Element project only**
 
+<<<<<<< HEAD
 If you want to build a specific branch for the MatrixKit and the MatrixSDK you have to indicate them using a dictionary like this: `$matrixKitVersion = {'kit branch name' => 'sdk branch name'}`.
+=======
+If you want to build a specific branch for the MatrixKit and the MatrixSDK you have to indicate them using a dictionary like this: `$matrixKitVersion = {'kit_branch_name' => 'sdk_branch_name'}`.
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 
 - **Build any branch and be able to modify MatrixKit and MatrixSDK locally**
 
 If you want to modify MatrixKit and/or MatrixSDK locally and see the result in Element project you have to uncommment `$matrixKitVersion = :local` in the `Podfile`.
 But before you have to checkout [MatrixKit](https://github.com/matrix-org/matrix-ios-kit) repository in `../matrix-ios-kit` and [MatrixSDK](https://github.com/matrix-org/matrix-ios-sdk) in `../matrix-ios-sdk` locally relatively to your Element iOS project folder.
+<<<<<<< HEAD
 Be sure to use compatible branches for Element iOS, MatrixKit and MatrixSDK. For example if you want to modify Element iOS from develop branch use MatrixKit and MatrixSDK develop branches and then make your modifications.
 
 **Important**: By working with local pods (development pods) you will need to use legacy build system in Xcode, to have your local changes taken into account. To enable it go to Xcode menu and select `File > Workspace Settings… > Build System` and then choose `Legacy Build System`.
@@ -72,11 +100,39 @@ Each time you edit `$matrixKitVersion` variable in the `Podfile` you will have t
 ### Install dependencies
 
 Before opening the Element Xcode workspace, you need to install dependencies via CocoaPods.
+=======
+Be sure to use compatible branches for Element iOS, MatrixKit and MatrixSDK. For example, if you want to modify Element iOS from develop branch, use MatrixKit and MatrixSDK develop branches and then make your modifications.
+
+**Important**: By working with [XcodeGen](https://github.com/yonaskolb/XcodeGen) you will need to use the _New Build System_ in Xcode, to have your some of the xcconfig variables taken into account. It should be enabled by default on the latest Xcode versions, but if you need to enable it go to Xcode menu and select `File > Workspace Settings… > Build System` and then choose `New Build System`.
+
+### `$matrixKitVersion` Modification
+
+Every time you change the `$matrixKitVersion` variable in the `Podfile`, you have to run the `pod install` command again.
+
+
+## Build
+
+## Generate Xcode project
+
+In order to get rid of git conflicts, the `Riot.xcodeproj` is not pushed into the git repository anymore but generated using `XcodeGen`. To generate the `xcodeproj` file simply run the following command line from the root folder :
+
+```
+$ xcodegen
+```
+
+
+### Install dependencies
+
+Then, before opening the Element Xcode workspace, you need to install dependencies via CocoaPods.
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 
 To be sure to use the right CocoaPods version you can use `bundler`:
 
 ```
+<<<<<<< HEAD
 $ cd Riot
+=======
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 $ bundle install
 $ bundle exec pod install
 ```
@@ -84,12 +140,20 @@ $ bundle exec pod install
 Or if you prefer to use directly CocoaPods:
 
 ```
+<<<<<<< HEAD
 $ cd Riot
+=======
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 $ pod install
 ```
 
 This will load all dependencies for the Element source code, including [MatrixKit](https://github.com/matrix-org/matrix-ios-kit) 
+<<<<<<< HEAD
 and [MatrixSDK](https://github.com/matrix-org/matrix-ios-sdk). 
+=======
+and [MatrixSDK](https://github.com/matrix-org/matrix-ios-sdk).
+
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 
 ### Open workspace
 
@@ -103,7 +167,14 @@ $ open Riot.xcworkspace
 
 ### Configure project
 
+<<<<<<< HEAD
 You may need to change the bundle identifier and app group identifier to be unique to get Xcode to build the app. Make sure to change the bundle identifier,  application group identifier and app name in the `Config/Common.xcconfig` file to your new identifiers.
+=======
+You may need to change the bundle identifier and app group identifier to be unique to get Xcode to build the app. Make sure to change the bundle identifier, application group identifier and app name in the `project.yml` file to your new identifiers.
+
+Each target has its own YAML file in the folder Targets folder.
+
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 
 ## Generate IPA
 
@@ -142,5 +213,8 @@ Or you can use the wrapper script located at `/Tools/Release/buildRelease.sh`. F
 And then indicate a branch or a tag like this:
 
 `$ ./buildRelease.sh <tag or branch>`
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926

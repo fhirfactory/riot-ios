@@ -17,6 +17,7 @@
 
 import Foundation
 import UIKit
+import DesignKit
 
 /// Color constants for the ACT Health Lingo customisation
 @objcMembers
@@ -44,6 +45,12 @@ class LingoTheme: NSObject, Theme {
 
     var textPrimaryColor: UIColor = UIColor(rgbHex: 0x171910)
     var textSecondaryColor: UIColor = UIColor(rgbHex: 0x8F97A3)
+    //TODO: Change these colours
+    var textTertiaryColor: UIColor = UIColor(rgbHex: 0x8D99A5)
+    var callScreenButtonTintColor: UIColor = UIColor(rgbHex: 0xFFFFFF)
+    var roomInputTextBorder: UIColor = UIColor(rgbHex: 0xE3E8F0)
+    var secondaryCircleButtonBackgroundColor: UIColor = UIColor(rgbHex: 0xE3E8F0)
+    var shadowColor: UIColor = UIColor(rgbHex: 0x000000)
     
     var sideMenuProfileBackground: UIColor = UIColor(rgbHex: 0xe9f0ff)
 
@@ -138,4 +145,8 @@ class LingoTheme: NSObject, Theme {
         button.tintColor = self.tintColor
         button.setTitleColor(self.tintColor, for: .normal)
     }
+    
+    lazy var colors: Colors = {
+        return LightColors()
+    }()
 }

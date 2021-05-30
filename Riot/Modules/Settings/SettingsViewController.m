@@ -134,6 +134,7 @@ enum
     OTHER_PRIVACY_INDEX,
     OTHER_ACKNOWLEDGEMENT_INDEX,
     OTHER_THIRD_PARTY_INDEX,
+    OTHER_SHOW_NSFW_ROOMS_INDEX,
     OTHER_CRASH_REPORT_INDEX,
     OTHER_ENABLE_RAGESHAKE_INDEX,
     OTHER_MARK_ALL_AS_READ_INDEX,
@@ -143,7 +144,7 @@ enum
 
 enum
 {
-    LABS_USE_JITSI_WIDGET_INDEX = 0,
+    LABS_ENABLE_RINGING_FOR_GROUP_CALLS_INDEX = 0
 };
 
 enum
@@ -245,7 +246,6 @@ TableViewSectionsDelegate>
 @property (nonatomic, strong) SettingsDiscoveryThreePidDetailsCoordinatorBridgePresenter *discoveryThreePidDetailsPresenter;
 
 @property (nonatomic, strong) SecureBackupSetupCoordinatorBridgePresenter *secureBackupSetupCoordinatorBridgePresenter;
-@property (nonatomic, strong) AuthenticatedSessionViewControllerFactory *authenticatedSessionViewControllerFactory;
 
 @property (nonatomic, strong) TableViewSections *tableViewSections;
 @property (nonatomic, strong) CameraPresenter *cameraPresenter;
@@ -254,9 +254,23 @@ TableViewSectionsDelegate>
 
 @property (nonatomic, strong) CrossSigningSetupCoordinatorBridgePresenter *crossSigningSetupCoordinatorBridgePresenter;
 
+@property (nonatomic, strong) ReauthenticationCoordinatorBridgePresenter *reauthenticationCoordinatorBridgePresenter;
+
+@property (nonatomic, strong) UserInteractiveAuthenticationService *userInteractiveAuthenticationService;
+
 @end
 
 @implementation SettingsViewController
+
+- (UserInteractiveAuthenticationService*)userInteractiveAuthenticationService
+{
+    if (!_userInteractiveAuthenticationService)
+    {
+        _userInteractiveAuthenticationService = [self createUserInteractiveAuthenticationService];
+    }
+    
+    return _userInteractiveAuthenticationService;
+}
 
 + (instancetype)instantiate
 {
@@ -291,9 +305,9 @@ TableViewSectionsDelegate>
     Section *sectionUserSettings = [Section sectionWithTag:SECTION_TAG_USER_SETTINGS];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_PROFILE_PICTURE_INDEX];
     [sectionUserSettings addRowWithTag:USER_SETTINGS_DISPLAYNAME_INDEX];
-    if (BuildSettings.settingsScreenAllowChangingPassword)
+    if (RiotSettings.shared.settingsScreenShowChangePassword)
     {
-    [sectionUserSettings addRowWithTag:USER_SETTINGS_CHANGE_PASSWORD_INDEX];
+        [sectionUserSettings addRowWithTag:USER_SETTINGS_CHANGE_PASSWORD_INDEX];
     }
     if (BuildSettings.settingsScreenShowUserFirstName)
     {
@@ -326,8 +340,10 @@ TableViewSectionsDelegate>
     {
         [sectionUserSettings addRowWithTag:USER_SETTINGS_THREEPIDS_INFORMATION_INDEX];
     }
-    
-    [sectionUserSettings addRowWithTag:USER_SETTINGS_INVITE_FRIENDS_INDEX];
+    if (RiotSettings.shared.settingsScreenShowInviteFriends)
+    {
+        [sectionUserSettings addRowWithTag:USER_SETTINGS_INVITE_FRIENDS_INDEX];
+    }
     
     sectionUserSettings.headerTitle = NSLocalizedStringFromTable(@"settings_user_settings", @"Vector", nil);
     [tmpSections addObject:sectionUserSettings];
@@ -339,9 +355,9 @@ TableViewSectionsDelegate>
     
     Section *sectionNotificationSettings = [Section sectionWithTag:SECTION_TAG_NOTIFICATIONS];
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_ENABLE_PUSH_INDEX];
-    if (BuildSettings.settingsScreenShowNotificationDecryptedContentSettings)
+    if (RiotSettings.shared.settingsScreenShowNotificationDecodedContentOption)
     {
-    [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT];
+        [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_SHOW_DECODED_CONTENT];
     }
     [sectionNotificationSettings addRowWithTag:NOTIFICATION_SETTINGS_GLOBAL_SETTINGS_INDEX];
     if (BuildSettings.settingsScreenShowPinWithMissed){
@@ -355,10 +371,18 @@ TableViewSectionsDelegate>
     if (BuildSettings.allowVoIPUsage && BuildSettings.stunServerFallbackUrlString && BuildSettings.settingsScreenShowCallsSettings)
     {
         Section *sectionCalls = [Section sectionWithTag:SECTION_TAG_CALLS];
-        [sectionCalls addRowWithTag:CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX];
-        [sectionCalls addRowWithTag:CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX];
         sectionCalls.headerTitle = NSLocalizedStringFromTable(@"settings_calls_settings", @"Vector", nil);
-        [tmpSections addObject:sectionCalls];
+
+        if (RiotSettings.shared.settingsScreenShowEnableStunServerFallback)
+        {
+            [sectionCalls addRowWithTag:CALLS_ENABLE_STUN_SERVER_FALLBACK_INDEX];
+            [sectionCalls addRowWithTag:CALLS_STUN_SERVER_FALLBACK_DESCRIPTION_INDEX];
+        }
+        
+        if (sectionCalls.rows.count)
+        {
+            [tmpSections addObject:sectionCalls];
+        }
     }
     
     if (BuildSettings.settingsScreenShowDiscoverySettings)
@@ -434,24 +458,25 @@ TableViewSectionsDelegate>
     
     Section *sectionOther = [Section sectionWithTag:SECTION_TAG_OTHER];
     [sectionOther addRowWithTag:OTHER_VERSION_INDEX];
-    if (BuildSettings.settingsScreenShowOLMVersion)
+    [sectionOther addRowWithTag:OTHER_OLM_VERSION_INDEX];
+    if (BuildSettings.applicationCopyrightUrlString.length)
     {
-        [sectionOther addRowWithTag:OTHER_OLM_VERSION_INDEX];
+        [sectionOther addRowWithTag:OTHER_COPYRIGHT_INDEX];
     }
-    if (BuildSettings.settingsScreenShowCopyRight)
+    if (BuildSettings.applicationTermsConditionsUrlString.length)
     {
-    [sectionOther addRowWithTag:OTHER_COPYRIGHT_INDEX];
+        [sectionOther addRowWithTag:OTHER_TERM_CONDITIONS_INDEX];
     }
-    [sectionOther addRowWithTag:OTHER_TERM_CONDITIONS_INDEX];
-    if (BuildSettings.settingsScreenShowThirdPartNotice)
+    if (BuildSettings.applicationPrivacyPolicyUrlString.length)
     {
+        [sectionOther addRowWithTag:OTHER_PRIVACY_INDEX];
+    }
     [sectionOther addRowWithTag:OTHER_THIRD_PARTY_INDEX];
-    }
-    [sectionOther addRowWithTag:OTHER_PRIVACY_INDEX];
-    if (BuildSettings.settingsScreenShowAcknowledgement)
+    if (RiotSettings.shared.settingsScreenShowNsfwRoomsOption)
     {
-    [sectionOther addRowWithTag:OTHER_ACKNOWLEDGEMENT_INDEX];
+        [sectionOther addRowWithTag:OTHER_SHOW_NSFW_ROOMS_INDEX];
     }
+    
     if (BuildSettings.settingsScreenAllowChangingCrashUsageDataSettings)
     {
         [sectionOther addRowWithTag:OTHER_CRASH_REPORT_INDEX];
@@ -477,9 +502,12 @@ TableViewSectionsDelegate>
     if (BuildSettings.settingsScreenShowLabSettings)
     {
         Section *sectionLabs = [Section sectionWithTag:SECTION_TAG_LABS];
-        [sectionLabs addRowWithTag:LABS_USE_JITSI_WIDGET_INDEX];
+        [sectionLabs addRowWithTag:LABS_ENABLE_RINGING_FOR_GROUP_CALLS_INDEX];
         sectionLabs.headerTitle = NSLocalizedStringFromTable(@"settings_labs", @"Vector", nil);
-        [tmpSections addObject:sectionLabs];
+        if (sectionLabs.hasAnyRows)
+        {
+            [tmpSections addObject:sectionLabs];
+        }
     }
     
     if ([groupsDataSource numberOfSectionsInTableView:self.tableView] && groupsDataSource.joinedGroupsSection != -1)
@@ -889,7 +917,7 @@ TableViewSectionsDelegate>
     }
 }
 
-- (void)showValidationEmailDialogWithMessage:(NSString*)message for3PidAddSession:(MX3PidAddSession*)threePidAddSession threePidAddManager:(MX3PidAddManager*)threePidAddManager password:(NSString*)password
+- (void)showValidationEmailDialogWithMessage:(NSString*)message for3PidAddSession:(MX3PidAddSession*)threePidAddSession threePidAddManager:(MX3PidAddManager*)threePidAddManager authenticationParameters:(NSDictionary*)authenticationParameters
 {
     MXWeakify(self);
     [currentAlert dismissViewControllerAnimated:NO completion:nil];
@@ -906,18 +934,19 @@ TableViewSectionsDelegate>
 
     [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"continue"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         MXStrongifyAndReturnIfNil(self);
-        [self tryFinaliseAddEmailSession:threePidAddSession withPassword:password threePidAddManager:threePidAddManager];
+        [self tryFinaliseAddEmailSession:threePidAddSession withAuthenticationParameters:authenticationParameters
+                      threePidAddManager:threePidAddManager];
     }]];
 
     [currentAlert mxk_setAccessibilityIdentifier:@"SettingsVCEmailValidationAlert"];
     [self presentViewController:currentAlert animated:YES completion:nil];
 }
 
-- (void)tryFinaliseAddEmailSession:(MX3PidAddSession*)threePidAddSession withPassword:(NSString*)password threePidAddManager:(MX3PidAddManager*)threePidAddManager
+- (void)tryFinaliseAddEmailSession:(MX3PidAddSession*)threePidAddSession withAuthenticationParameters:(NSDictionary*)authParams threePidAddManager:(MX3PidAddManager*)threePidAddManager
 {
     self->is3PIDBindingInProgress = YES;
-
-    [threePidAddManager tryFinaliseAddEmailSession:threePidAddSession withPassword:password success:^{
+    
+    [threePidAddManager tryFinaliseAddEmailSession:threePidAddSession authParams:authParams success:^{
 
         self->is3PIDBindingInProgress = NO;
 
@@ -947,7 +976,7 @@ TableViewSectionsDelegate>
         MXError *mxError = [[MXError alloc] initWithNSError:error];
         if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringForbidden])
         {
-            NSLog(@"[SettingsViewController] tryFinaliseAddEmailSession: Wrong password");
+            NSLog(@"[SettingsViewController] tryFinaliseAddEmailSession: Wrong credentials");
 
             // Ask password again
             self->currentAlert = [UIAlertController alertControllerWithTitle:nil
@@ -956,11 +985,9 @@ TableViewSectionsDelegate>
 
             [self->currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"retry", @"Vector", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                 self->currentAlert = nil;
-
-                [self requestAccountPasswordWithTitle:NSLocalizedStringFromTable(@"settings_add_3pid_password_title_email", @"Vector", nil)
-                                              message:NSLocalizedStringFromTable(@"settings_add_3pid_password_message", @"Vector", nil)
-                                           onComplete:^(NSString *password) {
-                    [self tryFinaliseAddEmailSession:threePidAddSession withPassword:password threePidAddManager:threePidAddManager];
+                
+                [self showAuthenticationIfNeededForAdding:kMX3PIDMediumEmail withSession:self.mainSession completion:^(NSDictionary *authParams) {
+                    [self tryFinaliseAddEmailSession:threePidAddSession withAuthenticationParameters:authParams threePidAddManager:threePidAddManager];
                 }];
             }]];
 
@@ -986,10 +1013,7 @@ TableViewSectionsDelegate>
             MXError *mxError = [[MXError alloc] initWithNSError:error];
             if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringThreePIDAuthFailed])
             {
-                [self showValidationEmailDialogWithMessage:[NSBundle mxk_localizedStringForKey:@"account_email_validation_error"]
-                                         for3PidAddSession:threePidAddSession
-                                        threePidAddManager:threePidAddManager
-                                                  password:password];
+                [self showValidationEmailDialogWithMessage:[NSBundle mxk_localizedStringForKey:@"account_email_validation_error"] for3PidAddSession:threePidAddSession threePidAddManager:threePidAddManager authenticationParameters:authParams];
             }
             else
             {
@@ -1003,7 +1027,7 @@ TableViewSectionsDelegate>
     }];
 }
 
-- (void)showValidationMsisdnDialogWithMessage:(NSString*)message for3PidAddSession:(MX3PidAddSession*)threePidAddSession threePidAddManager:(MX3PidAddManager*)threePidAddManager password:(NSString*)password
+- (void)showValidationMsisdnDialogWithMessage:(NSString*)message for3PidAddSession:(MX3PidAddSession*)threePidAddSession threePidAddManager:(MX3PidAddManager*)threePidAddManager authenticationParameters:(NSDictionary*)authenticationParameters
 {
     MXWeakify(self);
     
@@ -1037,12 +1061,12 @@ TableViewSectionsDelegate>
 
         if (smsCode.length)
         {
-            [self finaliseAddPhoneNumberSession:threePidAddSession withToken:smsCode andPassword:password message:message threePidAddManager:threePidAddManager];
+            [self finaliseAddPhoneNumberSession:threePidAddSession withToken:smsCode andAuthenticationParameters:authenticationParameters message:message threePidAddManager:threePidAddManager];
         }
         else
         {
             // Ask again the sms token
-            [self showValidationMsisdnDialogWithMessage:message for3PidAddSession:threePidAddSession threePidAddManager:threePidAddManager password:password];
+            [self showValidationMsisdnDialogWithMessage:message for3PidAddSession:threePidAddSession threePidAddManager:threePidAddManager authenticationParameters:authenticationParameters];
         }
     }]];
     
@@ -1050,12 +1074,12 @@ TableViewSectionsDelegate>
     [self presentViewController:currentAlert animated:YES completion:nil];
 }
 
-- (void)finaliseAddPhoneNumberSession:(MX3PidAddSession*)threePidAddSession withToken:(NSString*)token andPassword:(NSString*)password message:(NSString*)message threePidAddManager:(MX3PidAddManager*)threePidAddManager
+- (void)finaliseAddPhoneNumberSession:(MX3PidAddSession*)threePidAddSession withToken:(NSString*)token andAuthenticationParameters:(NSDictionary*)authParams message:(NSString*)message threePidAddManager:(MX3PidAddManager*)threePidAddManager
 {
     self->is3PIDBindingInProgress = YES;
 
-    [threePidAddManager finaliseAddPhoneNumberSession:threePidAddSession withToken:token password:password success:^{
-
+    [threePidAddManager finaliseAddPhoneNumberSession:threePidAddSession withToken:token authParams:authParams success:^{
+        
         self->is3PIDBindingInProgress = NO;
 
         // Check whether destroy has been called during the binding
@@ -1083,7 +1107,7 @@ TableViewSectionsDelegate>
         MXError *mxError = [[MXError alloc] initWithNSError:error];
         if (mxError && [mxError.errcode isEqualToString:kMXErrCodeStringForbidden])
         {
-            NSLog(@"[SettingsViewController] finaliseAddPhoneNumberSession: Wrong password");
+            NSLog(@"[SettingsViewController] finaliseAddPhoneNumberSession: Wrong authentication credentials");
 
             // Ask password again
             self->currentAlert = [UIAlertController alertControllerWithTitle:nil
@@ -1092,11 +1116,9 @@ TableViewSectionsDelegate>
 
             [self->currentAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedStringFromTable(@"retry", @"Vector", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                 self->currentAlert = nil;
-
-                [self requestAccountPasswordWithTitle:NSLocalizedStringFromTable(@"settings_add_3pid_password_title_msidsn", @"Vector", nil)
-                                              message:NSLocalizedStringFromTable(@"settings_add_3pid_password_message", @"Vector", nil)
-                                           onComplete:^(NSString *password) {
-                                               [self finaliseAddPhoneNumberSession:threePidAddSession withToken:token andPassword:password message:message threePidAddManager:threePidAddManager];
+                
+                [self showAuthenticationIfNeededForAdding:kMX3PIDMediumMSISDN withSession:self.mainSession completion:^(NSDictionary *authParams) {
+                    [self finaliseAddPhoneNumberSession:threePidAddSession withToken:token andAuthenticationParameters:authParams message:message threePidAddManager:threePidAddManager];
                 }];
             }]];
 
@@ -1146,7 +1168,7 @@ TableViewSectionsDelegate>
                 self->currentAlert = nil;
 
                 // Ask again the sms token
-                [self showValidationMsisdnDialogWithMessage:message for3PidAddSession:threePidAddSession threePidAddManager:threePidAddManager password:password];
+                [self showValidationMsisdnDialogWithMessage:message for3PidAddSession:threePidAddSession threePidAddManager:threePidAddManager authenticationParameters:authParams];
             }]];
 
             [self->currentAlert mxk_setAccessibilityIdentifier: @"SettingsVCErrorAlert"];
@@ -1255,97 +1277,90 @@ TableViewSectionsDelegate>
     self.settingsDiscoveryTableViewSection = discoverySection;
 }
 
+- (UserInteractiveAuthenticationService*)createUserInteractiveAuthenticationService
+{
+    MXSession *session = self.mainSession;
+    UserInteractiveAuthenticationService *userInteractiveAuthenticationService;
+    
+    if (session)
+    {
+        userInteractiveAuthenticationService = [[UserInteractiveAuthenticationService alloc] initWithSession:session];
+    }
+    
+    return userInteractiveAuthenticationService;
+}
+
 #pragma mark - 3Pid Add
 
--(void)checkAuthenticationFlowForAdding:(MX3PIDMedium)medium withSession:(MXSession*)session onComplete:(void (^)(NSString *password))onComplete
+- (void)showAuthenticationIfNeededForAdding:(MX3PIDMedium)medium withSession:(MXSession*)session completion:(void (^)(NSDictionary* authParams))completion
 {
     [self startActivityIndicator];
-
-    [session.threePidAddManager authenticationFlowForAdd3PidWithSuccess:^(NSArray<MXLoginFlow *> * _Nullable flows) {
+    
+    MXWeakify(self);
+    
+    void (^animationCompletion)(void) = ^void () {
+        MXStrongifyAndReturnIfNil(self);
+        
         [self stopActivityIndicator];
-
-        if (flows)
+        [self.reauthenticationCoordinatorBridgePresenter dismissWithAnimated:YES completion:^{}];
+        self.reauthenticationCoordinatorBridgePresenter = nil;
+    };
+        
+    NSString *title;
+    
+    if ([medium isEqualToString:kMX3PIDMediumMSISDN])
+    {
+        title = NSLocalizedStringFromTable(@"settings_add_3pid_password_title_msidsn", @"Vector", nil);
+    }
+    else
+    {
+        title = NSLocalizedStringFromTable(@"settings_add_3pid_password_title_email", @"Vector", nil);
+    }
+    
+    NSString *message = NSLocalizedStringFromTable(@"settings_add_3pid_password_message", @"Vector", nil);
+    
+    
+    [session.matrixRestClient add3PIDOnlyWithSessionId:@"" clientSecret:[MXTools generateSecret] authParams:nil success:^{
+        
+    } failure:^(NSError *error) {
+        
+        if (error)
         {
-            // We support only "m.login.password"
-            BOOL hasPasswordFlow = NO;
-            for (MXLoginFlow *flow in flows)
-            {
-                if ([flow.stages containsObject:kMXLoginFlowTypePassword])
+            [self.userInteractiveAuthenticationService authenticationSessionFromRequestError:error success:^(MXAuthenticationSession * _Nullable authenticationSession) {
+                                
+                if (authenticationSession)
                 {
-                    hasPasswordFlow = YES;
-                    break;
+                    ReauthenticationCoordinatorParameters *coordinatorParameters = [[ReauthenticationCoordinatorParameters alloc] initWithSession:self.mainSession presenter:self title:title message:message authenticationSession:authenticationSession];
+                    
+                    ReauthenticationCoordinatorBridgePresenter *reauthenticationPresenter = [ReauthenticationCoordinatorBridgePresenter new];
+                    
+                    [reauthenticationPresenter presentWith:coordinatorParameters animated:YES success:^(NSDictionary<NSString *,id> *_Nullable authParams) {
+                        completion(authParams);
+                    } cancel:^{
+                        animationCompletion();
+                    } failure:^(NSError * _Nonnull error) {
+                        animationCompletion();
+                        [[AppDelegate theDelegate] showErrorAsAlert:error];
+                    }];
+                    
+                    self.reauthenticationCoordinatorBridgePresenter = reauthenticationPresenter;
                 }
-            }
-
-            if (hasPasswordFlow)
-            {
-                // Ask password to the user while we are here
-                NSString *title = NSLocalizedStringFromTable(@"settings_add_3pid_password_title_email", @"Vector", nil);
-                if ([medium isEqualToString:kMX3PIDMediumMSISDN])
+                else
                 {
-                    title = NSLocalizedStringFromTable(@"settings_add_3pid_password_title_msidsn", @"Vector", nil);
+                    animationCompletion();
+                    completion(nil);
                 }
-
-                [self requestAccountPasswordWithTitle:title
-                                              message:NSLocalizedStringFromTable(@"settings_add_3pid_password_message", @"Vector", nil)
-                                           onComplete:onComplete];
-            }
-            else
-            {
-                // The user needs to use Riot-web
-                NSString *appName = [[NSBundle mainBundle] infoDictionary][@"CFBundleDisplayName"];
-                NSString *message = [NSString stringWithFormat:NSLocalizedStringFromTable(@"error_not_supported_on_mobile", @"Vector", nil), appName];
-                [[AppDelegate theDelegate] showAlertWithTitle:nil message:message];
-            }
+            } failure:^(NSError * _Nonnull error) {
+                animationCompletion();
+                [[AppDelegate theDelegate] showErrorAsAlert:error];
+            }];
         }
         else
         {
-            // No auth
-            onComplete(nil);
+            animationCompletion();
+            [[AppDelegate theDelegate] showErrorAsAlert:error];
         }
-
-    } failure:^(NSError * _Nonnull error) {
-        [self stopActivityIndicator];
-        [[AppDelegate theDelegate] showErrorAsAlert:error];
-    }];
-}
-
-- (void)requestAccountPasswordWithTitle:(NSString*)title message:(NSString*)message onComplete:(void (^)(NSString *password))onComplete
-{
-    [currentAlert dismissViewControllerAnimated:NO completion:nil];
-
-    // Prompt the user before deleting the device.
-    currentAlert = [UIAlertController alertControllerWithTitle:title
-                                                       message:message
-                                                preferredStyle:UIAlertControllerStyleAlert];
-
-    [currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.secureTextEntry = YES;
-        textField.placeholder = nil;
-        textField.keyboardType = UIKeyboardTypeDefault;
-    }];
-
-    MXWeakify(self);
-    [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"cancel"]
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * action)
-                             {
-                                 MXStrongifyAndReturnIfNil(self);
-                                 self->currentAlert = nil;
-                             }]];
-
-    [currentAlert addAction:[UIAlertAction actionWithTitle:[NSBundle mxk_localizedStringForKey:@"continue"]
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * action) {
-                                                       MXStrongifyAndReturnIfNil(self);
-
-                                                       UITextField *textField = [self->currentAlert textFields].firstObject;
-                                                       self->currentAlert = nil;
-
-                                                       onComplete(textField.text);
-                                                   }]];
-
-    [self presentViewController:currentAlert animated:YES completion:nil];
+    }];            
 }
 
 #pragma mark - Segues
@@ -1473,7 +1488,7 @@ TableViewSectionsDelegate>
         return cell;
     }
     
-    MXSession* session = [AppDelegate theDelegate].mxSessions[0];
+    MXSession* session = self.mainSession;
     MXKAccount* account = [MXKAccountManager sharedManager].activeAccounts.firstObject;
 
     if (section == SECTION_TAG_SIGN_OUT)
@@ -2175,6 +2190,19 @@ TableViewSectionsDelegate>
             
             cell = thirdPartyCell;
         }
+        else if (row == OTHER_SHOW_NSFW_ROOMS_INDEX)
+        {
+            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
+            
+            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_show_NSFW_public_rooms", @"Vector", nil);
+            
+            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.showNSFWPublicRooms;
+            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
+            labelAndSwitchCell.mxkSwitch.enabled = YES;
+            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleNSFWPublicRoomsFiltering:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell = labelAndSwitchCell;
+        }
         else if (row == OTHER_CRASH_REPORT_INDEX)
         {
             MXKTableViewCellWithLabelAndSwitch* sendCrashReportCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
@@ -2277,16 +2305,16 @@ TableViewSectionsDelegate>
     }
     else if (section == SECTION_TAG_LABS)
     {
-        if (row == LABS_USE_JITSI_WIDGET_INDEX)
+        if (row == LABS_ENABLE_RINGING_FOR_GROUP_CALLS_INDEX)
         {
-            MXKTableViewCellWithLabelAndSwitch* labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
-
-            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_labs_create_conference_with_jitsi", @"Vector", nil);
-            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.createConferenceCallsWithJitsi;
-            labelAndSwitchCell.mxkSwitch.onTintColor = ThemeService.shared.theme.tintColor;
-
-            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleJitsiForConference:) forControlEvents:UIControlEventTouchUpInside];
-
+            MXKTableViewCellWithLabelAndSwitch *labelAndSwitchCell = [self getLabelAndSwitchCell:tableView forIndexPath:indexPath];
+            
+            labelAndSwitchCell.mxkLabel.text = NSLocalizedStringFromTable(@"settings_labs_enable_ringing_for_group_calls", @"Vector", nil);
+            labelAndSwitchCell.mxkSwitch.on = RiotSettings.shared.enableRingingForGroupCalls;
+            labelAndSwitchCell.mxkSwitch.tintColor = ThemeService.shared.theme.tintColor;
+            
+            [labelAndSwitchCell.mxkSwitch addTarget:self action:@selector(toggleEnableRingingForGroupCalls:) forControlEvents:UIControlEventValueChanged];
+            
             cell = labelAndSwitchCell;
         }
     }
@@ -2530,7 +2558,7 @@ TableViewSectionsDelegate>
         }
         else if (section == SECTION_TAG_IGNORED_USERS)
         {
-            MXSession* session = [AppDelegate theDelegate].mxSessions[0];
+            MXSession* session = self.mainSession;
 
             NSString *ignoredUserId = session.ignoredUsers[row];
 
@@ -2551,7 +2579,7 @@ TableViewSectionsDelegate>
                                                                        typeof(self) self = weakSelf;
                                                                        self->currentAlert = nil;
                                                                        
-                                                                       MXSession* session = [AppDelegate theDelegate].mxSessions[0];
+                                                                       MXSession* session = self.mainSession;
                                                                        
                                                                        // Remove the member from the ignored user list
                                                                        [self startActivityIndicator];
@@ -2988,14 +3016,12 @@ TableViewSectionsDelegate>
     }
 }
 
-- (void)toggleJitsiForConference:(id)sender
+- (void)toggleEnableRingingForGroupCalls:(UISwitch *)sender
 {
-    if (sender && [sender isKindOfClass:UISwitch.class])
+    if (sender)
     {
-        UISwitch *switchButton = (UISwitch*)sender;
+        RiotSettings.shared.enableRingingForGroupCalls = sender.isOn;
         
-        RiotSettings.shared.createConferenceCallsWithJitsi = switchButton.isOn;
-
         [self.tableView reloadData];
     }
 }
@@ -3336,10 +3362,9 @@ TableViewSectionsDelegate>
     // Dismiss the keyboard
     [newEmailTextField resignFirstResponder];
 
-    MXSession* session = [AppDelegate theDelegate].mxSessions[0];
+    MXSession* session = self.mainSession;
 
-    [self checkAuthenticationFlowForAdding:kMX3PIDMediumEmail withSession:session onComplete:^(NSString *password) {
-
+    [self showAuthenticationIfNeededForAdding:kMX3PIDMediumEmail withSession:session completion:^(NSDictionary *authParams) {
         [self startActivityIndicator];
 
         __block MX3PidAddSession *thirdPidAddSession;
@@ -3348,7 +3373,7 @@ TableViewSectionsDelegate>
             [self showValidationEmailDialogWithMessage:[NSBundle mxk_localizedStringForKey:@"account_email_validation_message"]
                                      for3PidAddSession:thirdPidAddSession
                                     threePidAddManager:session.threePidAddManager
-                                              password:password];
+                                              authenticationParameters:authParams];
 
         } failure:^(NSError * _Nonnull error) {
 
@@ -3444,7 +3469,7 @@ TableViewSectionsDelegate>
     // Dismiss the keyboard
     [newPhoneNumberCell.mxkTextField resignFirstResponder];
 
-    MXSession* session = [AppDelegate theDelegate].mxSessions[0];
+    MXSession* session = self.mainSession;
 
     NSString *e164 = [[NBPhoneNumberUtil sharedInstance] format:newPhoneNumber numberFormat:NBEPhoneNumberFormatE164 error:nil];
     NSString *msisdn;
@@ -3456,14 +3481,14 @@ TableViewSectionsDelegate>
     {
         msisdn = [NSString stringWithFormat:@"+%@", [e164 substringFromIndex:2]];
     }
-
-    [self checkAuthenticationFlowForAdding:kMX3PIDMediumMSISDN withSession:session onComplete:^(NSString *password) {
+    
+    [self showAuthenticationIfNeededForAdding:kMX3PIDMediumMSISDN withSession:session completion:^(NSDictionary *authParams) {
         [self startActivityIndicator];
 
         __block MX3PidAddSession *new3Pid;
         new3Pid = [session.threePidAddManager startAddPhoneNumberSessionWithPhoneNumber:msisdn countryCode:nil success:^{
 
-            [self showValidationMsisdnDialogWithMessage:[NSBundle mxk_localizedStringForKey:@"account_msisdn_validation_message"] for3PidAddSession:new3Pid threePidAddManager:session.threePidAddManager password:password];
+            [self showValidationMsisdnDialogWithMessage:[NSBundle mxk_localizedStringForKey:@"account_msisdn_validation_message"] for3PidAddSession:new3Pid threePidAddManager:session.threePidAddManager authenticationParameters:authParams];
 
         } failure:^(NSError *error) {
 
@@ -3523,7 +3548,7 @@ TableViewSectionsDelegate>
 {
     if ([AppDelegate theDelegate].mxSessions.count > 0)
     {
-        MXSession* session = [AppDelegate theDelegate].mxSessions[0];
+        MXSession* session = self.mainSession;
         MXMyUser* myUser = session.myUser;
         
         BOOL saveButtonEnabled = (nil != newAvatarImage);
@@ -3692,6 +3717,18 @@ TableViewSectionsDelegate>
                                        from:self
                                  sourceView:sourceView
                                    animated:YES];
+}
+
+- (void)toggleNSFWPublicRoomsFiltering:(id)sender
+{
+    if (sender && [sender isKindOfClass:UISwitch.class])
+    {
+        UISwitch *switchButton = (UISwitch*)sender;
+        
+        RiotSettings.shared.showNSFWPublicRooms = switchButton.isOn;
+
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - TextField listener

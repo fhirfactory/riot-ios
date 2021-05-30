@@ -11,11 +11,11 @@ use_frameworks!
 # - `{ {kit spec hash} => {sdk spec hash}` to depend on specific pod options (:git => …, :podspec => …) for each repo. Used by Fastfile during CI
 #
 # Warning: our internal tooling depends on the name of this variable name, so be sure not to change it
-$matrixKitVersion = '= 0.13.9'
-#$matrixSDKVersion = '= 0.17.11'
+$matrixKitVersion = '= 0.14.11'
+$matrixSDKVersion = '= 0.18.11'
 
 # $matrixKitVersion = :local
-$matrixKitVersion = {'merge-master-0.13.9' => 'develop'}
+$matrixKitVersion = {'merge-master-0.14.11' => 'develop'}
 
 #this allows the xcode project options on individual pods to be modified.
 #{'podname' => {'xcodesetting' => 'value', 'setting' => 'value'}} etc
@@ -67,25 +67,25 @@ end
 
 abstract_target 'RiotPods' do
 
-  pod 'GBDeviceInfo', '~> 6.4.0'
+  pod 'GBDeviceInfo', '~> 6.6.0'
   pod 'Reusable', '~> 4.1'
-  pod 'KeychainAccess', '~> 4.2.1'
+  pod 'KeychainAccess', '~> 4.2.2'
   pod 'SideMenu'
  
 
   # Piwik for analytics
-  pod 'MatomoTracker', '~> 7.2.2'
+  pod 'MatomoTracker', '~> 7.4.1'
 
   # Remove warnings from "bad" pods
   pod 'OLMKit', :inhibit_warnings => true
-  pod 'cmark', :inhibit_warnings => true
   pod 'zxcvbn-ios', :inhibit_warnings => true
   pod 'HPGrowingTextView', :inhibit_warnings => true
 
   # Tools
   pod 'SwiftGen', '~> 6.4.0'
-  pod 'SwiftLint', '~> 0.40.3'
+  pod 'SwiftLint', '~> 0.43.0'
   pod 'Material', '~> 3.1.0'
+  
 
   target "Riot" do
     import_MatrixKit
@@ -93,33 +93,29 @@ abstract_target 'RiotPods' do
     pod 'DGCollectionViewLeftAlignFlowLayout', '~> 1.0.4'
     pod 'KTCenterFlowLayout', '~> 1.3.1'
     pod 'ZXingObjC', '~> 3.6.5'
-    pod 'FlowCommoniOS', '~> 1.9.0'
+    pod 'FlowCommoniOS', '~> 1.10.0'
     pod 'ReadMoreTextView', '~> 3.0.1'
     pod 'SwiftBase32', '~> 0.9.0'
-    pod 'SwiftJWT', '~> 3.5.3'
+    pod 'SwiftJWT', '~> 3.6.200'
     pod 'FFDropDownMenu', '~> 1.4'
 
     target 'RiotTests' do
       inherit! :search_paths
       pod 'FFDropDownMenu', '~> 1.4'
     end
-    target 'LingoTests' do
-      inherit! :search_paths
-      pod 'FFDropDownMenu', '~> 1.4'
-    end
   end
 
   #Commented out as Lingo does not use the sharing extension, and Xcode complains if the target is there, but not included in the project
-  #target "RiotShareExtension" do
-  #  import_MatrixKitAppExtension
-  #end
+  target "RiotShareExtension" do
+   import_MatrixKitAppExtension
+  end
 
   target "SiriIntents" do
-    import_MatrixKitAppExtension
+    import_MatrixKit
   end
 
   target "RiotNSE" do
-    import_MatrixKitAppExtension
+    import_MatrixKit
   end
 
 end
@@ -153,10 +149,16 @@ post_install do |installer|
       # Make fastlane(xcodebuild) happy by preventing it from building for arm64 simulator 
       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
 
+      # Make fastlane(xcodebuild) happy by preventing it from building for arm64 simulator 
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+
       # Force ReadMoreTextView to use Swift 5.2 version (as there is no code changes to perform)
       if target.name.include? 'ReadMoreTextView'
         config.build_settings['SWIFT_VERSION'] = '5.2'
       end
+
+      # Stop Xcode 12 complaining about old IPHONEOS_DEPLOYMENT_TARGET from pods 
+      config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
     end
   end
 end

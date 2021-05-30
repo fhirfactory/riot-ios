@@ -51,6 +51,10 @@
 @protocol MasterTabBarControllerDelegate;
 
 
+
+@protocol MasterTabBarControllerDelegate;
+
+
 @interface MasterTabBarController : UITabBarController
 
 // UITabBarController already have a `delegate` property
@@ -158,7 +162,6 @@
  */
 - (void)refreshTabBarBadges;
 
-@property (nonatomic, weak) id<MasterTabBarControllerDelegate> masterVCDelegate;
 /**
  Verify the current device if needed.
  

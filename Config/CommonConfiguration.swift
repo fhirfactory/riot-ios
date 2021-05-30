@@ -59,19 +59,18 @@ class CommonConfiguration: NSObject, Configurable {
         
         // Enable e2e encryption for newly created MXSession
         sdkOptions.enableCryptoWhenStartingMXSession = true
-        sdkOptions.computeE2ERoomSummaryTrust = true
         
         // Disable identicon use
         sdkOptions.disableIdenticonUseForUserAvatar = true
-        
-        // Use UIKit BackgroundTask for handling background tasks in the SDK
-        sdkOptions.backgroundModeHandler = MXUIKitBackgroundModeHandler()
         
         // Pass httpAdditionalHeaders to the SDK
         sdkOptions.httpAdditionalHeaders = BuildSettings.httpAdditionalHeaders
         
         // Disable key backup on common
         sdkOptions.enableKeyBackupWhenStartingMXCrypto = false
+        
+        // Configure key provider delegate
+        MXKeyProvider.sharedInstance().delegate = EncryptionKeyManager.shared
     }
     
     

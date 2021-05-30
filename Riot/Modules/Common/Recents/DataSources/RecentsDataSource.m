@@ -290,6 +290,7 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
     if (!_publicRoomsDirectoryDataSource)
     {
         _publicRoomsDirectoryDataSource = [[PublicRoomsDirectoryDataSource alloc] initWithMatrixSession:mxSession];
+        _publicRoomsDirectoryDataSource.showNSFWRooms = RiotSettings.shared.showNSFWPublicRooms;
         _publicRoomsDirectoryDataSource.delegate = self;
     }
     
@@ -1143,9 +1144,12 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
     [serverNoticeCellDataArray removeAllObjects];
     
     _missedFavouriteDiscussionsCount = _missedHighlightFavouriteDiscussionsCount = 0;
+    
     _missedHighlightNonFavouriteDirectChatCount = _missedDirectDiscussionsCount = _missedHighlightDirectDiscussionsCount = 0;
     _missedHighlightNonFavouriteGroupDiscussionCount = _missedGroupDiscussionsCount = _missedHighlightGroupDiscussionsCount = 0;
     _missedFavouriteCount = _missedLowPriorityCount = _missedChatCount = _missedInviteCount = 0;
+    _unsentMessagesDirectDiscussionsCount = 0;
+    _unsentMessagesGroupDiscussionsCount = 0;
     
     secureBackupBannerSection = directorySection = favoritesSection = peopleSection = conversationSection = lowPrioritySection = serverNoticeSection = invitesSection = -1;
     
@@ -1299,6 +1303,18 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
                 }
             }
             
+            if (room.sentStatus != RoomSentStatusOk)
+            {
+                if (room.isDirect)
+                {
+                    _unsentMessagesDirectDiscussionsCount ++;
+                }
+                else
+                {
+                    _unsentMessagesGroupDiscussionsCount ++;
+                }
+            }
+            
         }
         
         if (_recentsDataSourceMode == RecentsDataSourceModeHome)
@@ -1325,6 +1341,25 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
                 
             }];
         }
+        else if (conversationCellDataArray.count > 0 && (_recentsDataSourceMode == RecentsDataSourceModeRooms || _recentsDataSourceMode == RecentsDataSourceModePeople))
+        {
+            [conversationCellDataArray sortUsingComparator:^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
+                
+                if (recentCellData1.roomSummary.room.sentStatus != RoomSentStatusOk
+                    && recentCellData2.roomSummary.room.sentStatus == RoomSentStatusOk)
+                {
+                    return NSOrderedAscending;
+                }
+                
+                if (recentCellData2.roomSummary.room.sentStatus != RoomSentStatusOk
+                    && recentCellData1.roomSummary.room.sentStatus == RoomSentStatusOk)
+                {
+                    return NSOrderedDescending;
+                }
+
+                return NSOrderedAscending;
+            }];
+        }
     }
 
     NSLog(@"[RecentsDataSource] refreshRoomsSections: Done in %.0fms", [[NSDate date] timeIntervalSinceDate:startDate] * 1000);
@@ -1334,86 +1369,110 @@ NSString *const kRecentsDataSourceTapOnDirectoryServerChange = @"kRecentsDataSou
     BOOL pinMissedNotif = RiotSettings.shared.pinRoomsWithMissedNotificationsOnHome;
     BOOL pinUnread = RiotSettings.shared.pinRoomsWithUnreadMessagesOnHome;
     if (pinMissedNotif)
-    {
-        // Sort each rooms collection by considering first the rooms with some missed notifs, the rooms with unread, then the others.
-        return ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
-            
-            if (recentCellData1.highlightCount)
             {
-                if (recentCellData2.highlightCount)
-                {
-                    return NSOrderedSame;
-                }
-                else
-                {
-                    return NSOrderedAscending;
-                }
-            }
-            else if (recentCellData2.highlightCount)
-            {
-                return NSOrderedDescending;
-            }
-            else if (recentCellData1.notificationCount)
-            {
-                if (recentCellData2.notificationCount)
-                {
-                    return NSOrderedSame;
-                }
-                else
-                {
-                    return NSOrderedAscending;
-                }
-            }
-            else if (recentCellData2.notificationCount)
-            {
-                return NSOrderedDescending;
-            }
-            else if (pinUnread)
-            {
-                if (recentCellData1.hasUnread)
-                {
-                    if (recentCellData2.hasUnread)
-                    {
-                        return NSOrderedSame;
-                    }
-                    else
+                // Sort each rooms collection by considering first the rooms with some missed notifs, the rooms with unread, then the others.
+                return ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
+                    
+                    if (recentCellData1.roomSummary.room.sentStatus != RoomSentStatusOk
+                        && recentCellData2.roomSummary.room.sentStatus == RoomSentStatusOk)
                     {
                         return NSOrderedAscending;
                     }
-                }
-                else if (recentCellData2.hasUnread)
-                {
-                    return NSOrderedDescending;
-                }
-            }
-            
-            return NSOrderedSame;
-        };
-    }
-    else if (pinUnread)
-    {
-        // Sort each rooms collection by considering first the rooms with some unread messages then the others.
-        return ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
-            
-            if (recentCellData1.hasUnread)
-            {
-                if (recentCellData2.hasUnread)
-                {
+                    
+                    if (recentCellData2.roomSummary.room.sentStatus != RoomSentStatusOk
+                        && recentCellData1.roomSummary.room.sentStatus == RoomSentStatusOk)
+                    {
+                        return NSOrderedDescending;
+                    }
+                    
+                    if (recentCellData1.highlightCount)
+                    {
+                        if (recentCellData2.highlightCount)
+                        {
+                            return NSOrderedSame;
+                        }
+                        else
+                        {
+                            return NSOrderedAscending;
+                        }
+                    }
+                    else if (recentCellData2.highlightCount)
+                    {
+                        return NSOrderedDescending;
+                    }
+                    else if (recentCellData1.notificationCount)
+                    {
+                        if (recentCellData2.notificationCount)
+                        {
+                            return NSOrderedSame;
+                        }
+                        else
+                        {
+                            return NSOrderedAscending;
+                        }
+                    }
+                    else if (recentCellData2.notificationCount)
+                    {
+                        return NSOrderedDescending;
+                    }
+                    else if (pinUnread)
+                    {
+                        if (recentCellData1.hasUnread)
+                        {
+                            if (recentCellData2.hasUnread)
+                            {
+                                return NSOrderedSame;
+                            }
+                            else
+                            {
+                                return NSOrderedAscending;
+                            }
+                        }
+                        else if (recentCellData2.hasUnread)
+                        {
+                            return NSOrderedDescending;
+                        }
+                    }
+                    
                     return NSOrderedSame;
-                }
-                else
-                {
-                    return NSOrderedAscending;
-                }
+                };
             }
-            else if (recentCellData2.hasUnread)
+            else if (pinUnread)
             {
-                return NSOrderedDescending;
+                // Sort each rooms collection by considering first the rooms with some unread messages then the others.
+                return ^NSComparisonResult(id<MXKRecentCellDataStoring> recentCellData1, id<MXKRecentCellDataStoring> recentCellData2) {
+                    
+                    if (recentCellData1.roomSummary.room.sentStatus != RoomSentStatusOk
+                        && recentCellData2.roomSummary.room.sentStatus == RoomSentStatusOk)
+                    {
+                        return NSOrderedAscending;
+                    }
+                    
+                    if (recentCellData2.roomSummary.room.sentStatus != RoomSentStatusOk
+                        && recentCellData1.roomSummary.room.sentStatus == RoomSentStatusOk)
+                    {
+                        return NSOrderedDescending;
+                    }
+                    
+                    if (recentCellData1.hasUnread)
+                    {
+                        if (recentCellData2.hasUnread)
+                        {
+                            return NSOrderedSame;
+                        }
+                        else
+                        {
+                            return NSOrderedAscending;
+                        }
+                    }
+                    else if (recentCellData2.hasUnread)
+                    {
+                        return NSOrderedDescending;
+                    }
+                    
+                    return NSOrderedSame;
+                };
             }
-            
-            return NSOrderedSame;
-        };
-    }
     return nil;
 }
 

@@ -23,4 +23,7 @@ limitations under the License.
 @property bool isInGalleryContext;
 @property UIButton *galleryTakePhotoButton;
 - (void)changeNavigationTitle;
+
+@property (nonatomic) BOOL showCancelBarButtonItem;
+
 @end

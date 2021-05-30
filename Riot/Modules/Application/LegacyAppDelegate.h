@@ -29,6 +29,8 @@
 
 @protocol Configurable;
 @protocol LegacyAppDelegateDelegate;
+@class CallBar;
+@class CallPresenter;
 
 #pragma mark - Notifications
 /**
@@ -50,7 +52,11 @@ extern NSString *const AppDelegateDidValidateEmailNotificationClientSecretKey;
  */
 extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
 
-@interface LegacyAppDelegate : UIResponder <UIApplicationDelegate, MXKCallViewControllerDelegate, UISplitViewControllerDelegate, UINavigationControllerDelegate, JitsiViewControllerDelegate>
+@interface LegacyAppDelegate : UIResponder <
+UIApplicationDelegate,
+UISplitViewControllerDelegate,
+UINavigationControllerDelegate
+>
 {
     // background sync management
     void (^_completionHandler)(UIBackgroundFetchResult);
@@ -111,6 +117,11 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
 
 // Build Settings
 @property (nonatomic, readonly) id<Configurable> configuration;
+
+/**
+ Call presenter instance. May be nil unless at least one session initialized.
+ */
+@property (nonatomic, strong, readonly) CallPresenter *callPresenter;
 
 + (instancetype)theDelegate;
 
@@ -220,28 +231,13 @@ extern NSString *const AppDelegateUniversalLinkDidChangeNotification;
  */
 - (BOOL)handleUniversalLinkFragment:(NSString*)fragment;
 
-#pragma mark - Jitsi call
-
-/**
- Open the Jitsi view controller from a widget.
-
- @param jitsiWidget the jitsi widget.
- @param video to indicate voice or video call.
- */
-- (void)displayJitsiViewControllerWithWidget:(Widget*)jitsiWidget andVideo:(BOOL)video;
-
-/**
- The current Jitsi view controller being displayed.
- */
-@property (nonatomic, readonly) JitsiViewController *jitsiViewController;
-
 #pragma mark - Call status handling
 
 /**
  Call status window displayed when user goes back to app during a call.
  */
 @property (nonatomic, readonly) UIWindow* callStatusBarWindow;
-@property (nonatomic, readonly) UIButton* callStatusBarButton;
+@property (nonatomic, readonly) CallBar* callBar;
 
 #pragma mark - App version management
 

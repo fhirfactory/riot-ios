@@ -165,6 +165,16 @@
  */
 - (void)muteEditedRoomNotifications:(BOOL)mute;
 
+/**
+ Show room directory.
+ */
+- (void)showRoomDirectory;
+
+/**
+ Show a public room.
+ */
+- (void)openPublicRoom:(MXPublicRoom *)publicRoom;
+
 #pragma mark - Scrolling
 
 /**
@@ -187,6 +197,18 @@
  Get the edit actions available on a specific tableView cell
  */
 - (nullable NSArray<UIContextualAction*>*)getContextualActionsFor:(UITableView *)tableView at:(NSIndexPath *)IndexPath;
+
+#pragma mark - Empty view
+
+/**
+ Overrides this method to fill the empty view with data.
+ */
+- (void)updateEmptyView;
+
+/**
+ Overrides this method to indicate if empty view should be shown. Returns NO by default.
+ */
+- (BOOL)shouldShowEmptyView;
 
 #pragma mark - Empty view
 

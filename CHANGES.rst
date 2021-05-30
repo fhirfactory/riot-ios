@@ -1,3 +1,487 @@
+<<<<<<< HEAD
+=======
+Changes in 1.3.6 (2021-05-07)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * Jitsi: Use Jitsi server from homeserver's Well Known, if present, to create conferences (#3158).
+ * RoomMemberDetailsVC: Enable / disable "Hide all messages from this user" from settings (#4281).
+ * RoomVC: Show / Hide More and Report Content contextual menu from settings (#4285).
+ * SettingsVC: Show / hide NSFW and decrypted content options from build settings (#4290).
+ * RoomVC: Tweaked Scroll to Bottom FAB button (#4272).
+ * DesignKit: Introduce a new framework to manage design components.
+ * Add Jitsi widget remove banner for privileged users.
+ * Update "Jump to unread" banner to a pill style button.
+ * CallVC: Add transfer button.
+
+🐛 Bugfix
+ * RoomVC: Avoid navigation to integration management using integration popup with settings set to integration disabled (#4261).
+ * RiotSettings: Logging out resets RiotSettings (#4259).
+ * RoomVC: Crash in `setScrollToBottomHidden` method (#4270).
+ * Notifications: Make them work in debug mode (#4274).
+ * VoIP: Fix call bar layout issue (#4300).
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * GH Actions: Make jobs use the right version of MatrixKit and MatrixSDK.
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.11](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.11)).
+
+Changes in 1.3.5 (2021-04-22)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * Add `gitter.im` to list of default room directories
+ * MasterTabBarController: Show/Hide Home Screen tabs (#4234).
+ * RoomVC: Enable / Disable VoIP feature in Rooms (#4236).
+ * UnifiedSearchRecentsDataSource: Show/Hide public directory (#4242).
+ * DirectoryRecentTableViewCell: Do not use "directory_search_results_more_than" string when there is no rooms and the search is on.
+ * RecentsVC: Make joining public rooms configurable (#4211).
+ * Make room settings screen configurable dynamically (#4219).
+ * RoomVC: Show / Hide integrations and actions (#4245).
+
+🐛 Bugfix
+ * PublicRoomsDirectoryDataSource: Fix search when NSFW filter is off.
+ * RoomVC: Fix navigation issue when a room left.
+ * RoomVC: Fix a crash when scroll to bottom tapped on a left room.
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * GH Actions: Start using them for CI to check simulator build and tests.
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.10](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.10)).
+
+Changes in 1.3.4 (2021-04-19)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * RoomVC: Crash in refreshTypingNotification (#4230).
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+
+
+Changes in 1.3.3 (2021-04-16)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.9](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.9)).
+
+Changes in 1.3.2 (2021-04-16)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * Self-verification: Fix compatibility with Element-Web (#4217).
+ * Notifications: Fix sender display name that can miss (#4222). 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.9](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.9)).
+
+Changes in 1.3.1 (2021-04-14)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.8](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.8)).
+
+Changes in 1.3.0 (2021-04-09)
+=================================================
+
+✨ Features
+ * Composer Update - Typing and sending a message (#4085)
+ * Switching composer between text mode & action mode (#4087)
+ * Explore typing notifications inspired by web (#4134)
+
+🙌 Improvements
+ * Make the application settings more configurable (#4171)
+ * Possibility to lock some room creation parameters from settings (#4181)
+ * Enable / disable external friends invite (#4173)
+ * Composer update - UI enhancements (#4133)
+ * Increase grow/shrink animation speed in new composer (#4187)
+ * Limit typing notifications timeline jumps (#4176)
+ * Consider displaying names in typing notifications (#4175)
+
+🐛 Bugfix
+ * If you start typing while the new attachment sending mode is on, the send button appears (#4155)
+ * The final frames of the appearance animation of the new composer buttons are missing (#4160)
+ * Crash in [RoomViewController setupActions] (#4162)
+ * Too much vertical whitespace when replying (#4164)
+ * Black theme uses dark background for composer (#4192)
+ * Vertical layout of typing notifs can go wonky (#4159)
+ * Crash in [RoomViewController refreshTypingNotification] (#4161)
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.7](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.7)).
+
+Changes in 1.2.8 (2021-03-26)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * Xcodegen: Unit tests are broken (#4152).
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+
+
+Changes in 1.2.7 (2021-03-24)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * Pods: Update FlowCommoniOS, GBDeviceInfo, KeychainAccess, MatomoTracker, SwiftJWT, SwiftLint (#4120).
+ * Room lists: Remove shields on room avatars (#4115).
+
+🐛 Bugfix
+ * RoomVC: Fix timeline blink on sending.
+ * RoomVC: Fix not visible last bubble issue.
+ * Room directory: Fix crash (#4137).
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.6](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.6)).
+
+Changes in 1.2.6 (2021-03-11)
+=================================================
+
+✨ Features
+ * Improve the status of send messages (sending, sent, received, failed) (#4014)
+ * Retrying & deleting failed messages (#4013)
+ * Composer Update - Typing and sending a message (#4085)
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.5](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.5)).
+
+Changes in 1.2.5 (2021-03-03)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * Settings: Add option to show NSFW public rooms (off by default).
+
+🐛 Bugfix
+ * Emoji store: Include short name when searching emojis (#4063).
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.4](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.4)).
+
+Changes in 1.2.4 (2021-03-01)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * Social login: Fix a crash when selecting a social login provider.
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+
+
+Changes in 1.2.3 (2021-02-26)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * 
+
+🐛 Bugfix
+ * 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.3](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.3)).
+
+Changes in 1.2.2 (2021-02-24)
+=================================================
+
+✨ Features
+ * Enable encryption for accounts, contacts and keys in the crypto database (#3867).
+
+🙌 Improvements
+ * Home: Show room directory on join room action (#3775).
+ * RoomVC: Add quick actions in timeline on room creation (#3776).
+
+🐛 Bugfix
+ * 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * XcodeGen: .xcodeproj files are now built from readable yml file: [New Build instructions](README.md#build-instructions) (#3812).
+ * Podfile: Use MatrixKit for all targets and remove MatrixKit/AppExtension.
+ * Fastlane: Use the "New Build System" to build releases.
+ * Fastlane: Re-enable parallelised builds.
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.2](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.2)).
+
+Changes in 1.2.1 (2021-02-12)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * User-Interactive Authentication: Add UIA support for device deletion and add user 3PID action (#4016).
+
+🐛 Bugfix
+ * NSE: Wait for VoIP push request if any before calling contentHandler (#4018).
+ * VoIP: Show dial pad option only if PSTN is supported (#4029).
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.1](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.1)).
+
+Changes in 1.2.0 (2021-02-11)
+=================================================
+
+✨ Features
+ * 
+
+🙌 Improvements
+ * Cross-signing: Setup cross-signing without authentication parameters when a grace period is enabled after login (#4006).
+ * VoIP: Implement DTMF on call screen (#3929).
+ * VoIP: Implement call transfer screen (#3962).
+ * VoIP: Implement call tiles on timeline (#3955).
+
+🐛 Bugfix
+ * 
+
+⚠️ API Changes
+ * 
+
+🗣 Translations
+ * 
+    
+🧱 Build
+ * 
+
+Others
+ * 
+
+Improvements:
+ * Upgrade MatrixKit version ([v0.14.0](https://github.com/matrix-org/matrix-ios-kit/releases/tag/v0.14.0)).
+
+>>>>>>> 001d6571541c78c0c0bc54b272623feee02d2926
 Changes in 1.1.7 (2021-02-03)
 =================================================
 

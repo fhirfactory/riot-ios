@@ -54,4 +54,26 @@ extension UIView {
         shake.timingFunction = CAMediaTimingFunction(name: .easeOut)
         layer.add(shake, forKey: "position")
     }
+    
+    @objc func vc_setupAccessibilityTraitsButton(withTitle title: String, hint: String, isEnabled: Bool) {
+        self.isAccessibilityElement = true
+        self.accessibilityLabel = title
+        self.accessibilityHint = hint
+        self.accessibilityTraits = .button
+        if !isEnabled {
+            self.accessibilityTraits.insert(.notEnabled)
+        }
+    }
+    
+    @objc func vc_addShadow(withColor color: UIColor, offset: CGSize, radius: CGFloat, opacity: CGFloat) {
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = Float(opacity)
+        layer.shadowRadius = radius
+        layer.shadowOffset = offset
+    }
+    
+    @objc func vc_removeShadow() {
+        layer.shadowColor = UIColor.clear.cgColor
+    }
+    
 }

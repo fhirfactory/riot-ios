@@ -20,8 +20,6 @@
 	<false/>
 	<key>syncLocalContacts</key>
 	<false/>
-	<key>createConferenceCallsWithJitsi</key>
-	<true/>
 	<key>enableRageShake</key>
 	<false/>
 	<key>maxAllowedMediaCacheSize</key>
@@ -61,5 +59,7 @@
 	<true/>
 	<key>hideDiscoverUser</key>
 	<true/>
+	<key>enableRingingForGroupCalls</key>
+	<false/>
 </dict>
 </plist>

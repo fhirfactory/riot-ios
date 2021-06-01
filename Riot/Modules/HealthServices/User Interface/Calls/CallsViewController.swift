@@ -16,7 +16,7 @@
 
 import Foundation
 
-class CallsViewController: UIViewController {
+@objc class CallsViewController: UIViewController {
     var sections = SegmentedViewController()
     
     override func viewWillAppear(_ animated: Bool) {

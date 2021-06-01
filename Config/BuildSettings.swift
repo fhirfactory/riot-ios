@@ -223,10 +223,14 @@ final class BuildSettings: NSObject {
     
     // MARK: - Main Tabs
     
-    static let homeScreenShowFavouritesTab: Bool = true
-    static let homeScreenShowPeopleTab: Bool = true
-    static let homeScreenShowRoomsTab: Bool = true
-    static let homeScreenShowCommunitiesTab: Bool = true
+    static let homeScreenShowFavouritesTab: Bool = false
+    static let homeScreenShowPeopleTab: Bool = false
+    static let homeScreenShowRoomsTab: Bool = false
+    static let homeScreenShowCommunitiesTab: Bool = false
+    static let homeScreenShowDirectoryTab: Bool = true
+    static let homeScreenShowGalleryTab: Bool = true
+    static let homeScreenShowCallsTab: Bool = true
+    static let homeScreenShowNotificationsTab: Bool = false
     
     // MARK: - General Settings Screen
     
@@ -242,7 +246,7 @@ final class BuildSettings: NSObject {
     static let settingsScreenShowDiscoverySettings: Bool = false
     static let settingsScreenAllowIdentityServerConfig: Bool = true
     static let settingsScreenAllowSelectingIdentityServer: Bool = false
-    static let settingsScreenShowAdvancedSettings: Bool = true
+    static let settingsScreenShowAdvancedSettings: Bool = false
 
 
     static let settingsScreenShowLabSettings: Bool = false
@@ -295,15 +299,16 @@ final class BuildSettings: NSObject {
     static let settingsScreenShowChangePassword:Bool = false
     static let settingsScreenShowInviteFriends:Bool = false
     static let settingsScreenShowEnableStunServerFallback: Bool = true
-    static let settingsScreenShowNotificationDecodedContentOption: Bool = true
-    static let settingsScreenShowNsfwRoomsOption: Bool = true
+    static let settingsScreenShowNotificationDecodedContentOption: Bool = false
+    static let settingsScreenShowNsfwRoomsOption: Bool = false
     static let settingsSecurityScreenShowSessions:Bool = true
-    static let settingsSecurityScreenShowSetupBackup:Bool = true
-    static let settingsSecurityScreenShowRestoreBackup:Bool = true
-    static let settingsSecurityScreenShowDeleteBackup:Bool = true
-    static let settingsSecurityScreenShowCryptographyInfo:Bool = true
-    static let settingsSecurityScreenShowCryptographyExport:Bool = true
-    static let settingsSecurityScreenShowAdvancedUnverifiedDevices:Bool = true
+    static let settingsSecurityScreenShowSetupBackup:Bool = false
+    static let settingsSecurityScreenShowRestoreBackup:Bool = false
+    static let settingsSecurityScreenShowDeleteBackup:Bool = false
+    static let settingsSecurityScreenShowCryptographyInfo:Bool = false
+    static let settingsSecurityScreenShowCryptographyExport:Bool = false
+    static let settingsSecurityScreenShowAdvancedUnverifiedDevices:Bool = false
+    static let settingsSecurityScreenShowPinSettings:Bool = false
     
     // MARK: - Room Creation Screen
     
@@ -376,9 +381,6 @@ final class BuildSettings: NSObject {
     
     // MARK: - Domain Specific Settings
     static let sendMessageRequirePatientTagging: Bool = true
-    
-    // MARK: - Home Screen
-    static let homeScreenShowFavourites : Bool = false
     
     // MARK: - Theme Application Settings
     /// Additional toggles that determine if theme customisations should apply to particular elements of the application

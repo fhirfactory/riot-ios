@@ -9,7 +9,7 @@
 import UIKit
 import Material
 
-class ActDirectoryViewController: SegmentedViewController {
+@objc class ActDirectoryViewController: SegmentedViewController {
     
     override func viewDidLoad() {
         self.initWithTitles(

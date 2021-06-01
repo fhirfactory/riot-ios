@@ -73,6 +73,10 @@ final class RiotSettings: NSObject {
         static let homeScreenShowPeopleTab = "homeScreenShowPeopleTab"
         static let homeScreenShowRoomsTab = "homeScreenShowRoomsTab"
         static let homeScreenShowCommunitiesTab = "homeScreenShowCommunitiesTab"
+        static let homeScreenShowDirectoryTab = "homeScreenShowDirectoryTab"
+        static let homeScreenShowGalleryTab = "homeScreenShowGalleryTab"
+        static let homeScreenShowCallsTab = "homeScreenShowCallsTab"
+        static let homeScreenShowNotificationsTab = "homeScreenShowNotificationsTab"
         static let roomScreenAllowVoIPForDirectRoom = "roomScreenAllowVoIPForDirectRoom"
         static let roomScreenAllowVoIPForNonDirectRoom = "roomScreenAllowVoIPForNonDirectRoom"
         static let roomScreenAllowCameraAction = "roomScreenAllowCameraAction"
@@ -498,6 +502,46 @@ final class RiotSettings: NSObject {
             return defaults.bool(forKey: UserDefaultsKeys.homeScreenShowCommunitiesTab)
         } set {
             defaults.set(newValue, forKey: UserDefaultsKeys.homeScreenShowCommunitiesTab)
+        }
+    }
+    var homeScreenShowDirectoryTab: Bool {
+        get {
+            guard defaults.object(forKey: UserDefaultsKeys.homeScreenShowDirectoryTab) != nil else {
+                return BuildSettings.homeScreenShowDirectoryTab
+            }
+            return defaults.bool(forKey: UserDefaultsKeys.homeScreenShowDirectoryTab)
+        } set {
+            defaults.set(newValue, forKey: UserDefaultsKeys.homeScreenShowDirectoryTab)
+        }
+    }
+    var homeScreenShowGalleryTab: Bool {
+        get {
+            guard defaults.object(forKey: UserDefaultsKeys.homeScreenShowGalleryTab) != nil else {
+                return BuildSettings.homeScreenShowGalleryTab
+            }
+            return defaults.bool(forKey: UserDefaultsKeys.homeScreenShowGalleryTab)
+        } set {
+            defaults.set(newValue, forKey: UserDefaultsKeys.homeScreenShowGalleryTab)
+        }
+    }
+    var homeScreenShowCallsTab: Bool {
+        get {
+            guard defaults.object(forKey: UserDefaultsKeys.homeScreenShowCallsTab) != nil else {
+                return BuildSettings.homeScreenShowCallsTab
+            }
+            return defaults.bool(forKey: UserDefaultsKeys.homeScreenShowCallsTab)
+        } set {
+            defaults.set(newValue, forKey: UserDefaultsKeys.homeScreenShowCallsTab)
+        }
+    }
+    var homeScreenShowNotificationsTab: Bool {
+        get {
+            guard defaults.object(forKey: UserDefaultsKeys.homeScreenShowNotificationsTab) != nil else {
+                return BuildSettings.homeScreenShowNotificationsTab
+            }
+            return defaults.bool(forKey: UserDefaultsKeys.homeScreenShowNotificationsTab)
+        } set {
+            defaults.set(newValue, forKey: UserDefaultsKeys.homeScreenShowNotificationsTab)
         }
     }
 

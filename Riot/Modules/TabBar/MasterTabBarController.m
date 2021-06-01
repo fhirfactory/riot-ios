@@ -69,7 +69,7 @@
     // The groups data source
     GroupsDataSource *groupsDataSource;
 
-    // All tabs deinfed in the storyboard
+    // All tabs defined in the storyboard
     NSArray *initalTabs;
 }
 
@@ -93,11 +93,15 @@
 
     // Retrieve the all view controllers
     // TODO: Make more neat & extensible
-    _homeViewController = self.viewControllers[0];
-    _favouritesViewController = self.viewControllers[1];
-    _peopleViewController = self.viewControllers[2];
-    _roomsViewController = self.viewControllers[3];
-    _fileGalleryViewController = self.viewControllers[4];
+    _homeViewController = self.viewControllers[TABBAR_HOME_INDEX];
+    _favouritesViewController = self.viewControllers[TABBAR_FAVOURITES_INDEX];
+    _peopleViewController = self.viewControllers[TABBAR_PEOPLE_INDEX];
+    _roomsViewController = self.viewControllers[TABBAR_ROOMS_INDEX];
+    _groupsViewController = self.viewControllers[TABBAR_GROUPS_INDEX];
+    _directoryViewController = self.viewControllers[TABBAR_DIRECTORY_INDEX];
+    _fileGalleryViewController = self.viewControllers[TABBAR_GALLERY_INDEX];
+    _callsViewController = self.viewControllers[TABBAR_CALLS_INDEX];
+    _codeNotificationList = self.viewControllers[TABBAR_CODES_INDEX];
     
     // Set the accessibility labels for all buttons #1842
     [_settingsBarButtonItem setAccessibilityLabel:NSLocalizedStringFromTable(@"settings_title", @"Vector", nil)];
@@ -109,7 +113,7 @@
     [_fileGalleryViewController setAccessibilityLabel:NSLocalizedStringFromTable(@"title_groups", @"Vector", nil)];
     
     // Sanity check
-    NSAssert(_homeViewController && _favouritesViewController && _peopleViewController && _roomsViewController && _fileGalleryViewController, @"Something wrong in Main.storyboard");
+    NSAssert(_homeViewController && _favouritesViewController && _peopleViewController && _roomsViewController && _groupsViewController && _fileGalleryViewController && _directoryViewController && _callsViewController && _codeNotificationList, @"Something wrong in Main.storyboard");
 
     // Adjust the display of the icons in the tabbar.
     for (UITabBarItem *tabBarItem in self.tabBar.items)
@@ -131,10 +135,6 @@
     // Initialize here the data sources if a matrix session has been already set.
     [self initializeDataSources];
     
-    if (!BuildSettings.homeScreenShowFavourites){
-        [self removeFromTabBarAt:TABBAR_FAVOURITES_INDEX];
-    }
-    
     // Observe user interface theme change.
     kThemeServiceDidChangeThemeNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kThemeServiceDidChangeThemeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
         
@@ -144,12 +144,6 @@
     [self userInterfaceThemeDidChange];
     
     initalTabs = [NSArray arrayWithArray:self.viewControllers];
-}
-
-- (void)removeFromTabBarAt:(NSInteger)Index{
-    NSMutableArray<UIViewController*>* _Nullable controllers = [NSMutableArray arrayWithArray:self.viewControllers];
-    [controllers removeObjectAtIndex:Index];
-    self.viewControllers = controllers;
 }
 
 - (void)userInterfaceThemeDidChange
@@ -337,12 +331,12 @@
                 recentsDataSourceMode = RecentsDataSourceModeFavourites;
                 break;
             case TABBAR_PEOPLE_INDEX:
-                //recentsDataSourceDelegate = _peopleViewController;
-                //recentsDataSourceMode = RecentsDataSourceModePeople;
+                recentsDataSourceDelegate = _peopleViewController;
+                recentsDataSourceMode = RecentsDataSourceModePeople;
                 break;
             case TABBAR_ROOMS_INDEX:
-                //recentsDataSourceDelegate = _roomsViewController;
-                //recentsDataSourceMode = RecentsDataSourceModeRooms;
+                recentsDataSourceDelegate = _roomsViewController;
+                recentsDataSourceMode = RecentsDataSourceModeRooms;
                 break;
                 
             default:
@@ -996,21 +990,42 @@
 - (void)updateTabs
 {
     NSMutableArray *newTabs = [NSMutableArray arrayWithArray:initalTabs];
+    NSMutableArray<NSNumber *> *removedTabs = [NSMutableArray new];
+    if (!RiotSettings.shared.homeScreenShowNotificationsTab)
+    {
+        [removedTabs addObject:@TABBAR_CODES_INDEX];
+    }
+    if (!RiotSettings.shared.homeScreenShowCallsTab)
+    {
+        [removedTabs addObject:@TABBAR_CALLS_INDEX];
+    }
+    if (!RiotSettings.shared.homeScreenShowGalleryTab)
+    {
+        [removedTabs addObject:@TABBAR_GALLERY_INDEX];
+    }
+    if (!RiotSettings.shared.homeScreenShowDirectoryTab)
+    {
+        [removedTabs addObject:@TABBAR_DIRECTORY_INDEX];
+    }
     if (!RiotSettings.shared.homeScreenShowCommunitiesTab)
     {
-        [newTabs removeObjectAtIndex:TABBAR_GROUPS_INDEX];
+        [removedTabs addObject:@TABBAR_GROUPS_INDEX];
     }
     if (!RiotSettings.shared.homeScreenShowRoomsTab)
     {
-        [newTabs removeObjectAtIndex:TABBAR_ROOMS_INDEX];
+        [removedTabs addObject:@TABBAR_ROOMS_INDEX];
     }
     if (!RiotSettings.shared.homeScreenShowPeopleTab)
     {
-        [newTabs removeObjectAtIndex:TABBAR_PEOPLE_INDEX];
+        [removedTabs addObject:@TABBAR_PEOPLE_INDEX];
     }
     if (!RiotSettings.shared.homeScreenShowFavouritesTab)
     {
-        [newTabs removeObjectAtIndex:TABBAR_FAVOURITES_INDEX];
+        [removedTabs addObject:@TABBAR_FAVOURITES_INDEX];
+    }
+    [removedTabs sortUsingSelector:@selector(compare:)];
+    for (NSNumber *index in [removedTabs reverseObjectEnumerator]) {
+        [newTabs removeObjectAtIndex:[index unsignedIntegerValue]];
     }
     self.viewControllers = newTabs;
 }

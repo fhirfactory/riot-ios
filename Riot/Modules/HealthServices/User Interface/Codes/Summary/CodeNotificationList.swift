@@ -16,7 +16,7 @@
 
 import Foundation
 
-class CodeNotificationList: UIViewController, UITableViewDelegate, UITableViewDataSource {
+@objc class CodeNotificationList: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         10
     }

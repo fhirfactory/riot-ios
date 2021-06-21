@@ -207,6 +207,74 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
             // Make event types MXEventTypeKeyVerificationCancel and MXEventTypeKeyVerificationDone visible in timeline.
             // TODO: Find another way to keep them visible and avoid instantiate empty NSMutableAttributedString.
             return [NSMutableAttributedString new];
+        case MXEventTypeRoomPowerLevels:
+        {
+            MXRoomPowerLevels *powerLevels = [MXRoomPowerLevels modelFromJSON:event.content];
+            NSDictionary *previousPowerLevels = [event.unsignedData.prevContent objectForKey:@"users"];
+            //calculate whether to display this text higher up the chain (as the roomState here is the actual state of the room at the point in the timeline in which this message appears)
+            if (previousPowerLevels){
+                for (NSString *key in [powerLevels.users allKeys]){
+                    if (previousPowerLevels[key] == nil || previousPowerLevels[key] != powerLevels.users[key]){
+                        RoomPowerLevel oldRoomPowerLevel = [previousPowerLevels[key] integerValue];
+                        RoomPowerLevel newRoomPowerLevel = [powerLevels.users[key] integerValue];
+
+                        NSString *oldDescriptor = nil;
+                        switch (oldRoomPowerLevel){
+                            case RoomPowerLevelAdmin:
+                                oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_admin",@"Vector",nil);
+                                break;
+                            case RoomPowerLevelModerator:
+                                oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_moderator",@"Vector",nil);
+                                break;
+                            case RoomPowerLevelUser:
+                                oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_user",@"Vector",nil);
+                                break;
+                        }
+
+                        NSString *powerDescriptor = nil;
+                        switch (newRoomPowerLevel){
+                            case RoomPowerLevelAdmin:
+                                powerDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_admin",@"Vector",nil);
+                                break;
+                            case RoomPowerLevelModerator:
+                                powerDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_moderator",@"Vector",nil);
+                                break;
+                            case RoomPowerLevelUser:
+                                powerDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_user",@"Vector",nil);
+                                break;
+                        }
+                        NSString *powerLevelMessage = nil;
+                        if (previousPowerLevels[key] == nil || previousPowerLevels[key] < powerLevels.users[key]){
+                            powerLevelMessage = NSLocalizedStringFromTable(@"room_power_level_changed_up",@"Vector",nil);
+                        }else{
+                            powerLevelMessage = NSLocalizedStringFromTable(@"room_power_level_changed_down",@"Vector",nil);
+                        }
+                        NSString* Sender = [roomState.members memberWithUserId:event.sender].displayname;
+                        if (!Sender){
+                            Sender = event.sender;
+                        }
+                        NSString* Target = [roomState.members memberWithUserId:key].displayname;
+                        if (!Target){
+                            Target = key;
+                        }
+                        NSMutableAttributedString *eventDescriptor = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:powerLevelMessage, Sender, Target, oldDescriptor, powerDescriptor]];
+                        [eventDescriptor beginEditing];
+                        [eventDescriptor setAttributes:@{
+                            NSFontAttributeName: [UIFont systemFontOfSize:13],
+                            NSForegroundColorAttributeName: ThemeService.shared.theme.textSecondaryColor
+                        } range:NSMakeRange(0, eventDescriptor.length)];
+                        [eventDescriptor endEditing];
+                        NSMutableDictionary *prevcontent = [[NSMutableDictionary alloc] initWithDictionary:event.prevContent];
+                        [prevcontent setObject:eventDescriptor forKey:@"adminDescription"];
+                        event.prevContent = prevcontent;
+                        return eventDescriptor;
+                    }
+                }
+            }else{
+                return nil;
+            }
+            break;
+        }
         default:
             break;
     }
@@ -271,94 +339,6 @@ static NSString *const kEventFormatterTimeFormat = @"HH:mm";
         attributedString = attributedStringWithEditMention;
     }
 
-    if (event.eventType == MXEventTypeRoomPowerLevels){
-        MXRoomPowerLevels *powerLevels = [MXRoomPowerLevels modelFromJSON:event.content];
-        NSDictionary *previousPowerLevels = [event.unsignedData.prevContent objectForKey:@"users"];
-        //calculate whether to display this text higher up the chain (as the roomState here is the actual state of the room at the point in the timeline in which this message appears)
-        if (previousPowerLevels){
-            for (NSString *key in [powerLevels.users allKeys]){
-                if (previousPowerLevels[key] == nil || previousPowerLevels[key] != powerLevels.users[key]){
-                    RoomPowerLevel oldRoomPowerLevel = [previousPowerLevels[key] integerValue];
-                    RoomPowerLevel newRoomPowerLevel = [powerLevels.users[key] integerValue];
-                    
-                    NSString *oldDescriptor = nil;
-                    switch (oldRoomPowerLevel){
-                        case RoomPowerLevelAdmin:
-                            oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_admin",@"Vector",nil);
-                            break;
-                        case RoomPowerLevelModerator:
-                            oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_moderator",@"Vector",nil);
-                            break;
-                        case RoomPowerLevelUser:
-                            oldDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_user",@"Vector",nil);
-                            break;
-                    }
-                    
-                    NSString *powerDescriptor = nil;
-                    switch (newRoomPowerLevel){
-                        case RoomPowerLevelAdmin:
-                            powerDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_admin",@"Vector",nil);
-                            break;
-                        case RoomPowerLevelModerator:
-                            powerDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_moderator",@"Vector",nil);
-                            break;
-                        case RoomPowerLevelUser:
-                            powerDescriptor = NSLocalizedStringFromTable(@"room_member_power_level_short_user",@"Vector",nil);
-                            break;
-                    }
-                    NSString *powerLevelMessage = nil;
-                    if (previousPowerLevels[key] == nil || previousPowerLevels[key] < powerLevels.users[key]){
-                        powerLevelMessage = NSLocalizedStringFromTable(@"room_power_level_changed_up",@"Vector",nil);
-                    }else{
-                        powerLevelMessage = NSLocalizedStringFromTable(@"room_power_level_changed_down",@"Vector",nil);
-                    }
-                    NSString* Sender = [roomState.members memberWithUserId:event.sender].displayname;
-                    if (!Sender){
-                        Sender = event.sender;
-                    }
-                    NSString* Target = [roomState.members memberWithUserId:key].displayname;
-                    if (!Target){
-                        Target = key;
-                    }
-                    NSMutableAttributedString *eventDescriptor = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:powerLevelMessage, Sender, Target, oldDescriptor, powerDescriptor]];
-                    [eventDescriptor beginEditing];
-                    [eventDescriptor setAttributes:@{
-                        NSFontAttributeName: [UIFont systemFontOfSize:13],
-                        NSForegroundColorAttributeName: ThemeService.shared.theme.textSecondaryColor
-                    } range:NSMakeRange(0, eventDescriptor.length)];
-                    [eventDescriptor endEditing];
-                    NSMutableDictionary *prevcontent = [[NSMutableDictionary alloc] initWithDictionary:event.prevContent];
-                    [prevcontent setObject:eventDescriptor forKey:@"adminDescription"];
-                    event.prevContent = prevcontent;
-                    return eventDescriptor;
-                }
-            }
-        }else{
-            return nil;
-        }
-    }
-    if (event.eventType == MXEventTypeRoomAvatar){
-        NSString* Sender = [roomState.members memberWithUserId:event.sender].displayname;
-        NSMutableAttributedString *messagecontent = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithFormat:NSLocalizedStringFromTable(@"%@ changed the room photo.", @"Vector", nil), Sender]];
-        [messagecontent beginEditing];
-        [messagecontent setAttributes:@{
-            NSFontAttributeName: [UIFont systemFontOfSize:13],
-            NSForegroundColorAttributeName: ThemeService.shared.theme.textSecondaryColor
-        } range:NSMakeRange(0, messagecontent.length)];
-        [messagecontent endEditing];
-        return messagecontent;
-        
-    }
-    if (event.eventType == MXEventTypeRoomTopic || event.eventType == MXEventTypeRoomName){
-        NSMutableAttributedString *messagecontent = [[NSMutableAttributedString alloc] initWithString:[[NSString alloc] initWithString:attributedString.string]];
-        [messagecontent beginEditing];
-        [messagecontent setAttributes:@{
-            NSFontAttributeName: [UIFont systemFontOfSize:13],
-            NSForegroundColorAttributeName: ThemeService.shared.theme.textSecondaryColor
-        } range:NSMakeRange(0, messagecontent.length)];
-        [messagecontent endEditing];
-        return messagecontent;
-    }
     return attributedString;
 }
 

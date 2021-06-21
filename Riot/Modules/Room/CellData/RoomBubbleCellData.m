@@ -117,6 +117,7 @@ static NSAttributedString *timestampVerticalWhitespace = nil;
                 self.collapsed = YES;
             }
                 break;
+            case MXEventTypeRoomPowerLevels:
             case MXEventTypeRoomTopic:
             case MXEventTypeRoomName:
             case MXEventTypeRoomEncryption:

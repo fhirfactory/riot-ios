@@ -2646,7 +2646,7 @@ internal enum VectorL10n {
   internal static var roomCreationAppearanceName: String { 
     return VectorL10n.tr("Vector", "room_creation_appearance_name") 
   }
-  /// Chat picture (optional)
+  /// Discussion picture (optional)
   internal static var roomCreationAppearancePicture: String { 
     return VectorL10n.tr("Vector", "room_creation_appearance_picture") 
   }
@@ -2670,11 +2670,11 @@ internal enum VectorL10n {
   internal static var roomCreationMakePublic: String { 
     return VectorL10n.tr("Vector", "room_creation_make_public") 
   }
-  /// Are you sure you want to make this chat public? Anyone can read your messages and join the chat.
+  /// Are you sure you want to make this discussion public? Anyone can read your messages and join the chat.
   internal static var roomCreationMakePublicPromptMsg: String { 
     return VectorL10n.tr("Vector", "room_creation_make_public_prompt_msg") 
   }
-  /// Make this chat public?
+  /// Make this discussion public?
   internal static var roomCreationMakePublicPromptTitle: String { 
     return VectorL10n.tr("Vector", "room_creation_make_public_prompt_title") 
   }
@@ -2682,15 +2682,15 @@ internal enum VectorL10n {
   internal static var roomCreationPrivacy: String { 
     return VectorL10n.tr("Vector", "room_creation_privacy") 
   }
-  /// This chat is private
+  /// This discussion is private
   internal static var roomCreationPrivateRoom: String { 
     return VectorL10n.tr("Vector", "room_creation_private_room") 
   }
-  /// This chat is public
+  /// This discussion is public
   internal static var roomCreationPublicRoom: String { 
     return VectorL10n.tr("Vector", "room_creation_public_room") 
   }
-  /// New Chat
+  /// New Discussion
   internal static var roomCreationTitle: String { 
     return VectorL10n.tr("Vector", "room_creation_title") 
   }
@@ -2814,7 +2814,7 @@ internal enum VectorL10n {
   internal static var roomDetailsCopyRoomUrl: String { 
     return VectorL10n.tr("Vector", "room_details_copy_room_url") 
   }
-  /// Chat
+  /// Discussion
   internal static var roomDetailsDirectChat: String { 
     return VectorL10n.tr("Vector", "room_details_direct_chat") 
   }
@@ -3334,7 +3334,7 @@ internal enum VectorL10n {
   internal static var roomParticipantsActionSectionDevices: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_devices") 
   }
-  /// Chats
+  /// Discussions
   internal static var roomParticipantsActionSectionDirectChats: String { 
     return VectorL10n.tr("Vector", "room_participants_action_section_direct_chats") 
   }
@@ -3378,7 +3378,7 @@ internal enum VectorL10n {
   internal static var roomParticipantsActionSetModerator: String { 
     return VectorL10n.tr("Vector", "room_participants_action_set_moderator") 
   }
-  /// Start Chat
+  /// Start Discussion
   internal static var roomParticipantsActionStartNewChat: String { 
     return VectorL10n.tr("Vector", "room_participants_action_start_new_chat") 
   }
@@ -3430,7 +3430,7 @@ internal enum VectorL10n {
   internal static var roomParticipantsInviteMalformedIdTitle: String { 
     return VectorL10n.tr("Vector", "room_participants_invite_malformed_id_title") 
   }
-  /// Are you sure you want to invite %@ to this chat?
+  /// Are you sure you want to invite %@ to this discussion?
   internal static func roomParticipantsInvitePromptMsg(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "room_participants_invite_prompt_msg", p1)
   }
@@ -3478,7 +3478,7 @@ internal enum VectorL10n {
   internal static var roomParticipantsOnline: String { 
     return VectorL10n.tr("Vector", "room_participants_online") 
   }
-  /// Are you sure you want to remove %@ from this chat?
+  /// Are you sure you want to remove %@ from this discussion?
   internal static func roomParticipantsRemovePromptMsg(_ p1: String) -> String {
     return VectorL10n.tr("Vector", "room_participants_remove_prompt_msg", p1)
   }
@@ -3574,7 +3574,7 @@ internal enum VectorL10n {
   internal static var roomPromptResend: String { 
     return VectorL10n.tr("Vector", "room_prompt_resend") 
   }
-  /// Chats
+  /// Discussions
   internal static var roomRecentsChatsSection: String { 
     return VectorL10n.tr("Vector", "room_recents_chats_section") 
   }
@@ -3582,7 +3582,7 @@ internal enum VectorL10n {
   internal static var roomRecentsConversationsSection: String { 
     return VectorL10n.tr("Vector", "room_recents_conversations_section") 
   }
-  /// Create group chat
+  /// Create group discussion
   internal static var roomRecentsCreateEmptyRoom: String { 
     return VectorL10n.tr("Vector", "room_recents_create_empty_room") 
   }
@@ -3602,7 +3602,7 @@ internal enum VectorL10n {
   internal static var roomRecentsInvitesSection: String { 
     return VectorL10n.tr("Vector", "room_recents_invites_section") 
   }
-  /// Join a chat
+  /// Join a discussion
   internal static var roomRecentsJoinRoom: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room") 
   }
@@ -3610,7 +3610,7 @@ internal enum VectorL10n {
   internal static var roomRecentsJoinRoomPrompt: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_prompt") 
   }
-  /// Join a chat
+  /// Join a discussion
   internal static var roomRecentsJoinRoomTitle: String { 
     return VectorL10n.tr("Vector", "room_recents_join_room_title") 
   }
@@ -3630,7 +3630,7 @@ internal enum VectorL10n {
   internal static var roomRecentsServerNoticeSection: String { 
     return VectorL10n.tr("Vector", "room_recents_server_notice_section") 
   }
-  /// Create chat
+  /// Create discussion
   internal static var roomRecentsStartChatWith: String { 
     return VectorL10n.tr("Vector", "room_recents_start_chat_with") 
   }

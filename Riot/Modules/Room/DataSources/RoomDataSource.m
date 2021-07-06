@@ -241,7 +241,7 @@ const CGFloat kTypingCellHeight = 24;
 
 #pragma  mark -
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSectionUnderlying:(NSInteger)section
 {
     NSInteger count = [super tableView:tableView numberOfRowsInSection:section];
     
@@ -291,15 +291,19 @@ const CGFloat kTypingCellHeight = 24;
         self.typingCellIndex = -1;
 
         //  leave it as is, if coming as 0 from super
-        return count * 2;
+        return count;
     }
     
     self.typingCellIndex = count;
-    return count * 2 + 1;
+    return count + 1;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self tableView:tableView numberOfRowsInSectionUnderlying:section];
+}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView directoryAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView getCellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == self.typingCellIndex)
     {
@@ -1093,46 +1097,9 @@ NSMutableDictionary *SiblingRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *translatedLocation = [NSIndexPath indexPathForRow:indexPath.item / 2 inSection:indexPath.section];
-    id<MXKRoomBubbleCellDataStoring> bubbleData = [self cellDataAtIndex:translatedLocation.row];
-    if ([self shouldRenderInsertedCells] && indexPath.item % 2 == 0) {
-        if (bubbleData.attachment) {
-            NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
-            [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:[bubbleData.attachment contentURL] andHandler:^(NSArray* tags) {
-                if (!SiblingRows) {
-                    SiblingRows = [NSMutableDictionary new];
-                }
-                [SiblingRows setObject:tags forKey:[[bubbleData.events firstObject] eventId]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [tableView beginUpdates];
-                    [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
-                    [tableView endUpdates];
-                });
-            }];
-        }
-        
-        return [self tableView:tableView fakeCellForRowAtIndexPath:indexPath];
-    } else if (![self shouldRenderInsertedCells]) {
-        return [self tableView:tableView fakeCellForRowAtIndexPath:indexPath];
-    }
-    if ([self shouldRenderInsertedCells] && SiblingRows && [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]]) {
-        LegacyTagViewContainer *element = [tableView dequeueReusableCellWithIdentifier:@"LegacyTagViewContainer" forIndexPath:indexPath];
-        NSArray *tags = [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]];
-        [element renderWithTags:tags];
-        return element;
-    }
-    return [UITableViewCell new];
+    return [self tableView:tableView getCellForRowAtIndexPath:indexPath];
 }
 
-- (CGFloat)getHeightForInsertedCellAtIndexPath:(NSIndexPath *)indexPath withMaxWidth:(CGFloat)maxWidth {
-    NSIndexPath *index = [NSIndexPath indexPathForRow:(indexPath.row - 1) / 2 inSection:indexPath.section];
-    id<MXKRoomBubbleCellDataStoring> bubbleData = [self cellDataAtIndex:index.row];
-    if (SiblingRows && [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]]) {
-        NSArray *tags = [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]];
-        return [LegacyTagViewContainer getHeightWithTags:tags withWidth:maxWidth];
-    }
-    return 0;
-}
 - (void)applyMaskToAttachmentViewOfBubbleCell:(MXKRoomBubbleTableViewCell *)cell
 {
     if (cell.attachmentView && !cell.attachmentView.layer.mask)

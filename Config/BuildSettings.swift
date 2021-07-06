@@ -322,9 +322,9 @@ final class BuildSettings: NSObject {
     static let roomScreenAllowVoIPForDirectRoom: Bool = true
     static let roomScreenAllowVoIPForNonDirectRoom: Bool = true
     static let roomScreenAllowCameraAction: Bool = true
-    static let roomScreenAllowMediaLibraryAction: Bool = true
-    static let roomScreenAllowStickerAction: Bool = true
-    static let roomScreenAllowFilesAction: Bool = true
+    static let roomScreenAllowMediaLibraryAction: Bool = false
+    static let roomScreenAllowStickerAction: Bool = false
+    static let roomScreenAllowFilesAction: Bool = false
     
     // MARK: - Room Contextual Menu
 

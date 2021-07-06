@@ -1119,6 +1119,353 @@ NSString *const AppDelegateUniversalLinkDidChangeNotification = @"AppDelegateUni
 
 #pragma mark - Universal link
 
+- (BOOL)handleUniversalLinkFragment:(NSString*)fragment fromURL:(NSURL*)universalLinkURL
+{
+    BOOL continueUserActivity = NO;
+    MXKAccountManager *accountManager = [MXKAccountManager sharedManager];
+    
+    NSLog(@"[AppDelegate] Universal link: handleUniversalLinkFragment: %@", fragment);
+    
+    // Make sure we have plain utf8 character for separators
+    fragment = [fragment stringByRemovingPercentEncoding];
+    NSLog(@"[AppDelegate] Universal link: handleUniversalLinkFragment: %@", fragment);
+    
+    // The app manages only one universal link at a time
+    // Discard any pending one
+    [self resetPendingUniversalLink];
+    
+    // Extract params
+    NSArray<NSString*> *pathParams;
+    NSMutableDictionary *queryParams;
+    [self parseUniversalLinkFragment:fragment outPathParams:&pathParams outQueryParams:&queryParams];
+    
+    // Sanity check
+    if (!pathParams.count)
+    {
+        NSLog(@"[AppDelegate] Universal link: Error: No path parameters");
+        return NO;
+    }
+    
+    NSString *roomIdOrAlias;
+    NSString *eventId;
+    NSString *userId;
+    NSString *groupId;
+    
+    // Check permalink to room or event
+    if ([pathParams[0] isEqualToString:@"room"] && pathParams.count >= 2)
+    {
+        // The link is the form of "/room/[roomIdOrAlias]" or "/room/[roomIdOrAlias]/[eventId]"
+        roomIdOrAlias = pathParams[1];
+        
+        // Is it a link to an event of a room?
+        eventId = (pathParams.count >= 3) ? pathParams[2] : nil;
+    }
+    else if ([pathParams[0] isEqualToString:@"group"] && pathParams.count >= 2)
+    {
+        // The link is the form of "/group/[groupId]"
+        groupId = pathParams[1];
+    }
+    else if (([pathParams[0] hasPrefix:@"#"] || [pathParams[0] hasPrefix:@"!"]) && pathParams.count >= 1)
+    {
+        // The link is the form of "/#/[roomIdOrAlias]" or "/#/[roomIdOrAlias]/[eventId]"
+        // Such links come from matrix.to permalinks
+        roomIdOrAlias = pathParams[0];
+        eventId = (pathParams.count >= 2) ? pathParams[1] : nil;
+    }
+    // Check permalink to a user
+    else if ([pathParams[0] isEqualToString:@"user"] && pathParams.count == 2)
+    {
+        // The link is the form of "/user/userId"
+        userId = pathParams[1];
+    }
+    else if ([pathParams[0] hasPrefix:@"@"] && pathParams.count == 1)
+    {
+        // The link is the form of "/#/[userId]"
+        // Such links come from matrix.to permalinks
+        userId = pathParams[0];
+    }
+    
+    // Check the conditions to keep the room alias information of a pending fragment.
+    if (universalLinkFragmentPendingRoomAlias)
+    {
+        if (!roomIdOrAlias || !universalLinkFragmentPendingRoomAlias[roomIdOrAlias])
+        {
+            universalLinkFragmentPendingRoomAlias = nil;
+        }
+    }
+    
+    if (roomIdOrAlias)
+    {
+        if (accountManager.activeAccounts.count)
+        {
+            // Check there is an account that knows this room
+            MXKAccount *account = [accountManager accountKnowingRoomWithRoomIdOrAlias:roomIdOrAlias];
+            if (account)
+            {
+                NSString *roomId = roomIdOrAlias;
+                MXRoom *room;
+                
+                // Translate the alias into the room id
+                if ([roomIdOrAlias hasPrefix:@"#"])
+                {
+                    room = [account.mxSession roomWithAlias:roomIdOrAlias];
+                    if (room)
+                    {
+                        roomId = room.roomId;
+                    }
+                }
+                else
+                {
+                    room = [account.mxSession roomWithRoomId:roomId];
+                }
+                
+                if (room.summary.roomType == MXRoomTypeSpace)
+                {
+                    // Indicates that spaces are not supported
+                    //[self.spaceFeatureUnavailablePresenter presentUnavailableFeatureFrom:self.presentedViewController animated:YES];
+                }
+                else
+                {
+                    // Open the room page
+                    [self showRoom:roomId andEventId:eventId withMatrixSession:account.mxSession];
+                }
+                
+                continueUserActivity = YES;
+            }
+            else
+            {
+                // We will display something but we need to do some requests before.
+                // So, come back to the home VC and show its loading wheel while processing
+                [self restoreInitialDisplay:^{
+                    
+                    if ([_masterTabBarController.selectedViewController isKindOfClass:MXKViewController.class])
+                    {
+                        MXKViewController *homeViewController = (MXKViewController*)_masterTabBarController.selectedViewController;
+                        
+                        [homeViewController startActivityIndicator];
+                        
+                        if ([roomIdOrAlias hasPrefix:@"#"])
+                        {
+                            // The alias may be not part of user's rooms states
+                            // Ask the HS to resolve the room alias into a room id and then retry
+                            universalLinkFragmentPending = fragment;
+                            MXKAccount* account = accountManager.activeAccounts.firstObject;
+                            [account.mxSession.matrixRestClient roomIDForRoomAlias:roomIdOrAlias success:^(NSString *roomId) {
+                                
+                                // Note: the activity indicator will not disappear if the session is not ready
+                                [homeViewController stopActivityIndicator];
+                                
+                                // Check that 'fragment' has not been cancelled
+                                if ([universalLinkFragmentPending isEqualToString:fragment])
+                                {
+                                    // Retry opening the link but with the returned room id
+                                    NSString *newUniversalLinkFragment =
+                                            [fragment stringByReplacingOccurrencesOfString:[MXTools encodeURIComponent:roomIdOrAlias]
+                                                                                withString:[MXTools encodeURIComponent:roomId]
+                                            ];
+                                    
+                                    // The previous operation can fail because of percent encoding
+                                    // TBH we are not clean on data inputs. For the moment, just give another try with no encoding
+                                    // TODO: Have a dedicated module and tests to handle universal links (matrix.to, email link, etc)
+                                    if ([newUniversalLinkFragment isEqualToString:fragment])
+                                    {
+                                        newUniversalLinkFragment =
+                                        [fragment stringByReplacingOccurrencesOfString:roomIdOrAlias
+                                                                            withString:[MXTools encodeURIComponent:roomId]];
+                                    }
+                                    
+                                    if (![newUniversalLinkFragment isEqualToString:fragment])
+                                    {
+                                        universalLinkFragmentPendingRoomAlias = @{roomId: roomIdOrAlias};
+                                        
+                                        [self handleUniversalLinkFragment:newUniversalLinkFragment fromURL:universalLinkURL];
+                                    }
+                                    else
+                                    {
+                                        // Do not continue. Else we will loop forever
+                                        NSLog(@"[AppDelegate] Universal link: Error: Cannot resolve alias in %@ to the room id %@", fragment, roomId);
+                                    }
+                                }
+                                
+                            } failure:^(NSError *error) {
+                                NSLog(@"[AppDelegate] Universal link: Error: The homeserver failed to resolve the room alias (%@)", roomIdOrAlias);
+
+                                [homeViewController stopActivityIndicator];
+
+                                NSString *errorMessage = [NSString stringWithFormat:NSLocalizedStringFromTable(@"room_does_not_exist", @"Vector", nil), roomIdOrAlias];
+
+                                [self showAlertWithTitle:nil message:errorMessage];
+                            }];
+                        }
+                        else if ([roomIdOrAlias hasPrefix:@"!"] && ((MXKAccount*)accountManager.activeAccounts.firstObject).mxSession.state != MXSessionStateRunning)
+                        {
+                            // The user does not know the room id but this may be because their session is not yet sync'ed
+                            // So, wait for the completion of the sync and then retry
+                            // FIXME: Manange all user's accounts not only the first one
+                            MXKAccount* account = accountManager.activeAccounts.firstObject;
+                            
+                            NSLog(@"[AppDelegate] Universal link: Need to wait for the session to be sync'ed and running");
+                            universalLinkFragmentPending = fragment;
+                            
+                            universalLinkWaitingObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXSessionStateDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull notif) {
+                                
+                                // Check that 'fragment' has not been cancelled
+                                if ([universalLinkFragmentPending isEqualToString:fragment])
+                                {
+                                    // Check whether the concerned session is the associated one
+                                    if (notif.object == account.mxSession && account.mxSession.state == MXSessionStateRunning)
+                                    {
+                                        NSLog(@"[AppDelegate] Universal link: The session is running. Retry the link");
+                                        [self handleUniversalLinkFragment:fragment fromURL:universalLinkURL];
+                                    }
+                                }
+                            }];
+                        }
+                        else
+                        {
+                            NSLog(@"[AppDelegate] Universal link: The room (%@) is not known by any account (email invitation: %@). Display its preview to try to join it", roomIdOrAlias, queryParams ? @"YES" : @"NO");
+                            
+                            // FIXME: In case of multi-account, ask the user which one to use
+                            MXKAccount* account = accountManager.activeAccounts.firstObject;
+                            
+                            RoomPreviewData *roomPreviewData = [[RoomPreviewData alloc] initWithRoomId:roomIdOrAlias
+                                                                                            andSession:account.mxSession];
+                            if (queryParams)
+                            {
+                                roomPreviewData.viaServers = queryParams[@"via"];
+                            }
+                            
+                            // Is it a link to an event of a room?
+                            // If yes, the event will be displayed once the room is joined
+                            roomPreviewData.eventId = (pathParams.count >= 3) ? pathParams[2] : nil;
+                            
+                            // Try to get more information about the room before opening its preview
+                            [roomPreviewData peekInRoom:^(BOOL succeeded) {
+                                
+                                // Note: the activity indicator will not disappear if the session is not ready
+                                [homeViewController stopActivityIndicator];
+                                
+                                // If no data is available for this room, we name it with the known room alias (if any).
+                                if (!succeeded && universalLinkFragmentPendingRoomAlias[roomIdOrAlias])
+                                {
+                                    roomPreviewData.roomName = universalLinkFragmentPendingRoomAlias[roomIdOrAlias];
+                                }
+                                universalLinkFragmentPendingRoomAlias = nil;
+                                
+                                [self showRoomPreview:roomPreviewData];
+                            }];
+                        }
+                        
+                    }
+                }];
+                
+                // Let's say we are handling the case
+                continueUserActivity = YES;
+            }
+        }
+        else
+        {
+            // There is no account. The app will display the AuthenticationVC.
+            // Wait for a successful login
+            NSLog(@"[AppDelegate] Universal link: The user is not logged in. Wait for a successful login");
+            universalLinkFragmentPending = fragment;
+            
+            // Register an observer in order to handle new account
+            universalLinkWaitingObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXKAccountManagerDidAddAccountNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
+                
+                // Check that 'fragment' has not been cancelled
+                if ([universalLinkFragmentPending isEqualToString:fragment])
+                {
+                    NSLog(@"[AppDelegate] Universal link:  The user is now logged in. Retry the link");
+                    [self handleUniversalLinkFragment:fragment fromURL:universalLinkURL];
+                }
+            }];
+        }
+    }
+    else if (userId)
+    {
+        // Check there is an account that knows this user
+        MXUser *mxUser;
+        MXKAccount *account = [accountManager accountKnowingUserWithUserId:userId];
+        if (account)
+        {
+            mxUser = [account.mxSession userWithUserId:userId];
+        }
+
+        // Prepare the display name of this user
+        NSString *displayName;
+        if (mxUser)
+        {
+            displayName = (mxUser.displayname.length > 0) ? mxUser.displayname : userId;
+        }
+        else
+        {
+            displayName = userId;
+        }
+
+        // Create the contact related to this member
+        MXKContact *contact = [[MXKContact alloc] initMatrixContactWithDisplayName:displayName andMatrixID:userId];
+        [self showContact:contact];
+
+        continueUserActivity = YES;
+    }
+    else if (groupId)
+    {
+        // @FIXME: In case of multi-account, ask the user which one to use
+        MXKAccount* account = accountManager.activeAccounts.firstObject;
+        if (account)
+        {
+            MXGroup *group = [account.mxSession groupWithGroupId:groupId];
+            
+            if (!group)
+            {
+                // Create a group instance to display its preview
+                group = [[MXGroup alloc] initWithGroupId:groupId];
+            }
+            
+            // Display the group details
+            [self showGroup:group withMatrixSession:account.mxSession];
+            
+            continueUserActivity = YES;
+        }
+        else
+        {
+            // There is no account. The app will display the AuthenticationVC.
+            // Wait for a successful login
+            NSLog(@"[AppDelegate] Universal link: The user is not logged in. Wait for a successful login");
+            universalLinkFragmentPending = fragment;
+            
+            // Register an observer in order to handle new account
+            universalLinkWaitingObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kMXKAccountManagerDidAddAccountNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notif) {
+                
+                // Check that 'fragment' has not been cancelled
+                if ([universalLinkFragmentPending isEqualToString:fragment])
+                {
+                    NSLog(@"[AppDelegate] Universal link:  The user is now logged in. Retry the link");
+                    [self handleUniversalLinkFragment:fragment fromURL:universalLinkURL];
+                }
+            }];
+        }
+    }
+    // Check whether this is a registration links.
+    else if ([pathParams[0] isEqualToString:@"register"])
+    {
+        NSLog(@"[AppDelegate] Universal link with registration parameters");
+        continueUserActivity = YES;
+        
+        [_masterTabBarController showAuthenticationScreenWithRegistrationParameters:queryParams];
+    }
+    else
+    {
+        // Unknown command: Do nothing except coming back to the main screen
+        NSLog(@"[AppDelegate] Universal link: TODO: Do not know what to do with the link arguments: %@", pathParams);
+        
+        [self popToHomeViewControllerAnimated:NO completion:nil];
+    }
+    
+    return continueUserActivity;
+}
+
 - (BOOL)handleUniversalLink:(NSUserActivity*)userActivity
 {
     NSURL *webURL = userActivity.webpageURL;

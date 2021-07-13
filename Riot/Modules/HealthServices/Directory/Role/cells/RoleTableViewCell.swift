@@ -9,16 +9,16 @@
 import UIKit
 
 
-protocol RoleCellDelegate: class, FavouriteActionReceiverDelegate {
+protocol RoleCellDelegate: AnyObject, FavouriteActionReceiverDelegate {
     func expandButtonClick(cell: RoleTableViewCell, index: Int)
 }
 
-protocol SelectableRoleCellDelegate: class {
+protocol SelectableRoleCellDelegate: AnyObject {
     func selectionChanged(cell: RoleTableViewCell, index: Int)
 }
 
 
-class RoleTableViewCell: UITableViewCell {
+class RoleTableViewCell: BaseGenericDirectoryCell<RoleModel>, ProvidesReuseIdentifierAndNib {
     //MARK: IBOutlets
     @IBOutlet weak var detailedView: UIView!
     @IBOutlet weak var contactName: UILabel!
@@ -36,8 +36,15 @@ class RoleTableViewCell: UITableViewCell {
     @IBOutlet weak var ActionContainer: UIView!
     @IBOutlet weak var SummaryView: UIStackView!
     
+    static func getReuseIdentifier() -> String {
+        return "RoleTableViewCell"
+    }
+    
+    static func getNib() -> UINib {
+        return UINib(nibName: "RoleTableViewCell", bundle: nil)
+    }
+    
     var role: RoleModel?
-    var roleSelectable: RoleSelectable?
     
     weak var delegate: RoleCellDelegate?
     weak var selectableDelegate: SelectableRoleCellDelegate?
@@ -81,23 +88,17 @@ class RoleTableViewCell: UITableViewCell {
                 FavouriteButton.setImage(UIImage(systemName: (theRole.Favourite ? "star.fill" : "star")), for: .normal)
             }
             delegate?.FavouritesUpdated(favourited: theRole.Favourite)
-        } else if let selectable = roleSelectable {
-            selectable.isSelected = !selectable.isSelected
-            if #available(iOS 13.0, *) {
-                FavouriteButton.setImage(UIImage(systemName: (selectable.isSelected ? "xmark.circle" : "plus.circle")), for: .normal)
-            }
-            selectableDelegate?.selectionChanged(cell: self, index: index)
         }
     }
     
-    private func roleCommon(role: Role) {
-        contactName.text = role.Name
-        contactDescription.text = role.OfficialName
+    private func roleCommon(role: PractitionerRole) {
+        contactName.text = role.shortName
+        contactDescription.text = role.longName
         RoleIcon.image = AvatarGenerator.generateAvatar(forText: contactName.text)
-        RoleLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_role", in: "Vector"), role.Title)
-        CategoryLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_category", in: "Vector"), role.Category)
-        OrgUnitLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_org_unit", in: "Vector"), role.OrgUnit)
-        LocationLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_location", in: "Vector"), role.Location)
+        RoleLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_role", in: "Vector"), role.roleName)
+        CategoryLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_category", in: "Vector"), role.roleCategory)
+        OrgUnitLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_org_unit", in: "Vector"), role.orgName)
+        LocationLabel.text = String(format: AlternateHomeTools.getNSLocalized("role_detail_location", in: "Vector"), role.location)
     }
     
     func setActionsHidden(to: Bool) {
@@ -107,29 +108,15 @@ class RoleTableViewCell: UITableViewCell {
         RoleFilledLabel.isHidden = to
     }
     
-    func bindModel(role: RoleSelectable, index: Int) {
-        self.roleSelectable = role
-        self.isDisplayed = role.isExpanded
-        self.index = index
-        setActionsHidden(to: true)
-        
-        roleCommon(role: role.innerRole)
-        
-        if #available(iOS 13.0, *) {
-            FavouriteButton.setImage(UIImage(systemName: (role.isSelected ? "xmark.circle" : "plus.circle")), for: .normal)
-        }
-        
-    }
-    
-    func bindModel(role: RoleModel, index: Int) {
-        self.role = role
-        self.isDisplayed = role.isExpanded
+    override func bind(data: RoleModel, index: Int) {
+        self.role = data
+        self.isDisplayed = data.isExpanded
         self.index = index
         setActionsHidden(to: false)
         
-        roleCommon(role: role.innerRole)
+        roleCommon(role: data.innerRole)
         
-        if role.isFilled {
+        if data.isFilled {
             RoleFilledLabel.text = AlternateHomeTools.getNSLocalized("filled", in: "Vector")
             RoleFilledLabel.textColor = ThemeService.shared().theme.tintColor
         } else {
@@ -138,7 +125,7 @@ class RoleTableViewCell: UITableViewCell {
         }
         
         if #available(iOS 13.0, *) {
-            FavouriteButton.setImage(UIImage(systemName: (role.Favourite ? "star.fill" : "star")), for: .normal)
+            FavouriteButton.setImage(UIImage(systemName: (data.Favourite ? "star.fill" : "star")), for: .normal)
         }
     }
 }

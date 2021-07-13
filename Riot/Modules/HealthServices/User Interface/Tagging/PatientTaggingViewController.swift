@@ -68,7 +68,7 @@ class PatientTaggingViewController: UIViewController, UITableViewDelegate, UITab
     }
     @IBAction private func TagButtonClicked(_ sender: Any) {
         let patientTaggingVC = FilteredSearchPopoverViewController<PatientModel>(withScrollHandler: nil, andViewCellReuseID: "PatientViewCell", andService: Services.PatientService())
-        patientTaggingVC.onSelectedCallback = {(patient) in
+        patientTaggingVC.onSelected = {(patient) in
             self.patientTaggingViewModel.patients.append(patient)
             self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
             self.updateSelections()

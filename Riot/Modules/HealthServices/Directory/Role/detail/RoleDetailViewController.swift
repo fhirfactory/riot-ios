@@ -42,17 +42,16 @@ class RoleDetailViewController: UIViewController {
         }
         set(value) {
             _role = value
-            self.navigationItem.title = value?.innerRole.Name
-            if let role = value?.innerRole {
-                Services.RolePractitionerService().GetUsersForRole(queryDetails: role) { (practitioners) in
+            self.navigationItem.title = value?.longName
+            if let v = value {
+                Services.RolePractitionerService().GetUsersForRole(queryDetails: v) { (practitioners) in
                     self.practitioners = practitioners.map({ (p) in
-                        ActPeopleModel(fromActPerson: p)
+                        ActPeopleModel(innerPractitioner: p)
                     })
                 } failure: {
                     self.practitioners = []
                 }
             }
-
         }
     }
     private var _practitioners: [ActPeopleModel] = []
@@ -144,11 +143,11 @@ extension RoleDetailViewController: UITableViewDataSource, UITableViewDelegate {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.SPECIALITY.cellIdentifier) as? TitleSubtitleTableViewCell else { return UITableViewCell() }
             switch indexPath.section {
             case SectionType.SPECIALITY.rawValue:
-                cell.DrawCell(withTitle: AlternateHomeTools.getNSLocalized("role_detail_specialty_title", in: "Vector"), andSubtitle: role?.innerRole.Category)
+                cell.DrawCell(withTitle: AlternateHomeTools.getNSLocalized("role_detail_specialty_title", in: "Vector"), andSubtitle: role?.roleCategory)
             case SectionType.LOCATION.rawValue:
-                cell.DrawCell(withTitle: AlternateHomeTools.getNSLocalized("role_detail_location_title", in: "Vector"), andSubtitle: role?.innerRole.Location)
+                cell.DrawCell(withTitle: AlternateHomeTools.getNSLocalized("role_detail_location_title", in: "Vector"), andSubtitle: role?.location)
             case SectionType.ORGANISATION_UNIT.rawValue:
-                cell.DrawCell(withTitle: AlternateHomeTools.getNSLocalized("role_detail_org_unit_title", in: "Vector"), andSubtitle: role?.innerRole.OrgUnit)
+                cell.DrawCell(withTitle: AlternateHomeTools.getNSLocalized("role_detail_org_unit_title", in: "Vector"), andSubtitle: role?.orgName)
             default:
                 break
             }

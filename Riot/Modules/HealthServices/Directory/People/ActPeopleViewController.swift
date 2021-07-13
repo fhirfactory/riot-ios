@@ -8,6 +8,34 @@
 
 import UIKit
 
+class ActPeopleViewController: SimpleSelectableFilteredSearchController<PeopleTableViewCell, ActPeopleModel> {
+    override func selectedItem(item: ActPeopleModel) {
+        let vc = PeopleDetailViewController()
+        vc.setPerson(person: item)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    override func paginate(page: Int, pageSize: Int, filter: String?, favourites: Bool, addPage: @escaping ([ActPeopleModel]) -> Void) {
+        Services.PractitionerService().Query(page: page, pageSize: pageSize, queryDetails: filter) { vals, count in
+            addPage(vals.map({ person in
+                ActPeopleModel(innerPractitioner: person)
+            }))
+        } failure: {
+
+        }
+    }
+    
+    init() {
+        super.init(nibName: "GenericDirectoryController", bundle: nil)
+        mode = .Directory
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+}
+
+/*
 class ActPeopleViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var attachedSearchBar: UISearchBar!
@@ -151,3 +179,4 @@ extension ActPeopleViewController {
         searchBar.resignFirstResponder()
     }
 }
+*/

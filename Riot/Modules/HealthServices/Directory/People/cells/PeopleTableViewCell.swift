@@ -8,7 +8,15 @@
 
 import UIKit
 
-class PeopleTableViewCell: UITableViewCell {
+class PeopleTableViewCell: BaseGenericDirectoryCell<ActPeopleModel>, ProvidesReuseIdentifierAndNib {
+    static func getReuseIdentifier() -> String {
+        "PeopleTableViewCell"
+    }
+    
+    static func getNib() -> UINib {
+        UINib(nibName: "PeopleTableViewCell", bundle: nil)
+    }
+    
 
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var jobTitle: UILabel!
@@ -19,8 +27,8 @@ class PeopleTableViewCell: UITableViewCell {
     
     var peopleCellDelegate: FavouriteActionReceiverDelegate?
     var actPeopleModel: ActPeopleModel?
-    private var _actPerson: ActPeople? = nil
-    var actPerson: ActPeople? {
+    private var _actPerson: ActPeopleModel? = nil
+    var actPerson: ActPeopleModel? {
         get {
             guard let p = _actPerson else { return actPeopleModel }
             return p
@@ -52,40 +60,23 @@ class PeopleTableViewCell: UITableViewCell {
         peopleCellDelegate?.FavouritesUpdated(favourited: person.Favourite)
     }
     
-    func setValue(withPerson: ActPeople) {
-        self.actPerson = withPerson
-        name.text = withPerson.officialName
-        jobTitle.text = withPerson.jobTitle
-        businessUnit.text = withPerson.businessUnit
-        organisation.text = withPerson.organisation
-        FavouriteButton.isHidden = true
-        AvatarImage.enableInMemoryCache = true
-        AvatarImage.setImageURI(withPerson.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: withPerson.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
-        AvatarImage.layer.cornerRadius = AvatarImage.frame.width / 2
-        AvatarImage.layer.masksToBounds = true
-        var currentTheme = ThemeService.shared().theme
-        if BuildSettings.settingsScreenOverrideDefaultThemeSelection != "" {
-            currentTheme = ThemeService.shared().theme(withThemeId: BuildSettings.settingsScreenOverrideDefaultThemeSelection as String)
-        }
-        backgroundColor = currentTheme.backgroundColor
-        
-        AvatarImage.backgroundColor = currentTheme.backgroundColor
-        
-        jobTitle.textColor = currentTheme.textPrimaryColor
-        businessUnit.textColor = currentTheme.textPrimaryColor
-        organisation.textColor = currentTheme.textPrimaryColor
-        name.textColor = currentTheme.textPrimaryColor
+    override func bind(data: ActPeopleModel, index: Int) {
+        setValue(actPeople: data)
+    }
+    
+    func bind(practitioner: Practitioner) {
+        setValue(actPeople: ActPeopleModel(innerPractitioner: practitioner))
     }
     
     func setValue(actPeople: ActPeopleModel, displayFavourites: Bool = true) {
         self.actPeopleModel = actPeople
-        name.text = actPeople.officialName
+        name.text = actPeople.displayName
         jobTitle.text = actPeople.jobTitle
         businessUnit.text = actPeople.businessUnit
         organisation.text = actPeople.organisation
         FavouriteButton.isHidden = !displayFavourites
         AvatarImage.enableInMemoryCache = true
-        AvatarImage.setImageURI(actPeople.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: actPeople.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
+        AvatarImage.setImageURI(actPeople.avatarURL, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: actPeople.displayName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
         AvatarImage.layer.cornerRadius = AvatarImage.frame.width / 2
         AvatarImage.layer.masksToBounds = true
         var currentTheme = ThemeService.shared().theme

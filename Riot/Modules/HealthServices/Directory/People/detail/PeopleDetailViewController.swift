@@ -60,8 +60,8 @@ class PeopleDetailViewController: UIViewController {
     
     func setPerson(person: ActPeopleModel) {
         actPeople = person
-        self.navigationItem.title = person.officialName
-        Services.PractitionerRoleService().GetRolesForUser(queryDetails: person.baseUser) { (roles) in
+        self.navigationItem.title = person.displayName
+        Services.PractitionerRoleService().GetRolesForUser(queryDetails: person.ID) { (roles) in
             self.roles = roles.map({role in
                 return RoleModel(innerRole: role, isExpanded: false)
             })
@@ -160,7 +160,7 @@ extension PeopleDetailViewController: UITableViewDataSource, UITableViewDelegate
             if rolesLoaded {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: SectionType.ROLE_CELL.cellIdentifier) as? RoleTableViewCell else { return UITableViewCell() }
                 cell.delegate = self
-                cell.bindModel(role: roles[indexPath.row], index: indexPath.row)
+                cell.bind(data: roles[indexPath.row], index: indexPath.row)
                 return cell
             }
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "LoadingDataTableViewCell") as? LoadingDataTableViewCell else { return UITableViewCell() }

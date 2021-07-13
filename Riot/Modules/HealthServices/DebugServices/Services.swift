@@ -52,4 +52,11 @@ import Foundation
         }
         return instancePractitionerRoleService
     }
+    private static var instancePractitionerService: PractitionerQueryService!
+    static func PractitionerService() -> PractitionerQueryService {
+        if instancePractitionerService == nil {
+            instancePractitionerService = PractitionerQueryService()
+        }
+        return instancePractitionerService
+    }
 }

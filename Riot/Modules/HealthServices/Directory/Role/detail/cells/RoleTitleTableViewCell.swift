@@ -13,7 +13,7 @@ class RoleTitleTableViewCell: UITableViewCell {
     @IBOutlet weak var heading: UILabel!
     @IBOutlet weak var primaryText: UILabel!
     @IBOutlet weak var secondaryText: UILabel!
-    var Role: Role!
+    var Role: PractitionerRole!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,9 +26,9 @@ class RoleTitleTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setRole(role: Role?)  {
+    func setRole(role: PractitionerRole?)  {
         Role = role
         heading.text = AlternateHomeTools.getNSLocalized("role_title", in: "Vector")
-        primaryText.text = Role?.Title
+        primaryText.text = Role?.roleName
     }
 }

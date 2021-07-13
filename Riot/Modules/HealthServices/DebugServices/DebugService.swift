@@ -15,3 +15,11 @@
 //
 
 import Foundation
+class DebugService: NSObject {
+    static let timeDelay: Double = 0
+    func performCallback(on callback: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + DebugService.timeDelay) {
+            callback()
+        }
+    }
+}

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActRoleViewController" customModule="Riot" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectableFilteredSearchController" customModule="Riot" customModuleProvider="target">
             <connections>
                 <outlet property="FavouritesButton" destination="OLQ-s1-v4S" id="484-rs-k0J"/>
                 <outlet property="SearchBar" destination="LfG-i6-Rmd" id="ocf-NQ-ahU"/>
-                <outlet property="rolesTableView" destination="UzB-Yr-DIf" id="N0z-u4-cgb"/>
+                <outlet property="tableView" destination="UzB-Yr-DIf" id="AV6-al-MMM"/>
                 <outlet property="view" destination="NsK-Sg-c1T" id="MyQ-W7-XBP"/>
             </connections>
         </placeholder>
@@ -23,24 +23,24 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Ft-24-sQg">
-                    <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="51"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49C-Ev-8AH">
-                            <rect key="frame" x="11" y="0.0" width="392" height="56"/>
+                            <rect key="frame" x="11" y="0.0" width="392" height="51"/>
                             <subviews>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="LfG-i6-Rmd" customClass="MinimalSearchBar" customModule="Riot" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="364.5" height="56"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="364.5" height="51"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xHL-tc-P51">
-                                    <rect key="frame" x="364.5" y="0.0" width="27.5" height="56"/>
+                                    <rect key="frame" x="364.5" y="0.0" width="27.5" height="51"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLQ-s1-v4S">
-                                            <rect key="frame" x="3" y="5.5" width="22" height="45"/>
+                                            <rect key="frame" x="3" y="5" width="22" height="41"/>
                                             <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <state key="normal" image="star" catalog="system"/>
                                             <connections>
-                                                <action selector="FavouritesToggled:" destination="-1" eventType="touchUpInside" id="Abl-Ix-VHp"/>
+                                                <action selector="FavouritesToggled:" destination="-1" eventType="touchUpInside" id="BVB-I6-kF9"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -74,7 +74,7 @@
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UzB-Yr-DIf">
-                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                    <rect key="frame" x="0.0" y="95" width="414" height="767"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>

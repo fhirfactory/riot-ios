@@ -20,8 +20,8 @@ import Foundation
     //Effectively a stub function, provides mock tag data on every image
     func LookupTagInfoFor(URL: String, andHandler handler: @escaping ([TagData]) -> Void) {
         self.performCallback {
-            handler([TagData(withPatient: PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), Description: "A photo taken of a patient's arm, showing growths developing on their upper forearm.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date()),
-                TagData(withPatient: PatientModel(Name: "John Nobody", URN: "123456788", DoB: Date()), Description: "A photo taken of a patient's arm, showing the development of growths on their upper forearm. A biopsy confirmed the growths to be benign cysts, in need of no further examination.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: Role(withName: "Aboriginal Liason", andId: "aaa-bbb-ccc", andDescription: "I dunno")), andDate: Date())
+            handler([TagData(withPatient: PatientModel(Name: "John Somebody", URN: "123456789", DoB: Date()), Description: "A photo taken of a patient's arm, showing growths developing on their upper forearm.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: MockPractitionerRole(name: "Aboriginal Liason")), andDate: Date()),
+                TagData(withPatient: PatientModel(Name: "John Nobody", URN: "123456788", DoB: Date()), Description: "A photo taken of a patient's arm, showing the development of growths on their upper forearm. A biopsy confirmed the growths to be benign cysts, in need of no further examination.", Photographer: PhotographerTagDetails(withName: "Jill", andRole: MockPractitionerRole(name: "A Different Role")), andDate: Date())
             ])
         }
     }

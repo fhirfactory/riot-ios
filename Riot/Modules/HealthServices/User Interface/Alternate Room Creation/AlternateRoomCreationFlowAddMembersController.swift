@@ -54,7 +54,7 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
             selectedItems.append(item)
         } else {
             selectedItems.removeAll(where: {(theItem) in
-                return (theItem is ActPeople && item is ActPeople) && (theItem as? ActPeople == item as? ActPeople)
+                return (theItem is Practitioner && item is Practitioner) && (theItem as? UnassociatedEquatable)?.same(rhs: item) == true
             })
         }
         CollectionView.reloadData()
@@ -82,12 +82,12 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         if filteredSearchViewControllers == nil || filteredSearchViewControllers.count == 0 {
-            filteredSearchViewControllers = [RoleFilteredSearchController(), PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:), andScrollHandler: dismissKeyboard)]
+            filteredSearchViewControllers = [PeopleFilteredSearchController(withSelectionChangeHandler: selectionChangedHandler(item:added:), andScrollHandler: dismissKeyboard, nibName: "EmbeddedSearchController")]
             
             self.navigationItem.title = AlternateHomeTools.getNSLocalized("room_creation_add_members", in: "Vector")
             
             let search = SearchViewSection()
-            search.initWithTitles([AlternateHomeTools.getNSLocalized("roles_title", in: "Vector"), AlternateHomeTools.getNSLocalized("people_title", in: "Vector")], viewControllers: filteredSearchViewControllers, defaultSelected: 0)
+            search.initWithTitles([AlternateHomeTools.getNSLocalized("people_title", in: "Vector")], viewControllers: filteredSearchViewControllers, defaultSelected: 0)
             search.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: search.view.frame.height)
             
             SearchResultContainerView.addSubview(search.view)
@@ -121,13 +121,14 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let val: Any = selectedItems[indexPath.row]
         switch val {
-        case let v as ActPeople:
+        case let v as ActPeopleModel:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: RoomCreationCollectionViewCell.self), for: indexPath) as? RoomCreationCollectionViewCell else {return UICollectionViewCell()}
             cell.renderWithAndProvideCanceller(renderer: RoomCreationCollectionViewPeopleCellRenderer.GetRendererFor(v), cancelButtonHander: {() in
                 self.selectionChangedHandler(item: v, added: false)
-                guard let searchController = self.filteredSearchViewControllers[1] as? PeopleFilteredSearchController else { return }
+                guard let searchController = self.filteredSearchViewControllers.first(where: { t in
+                    t is PeopleFilteredSearchController
+                }) as? PeopleFilteredSearchController else { return }
                 searchController.deselect(Item: v)
-                
             })
             return cell
         default:
@@ -159,7 +160,7 @@ class AlternateRoomCreationFlowAddMembersController: UIViewController, UICollect
             }
         }
         for x in filteredSearchViewControllers {
-            x.applyFilter(searchText)
+            x.changeFilter(searchText)
         }
     }
     

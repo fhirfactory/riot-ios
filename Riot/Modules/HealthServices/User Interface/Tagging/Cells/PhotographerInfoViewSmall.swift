@@ -23,6 +23,6 @@ class PhotographerInfoViewSmall: UITableViewCell {
     func displayDetails(photographerTagDetails: PhotographerTagDetails) {
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
         PhotographerNameLabel.text = photographerTagDetails.Name
-        PhotographerDesignationLabel.text = photographerTagDetails.Role.Designation
+        PhotographerDesignationLabel.text = photographerTagDetails.Role.roleName
     }
 }

@@ -151,27 +151,48 @@ NSArray *TagDataArray;
         
         [self destroyTag];
         
-        [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
-            TagDataArray = tagData;
-            isShowingDetail = false;
+        if ([attachment type] == MXKAttachmentTypeImage) {
+            [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:contentURL andHandler:^(NSArray *tagData) {
+                TagDataArray = tagData;
+                isShowingDetail = false;
+                
+                TagViewDetails = [PatientTagHelpers getPatientViewCellForTagData:tagData];
+                
+                //bookmark.fill
+                RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
+                UIBarButtonItem *forwardItem = [[UIBarButtonItem alloc] initWithImage:menuItem.image style:UIBarButtonItemStylePlain target:self action:@selector(forwardAttachment)];
+                UIImage *image = [UIImage imageNamed:@"edit_icon"];
+                UIBarButtonItem *tagItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(editTag)];
+                NSArray *rightBarButtonItems = NULL;
+                
+                UINavigationBar *navBar = [super valueForKey:@"navigationBar"];
+                UINavigationItem * navItem = navBar.topItem;
+                
+                rightBarButtonItems = [[NSArray alloc] initWithObjects:forwardItem, tagItem, nil];
+                navItem.rightBarButtonItems = rightBarButtonItems;
+                
+                [self tryDisplayTag];
+            }];
+        } else {
+            if (TagGestureRecognizer) {
+                [[self view] removeGestureRecognizer:TagGestureRecognizer];
+                TagGestureRecognizer = NULL;
+            }
             
-            TagViewDetails = [PatientTagHelpers getPatientViewCellForTagData:tagData];
+            if (TagLongPressRecognizer) {
+                [[self view] removeGestureRecognizer:TagLongPressRecognizer];
+                TagLongPressRecognizer = NULL;
+            }
             
-            //bookmark.fill
-            RoomContextualMenuItem *menuItem = [[RoomContextualMenuItem alloc] initWithMenuAction:RoomContextualMenuActionForward];
-            UIBarButtonItem *forwardItem = [[UIBarButtonItem alloc] initWithImage:menuItem.image style:UIBarButtonItemStylePlain target:self action:@selector(forwardAttachment)];
-            UIImage *image = [UIImage imageNamed:@"edit_icon"];
-            UIBarButtonItem *tagItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(editTag)];
-            NSArray *rightBarButtonItems = NULL;
+            TagGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleGestureRecognition:)];
             
-            UINavigationBar *navBar = [super valueForKey:@"navigationBar"];
-            UINavigationItem * navItem = navBar.topItem;
+            TagLongPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleGestureRecognition:)];
             
-            rightBarButtonItems = [[NSArray alloc] initWithObjects:forwardItem, tagItem, nil];
-            navItem.rightBarButtonItems = rightBarButtonItems;
-            
-            [self tryDisplayTag];
-        }];
+            [TagLongPressRecognizer setCancelsTouchesInView:NO];
+            [[self view] addGestureRecognizer:TagLongPressRecognizer];
+            [[self view] addGestureRecognizer:TagGestureRecognizer];
+            [self hideTag];
+        }
     }
     
 }
@@ -375,7 +396,6 @@ bool isShowingDetail = false;
 {
     NSInteger currentIdx = [[self valueForKey:@"currentVisibleItemIndex"] integerValue];
     UIGestureRecognizer *cellGestureRecognizer = [cellGestureRecognizers objectForKey:[NSNumber numberWithLong:currentIdx]];
-    NSArray *subviews = TagViewContainer.subviews;
     UIView *collapsedMenuParts = [[TagViewContainer.subviews firstObject].subviews firstObject];
     CGPoint location = (isShowingDetail ? [GestureRecognizer locationInView:[TagViewContainer.subviews firstObject]] : [GestureRecognizer locationInView:collapsedMenuParts]);
     if (!hidden && ((isShowingDetail && [self point:location IsInRectangle:[TagViewContainer.subviews firstObject].bounds]) || (!isShowingDetail && [self point:location IsInRectangle:collapsedMenuParts.bounds]))){

@@ -5893,6 +5893,15 @@ const NSTimeInterval kResizeComposerAnimationDuration = .05;
     [self hideContextualMenuAnimated:YES];
 }
 
+#pragma mark - Lingo Changes
+
+- (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
+    if ([cellData isKindOfClass:[CustomTimelineElement class]]) {
+        return [((CustomTimelineElement*)cellData) ReuseIdentifier];
+    }
+    return [super cellReuseIdentifierForCellData:cellData];
+}
+
 #pragma mark - ReactionsMenuViewModelCoordinatorDelegate
 
 - (void)reactionsMenuViewModel:(ReactionsMenuViewModel *)viewModel didAddReaction:(NSString *)reaction forEventId:(NSString *)eventId
@@ -5926,16 +5935,6 @@ const NSTimeInterval kResizeComposerAnimationDuration = .05;
         }];
         
     }];
-}
-
-//Enable the new room rendering pipeline. Currently, this must be set to true for tags and other custom elements to render correctly.
-BOOL enableNewRoomRendering = NO;
-
-- (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
-    if (enableNewRoomRendering){
-        return @"RoomMessageContentCell";
-    }
-    return [super cellReuseIdentifierForCellData:cellData];
 }
 
 - (void)reactionsMenuViewModelDidTapMoreReactions:(ReactionsMenuViewModel *)viewModel forEventId:(NSString *)eventId

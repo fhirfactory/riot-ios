@@ -190,6 +190,10 @@ const CGFloat kTypingCellHeight = 24;
 
 - (CGFloat)cellHeightAtIndex:(NSInteger)index withMaximumWidth:(CGFloat)maxWidth
 {
+    if ([[bubbles objectAtIndex:index] isKindOfClass:[CustomTimelineElement class]]) {
+        return [self heightForLingoCell:[bubbles objectAtIndex:index] withWidth:maxWidth];
+    }
+    
     if (index == self.typingCellIndex)
     {
         return kTypingCellHeight;
@@ -208,6 +212,86 @@ const CGFloat kTypingCellHeight = 24;
         [roomBubbleCellData setNeedsUpdateAdditionalContentHeight];
     }
 }
+
+#pragma mark Lingo Features
+
+- (CGFloat)heightForLingoCell:(CustomTimelineElement*)cell withWidth:(CGFloat)width {
+    return [cell heightWithWidth:width];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView lingoCellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RoomBubbleCellData *roomBubbleCellData = [self cellDataAtIndex:indexPath.row];
+    NSAssert([roomBubbleCellData isKindOfClass:[CustomTimelineElement class]], @"Check that we're rendering a lingo cell");
+    CustomTimelineElement *el = (CustomTimelineElement*)roomBubbleCellData;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[el ReuseIdentifier]];
+    [el renderWithCell:cell requestUpdate:^{
+        [tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects:[tableView indexPathForCell:cell], nil] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    return cell;
+}
+
+- (CustomTimelineElement*)getCustomElementForGivenData:(id<MXKRoomBubbleCellDataStoring>)data {
+    if ([data isAttachmentWithThumbnail]) {
+        PatientTagPlaceholder *cellData = [PatientTagPlaceholder new];
+        [cellData setURL:[[data attachment] contentURL]];
+        return cellData;
+    }
+    return NULL;
+}
+
+//this climbs up
+- (long)insertLingoCellsFromIndex:(unsigned long)fromIndex toIndex:(long)minIndex {
+    long index = MIN(fromIndex, [bubbles count] - 1);
+    while (index >= minIndex) {
+        if ([[bubbles objectAtIndex:index] isKindOfClass:[CustomTimelineElement class]]) {
+            index -= 2;
+        } else {
+            if (index < [bubbles count] - 1) {
+                if ([[bubbles objectAtIndex:index + 1] isKindOfClass:[CustomTimelineElement class]]) {
+                    index--;
+                    continue;
+                }
+            }
+            CustomTimelineElement* el = [self getCustomElementForGivenData:[bubbles objectAtIndex:index]];
+            if (el) {
+                [bubbles insertObject:(id)el atIndex:index+1];
+                return index;
+            }
+            index--;
+        }
+    }
+    return index;
+}
+
+- (void)paginate:(NSUInteger)numItems direction:(MXTimelineDirection)direction onlyFromStore:(BOOL)onlyFromStore success:(void (^)(NSUInteger addedCellNumber))success failure:(void (^)(NSError *error))failure {
+    if ([[self superclass] instancesRespondToSelector:@selector(paginate:direction:onlyFromStore:success:failure:)]) {
+        [super paginate:numItems direction:direction onlyFromStore:onlyFromStore success:^(NSUInteger cells) {
+            unsigned long newCells = cells;
+            if (direction == MXTimelineDirectionBackwards) {
+                long lingoCell = [self insertLingoCellsFromIndex:cells toIndex:0];
+                while (lingoCell > 0) {
+                    newCells++;
+                    lingoCell = [self insertLingoCellsFromIndex:lingoCell toIndex:0];
+                }
+            } else {
+                unsigned long min = MAX([self->bubbles count] - cells - 1,0);
+                long lingoCell = [self insertLingoCellsFromIndex:[self->bubbles count] - 1 toIndex:min];
+                while (lingoCell > min) {
+                    newCells++;
+                    lingoCell = [self insertLingoCellsFromIndex:lingoCell toIndex:min];
+                }
+            }
+            success(newCells);
+        } failure:failure];
+    }
+}
+
+//- (void)processQueuedEvents:(void (^)(NSUInteger addedHistoryCellNb, NSUInteger addedLiveCellNb))onComplete {
+//    if ([[self superclass] instancesRespondToSelector:@selector(processQueuedEvents:)]) {
+//        [super processQueuedEvents: onComplete];
+//    }
+//}
 
 #pragma mark Encryption trust level
 
@@ -324,7 +408,8 @@ const CGFloat kTypingCellHeight = 24;
     
     [self updateKeyVerificationIfNeededForRoomBubbleCellData:roomBubbleCellData];
 
-    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = ([roomBubbleCellData isKindOfClass:[CustomTimelineElement class]]) ?
+    [self tableView:tableView lingoCellForRowAtIndexPath:indexPath] : [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
     // Finalize cell view customization here
     if ([cell isKindOfClass:MXKRoomBubbleTableViewCell.class])

@@ -21,6 +21,18 @@ import Foundation
                 callback()
             }
         }
+//        PractitionerService().FetchResource(ID: "joseph.fergusson@test.act.gov.au") { Practitioner in
+//            print(Practitioner)
+//        } andFailureCallback: { err in
+//            
+//        }
+//        PractitionerService().SearchResources(query: "Joseph", page: 0, pageSize: 20) { practitioners, count in
+//            print(practitioners)
+//        } andFailureCallback: { e in
+//            
+//        }
+
+
     }
     override func drawCell(cell: UITableViewCell, requestUpdate: @escaping () -> Void) {
         if let typedCell = cell as? LegacyTagViewContainer {

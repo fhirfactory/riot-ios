@@ -16,10 +16,10 @@
 
 import Foundation
 
-class FilteredSearchResultsController<T>: SelectableFilteredSearchController<T> where T: Equatable {
-    var connectedService: AsyncQueryableService<T>!
+class FilteredSearchResultsController<Service: DataQueryService, T>: SelectableFilteredSearchController<T> where T: Equatable, T == Service.ReturnType {
+    var connectedService: Service!
     var reuseIdentifier: String!
-    func initializeService(With service: AsyncQueryableService<T>, AndReuseIdentifier identifier: String) {
+    func initializeService(With service: Service, AndReuseIdentifier identifier: String) {
         connectedService = service
         reuseIdentifier = identifier
     }
@@ -29,7 +29,11 @@ class FilteredSearchResultsController<T>: SelectableFilteredSearchController<T> 
         UINib(nibName: cellNibName, bundle: nil)
     }
     
-    init(withSelectionChangeHandler changeHandler: @escaping ((T, Bool) -> Void), andScrollHandler scrollHandler: @escaping (() -> Void), andReuseIdentifier reuseID: String, andConnectedService connectedService: AsyncQueryableService<T>, nibName: String? = nil) {
+    init(withSelectionChangeHandler changeHandler: @escaping ((T, Bool) -> Void),
+         andScrollHandler scrollHandler: @escaping (() -> Void),
+         andReuseIdentifier reuseID: String,
+         andConnectedService connectedService: Service,
+         nibName: String? = nil) {
         super.init(withSelectionChangeHandler: changeHandler, andScrollHandler: scrollHandler)
         cellNibName = reuseID
         initializeService(With: connectedService, AndReuseIdentifier: reuseID)
@@ -50,11 +54,11 @@ class FilteredSearchResultsController<T>: SelectableFilteredSearchController<T> 
         tableView.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellReuseIdentifier: reuseIdentifier)
     }
     override func paginate(page: Int, pageSize: Int, filter: String?, favourites: Bool, addPage: @escaping ([T]) -> Void) {
-        connectedService.Query(page: page, pageSize: pageSize, queryDetails: filter, success: { (returnedList, count)  in
+        connectedService.SearchResources(query: filter, page: page, pageSize: pageSize) { (returnedList, count)  in
             addPage(returnedList)
-        }, failure: {
-            //presumably an internet failure, in prod
-        })
+        } andFailureCallback: { err in
+            
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

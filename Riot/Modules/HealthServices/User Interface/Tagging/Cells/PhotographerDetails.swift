@@ -16,14 +16,22 @@
 
 import Foundation
 
-class RoleModelQueryService: AsyncQueryableService<RoleModel> {
-    override func Query(page: Int, pageSize: Int, queryDetails: String?, success: @escaping ([RoleModel], Int) -> Void, failure: () -> Void) {
-        Services.RoleService().Query(page: page, pageSize: pageSize, queryDetails: queryDetails) { roles, count in
-            success(roles.map({ role in
-                RoleModel(innerRole: role)
+class RoleModelQueryService: MappedService<FHIRPractitionerRole,RoleModel> {
+    override func SearchResources(query: String?, page: Int, pageSize: Int, withSuccessCallback success: (([MappedService<FHIRPractitionerRole, RoleModel>.ReturnType], Int) -> Void)?, andFailureCallback failure: ((Error?) -> Void)?) {
+        Services.PractitionerRoleService().SearchResources(query: query, page: page, pageSize: pageSize) { roles, count in
+            success?(roles.map({ r in
+                RoleModel(innerRole: r)
             }), count)
-        } failure: {
-            failure()
+        } andFailureCallback: { err in
+            failure?(err)
+        }
+    }
+    
+    override func FetchResource(ID: String, withSuccessCallback success: ((MappedService<FHIRPractitionerRole, RoleModel>.ReturnType) -> Void)?, andFailureCallback failure: ((Error) -> Void)?) {
+        Services.PractitionerRoleService().FetchResource(ID: ID) { role in
+            success?(RoleModel(innerRole: role))
+        } andFailureCallback: { err in
+            failure?(err)
         }
     }
 }
@@ -37,7 +45,7 @@ class PhotographerDetails: UITableViewCell {
     var selectedDesignation: PractitionerRole?
     private var roleSelectionChanged: ((PractitionerRole) -> Void)?
     @IBAction private func DesignationSelectorClicked(_ sender: Any) {
-        let selectDesignationVC = FilteredSearchPopoverViewController<RoleModel>(withScrollHandler: nil, andViewCellReuseID: "DesignationViewCell", andService: RoleModelQueryService())
+        let selectDesignationVC = FilteredSearchPopoverViewController<RoleModelQueryService>(withScrollHandler: nil, andViewCellReuseID: "DesignationViewCell", andService: RoleModelQueryService())
         selectDesignationVC.onSelected = {(designation) in
             self.selectedDesignation = designation
             self.drawText()

@@ -70,7 +70,7 @@ class PeopleTableViewCell: BaseGenericDirectoryCell<ActPeopleModel>, ProvidesReu
     
     func setValue(actPeople: ActPeopleModel, displayFavourites: Bool = true) {
         self.actPeopleModel = actPeople
-        name.text = actPeople.displayName
+        name.text = actPeople.name
         jobTitle.text = actPeople.jobTitle
         businessUnit.text = actPeople.businessUnit
         organisation.text = actPeople.organisation

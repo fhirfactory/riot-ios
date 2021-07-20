@@ -44,13 +44,13 @@ class RoleDetailViewController: UIViewController {
             _role = value
             self.navigationItem.title = value?.longName
             if let v = value {
-                Services.RolePractitionerService().GetUsersForRole(queryDetails: v) { (practitioners) in
+                /*Services.RolePractitionerService().GetUsersForRole(queryDetails: v) { (practitioners) in
                     self.practitioners = practitioners.map({ (p) in
                         ActPeopleModel(innerPractitioner: p)
                     })
                 } failure: {
                     self.practitioners = []
-                }
+                }*/
             }
         }
     }

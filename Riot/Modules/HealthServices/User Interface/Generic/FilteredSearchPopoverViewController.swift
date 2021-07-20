@@ -16,14 +16,15 @@
 
 import Foundation
 
-class FilteredSearchPopoverViewController<T>: FilteredSearchResultsController<T> where T: Equatable {
+class FilteredSearchPopoverViewController<Service: DataQueryService>: FilteredSearchResultsController<Service, Service.ReturnType> where Service.ReturnType: Equatable {
+    typealias T = Service.ReturnType
     var onSelected: ((T) -> Void)?
     
     func SetSearchBarPlaceholder(to placeholder: String){
         SearchBar?.placeholder = placeholder
     }
     
-    init(withScrollHandler scrollHandler: (() -> Void)?, andViewCellReuseID cellReuseID: String, andService service: AsyncQueryableService<T>) {
+    init(withScrollHandler scrollHandler: (() -> Void)?, andViewCellReuseID cellReuseID: String, andService service: Service) {
         super.init(nibName: "FilteredSearchPopoverViewController", bundle: nil)
         super.initializeService(With: service, AndReuseIdentifier: cellReuseID)
         selectionDidChange = { Selected, _ in

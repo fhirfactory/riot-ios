@@ -24,11 +24,11 @@ class PeopleFilteredSearchController: SelectableFilteredSearchController<ActPeop
         tableView.register(UINib(nibName: "PeopleTableViewCell", bundle: nil), forCellReuseIdentifier: "PeopleTableViewCell")
     }
     override func paginate(page: Int, pageSize: Int, filter: String?, favourites: Bool, addPage: @escaping ([ActPeopleModel]) -> Void) {
-        Services.PractitionerService().Query(page: page, pageSize: pageSize, queryDetails: filter) { practitioners, count in
+        Services.PractitionerService().SearchResources(query: filter, page: page, pageSize: pageSize) { practitioners, count in
             addPage(practitioners.map({ practitioner in
                 ActPeopleModel(innerPractitioner: practitioner)
             }))
-        } failure: {
+        } andFailureCallback: { err in
             
         }
 

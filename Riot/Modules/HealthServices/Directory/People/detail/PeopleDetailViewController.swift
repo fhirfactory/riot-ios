@@ -61,13 +61,13 @@ class PeopleDetailViewController: UIViewController {
     func setPerson(person: ActPeopleModel) {
         actPeople = person
         self.navigationItem.title = person.displayName
-        Services.PractitionerRoleService().GetRolesForUser(queryDetails: person.ID) { (roles) in
-            self.roles = roles.map({role in
-                return RoleModel(innerRole: role, isExpanded: false)
-            })
-        } failure: {
-            
-        }
+//        Services.PractitionerRoleService().GetRolesForUser(queryDetails: person.ID) { (roles) in
+//            self.roles = roles.map({role in
+//                return RoleModel(innerRole: role, isExpanded: false)
+//            })
+//        } failure: {
+//            
+//        }
 
     }
     

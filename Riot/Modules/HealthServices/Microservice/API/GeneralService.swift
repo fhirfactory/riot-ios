@@ -32,7 +32,7 @@ class GeneralService<T: Codable> {
     }
     
     fileprivate func GetResource(ID: String, withSuccessCallback success: @escaping (T) -> Void, andFailureCallback failure: @escaping (Error) -> Void) {
-        let URL = "\(microserviceURL ?? "")/\(subserviceURL ?? "")/\(ID)"
+        let URL = "\(microserviceURL)/\(subserviceURL)/\(ID)"
         AFSM.get(URL, parameters: [:], headers: [:], progress: nil) { task, value in
             if let itm = value as? Data {
                 let decoder = JSONDecoder()
@@ -56,7 +56,7 @@ class GeneralService<T: Codable> {
                     let decoder = JSONDecoder()
                     do {
                         let response: [T] = try decoder.decode([T].self, from: itm)
-                        success(response,count)
+                        success(response, count)
                     } catch {
                         failure(error)
                     }
@@ -72,11 +72,11 @@ class GeneralService<T: Codable> {
     }
     
     fileprivate func ListResources(page: Int, pageSize: Int, withSuccessCallback success: @escaping ([T], Int) -> Void, andFailureCallback failure: @escaping (Error?) -> Void) {
-        FetchResources(fromURL: "\(microserviceURL ?? "")/\(subserviceURL ?? "")?page=\(page)&pageSize=\(pageSize)", withSuccessCallback: success, andFailureCallback: failure)
+        FetchResources(fromURL: "\(microserviceURL)/\(subserviceURL)?page=\(page)&pageSize=\(pageSize)", withSuccessCallback: success, andFailureCallback: failure)
     }
     
     fileprivate func QueryResources(query: String, page: Int, pageSize: Int, withSuccessCallback success: @escaping ([T], Int) -> Void, andFailureCallback failure: @escaping (Error?) -> Void) {
-        FetchResources(fromURL: "\(microserviceURL ?? "")/\(subserviceURL ?? "")/search?allName=\(query)&page=\(page)&pageSize=\(pageSize)", withSuccessCallback: success, andFailureCallback: failure)
+        FetchResources(fromURL: "\(microserviceURL)/\(subserviceURL)/search?allName=\(query)&page=\(page)&pageSize=\(pageSize)", withSuccessCallback: success, andFailureCallback: failure)
     }
     
     fileprivate func GetResources(query: String?, page: Int, pageSize: Int, withSuccessCallback success: @escaping ([T], Int) -> Void, andFailureCallback failure: @escaping (Error?) -> Void) {
@@ -113,7 +113,7 @@ class MappedService<T: Codable, U>: GeneralService<T>, BaseAPIService {
     }
 }
 
-class FavouriteService<T: Codable, U>: MappedService<T,U> {
+class FavouriteService<T: Codable, U>: MappedService<T, U>, FavouritesQueryService {
     
     var favouritesPath: String { preconditionFailure("Override in deriving class") }
     
@@ -134,25 +134,28 @@ class FavouriteService<T: Codable, U>: MappedService<T,U> {
     }
 }
 
-class PractitionerAPIService: MappedService<FHIRPractitioner, Practitioner> {
+class PractitionerAPIService: FavouriteService<FHIRPractitioner, Practitioner> {
     override var subserviceURL: String { "Practitioner" }
+    override var favouritesPath: String { "PractitionerFavouritesDetails" }
     override func mapObject(item: FHIRPractitioner) -> Practitioner {
         APIPractitioner(fhirPractitioner: item)
     }
 }
 
-class PractitionerRoleAPIService: MappedService<FHIRPractitionerRole, PractitionerRole> {
+class PractitionerRoleAPIService: FavouriteService<FHIRPractitionerRole, PractitionerRole> {
     override var subserviceURL: String { "PractitionerRole" }
+    override var favouritesPath: String { "PractitionerRoleFavouritesDetails" }
     override func mapObject(item: FHIRPractitionerRole) -> PractitionerRole {
         APIPractitionerRole(innerPractitionerRole: item)
     }
 }
 
-class HealthcareServiceAPIService: MappedService<FHIRHealthcareService, HealthcareService> {
+class HealthcareServiceAPIService: FavouriteService<FHIRHealthcareService, HealthcareService> {
     override var subserviceURL: String { "HealthcareService" }
 }
 
 typealias BaseAPIService = DataFetchService & DataQueryService
+typealias APIWithFavourites = BaseAPIService & FavouritesQueryService
 
 protocol DataFetchService {
     associatedtype ReturnType
@@ -162,4 +165,9 @@ protocol DataFetchService {
 protocol DataQueryService {
     associatedtype ReturnType
     func SearchResources(query: String?, page: Int, pageSize: Int, withSuccessCallback success: (([ReturnType], Int) -> Void)?, andFailureCallback failure: ((Error?) -> Void)?)
+}
+
+protocol FavouritesQueryService {
+    associatedtype ReturnType
+    func SearchFavouriteResources(practitionerID: String, query: String?, page: Int, pageSize: Int, withSuccessCallback success: (([ReturnType], Int) -> Void)?, andFailureCallback failure: ((Error?) -> Void)?)
 }

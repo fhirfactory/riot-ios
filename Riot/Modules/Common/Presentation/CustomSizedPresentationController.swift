@@ -156,7 +156,9 @@ class CustomSizedPresentationController: UIPresentationController {
         }
         
         coordinator.animate(alongsideTransition: { _ in
-            self.dimmingView.alpha = 0.0
+            if self.dimmingView != nil {
+                self.dimmingView.alpha = 0.0
+            }
         })
     }
     

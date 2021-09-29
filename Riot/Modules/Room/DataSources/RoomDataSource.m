@@ -190,13 +190,13 @@ const CGFloat kTypingCellHeight = 24;
 
 - (CGFloat)cellHeightAtIndex:(NSInteger)index withMaximumWidth:(CGFloat)maxWidth
 {
-    if ([[bubbles objectAtIndex:index] isKindOfClass:[CustomTimelineElement class]]) {
-        return [self heightForLingoCell:[bubbles objectAtIndex:index] withWidth:maxWidth];
-    }
-    
     if (index == self.typingCellIndex)
     {
         return kTypingCellHeight;
+    }
+    
+    if ([[bubbles objectAtIndex:index] isKindOfClass:[CustomTimelineElement class]]) {
+        return [self heightForLingoCell:[bubbles objectAtIndex:index] withWidth:maxWidth];
     }
     
     return [super cellHeightAtIndex:index withMaximumWidth:maxWidth];

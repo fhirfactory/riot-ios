@@ -565,6 +565,9 @@
     self.customSizedPresentationController = nil;
 }
 
+int requestIdx = 0;
+NSString* dialerQueue = @"";
+
 - (void)dialpadViewControllerDidTapDigit:(DialpadViewController *)viewController digit:(NSString *)digit
 {
     if (digit.length == 0)
@@ -574,6 +577,21 @@
     BOOL result = [self.mxCall sendDTMF:digit
                                duration:0
                            interToneGap:0];
+    
+    dialerQueue = [dialerQueue stringByAppendingString:digit];
+    requestIdx++;
+    int request = requestIdx;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC),dispatch_get_main_queue(),^{
+        if (request == requestIdx) {
+            [[self.mxCall room] sendTextMessage:[NSString stringWithFormat:@"/dial %@", dialerQueue] success:^(NSString *eventId) {
+                
+            } failure:^(NSError *error) {
+                
+            }];
+            dialerQueue = @"";
+        }
+    });
+    
     
     NSLog(@"[CallViewController] Sending DTMF tones %@", result ? @"succeeded": @"failed");
 }

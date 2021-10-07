@@ -16,66 +16,67 @@
 
 import Foundation
 
-class FilteredSearchResultsController<T>: SelectableFilteredSearchController<T> where T: Equatable {
-    var QueryList: [T] = []
-    var connectedService: AsyncQueryableService<T>!
+class FilteredSearchResultsController<Service: DataQueryService, T>: SelectableFilteredSearchController<T> where T: Equatable, T == Service.ReturnType {
+    var connectedService: Service!
     var reuseIdentifier: String!
-    func initializeService(With service: AsyncQueryableService<T>, AndReuseIdentifier identifier: String) {
+    func initializeService(With service: Service, AndReuseIdentifier identifier: String) {
         connectedService = service
         reuseIdentifier = identifier
     }
     
-    init(withSelectionChangeHandler changeHandler: @escaping ((T, Bool) -> Void), andScrollHandler scrollHandler: @escaping (() -> Void), andReuseIdentifier reuseID: String, andConnectedService connectedService: AsyncQueryableService<T>) {
+    var cellNibName: String!
+    override func getNib() -> UINib {
+        UINib(nibName: cellNibName, bundle: nil)
+    }
+    
+    init(withSelectionChangeHandler changeHandler: @escaping ((T, Bool) -> Void),
+         andScrollHandler scrollHandler: @escaping (() -> Void),
+         andReuseIdentifier reuseID: String,
+         andConnectedService connectedService: Service,
+         nibName: String? = nil) {
         super.init(withSelectionChangeHandler: changeHandler, andScrollHandler: scrollHandler)
+        cellNibName = reuseID
         initializeService(With: connectedService, AndReuseIdentifier: reuseID)
+        if let name = nibName {
+            cellNibName = name
+        }
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
+    override init(nibName: String?, bundle: Bundle?) {
+        super.init(nibName: nibName, bundle: bundle)
+    }
+    
     override func registerReuseIdentifierForTableView(_ tableView: UITableView) {
         tableView.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellReuseIdentifier: reuseIdentifier)
     }
-    override func applyFilter(_ filter: String) {
-        connectedService.Query(queryDetails: filter, success: { (returnedList) in
-            QueryList = returnedList
-            self.tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-        }, failure: {
-            //presumably an internet failure, in prod
-        })
+    override func paginate(page: Int, pageSize: Int, filter: String?, favourites: Bool, addPage: @escaping ([T]) -> Void) {
+        connectedService.SearchResources(query: filter, page: page, pageSize: pageSize) { (returnedList, count)  in
+            addPage(returnedList)
+        } andFailureCallback: { err in
+            
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
-        applyFilter("")
+        super.viewDidAppear(animated)
     }
-    override func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> T? {
-        guard let actualCell = tableViewCell as? QueryTableViewCell<T> else { return nil }
-        return actualCell.CurrentValue
-    }
+    
     override func getTableviewCell(_ tableView: UITableView, atIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? QueryTableViewCell<T> else { return UITableViewCell() }
-        let Result = QueryList[indexPath.row]
+        let Result = items[indexPath.row]
         cell.RenderWith(Object: Result)
         return cell
     }
-    override func getIndexPathFor(Item theItem: T) -> IndexPath? {
-        if let idx = QueryList.firstIndex(of: theItem) {
-            return IndexPath(row: idx, section: 0)
-        }
-        return nil
-    }
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return QueryList.count
-    }
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if QueryList.count == 1 {
-            return "1 " + AlternateHomeTools.getNSLocalized("person_single", in: "Vector")
-        } else if QueryList.count > 1 {
-            return String(QueryList.count) + " " + AlternateHomeTools.getNSLocalized("person_plural", in: "Vector")
-        }
-        return nil
-    }
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        1
-    }
+    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        if items.count == 1 {
+//            return "1 " + AlternateHomeTools.getNSLocalized("person_single", in: "Vector")
+//        } else if items.count > 1 {
+//            return String(items.count) + " " + AlternateHomeTools.getNSLocalized("person_plural", in: "Vector")
+//        }
+//        return nil
+//    }
 }

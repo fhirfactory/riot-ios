@@ -16,17 +16,37 @@
 
 import Foundation
 
+class RoleModelQueryService: MappedService<FHIRPractitionerRole,RoleModel> {
+    override func SearchResources(query: String?, page: Int, pageSize: Int, withSuccessCallback success: (([MappedService<FHIRPractitionerRole, RoleModel>.ReturnType], Int) -> Void)?, andFailureCallback failure: ((Error?) -> Void)?) {
+        Services.PractitionerRoleService().SearchResources(query: query, page: page, pageSize: pageSize) { roles, count in
+            success?(roles.map({ r in
+                RoleModel(innerRole: r)
+            }), count)
+        } andFailureCallback: { err in
+            failure?(err)
+        }
+    }
+    
+    override func FetchResource(ID: String, withSuccessCallback success: ((MappedService<FHIRPractitionerRole, RoleModel>.ReturnType) -> Void)?, andFailureCallback failure: ((Error) -> Void)?) {
+        Services.PractitionerRoleService().FetchResource(ID: ID) { role in
+            success?(RoleModel(innerRole: role))
+        } andFailureCallback: { err in
+            failure?(err)
+        }
+    }
+}
+
 class PhotographerDetails: UITableViewCell {
     @IBOutlet weak var PhotographerTitle: UILabel!
     @IBOutlet weak var PhotographerName: UILabel!
     @IBOutlet weak var DesignationTitle: UILabel!
     @IBOutlet weak var DesignationSelector: UIButton!
     @IBOutlet weak var DesignationLabel: UILabel!
-    var selectedDesignation: Role?
-    private var roleSelectionChanged: ((Role) -> Void)?
+    var selectedDesignation: PractitionerRole?
+    private var roleSelectionChanged: ((PractitionerRole) -> Void)?
     @IBAction private func DesignationSelectorClicked(_ sender: Any) {
-        let selectDesignationVC = FilteredSearchPopoverViewController<Role>(withScrollHandler: nil, andViewCellReuseID: "DesignationViewCell", andService: Services.RoleService())
-        selectDesignationVC.onSelectedCallback = {(designation) in
+        let selectDesignationVC = FilteredSearchPopoverViewController<RoleModelQueryService>(withScrollHandler: nil, andViewCellReuseID: "DesignationViewCell", andService: RoleModelQueryService())
+        selectDesignationVC.onSelected = {(designation) in
             self.selectedDesignation = designation
             self.drawText()
             (self.roleSelectionChanged ?? {(d) in })(designation)
@@ -35,7 +55,7 @@ class PhotographerDetails: UITableViewCell {
     }
     
     func drawText() {
-        DesignationSelector.setTitle(selectedDesignation?.Designation ?? AlternateHomeTools.getNSLocalized("designation_select", in: "Vector"), for: .normal)
+        DesignationSelector.setTitle(selectedDesignation?.roleName ?? AlternateHomeTools.getNSLocalized("designation_select", in: "Vector"), for: .normal)
     }
     
     weak var nearestViewController: UIViewController? //avoid ref cycles
@@ -44,7 +64,7 @@ class PhotographerDetails: UITableViewCell {
         drawText()
     }
     
-    func setRole(to role: Role?) {
+    func setRole(to role: PractitionerRole?) {
         selectedDesignation = role
         drawText()
         guard let session = AppDelegate.theDelegate().mxSessions.first as? MXSession else { return }
@@ -52,7 +72,7 @@ class PhotographerDetails: UITableViewCell {
         DesignationLabel.isHidden = true
     }
     
-    func setChangeHandler(to handler: ((Role) -> Void)?) {
+    func setChangeHandler(to handler: ((PractitionerRole) -> Void)?) {
         roleSelectionChanged = handler
     }
     
@@ -61,6 +81,6 @@ class PhotographerDetails: UITableViewCell {
         DesignationSelector.isHidden = true
         applyTheme()
         PhotographerName.text = photographerTagDetails.Name
-        DesignationLabel.text = photographerTagDetails.Role.Designation
+        DesignationLabel.text = photographerTagDetails.Role.roleName
     }
 }

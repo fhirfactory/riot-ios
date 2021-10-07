@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilteredSearchPopoverViewController" customModule="Riot" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectableFilteredSearchController" customModule="Riot" customModuleProvider="target">
             <connections>
-                <outlet property="FilteredSearchViewControllerContainer" destination="uTv-NR-mKO" id="7Mx-eg-Nrf"/>
-                <outlet property="attachedSearchBar" destination="ZDx-P9-BQJ" id="6BE-qf-6yS"/>
-                <outlet property="view" destination="EUF-o2-2zB" id="Jum-CO-rsx"/>
+                <outlet property="SearchBar" destination="ZDx-P9-BQJ" id="IG9-Dn-cZd"/>
+                <outlet property="tableView" destination="NwI-Jx-Osg" id="CeV-VD-UX9"/>
+                <outlet property="view" destination="EUF-o2-2zB" id="WsB-WY-HtS"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -22,15 +22,24 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uTv-NR-mKO">
-                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                    <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NwI-Jx-Osg">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="767"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="NwI-Jx-Osg" firstAttribute="leading" secondItem="uTv-NR-mKO" secondAttribute="leading" id="0QM-4Z-hxi"/>
+                        <constraint firstAttribute="bottom" secondItem="NwI-Jx-Osg" secondAttribute="bottom" id="Sdk-Zq-TZ5"/>
+                        <constraint firstItem="NwI-Jx-Osg" firstAttribute="top" secondItem="uTv-NR-mKO" secondAttribute="top" id="Ve6-8e-jdf"/>
+                        <constraint firstAttribute="trailing" secondItem="NwI-Jx-Osg" secondAttribute="trailing" id="i8h-gf-Uvh"/>
+                    </constraints>
                 </view>
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="ZDx-P9-BQJ">
-                    <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="51"/>
                     <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="mky-GL-82L"/>
-                    </connections>
                 </searchBar>
             </subviews>
             <viewLayoutGuide key="safeArea" id="BhB-WM-Oc4"/>

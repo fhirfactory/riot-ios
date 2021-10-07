@@ -17,15 +17,8 @@
 import Foundation
 
 class RoleFilteredSearchController: SelectableFilteredSearchController<RoleModel> {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
-    }
     
     override func registerReuseIdentifierForTableView(_ tableView: UITableView) {
-        
-    }
-    
-    override func applyFilter(_ filter: String) {
         
     }
 }

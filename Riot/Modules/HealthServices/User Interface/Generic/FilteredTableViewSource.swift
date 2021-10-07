@@ -17,5 +17,5 @@
 import Foundation
 
 protocol FilteredTableViewSource {
-    func applyFilter(_ filter: String)
+    func changeFilter(_ filter: String?)
 }

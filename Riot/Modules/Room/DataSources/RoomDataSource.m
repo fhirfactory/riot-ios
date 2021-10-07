@@ -195,6 +195,10 @@ const CGFloat kTypingCellHeight = 24;
         return kTypingCellHeight;
     }
     
+    if ([[bubbles objectAtIndex:index] isKindOfClass:[CustomTimelineElement class]]) {
+        return [self heightForLingoCell:[bubbles objectAtIndex:index] withWidth:maxWidth];
+    }
+    
     return [super cellHeightAtIndex:index withMaximumWidth:maxWidth];
 }
 
@@ -208,6 +212,86 @@ const CGFloat kTypingCellHeight = 24;
         [roomBubbleCellData setNeedsUpdateAdditionalContentHeight];
     }
 }
+
+#pragma mark Lingo Features
+
+- (CGFloat)heightForLingoCell:(CustomTimelineElement*)cell withWidth:(CGFloat)width {
+    return [cell heightWithWidth:width];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView lingoCellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RoomBubbleCellData *roomBubbleCellData = [self cellDataAtIndex:indexPath.row];
+    NSAssert([roomBubbleCellData isKindOfClass:[CustomTimelineElement class]], @"Check that we're rendering a lingo cell");
+    CustomTimelineElement *el = (CustomTimelineElement*)roomBubbleCellData;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[el ReuseIdentifier]];
+    [el renderWithCell:cell requestUpdate:^{
+        [tableView reloadRowsAtIndexPaths:[[NSArray alloc] initWithObjects:[tableView indexPathForCell:cell], nil] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }];
+    return cell;
+}
+
+- (CustomTimelineElement*)getCustomElementForGivenData:(id<MXKRoomBubbleCellDataStoring>)data {
+    if ([data isAttachmentWithThumbnail]) {
+        PatientTagPlaceholder *cellData = [PatientTagPlaceholder new];
+        [cellData setURL:[[data attachment] contentURL]];
+        return cellData;
+    }
+    return NULL;
+}
+
+//this climbs up
+- (long)insertLingoCellsFromIndex:(unsigned long)fromIndex toIndex:(long)minIndex {
+    long index = MIN(fromIndex, [bubbles count] - 1);
+    while (index >= minIndex) {
+        if ([[bubbles objectAtIndex:index] isKindOfClass:[CustomTimelineElement class]]) {
+            index -= 2;
+        } else {
+            if (index < [bubbles count] - 1) {
+                if ([[bubbles objectAtIndex:index + 1] isKindOfClass:[CustomTimelineElement class]]) {
+                    index--;
+                    continue;
+                }
+            }
+            CustomTimelineElement* el = [self getCustomElementForGivenData:[bubbles objectAtIndex:index]];
+            if (el) {
+                [bubbles insertObject:(id)el atIndex:index+1];
+                return index;
+            }
+            index--;
+        }
+    }
+    return index;
+}
+
+- (void)paginate:(NSUInteger)numItems direction:(MXTimelineDirection)direction onlyFromStore:(BOOL)onlyFromStore success:(void (^)(NSUInteger addedCellNumber))success failure:(void (^)(NSError *error))failure {
+    if ([[self superclass] instancesRespondToSelector:@selector(paginate:direction:onlyFromStore:success:failure:)]) {
+        [super paginate:numItems direction:direction onlyFromStore:onlyFromStore success:^(NSUInteger cells) {
+            unsigned long newCells = cells;
+            if (direction == MXTimelineDirectionBackwards) {
+                long lingoCell = [self insertLingoCellsFromIndex:cells toIndex:0];
+                while (lingoCell > 0) {
+                    newCells++;
+                    lingoCell = [self insertLingoCellsFromIndex:lingoCell toIndex:0];
+                }
+            } else {
+                unsigned long min = MAX([self->bubbles count] - cells - 1,0);
+                long lingoCell = [self insertLingoCellsFromIndex:[self->bubbles count] - 1 toIndex:min];
+                while (lingoCell > min) {
+                    newCells++;
+                    lingoCell = [self insertLingoCellsFromIndex:lingoCell toIndex:min];
+                }
+            }
+            success(newCells);
+        } failure:failure];
+    }
+}
+
+//- (void)processQueuedEvents:(void (^)(NSUInteger addedHistoryCellNb, NSUInteger addedLiveCellNb))onComplete {
+//    if ([[self superclass] instancesRespondToSelector:@selector(processQueuedEvents:)]) {
+//        [super processQueuedEvents: onComplete];
+//    }
+//}
 
 #pragma mark Encryption trust level
 
@@ -241,7 +325,7 @@ const CGFloat kTypingCellHeight = 24;
 
 #pragma  mark -
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSectionUnderlying:(NSInteger)section
 {
     NSInteger count = [super tableView:tableView numberOfRowsInSection:section];
     
@@ -291,15 +375,19 @@ const CGFloat kTypingCellHeight = 24;
         self.typingCellIndex = -1;
 
         //  leave it as is, if coming as 0 from super
-        return count * 2;
+        return count;
     }
     
     self.typingCellIndex = count;
-    return count * 2 + 1;
+    return count + 1;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self tableView:tableView numberOfRowsInSectionUnderlying:section];
+}
 
-- (UITableViewCell *)tableView:(UITableView *)tableView directoryAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView getCellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == self.typingCellIndex)
     {
@@ -320,7 +408,8 @@ const CGFloat kTypingCellHeight = 24;
     
     [self updateKeyVerificationIfNeededForRoomBubbleCellData:roomBubbleCellData];
 
-    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = ([roomBubbleCellData isKindOfClass:[CustomTimelineElement class]]) ?
+    [self tableView:tableView lingoCellForRowAtIndexPath:indexPath] : [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
     // Finalize cell view customization here
     if ([cell isKindOfClass:MXKRoomBubbleTableViewCell.class])
@@ -1093,46 +1182,9 @@ NSMutableDictionary *SiblingRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSIndexPath *translatedLocation = [NSIndexPath indexPathForRow:indexPath.item / 2 inSection:indexPath.section];
-    id<MXKRoomBubbleCellDataStoring> bubbleData = [self cellDataAtIndex:translatedLocation.row];
-    if ([self shouldRenderInsertedCells] && indexPath.item % 2 == 0) {
-        if (bubbleData.attachment) {
-            NSIndexPath *path = [NSIndexPath indexPathForRow:indexPath.row + 1 inSection:indexPath.section];
-            [[Services ImageTagDataService] LookupTagInfoForObjcWithURL:[bubbleData.attachment contentURL] andHandler:^(NSArray* tags) {
-                if (!SiblingRows) {
-                    SiblingRows = [NSMutableDictionary new];
-                }
-                [SiblingRows setObject:tags forKey:[[bubbleData.events firstObject] eventId]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [tableView beginUpdates];
-                    [tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
-                    [tableView endUpdates];
-                });
-            }];
-        }
-        
-        return [self tableView:tableView fakeCellForRowAtIndexPath:indexPath];
-    } else if (![self shouldRenderInsertedCells]) {
-        return [self tableView:tableView fakeCellForRowAtIndexPath:indexPath];
-    }
-    if ([self shouldRenderInsertedCells] && SiblingRows && [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]]) {
-        LegacyTagViewContainer *element = [tableView dequeueReusableCellWithIdentifier:@"LegacyTagViewContainer" forIndexPath:indexPath];
-        NSArray *tags = [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]];
-        [element renderWithTags:tags];
-        return element;
-    }
-    return [UITableViewCell new];
+    return [self tableView:tableView getCellForRowAtIndexPath:indexPath];
 }
 
-- (CGFloat)getHeightForInsertedCellAtIndexPath:(NSIndexPath *)indexPath withMaxWidth:(CGFloat)maxWidth {
-    NSIndexPath *index = [NSIndexPath indexPathForRow:(indexPath.row - 1) / 2 inSection:indexPath.section];
-    id<MXKRoomBubbleCellDataStoring> bubbleData = [self cellDataAtIndex:index.row];
-    if (SiblingRows && [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]]) {
-        NSArray *tags = [SiblingRows objectForKey:[[bubbleData.events firstObject] eventId]];
-        return [LegacyTagViewContainer getHeightWithTags:tags withWidth:maxWidth];
-    }
-    return 0;
-}
 - (void)applyMaskToAttachmentViewOfBubbleCell:(MXKRoomBubbleTableViewCell *)cell
 {
     if (cell.attachmentView && !cell.attachmentView.layer.mask)

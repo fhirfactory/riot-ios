@@ -8,35 +8,66 @@
 
 import Foundation
 
-class RoleModel: Equatable {
-    static func == (lhs: RoleModel, rhs: RoleModel) -> Bool {
-        lhs.innerRole == rhs.innerRole
+class RoleModel: PractitionerRole, Equatable {
+    var longName: String {
+        innerRole.longName
     }
     
-    var innerRole: Role
+    var shortName: String {
+        innerRole.shortName
+    }
+    
+    var orgName: String {
+        innerRole.orgName
+    }
+    
+    var roleName: String {
+        innerRole.roleName
+    }
+    
+    var roleCategory: String {
+        innerRole.roleCategory
+    }
+    
+    var location: String {
+        innerRole.location
+    }
+    
+    func GetPractitioners(callback: ([Practitioner]) -> Void) {
+        
+    }
+    
+    var ID: String {
+        innerRole.ID
+    }
+    
+    var active: Bool {
+        innerRole.active
+    }
+    
+    var matrixID: String {
+        innerRole.matrixID
+    }
+    
+    var avatarURL: String? {
+        innerRole.avatarURL
+    }
+    
+    var displayName: String {
+        innerRole.displayName
+    }
+    
+    static func == (lhs: RoleModel, rhs: RoleModel) -> Bool {
+        lhs.ID == rhs.ID && lhs.matrixID == rhs.matrixID && lhs.displayName == rhs.displayName
+    }
+    
+    var innerRole: PractitionerRole
     var isExpanded: Bool
     var isFilled: Bool = false
     //as with the others, this should be changed to be stored
     var Favourite: Bool = false
-    init(innerRole: Role, isExpanded: Bool) {
+    init(innerRole: PractitionerRole, isExpanded: Bool = false) {
         self.innerRole = innerRole
         self.isExpanded = isExpanded
-    }
-}
-
-class RoleSelectable: Equatable {
-    static func == (lhs: RoleSelectable, rhs: RoleSelectable) -> Bool {
-        lhs.innerRole == rhs.innerRole
-    }
-    
-    var innerRole: Role
-    var isExpanded: Bool
-    var isOnDuty: Bool
-    var isSelected: Bool
-    init(innerRole: Role, isExpanded: Bool) {
-        self.innerRole = innerRole
-        self.isExpanded = isExpanded
-        isOnDuty = false
-        isSelected = false
     }
 }

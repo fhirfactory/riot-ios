@@ -17,18 +17,18 @@
 import Foundation
 
 class RoomCreationCollectionViewPeopleCellRenderer {
-    static func GetRendererFor(_ person: ActPeople) -> (RoomCreationCollectionViewCell) -> Void {
+    static func GetRendererFor(_ person: ActPeopleModel) -> (RoomCreationCollectionViewCell) -> Void {
         return {(value) in
             let session = (AppDelegate.theDelegate().mxSessions.first as? MXSession)
-            let previewAvatar = AvatarGenerator.generateAvatar(forText: person.officialName)
+            let previewAvatar = AvatarGenerator.generateAvatar(forText: person.displayName)
             value.AvatarView.enableInMemoryCache = true
-            value.AvatarView.setImageURI(person.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: previewAvatar, mediaManager: session?.mediaManager) //this line is a memory leak
+            value.AvatarView.setImageURI(person.avatarURL, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: previewAvatar, mediaManager: session?.mediaManager) //this line is a memory leak
             value.AvatarView.layer.cornerRadius = value.AvatarView.frame.width / 2
             value.AvatarView.layer.masksToBounds = true
             value.Presence.layer.cornerRadius = value.Presence.frame.width / 2
             value.Presence.layer.masksToBounds = true
-            value.Name.text = person.officialName
-            value.Presence.backgroundColor = person.baseUser.presence == MXPresenceOnline ? UIColor.green : UIColor.gray
+            value.Name.text = person.displayName
+            value.Presence.backgroundColor = person.onlineStatus == true ? UIColor.green : UIColor.gray
         }
     }
 }

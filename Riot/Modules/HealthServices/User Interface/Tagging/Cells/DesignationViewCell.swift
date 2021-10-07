@@ -16,12 +16,12 @@
 
 import Foundation
 
-class DesignationViewCell: QueryTableViewCell<Role> {
+class DesignationViewCell: QueryTableViewCell<RoleModel> {
     @IBOutlet weak var DesignationDetails: UILabel!
     
-    override func RenderWith(Object value: Role) {
+    override func RenderWith(Object value: RoleModel) {
         super.RenderWith(Object: value)
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
-        DesignationDetails.text = value.Designation
+        DesignationDetails.text = value.roleName
     }
 }

@@ -13,7 +13,7 @@ class RoleProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var officialName: UILabel!
     @IBOutlet weak var jobTitle: UILabel!
-    var Role: Role!
+    var Role: PractitionerRole!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,9 +27,9 @@ class RoleProfileTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setRole(role: Role?) {
+    func setRole(role: PractitionerRole?) {
         Role = role
-        officialName.text = role?.OfficialName
-        jobTitle.text = role?.Title
+        officialName.text = role?.displayName
+        jobTitle.text = role?.roleName
     }
 }

@@ -17,19 +17,20 @@
 import Foundation
 
 @objc class Services: NSObject {
+    private static var loggedInUserIdentity: String!
+    static func setUser(emailAddress: String) {
+        loggedInUserIdentity = emailAddress
+    }
+    static func getUser() -> String {
+        loggedInUserIdentity
+    }
+    
     private static var instancePatientQueryService: PatientQueryService!
     static func PatientService() -> PatientQueryService {
         if instancePatientQueryService == nil {
             instancePatientQueryService = PatientQueryService()
         }
         return instancePatientQueryService
-    }
-    private static var instanceRoleQueryService: RoleQueryService!
-    static func RoleService() -> RoleQueryService {
-        if instanceRoleQueryService == nil {
-            instanceRoleQueryService = RoleQueryService()
-        }
-        return instanceRoleQueryService
     }
     private static var instanceImageTagService: ImageTagService!
     @objc static func ImageTagDataService() -> ImageTagService {
@@ -38,18 +39,18 @@ import Foundation
         }
         return instanceImageTagService
     }
-    private static var instanceRolePractitionerService: RolePractitionerQueryService!
-    static func RolePractitionerService() -> RolePractitionerQueryService {
-        if instanceRolePractitionerService == nil {
-            instanceRolePractitionerService = RolePractitionerQueryService()
-        }
-        return instanceRolePractitionerService
-    }
-    private static var instancePractitionerRoleService: PractitionerRoleQueryService!
-    static func PractitionerRoleService() -> PractitionerRoleQueryService {
+    private static var instancePractitionerRoleService: PractitionerRoleAPIService!
+    static func PractitionerRoleService() -> PractitionerRoleAPIService {
         if instancePractitionerRoleService == nil {
-            instancePractitionerRoleService = PractitionerRoleQueryService()
+            instancePractitionerRoleService = PractitionerRoleAPIService()
         }
         return instancePractitionerRoleService
+    }
+    private static var instancePractitionerService: PractitionerAPIService!
+    static func PractitionerService() -> PractitionerAPIService {
+        if instancePractitionerService == nil {
+            instancePractitionerService = PractitionerAPIService()
+        }
+        return instancePractitionerService
     }
 }

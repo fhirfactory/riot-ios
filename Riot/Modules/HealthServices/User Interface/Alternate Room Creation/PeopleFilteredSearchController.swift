@@ -16,58 +16,44 @@
 
 import Foundation
 
-class PeopleFilteredSearchController: SelectableFilteredSearchController<ActPeople> {
+//TODO: Switch this to use the directory services directory
+
+class PeopleFilteredSearchController: SelectableFilteredSearchController<ActPeopleModel> {
     var currentSearch: MXHTTPOperation?
-    var peopleList: [ActPeople] = []
     override func registerReuseIdentifierForTableView(_ tableView: UITableView) {
         tableView.register(UINib(nibName: "PeopleTableViewCell", bundle: nil), forCellReuseIdentifier: "PeopleTableViewCell")
     }
-    override func applyFilter(_ filter: String) {
-        if currentSearch != nil {
-            currentSearch?.cancel()
-            currentSearch = nil
-        }
-        currentSearch = session.matrixRestClient.searchUsers(filter, limit: 50, success: {(users) in
-            self.peopleList = []
-            if let usersList: [MXUser] = users?.results {
-                //TODO: Connect this to actual data
-                for p: MXUser in usersList where p.displayname != nil {
-
-                    var actPerson = ActPeople(withBaseUser: p, officialName: p.displayname, jobTitle: "Worker", org: "At Org", businessUnit: "In Business Unit")
-                    actPerson.emailAddress = "noname@gmail.com"
-                    actPerson.phoneNumber = "0412345678"
-                    self.peopleList.append(actPerson)
-                }
-            }
-            self.tableView.reloadData()
-        }, failure: {(error) in
+    override func paginate(page: Int, pageSize: Int, filter: String?, favourites: Bool, addPage: @escaping ([ActPeopleModel]) -> Void) {
+        Services.PractitionerService().SearchResources(query: filter, page: page, pageSize: pageSize) { practitioners, count in
+            addPage(practitioners.map({ practitioner in
+                ActPeopleModel(innerPractitioner: practitioner)
+            }))
+        } andFailureCallback: { err in
             
-        })
+        }
+
     }
-    override func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> ActPeople? {
+    override func getUnderlyingValue(_ tableViewCell: UITableViewCell) -> ActPeopleModel? {
         guard let actualCell = tableViewCell as? PeopleTableViewCell else { return nil }
         return actualCell.actPerson
     }
     override func getTableviewCell(_ tableView: UITableView, atIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "PeopleTableViewCell") as? PeopleTableViewCell else { return UITableViewCell() }
-        let person = peopleList[indexPath.row]
-        cell.setValue(withPerson: person)
+        let person = items[indexPath.row]
+        cell.bind(data: person, index: indexPath.row)
         return cell
     }
-    override func getIndexPathFor(Item theItem: ActPeople) -> IndexPath? {
-        if let idx = peopleList.firstIndex(of: theItem) {
+    override func getIndexPathFor(Item theItem: ActPeopleModel) -> IndexPath? {
+        if let idx = items.firstIndex(of: theItem) {
             return IndexPath(row: idx, section: 0)
         }
         return nil
     }
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return peopleList.count
-    }
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if peopleList.count == 1 {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if items.count == 1 {
             return "1 " + AlternateHomeTools.getNSLocalized("person_single", in: "Vector")
-        } else if peopleList.count > 1 {
-            return String(peopleList.count) + " " + AlternateHomeTools.getNSLocalized("person_plural", in: "Vector")
+        } else if items.count > 1 {
+            return String(items.count) + " " + AlternateHomeTools.getNSLocalized("person_plural", in: "Vector")
         }
         return nil
     }

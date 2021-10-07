@@ -29,10 +29,10 @@ class PractitionerTableViewCell: UITableViewCell {
     
     func setUser(_ person: ActPeopleModel) {
         user = person
-        avatarView.setImageURI(person.baseUser.avatarUrl, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: person.officialName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
+        avatarView.setImageURI(person.avatarURL, withType: nil, andImageOrientation: UIImage.Orientation.up, previewImage: AvatarGenerator.generateAvatar(forText: person.displayName), mediaManager: (AppDelegate.theDelegate().mxSessions.first as? MXSession)?.mediaManager)
         avatarView.layer.cornerRadius = avatarView.frame.height / 2
         avatarView.clipsToBounds = true
-        primaryText.text = person.officialName
+        primaryText.text = person.displayName
         secondaryText.text = person.jobTitle
     }
 }

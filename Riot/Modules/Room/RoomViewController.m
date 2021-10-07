@@ -124,7 +124,6 @@
 #import "SettingsViewController.h"
 #import "SecurityViewController.h"
 
-#import <objc/message.h>
 #import "MXKRoomDataSource+Lingo.h"
 #import "TypingUserInfo.h"
 
@@ -660,10 +659,7 @@ const NSTimeInterval kResizeComposerAnimationDuration = .05;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.item % 2 == 0) {
-        return [super tableView:tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.item / 2 inSection:indexPath.section]];
-    }
-    return [[self roomDataSource] getHeightForInsertedCellAtIndexPath:indexPath withMaxWidth:[self view].frame.size.width];
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -2306,9 +2302,6 @@ const NSTimeInterval kResizeComposerAnimationDuration = .05;
 
 - (Class<MXKCellRendering>)cellViewClassForCellData:(MXKCellData*)cellData
 {
-    if (enableNewRoomRendering){
-        return RoomMessageContentCell.class;
-    }
     Class cellViewClass = nil;
     BOOL showEncryptionBadge = NO;
     
@@ -5900,6 +5893,15 @@ const NSTimeInterval kResizeComposerAnimationDuration = .05;
     [self hideContextualMenuAnimated:YES];
 }
 
+#pragma mark - Lingo Changes
+
+- (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
+    if ([cellData isKindOfClass:[CustomTimelineElement class]]) {
+        return [((CustomTimelineElement*)cellData) ReuseIdentifier];
+    }
+    return [super cellReuseIdentifierForCellData:cellData];
+}
+
 #pragma mark - ReactionsMenuViewModelCoordinatorDelegate
 
 - (void)reactionsMenuViewModel:(ReactionsMenuViewModel *)viewModel didAddReaction:(NSString *)reaction forEventId:(NSString *)eventId
@@ -5933,16 +5935,6 @@ const NSTimeInterval kResizeComposerAnimationDuration = .05;
         }];
         
     }];
-}
-
-//Enable the new room rendering pipeline. Currently, this must be set to true for tags and other custom elements to render correctly.
-BOOL enableNewRoomRendering = NO;
-
-- (NSString *)cellReuseIdentifierForCellData:(MXKCellData*)cellData{
-    if (enableNewRoomRendering){
-        return @"RoomMessageContentCell";
-    }
-    return [super cellReuseIdentifierForCellData:cellData];
 }
 
 - (void)reactionsMenuViewModelDidTapMoreReactions:(ReactionsMenuViewModel *)viewModel forEventId:(NSString *)eventId
@@ -6136,7 +6128,7 @@ BOOL enableNewRoomRendering = NO;
         {
             [roomInputToolbarView sendSelectedImage:imageData withMimeType:uti.mimeType andCompressionMode:BuildSettings.roomInputToolbarCompressionMode isPhotoLibraryAsset:NO];
         }*/
-    }else{
+    } else {
         [cameraPresenter dismissWithAnimated:YES completion:nil];
         self.cameraPresenter = nil;
         

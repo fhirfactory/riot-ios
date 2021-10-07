@@ -18,7 +18,7 @@ import Foundation
 
 class PatientTaggingViewModel {
     var description: String?
-    var role: Role?
+    var role: PractitionerRole?
     var name: String!
     var patients: [PatientModel] = []
     var photoDate: Date = Date()

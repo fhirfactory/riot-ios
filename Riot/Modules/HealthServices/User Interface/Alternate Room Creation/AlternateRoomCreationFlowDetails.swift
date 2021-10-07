@@ -200,7 +200,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
                 self.uploadAvatarIfRequired(ofRoom: room)
                 for x in self.previousPageReference.selectedItems {
                     switch x {
-                    case let person as ActPeople:
+                    case let person as ActPeopleModel:
                         self.inviteCount += 1
                         let inviteCompletion = {(response: MXResponse<Void>) in
                             switch response {
@@ -215,7 +215,7 @@ class AlternateRoomCreationFlowDetails: UIViewController, UITableViewDelegate, U
                                 self.removeLoading()
                             }
                         }
-                        room.invite(MXRoomInvitee.userId(person.baseUser.userId), completion: inviteCompletion)
+                        room.invite(MXRoomInvitee.userId(person.matrixID), completion: inviteCompletion)
                     default:
                         break
                     }

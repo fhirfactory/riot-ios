@@ -17,7 +17,7 @@
 import Foundation
 
 class AsyncQueryableService<T>: BaseService<T> {
-    func Query(queryDetails: String, success: ([T]) -> Void, failure: () -> Void) {
-        
+    func Query(page: Int, pageSize: Int, queryDetails: String?, success: @escaping ([T], Int) -> Void, failure: () -> Void) {
+        preconditionFailure("Must be overwritten")
     }
 }

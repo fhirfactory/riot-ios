@@ -18,8 +18,8 @@ import Foundation
 
 class PhotographerTagDetails {
     let Name: String!
-    let Role: Role!
-    init(withName: String, andRole: Role) {
+    let Role: PractitionerRole!
+    init(withName: String, andRole: PractitionerRole) {
         Name = withName
         Role = andRole
     }

@@ -17,7 +17,7 @@ class EmailTableViewCell: UITableViewCell {
         ThemeService.shared().theme.recursiveApply(on: self.contentView)
     }
     
-    func setUser(person: ActPeople){
-        Value.text = person.emailAddress;
+    func setUser(person: Practitioner){
+        Value.text = person.emailAddress
     }
 }

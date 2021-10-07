@@ -15,13 +15,13 @@
 //
 
 import Foundation
-class LegacyTagViewContainer: UITableViewCell {
+class LegacyTagViewContainer: TimelineCell<[TagData]> {
     @IBOutlet weak var Container: UIView!
-    @objc func render(tags: [TagData]) {
+    override func render(with data: [TagData]) {
         Container.subviews.forEach { (view) in
             view.removeFromSuperview()
         }
-        let tagCell = PatientTagHelpers.getPatientViewCell(ForTagData: tags, forTimeline: true)
+        let tagCell = PatientTagHelpers.getPatientViewCell(ForTagData: data, forTimeline: true)
         if let returnView = tagCell?.returnView {
             returnView.translatesAutoresizingMaskIntoConstraints = false
             Container.addSubview(returnView)
@@ -33,7 +33,10 @@ class LegacyTagViewContainer: UITableViewCell {
             ])
         }
     }
-    @objc static func getHeight(tags: [TagData], withWidth: CGFloat) -> CGFloat {
+    override func getHeight(from data: [TagData], withWidth width: CGFloat) -> CGFloat {
+        LegacyTagViewContainer.calculateHeight(tags: data, withWidth: width)
+    }
+    @objc static func calculateHeight(tags: [TagData], withWidth: CGFloat) -> CGFloat {
         //width - (51 + 10) -- the two constraints
         //this should probably be updated to dynamically figure out the constraints
         let view = UIView(frame: CGRect(x: 0, y: 0, width: withWidth - 61, height: 0))

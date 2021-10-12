@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>$(APPLICATION_GROUP_IDENTIFIER)</string>
+		<string>group.au.gov.act.health.aether</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>

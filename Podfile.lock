@@ -19,27 +19,27 @@ PODS:
   - BlueRSA (1.0.34)
   - DGCollectionViewLeftAlignFlowLayout (1.0.4)
   - Down (0.10.0)
-  - DTCoreText (1.6.25):
-    - DTCoreText/Core (= 1.6.25)
+  - DTCoreText (1.6.26):
+    - DTCoreText/Core (= 1.6.26)
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTCoreText/Core (1.6.25):
+  - DTCoreText/Core (1.6.26):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTCoreText/Extension (1.6.25):
+  - DTCoreText/Extension (1.6.26):
     - DTFoundation/Core (~> 1.7.5)
     - DTFoundation/DTAnimatedGIF (~> 1.7.5)
     - DTFoundation/DTHTMLParser (~> 1.7.5)
     - DTFoundation/UIKit (~> 1.7.5)
-  - DTFoundation/Core (1.7.17)
-  - DTFoundation/DTAnimatedGIF (1.7.17)
-  - DTFoundation/DTHTMLParser (1.7.17):
+  - DTFoundation/Core (1.7.18)
+  - DTFoundation/DTAnimatedGIF (1.7.18)
+  - DTFoundation/DTHTMLParser (1.7.18):
     - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.17):
+  - DTFoundation/UIKit (1.7.18):
     - DTFoundation/Core
   - FFDropDownMenu (1.4.5)
   - FlowCommoniOS (1.10.0)
@@ -99,20 +99,20 @@ PODS:
   - Motion (3.1.3):
     - Motion/Core (= 3.1.3)
   - Motion/Core (3.1.3)
-  - OLMKit (3.2.2):
-    - OLMKit/olmc (= 3.2.2)
-    - OLMKit/olmcpp (= 3.2.2)
-  - OLMKit/olmc (3.2.2)
-  - OLMKit/olmcpp (3.2.2)
+  - OLMKit (3.2.5):
+    - OLMKit/olmc (= 3.2.5)
+    - OLMKit/olmcpp (= 3.2.5)
+  - OLMKit/olmc (3.2.5)
+  - OLMKit/olmcpp (3.2.5)
   - ReadMoreTextView (3.0.1)
   - Realm (10.7.2):
     - Realm/Headers (= 10.7.2)
   - Realm/Headers (10.7.2)
-  - Reusable (4.1.1):
-    - Reusable/Storyboard (= 4.1.1)
-    - Reusable/View (= 4.1.1)
-  - Reusable/Storyboard (4.1.1)
-  - Reusable/View (4.1.1)
+  - Reusable (4.1.2):
+    - Reusable/Storyboard (= 4.1.2)
+    - Reusable/View (= 4.1.2)
+  - Reusable/Storyboard (4.1.2)
+  - Reusable/View (4.1.2)
   - SideMenu (6.5.0)
   - SwiftBase32 (0.9.0)
   - SwiftGen (6.4.0)
@@ -138,8 +138,8 @@ DEPENDENCIES:
   - KTCenterFlowLayout (~> 1.3.1)
   - Material (~> 3.1.0)
   - MatomoTracker (~> 7.4.1)
-  - MatrixKit (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `merge-master-0.14.11`)
-  - MatrixKit/AppExtension (from `https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `merge-master-0.14.11`)
+  - "MatrixKit (from `ssh://git@github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `merge-master-0.14.11`)"
+  - "MatrixKit/AppExtension (from `ssh://git@github.com/fhirfactory/pegacorn-matrix-ios-kit.git`, branch `merge-master-0.14.11`)"
   - MatrixSDK (= 0.18.11)
   - MatrixSDK/JingleCallStack (= 0.18.11)
   - OLMKit
@@ -195,12 +195,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   MatrixKit:
     :branch: merge-master-0.14.11
-    :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
+    :git: "ssh://git@github.com/fhirfactory/pegacorn-matrix-ios-kit.git"
 
 CHECKOUT OPTIONS:
   MatrixKit:
     :commit: b87ce0ac8cc99f4bf6364410b2bd1777e8a8c3d7
-    :git: https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git
+    :git: "ssh://git@github.com/fhirfactory/pegacorn-matrix-ios-kit.git"
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
@@ -209,8 +209,8 @@ SPEC CHECKSUMS:
   BlueRSA: 6f9776d62d9773502415a7db3bcbb2bbb3f71fc3
   DGCollectionViewLeftAlignFlowLayout: a0fa58797373ded039cafba8133e79373d048399
   Down: 01f155f9d7e99673c667efd2218709c3b9a8bc13
-  DTCoreText: e92f4cf6b36d9d71ce4436d12cf089d74ab0596b
-  DTFoundation: 989698be00d3f19438c38a49a8ebb3f6919dcac5
+  DTCoreText: ec749e013f2e1f76de5e7c7634642e600a7467ce
+  DTFoundation: a53f8cda2489208cbc71c648be177f902ee17536
   FFDropDownMenu: 3dc2b1e47d349687b9d451282a3b6bae3e0e8c7a
   FlowCommoniOS: bcdf81a5f30717e711af08a8c812eb045411ba94
   GBDeviceInfo: ed0db16230d2fa280e1cbb39a5a7f60f6946aaec
@@ -229,10 +229,10 @@ SPEC CHECKSUMS:
   MatrixKit: b4427e22aed3ae4a3ef5175bb017fc2b9786269c
   MatrixSDK: f3cecb8e8ca7624dc52940dfae95ae8b81ebee1a
   Motion: cf1e060e489f6661126374d5c60dbd2ed991605c
-  OLMKit: 20d1c564033a1ae7148f8f599378d4c798363905
+  OLMKit: 9fb4799c4a044dd2c06bda31ec31a12191ad30b5
   ReadMoreTextView: 19147adf93abce6d7271e14031a00303fe28720d
   Realm: e523da9ade306c5ae87e85dc09fdef148d3e1cc1
-  Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
+  Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SwiftBase32: 9399c25a80666dc66b51e10076bf591e3bbb8f17
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
@@ -241,6 +241,6 @@ SPEC CHECKSUMS:
   zxcvbn-ios: fef98b7c80f1512ff0eec47ac1fa399fc00f7e3c
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: ae7ea82d273daf620e4b9e218e1f4896858db522
+PODFILE CHECKSUM: ac9fa91579ceba335c8446de5dd714216ff16366
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

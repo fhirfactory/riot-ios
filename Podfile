@@ -1,6 +1,8 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '12.0'
 
+#source 'https://github.com/CocoaPods/Specs.git'
+
 # Use frameforks to allow usage of pod written in Swift (like PiwikTracker)
 use_frameworks!
 
@@ -19,7 +21,7 @@ $matrixKitVersion = {'merge-master-0.14.11' => 'develop'}
 
 #this allows the xcode project options on individual pods to be modified.
 #{'podname' => {'xcodesetting' => 'value', 'setting' => 'value'}} etc
-$projectOptions = {'SideMenu' => {'APPLICATION_EXTENSION_API_ONLY' => 'NO'}, 'MatrixKit' => {'IPHONEOS_DEPLOYMENT_TARGET' => '11.0'}}
+$projectOptions = {'SideMenu' => {'APPLICATION_EXTENSION_API_ONLY' => 'NO'}, 'MatrixKit' => {'IPHONEOS_DEPLOYMENT_TARGET' => '12.0'}}
 
 ########################################
 
@@ -29,7 +31,7 @@ case $matrixKitVersion
     $matrixSDKVersionSpec = { :path => '../matrix-ios-sdk/MatrixSDK.podspec' }
   when Hash # kit branch name => sdk branch name – or {kit spec Hash} => {sdk spec Hash}
     kit_spec, sdk_spec = $matrixKitVersion.first # extract first and only key/value pair; key is kit_spec, value is sdk_spec
-    kit_spec = { :git => 'https://github.com/fhirfactory/pegacorn-matrix-ios-kit.git', :branch => kit_spec.to_s } unless kit_spec.is_a?(Hash)
+    kit_spec = { :git => 'ssh://git@github.com/fhirfactory/pegacorn-matrix-ios-kit.git', :branch => kit_spec.to_s } unless kit_spec.is_a?(Hash)
     sdk_spec = { :git => 'https://github.com/matrix-org/matrix-ios-sdk.git', :branch => sdk_spec.to_s } unless sdk_spec.is_a?(Hash)
     if $matrixSDKVersion.is_a?(String) then #even if we have a specific branch selected for matrixKitVersion, if we also have a specific MatrixSDKVersion set, we want to override our branch with that SDK Version
       sdk_spec = $matrixSDKVersion
@@ -57,9 +59,9 @@ end
 
 # Method to import the right MatrixKit/AppExtension flavour
 def import_MatrixKitAppExtension
-  pod 'MatrixKit', $matrixKitVersionSpec
   pod 'MatrixSDK/JingleCallStack', $matrixSDKVersionSpec
   pod 'MatrixSDK', $matrixSDKVersionSpec
+  pod 'MatrixKit', $matrixKitVersionSpec
   pod 'MatrixKit/AppExtension', $matrixKitVersionSpec
 end
 
@@ -88,7 +90,7 @@ abstract_target 'RiotPods' do
   
 
   target "Riot" do
-    import_MatrixKit
+    # import_MatrixKit
     import_MatrixKitAppExtension
     pod 'DGCollectionViewLeftAlignFlowLayout', '~> 1.0.4'
     pod 'KTCenterFlowLayout', '~> 1.3.1'
@@ -159,6 +161,18 @@ post_install do |installer|
 
       # Stop Xcode 12 complaining about old IPHONEOS_DEPLOYMENT_TARGET from pods 
       config.build_settings.delete 'IPHONEOS_DEPLOYMENT_TARGET'
+      
+      # trying to fix the archive errors with duplicate targets
+      if target.name == "MatrixKit.default-AppExtension"
+        target.remove_from_project
+      end
+      if target.name == "DTCoreText.default-Extension"
+        target.remove_from_project
+      end
+      if target.name == "DTCoreText.default-Extension-Resources"
+        target.remove_from_project
+      end
+      
     end
   end
 end
